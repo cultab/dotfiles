@@ -8,17 +8,28 @@ Plug 'https://github.com/ervandew/supertab'
 Plug 'borissov/vim-mysql-suggestions'
 Plug 'https://github.com/Shougo/deoplete-clangx'
 Plug 'https://github.com/Shougo/neco-syntax'
- 
-"Colorschemes
+"Plug 'jiangxincode/mpi.vim'
+
+"Linting
+Plug 'nvie/vim-flake8'
+
+"Autoclose
+Plug 'jiangmiao/auto-pairs'
+
+"Visual
 Plug 'vim-airline/vim-airline'
+"Plug 'mengelbrecht/lightline-bufferline'
+
+"Colorschemes
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 Plug 'patstockwell/vim-monokai-tasty'
 Plug 'elitetester29/plastic.vim'
 Plug 'https://github.com/vim-scripts/CycleColor'
-"Misc
+Plug 'joshdick/onedark.vim'
 
+"Misc
 Plug 'sheerun/vim-polyglot'
 Plug 'captbaritone/better-indent-support-for-php-with-html'
 
