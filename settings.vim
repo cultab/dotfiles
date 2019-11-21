@@ -5,7 +5,7 @@ set number
 set tabstop=8
 set softtabstop=4
 set shiftwidth=4
-set expandtab
+set noexpandtab
 set cindent
 set smarttab
 set autoindent
