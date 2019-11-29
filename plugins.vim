@@ -8,6 +8,7 @@ Plug 'https://github.com/ervandew/supertab'
 Plug 'borissov/vim-mysql-suggestions'
 Plug 'https://github.com/Shougo/deoplete-clangx'
 Plug 'https://github.com/Shougo/neco-syntax'
+Plug 'deoplete-plugins/deoplete-jedi'
 "Plug 'jiangxincode/mpi.vim'
 
 "Linting
@@ -43,7 +44,7 @@ call plug#end()
 let g:deoplete#enable_at_startup = 1
 
 "Colorscheme Options
-colorscheme plastic
+colorscheme onedark
 let g:airline_theme='deus'
 let g:airline_powerline_fonts = 1
 set termguicolors

@@ -18,4 +18,4 @@ filetype plugin indent on
 set autochdir
 syntax on
 set showcmd
-set noshowmode 
+set noshowmode
