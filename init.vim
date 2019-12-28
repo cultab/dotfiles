@@ -28,6 +28,7 @@ set signcolumn=yes
 set clipboard+=unnamedplus
 " enable mouse for a(ll) modes
 set mouse=a
+set termguicolors
 
 call plug#begin("~/.config/nvim/plugged")
 
@@ -49,7 +50,9 @@ Plug 'vmchale/ion-vim'
 Plug 'sheerun/vim-polyglot'
 
 " Visual
-Plug 'vim-airline/vim-airline'
+ Plug 'vim-airline/vim-airline'
+"Plug 'itchyny/lightline.vim'
+"Plug 'mengelbrecht/lightline-bufferline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'lilydjwg/colorizer'
@@ -85,16 +88,9 @@ let g:echodoc#type = 'floating'
 " Change the truncate width of completions.
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 
-" ccls
-let s:ccls_settings = {
-         \ 'highlight': { 'lsRanges' : v:true },
-         \ }
-
-let s:ccls_command = ['ccls', '-init=' . json_encode(s:ccls_settings)]
-
 let g:LanguageClient_serverCommands = {
     \ 'python': ['~/.local/bin/pyls'],
-    \ 'c'     : s:ccls_command,
+    \ 'c'     : ['/bin/clangd'],
     \ 'cpp'  : ['/bin/clangd']}
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
@@ -108,14 +104,21 @@ nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
 
 " Colorscheme Options
 colorscheme onedark
-let g:airline_theme='deus'
-let g:airline_powerline_fonts = 1
 
-"colorscheme gruvbox
-"let g:gruvbox_italics=1
-"let g:airline_theme='gruvbox'
-"let g:airline_theme='distinguished'
-set termguicolors
+" Lightline options
+let g:lightline = {
+      \ 'colorscheme': 'one',}
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
+let g:lightline#bufferline#min_buffer_count = 1
+let g:lightline#bufferline#enable_devicons = 1
+let g:lightline#bufferline#unicode_symbols = 1
+
+" Airline options
+let g:airline_theme='deus'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " airline status line
 "let g:airline_section_z = '%p% %% %#__accent_bold#%{g:airline_symbols.linenr}%#__restore__#'
