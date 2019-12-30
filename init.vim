@@ -29,6 +29,8 @@ set clipboard+=unnamedplus
 " enable mouse for a(ll) modes
 set mouse=a
 set termguicolors
+"set list listchars=trail:«
+
 
 call plug#begin("~/.config/nvim/plugged")
 
