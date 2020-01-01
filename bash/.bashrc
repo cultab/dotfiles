@@ -58,7 +58,6 @@ alias la="exa -la --group-directories-first"
 alias lt="exa --tree --group-directories-first"
 
 alias diff="diff --color=auto"
-alias vdir="vdir --color=auto"
 alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
@@ -76,8 +75,12 @@ alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
 search () {
-    find / -name $1 2> /dev/null
+    find / -name $@ 2> /dev/null
 }
+
+export NNN_CONTEXT_COLORS="2136"                        # use a different color for each context
+export NNN_TRASH=1                                      # trash (needs trash-cli) instead of delete
+export NNN_USE_EDITOR=1                                 # use the $EDITOR when opening text files
 
 # stolen from https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash
 n ()
@@ -94,6 +97,9 @@ n ()
     # NOTE: NNN_TMPFILE is fixed, should not be modified
     export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
 
+    # backup VISUAL and set it so as to open vim in a new tmux pane
+    VISUAL_BAK=$VISUAL
+    export VISUAL="tmux split-window -h vim"
     # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
     # stty start undef
     # stty stop undef
@@ -107,6 +113,10 @@ n ()
             . "$NNN_TMPFILE"
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
+
+    # reset VISUAL
+    unset VISUAL
+    export VISUAL=$VISUAL_BAK
 }
 
 #keymaps cause .xinirc is not enough..
@@ -115,13 +125,8 @@ setxkbmap -option caps:swapescape
 export MYVIMRC=~/.config/nvim/init.vim
 
 export EDITOR="vim"
-export VISUAL="tmux split-window -h vim"
 
-export NNN_USE_EDITOR=1                                 # use the $EDITOR when opening text files
-export NNN_CONTEXT_COLORS="2136"                        # use a different color for each context
-export NNN_TRASH=1                                      # trash (needs trash-cli) instead of delete
-
-# man colors ?
+# man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
 export LESS_TERMCAP_md=$(tput bold; tput setaf 4)            # begin blink
 export LESS_TERMCAP_me=$(tput sgr0)                          # reset bold/blink
@@ -137,4 +142,5 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
+# starship prompt
 eval "$(starship init bash)"
