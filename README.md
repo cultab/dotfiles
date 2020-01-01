@@ -1,2 +1,2 @@
 # dotfiles
-my vim dotfiles
+my dotfiles, use at your own risk
