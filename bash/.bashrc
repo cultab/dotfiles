@@ -68,10 +68,7 @@ alias e="vim"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="echo '
-################################
-# DANGEROUS, USE TRASH INSTEAD #
-################################'; rm -iv"
+alias rm="rm -iv"
 
 alias q="exit"
 
