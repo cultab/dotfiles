@@ -59,7 +59,7 @@ alias xq="xbps-query"
 
 alias ls="exa --group-directories-first"
 alias ll="exa -l --group-directories-first"
-alias la="exa -lA --group-directories-first"
+alias la="exa -la --group-directories-first"
 alias lt="exa --tree --group-directories-first"
 
 alias diff="diff --color=auto"
@@ -72,7 +72,7 @@ alias vimdiff="vim -d"
 alias e="vim"
 
 alias cp="cp -iv"
-alias rm="echo -e '# Consider using trash-cli #\n'; rm -Iv"
+alias rm="echo -e '# Consider using trash-cli #\n'; rm -iv"
 alias mv="mv -iv"
 
 alias q="exit"
