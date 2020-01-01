@@ -19,15 +19,10 @@ if [[ -z "$TMUX" ]] ;then
     fi
 fi
 
-#PS1='[\u@\h \W]\$ '
-
 # Use bash-completion, if available
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
 fi
-
-#set -o vi
-
 
 #these where a mistake
 #they broke autocmpl
@@ -72,8 +67,11 @@ alias vimdiff="vim -d"
 alias e="vim"
 
 alias cp="cp -iv"
-alias rm="echo -e '# Consider using trash-cli #\n'; rm -iv"
 alias mv="mv -iv"
+alias rm="echo '
+################################
+# DANGEROUS, USE TRASH INSTEAD #
+################################'; rm -iv"
 
 alias q="exit"
 
@@ -84,12 +82,47 @@ search () {
     find / -name $1 2> /dev/null
 }
 
+# stolen from https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash
+n ()
+{
+    # Block nesting of nnn in subshells
+    if [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+
+    # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+    # To cd on quit only on ^G, remove the "export" as in:
+    #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    # NOTE: NNN_TMPFILE is fixed, should not be modified
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+    # stty start undef
+    # stty stop undef
+    # stty lwrap undef
+    # stty lnext undef
+
+    # use -E for detached editing
+    nnn -E "$@"
+
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+
 #keymaps cause .xinirc is not enough..
 setxkbmap -option caps:swapescape
 
-export EDITOR="vim"
-export VISUAL="emacs"
 export MYVIMRC=~/.config/nvim/init.vim
+
+export EDITOR="vim"
+export VISUAL="tmux split-window -h vim"
+
+export NNN_USE_EDITOR=1                                 # use the $EDITOR when opening text files
+export NNN_CONTEXT_COLORS="2136"                        # use a different color for each context
+export NNN_TRASH=1                                      # trash (needs trash-cli) instead of delete
 
 # man colors ?
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
