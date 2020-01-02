@@ -48,16 +48,16 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf'
 
 " Syntax highlighting
-Plug 'vmchale/ion-vim'
 Plug 'sheerun/vim-polyglot'
 
 " Visual
- Plug 'vim-airline/vim-airline'
-"Plug 'itchyny/lightline.vim'
-"Plug 'mengelbrecht/lightline-bufferline'
+"Plug 'vim-airline/vim-airline'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'lilydjwg/colorizer'
+
 " Colorschemes
 Plug 'vim-airline/vim-airline-themes'
 Plug 'elitetester29/plastic.vim'
@@ -69,13 +69,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/vim-scripts/CycleColor'
 
 " Disabled 
+"Plug 'neomake/neomake'
 "Plug 'captbaritone/better-indent-support-for-php-with-html'
-"Plug 'dag/vim-fish'
-"Plug 'https://github.com/vim-scripts/dbext.vim'
-"Plug 'borissov/vim-mysql-suggestions'
-"Plug 'https://github.com/Shougo/neco-syntax'
-"Plug 'zxqfl/tabnine-vim'
-"Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 call plug#end()
 
@@ -84,7 +79,7 @@ let g:deoplete#enable_at_startup = 1
 let g:echodoc_enable_at_startup = 1
 " floating window
 let g:echodoc#type = 'floating'
-" underneath lightline
+" underneath airline
 " let g:echodoc#type = 'signature'
 
 " Change the truncate width of completions.
@@ -93,7 +88,8 @@ call deoplete#custom#source('_', 'max_abbr_width', 0)
 let g:LanguageClient_serverCommands = {
     \ 'python': ['~/.local/bin/pyls'],
     \ 'c'     : ['/bin/clangd'],
-    \ 'cpp'  : ['/bin/clangd']}
+    \ 'cpp'   : ['/bin/clangd']
+    \}
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> U :call LanguageClient#textDocument_hover()<CR>
@@ -122,9 +118,6 @@ let g:airline_theme='deus'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-" airline status line
-"let g:airline_section_z = '%p% %% %#__accent_bold#%{g:airline_symbols.linenr}%#__restore__#'
-
 " mySQL completion
 let g:database_host = "localhost"
 let g:database_password = "rootP"
@@ -132,9 +125,9 @@ let g:database_database = "warehouse"
 let g:database_user = "root"
 
 " SuperTab 
-" Scroll downwards with tab
 let g:SuperTabDefaultCompletionType = "<c-n>"
-"let g:SuperTabDefaultCompletionType = "context"
+
+nnoremap <leader>l :ls<CR>:b<space>
 
 " enter inserts seletion
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -150,9 +143,6 @@ set completeopt=longest,menuone,noinsert
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
 
-" reset cursor shape, does not work
-autocmd VimLeave * set guicursor=i-ci-ve:ver25
-
 " This unsets the last search pattern register by hitting ESC 
 nnoremap <ESC> :nohlsearch<CR>
 
@@ -166,8 +156,8 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 map <Space> <Leader>
 
 " tabs
-nnoremap <A-h> :tabprevious<CR>
-nnoremap <A-l> :tabnext<CR>
+"nnoremap <A-h> :tabprevious<CR>
+"nnoremap <A-l> :tabnext<CR>
 
 " CycleColors, it's bound in the plugin but incase I forget
 nnoremap <f4> :CycleColorNext<cr>
