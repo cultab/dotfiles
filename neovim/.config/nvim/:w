@@ -124,11 +124,11 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Folds {{{
 
 set foldmethod=marker
-autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10
+autocmd FileType c,h,java,cpp,hpp setlocal foldmethod=syntax foldnestmax=1 foldminlines=10
 
 "}}}
 
-" Visual Settings + Lightline settings and function {{{
+" Visual Settings{{{
 
 " more colors ?
 set termguicolors
@@ -150,102 +150,43 @@ set cursorline
 colorscheme onedark
 
 " Lightline options
-
-let g:lightline#bufferline#min_buffer_count = 1
-let g:lightline#bufferline#enable_devicons = 1
-let g:lightline#bufferline#unicode_symbols = 1
-
-" TODO fix this json? thing
-let g:lightline = { 'colorscheme' : 'one' }
-let g:lightline.active = {
-    \   'left': [ [ 'mode', 'paste' ],
-    \           [ 'filename', 'modified', 'readonly' ] ],
-    \   'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
-let g:lightline.inactive = {
-    \   'left': [ [ 'filename' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ] ] }
-let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component = { 'lineinfo': ' %3l:%-2v', 'asd' : 'asd'}
-let g:lightline.component_type = { 
-    \   'buffers'  : 'tabsel',
-    \   'readonly' : 'error',
-    \   'err_cnt'  : 'error',
-    \   'wrn_cnt'  : 'warning' }
-let g:lightline.component_function = { 
-    \   'err_cnt'  : 'LightlineLspErrorCount',
-    \   'wrn_cnt'  : 'LightlineLspWarningCount'}
-let g:lightline.component_expand  = {
-    \   'buffers'  : 'lightline#bufferline#buffers',
-    \   'readonly' : 'LightlineReadonly',
-    \   'err_cnt'  : 'LightlineLspErrorCount',
-    \   'wrn_cnt'  : 'LightlineLspWarningCount'}
-let g:lightline.separator    = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
+let g:lightline = {
+    \ 'colorscheme': 'one',
+    \ 'component': {
+    \   'lineinfo': ' %3l:%-2v',
+    \ },
+    \ 'component_function': {
+    \   'readonly'  : 'LightlineReadonly'
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '', 'right': '' }
+\}
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
 
 function! LightlineReadonly()
         return &readonly ? '' : ''
 endfunction
 
-" Lightline Functions {{{
+function! Callme()
 
-" The following is practicaly stolen right out of 
-" airline's interface with LanguageClient
-
-augroup LanguageClient_config
-    autocmd!
-    autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
-augroup END
-   
-" Severity codes from the LSP spec
-let s:severity_error = 1
-let s:severity_warning = 2
-let s:severity_info = 3
-let s:severity_hint = 4
-
-" gets filled on autocmd
-let s:diagnostics = {  }
-
-" calls LightlineLspGetTypeCount with type = error
-function! LightlineLspErrorCount()
-    let cnt = LightlineLspGetTypeCount(s:severity_error)
-    return cnt == 0 ? '' : printf('✗:%d', cnt)
-endfunction 
-
-" calls LightlineLspGetTypeCount with type = warning
-function! LightlineLspWarningCount()
-    let cnt = LightlineLspGetTypeCount(s:severity_warning)
-    return cnt == 0 ? '' : printf('◆:%d', cnt)
-endfunction 
-
-" counts keys with severity == type
-function! LightlineLspGetTypeCount(type)
-    let cnt = 0
-    for d in get(s:diagnostics, expand('%:p'), [])
-        if has_key(d, 'severity') && (d.severity == a:type)
-            let cnt += 1
-        endif
-    endfor
-    return cnt 
-endfunction
-
-function! s:get_diagnostics()
     call LanguageClient#getState(function("s:record_diagnostics"))
-endfunction
+    echo "ASD" s:diagnostics "F"
+
+endfunction 
 
 function! s:record_diagnostics(state)
-    " The returned message might not have the 'result' key
-    if has_key(a:state, 'result')
-        let result = json_decode(a:state.result)
-        let s:diagnostics = result.diagnostics
-    endif
-
-    call lightline#update()
+  " The returned message might not have the 'result' key
+  if has_key(a:state, 'result')
+    let result = json_decode(a:state.result)
+    let s:diagnostics = result.diagnostics
+  endif
 endfunction
 
-"}}}
+let g:lightline#bufferline#min_buffer_count = 1
+let g:lightline#bufferline#enable_devicons = 1
+let g:lightline#bufferline#unicode_symbols = 1
 
 "}}}
 
