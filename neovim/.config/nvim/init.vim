@@ -34,7 +34,7 @@ set ttyfast
 " auto-update if changes are detected
 set autoread
 
-" assume the 'g' in s/../../g 
+" assume the 'g' in s/../../g
 set gdefault
 
 " don't leave a mess
@@ -79,7 +79,7 @@ Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/vim-scripts/CycleColor'
 
-" Disabled 
+" Disabled
 "Plug 'neomake/neomake'
 "Plug 'captbaritone/better-indent-support-for-php-with-html'
 
@@ -93,7 +93,7 @@ set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone,noinsert
 ",preview
 
-" SuperTab 
+" SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Start deoplete,echodoc automatically
@@ -169,12 +169,12 @@ let g:lightline.inactive = {
     \            [ 'percent' ] ] }
 let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
 let g:lightline.component = { 'lineinfo': ' %3l:%-2v', 'asd' : 'asd'}
-let g:lightline.component_type = { 
+let g:lightline.component_type = {
     \   'buffers'  : 'tabsel',
     \   'readonly' : 'error',
     \   'err_cnt'  : 'error',
     \   'wrn_cnt'  : 'warning' }
-let g:lightline.component_function = { 
+let g:lightline.component_function = {
     \   'err_cnt'  : 'LightlineLspErrorCount',
     \   'wrn_cnt'  : 'LightlineLspWarningCount'}
 let g:lightline.component_expand  = {
@@ -191,14 +191,14 @@ endfunction
 
 " Lightline Functions {{{
 
-" The following is practicaly stolen right out of 
+" The following is practicaly stolen right out of
 " airline's interface with LanguageClient
 
 augroup LanguageClient_config
     autocmd!
     autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
 augroup END
-   
+
 " Severity codes from the LSP spec
 let s:severity_error = 1
 let s:severity_warning = 2
@@ -212,13 +212,13 @@ let s:diagnostics = {  }
 function! LightlineLspErrorCount()
     let cnt = LightlineLspGetTypeCount(s:severity_error)
     return cnt == 0 ? '' : printf('✗:%d', cnt)
-endfunction 
+endfunction
 
 " calls LightlineLspGetTypeCount with type = warning
 function! LightlineLspWarningCount()
     let cnt = LightlineLspGetTypeCount(s:severity_warning)
     return cnt == 0 ? '' : printf('◆:%d', cnt)
-endfunction 
+endfunction
 
 " counts keys with severity == type
 function! LightlineLspGetTypeCount(type)
@@ -228,7 +228,7 @@ function! LightlineLspGetTypeCount(type)
             let cnt += 1
         endif
     endfor
-    return cnt 
+    return cnt
 endfunction
 
 function! s:get_diagnostics()
@@ -276,7 +276,7 @@ noremap <leader>rc :so $MYVIMRC<CR>
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
 
-" This unsets the last search pattern register by hitting ESC 
+" This unsets the last search pattern register by hitting ESC
 nnoremap <ESC> :nohlsearch<CR>
 
 " Move text
