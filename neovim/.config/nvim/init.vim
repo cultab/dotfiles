@@ -6,7 +6,7 @@ set number
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set noexpandtab                     " use ta🅱️ s
+set noexpandtab					 " use ta🅱️ s
 set smarttab
 set autoindent
 set cindent
@@ -14,13 +14,13 @@ set splitbelow
 set splitright
 filetype plugin indent on
 set autochdir
-let g:c_syntax_for_h = 1            " Assume .h files are c headers instead of cpp
-set hidden                          " Required for operations modifying multiple buffers like rename. with langclient
-set clipboard+=unnamedplus          " Use 'normal' clipboard by default
-set mouse=a                         " enable mouse for a(ll) modes
-set ttyfast                         " push more characters through to the terminal per cycle
-set autoread                        " auto-update if changes are detected
-set gdefault                        " assume the 'g' in s/../../g
+let g:c_syntax_for_h = 1   " Assume .h files are c headers instead of cpp
+set hidden                 " Required for operations modifying multiple buffers like rename. with langclient
+set clipboard+=unnamedplus " Use 'normal' clipboard by default
+set mouse=a                " enable mouse for a(ll) modes
+set ttyfast                " push more characters through to the terminal per cycle
+set autoread               " auto-update if changes are detected
+set gdefault               " assume the 'g' in s/../../g
 set backup
 set backupdir=~/.config/nvim/backup " don't leave a mess
 set noswapfile
@@ -109,11 +109,11 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 "}}}
 
-" Folds {{{
+" Per FileType Settings {{{
 
 set foldmethod=marker
 augroup my_autocmds
-autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10 
+autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10
 autocmd FileType sh,bash call NeomakeConfig()
 augroup end
 
@@ -123,7 +123,6 @@ function! NeomakeConfig()
 	call neomake#configure#automake('rw', 1000)
 	call neomake#configure#automake('w')
 endfunction
-
 
 "}}}
 
@@ -161,7 +160,7 @@ let g:lightline = {
 	\				[ 'filename', 'modified', 'readonly' ] ],
 	\	   'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
 	\				[ 'percent' ],
-	\				[ 'fileformat', 'fileencoding', 'filetype' ] ] 
+	\				[ 'fileformat', 'fileencoding', 'filetype' ] ]
 	\   },
 	\   'inactive' : {
 	\	   'left' : [ [ 'filename' ] ],
@@ -174,7 +173,7 @@ let g:lightline = {
 	\	   'buffers'  : 'tabsel',
 	\	   'readonly' : 'error',
 	\	   'err_cnt'  : 'error',
-	\	   'wrn_cnt'  : 'warning' 
+	\	   'wrn_cnt'  : 'warning'
 	\   },
 	\   'component_function' : {
 	\	   'err_cnt'  : 'LightlineErrorCount',
@@ -206,7 +205,7 @@ augroup lint_config
 	autocmd User NeomakeCountsChanged call s:get_Nmdiagnostics()
 augroup END
 
-" Severity codes from the LSP spec 
+" Severity codes from the LSP spec
 let s:severity_error = 1
 let s:severity_warning = 2
 let s:severity_info = 3
