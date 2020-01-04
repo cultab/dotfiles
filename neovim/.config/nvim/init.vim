@@ -36,9 +36,9 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/echodoc.vim'
 Plug 'ervandew/supertab'
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+	\ 'branch': 'next',
+	\ 'do': 'bash install.sh',
+	\ }
 Plug 'jiangmiao/auto-pairs'
 
 " Text manipulation
@@ -94,10 +94,10 @@ let g:echodoc#type = 'floating'
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 
 let g:LanguageClient_serverCommands = {
-    \ 'python': ['~/.local/bin/pyls'],
-    \ 'c'     : ['/bin/clangd'],
-    \ 'cpp'   : ['/bin/clangd']
-    \}
+	\ 'python': ['~/.local/bin/pyls'],
+	\ 'c'	 : ['/bin/clangd'],
+	\ 'cpp'   : ['/bin/clangd']
+	\}
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> U :call LanguageClient#textDocument_hover()<CR>
@@ -118,10 +118,10 @@ autocmd FileType sh,bash call NeomakeConfig()
 augroup end
 
 function! NeomakeConfig()
-    :Neomake
-    call neomake#configure#automake('nw', 750)
-    call neomake#configure#automake('rw', 1000)
-    call neomake#configure#automake('w')
+	:Neomake
+	call neomake#configure#automake('nw', 750)
+	call neomake#configure#automake('rw', 1000)
+	call neomake#configure#automake('w')
 endfunction
 
 
@@ -155,54 +155,54 @@ let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
 
 let g:lightline = {
-    \   'colorscheme' : 'one',
-    \   'active' : {
-    \       'left' : [ [ 'mode', 'paste' ],
-    \                [ 'filename', 'modified', 'readonly' ] ],
-    \       'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
-    \                [ 'percent' ],
-    \                [ 'fileformat', 'fileencoding', 'filetype' ] ] 
-    \   },
-    \   'inactive' : {
-    \       'left' : [ [ 'filename' ] ],
-    \       'right': [ [ 'lineinfo' ],
-    \                [ 'percent' ] ]
-    \   },
-    \   'tabline' : {'left': [['buffers']], 'right': [['close']]},
-    \   'component' : { 'lineinfo': ' %3l:%-2v'},
-    \   'component_type' : {
-    \       'buffers'  : 'tabsel',
-    \       'readonly' : 'error',
-    \       'err_cnt'  : 'error',
-    \       'wrn_cnt'  : 'warning' 
-    \   },
-    \   'component_function' : {
-    \       'err_cnt'  : 'LightlineErrorCount',
-    \       'wrn_cnt'  : 'LightlineWarningCount'
-    \   },
-    \   'component_expand' : {
-    \       'buffers'  : 'lightline#bufferline#buffers',
-    \       'readonly' : 'LightlineReadonly',
-    \       'err_cnt'  : 'LightlineErrorCount',
-    \       'wrn_cnt'  : 'LightlineWarningCount'
-    \   },
-    \   'separator'    : { 'left': '', 'right': '' },
-    \   'subseparator' : { 'left': '', 'right': '' },
-    \}
+	\   'colorscheme' : 'one',
+	\   'active' : {
+	\	   'left' : [ [ 'mode', 'paste' ],
+	\				[ 'filename', 'modified', 'readonly' ] ],
+	\	   'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
+	\				[ 'percent' ],
+	\				[ 'fileformat', 'fileencoding', 'filetype' ] ] 
+	\   },
+	\   'inactive' : {
+	\	   'left' : [ [ 'filename' ] ],
+	\	   'right': [ [ 'lineinfo' ],
+	\				[ 'percent' ] ]
+	\   },
+	\   'tabline' : {'left': [['buffers']], 'right': [['close']]},
+	\   'component' : { 'lineinfo': ' %3l:%-2v'},
+	\   'component_type' : {
+	\	   'buffers'  : 'tabsel',
+	\	   'readonly' : 'error',
+	\	   'err_cnt'  : 'error',
+	\	   'wrn_cnt'  : 'warning' 
+	\   },
+	\   'component_function' : {
+	\	   'err_cnt'  : 'LightlineErrorCount',
+	\	   'wrn_cnt'  : 'LightlineWarningCount'
+	\   },
+	\   'component_expand' : {
+	\	   'buffers'  : 'lightline#bufferline#buffers',
+	\	   'readonly' : 'LightlineReadonly',
+	\	   'err_cnt'  : 'LightlineErrorCount',
+	\	   'wrn_cnt'  : 'LightlineWarningCount'
+	\   },
+	\   'separator'	: { 'left': '', 'right': '' },
+	\   'subseparator' : { 'left': '', 'right': '' },
+	\}
 
 " Lightline Functions {{{
 
 function! LightlineReadonly()
-    return &readonly ? '' : ''
+	return &readonly ? '' : ''
 endfunction
 
 " The following is practicaly stolen right out of
 " airline's interface with LanguageClient
 augroup lint_config
-    autocmd!
-    autocmd User LanguageClientStarted setlocal signcolumn=yes
-    autocmd User LanguageClientStopped setlocal signcolumn=auto
-    autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
+	autocmd!
+	autocmd User LanguageClientStarted setlocal signcolumn=yes
+	autocmd User LanguageClientStopped setlocal signcolumn=auto
+	autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
 	autocmd User NeomakeCountsChanged call s:get_Nmdiagnostics()
 augroup END
 
@@ -223,7 +223,7 @@ function! LightlineErrorCount()
 	if (cnt == 0)
 		let cnt = LightlineNmGetTypeCount(s:severity_error)
 	endif
-    return cnt == 0 ? '' : printf('%d ', cnt)
+	return cnt == 0 ? '' : printf('%d ', cnt)
 endfunction
 
 " calls LightlineLcGetTypeCount with type = warning
@@ -233,7 +233,7 @@ function! LightlineWarningCount()
 	if (cnt == 0)
 		let cnt = LightlineNmGetTypeCount(s:severity_warning)
 	endif
-    return cnt == 0 ? '' : printf('%d ', cnt)
+	return cnt == 0 ? '' : printf('%d ', cnt)
 endfunction
 
 function! LightlineNmGetTypeCount(type)
@@ -253,32 +253,32 @@ endfunction
 
 " counts keys with severity == type
 function! LightlineLcGetTypeCount(type)
-    let cnt = 0
-    for d in get(s:diagnostics, expand('%:p'), [])
-        if has_key(d, 'severity') && (d.severity == a:type)
-            let cnt += 1
-        endif
-    endfor
-    return cnt
+	let cnt = 0
+	for d in get(s:diagnostics, expand('%:p'), [])
+		if has_key(d, 'severity') && (d.severity == a:type)
+			let cnt += 1
+		endif
+	endfor
+	return cnt
 endfunction
 
 function! s:get_diagnostics()
-    call LanguageClient#getState(function("s:record_diagnostics"))
+	call LanguageClient#getState(function("s:record_diagnostics"))
 endfunction
 
 function! s:get_Nmdiagnostics()
 	let s:NmStatuslineCounts = (neomake#statusline#LoclistCounts())
-    call lightline#update()
+	"call lightline#update()
 endfunction
 
 function! s:record_diagnostics(state)
-    " The returned message might not have the 'result' key
-    if has_key(a:state, 'result')
-        let result = json_decode(a:state.result)
-        let s:diagnostics = result.diagnostics
-    endif
+	" The returned message might not have the 'result' key
+	if has_key(a:state, 'result')
+		let result = json_decode(a:state.result)
+		let s:diagnostics = result.diagnostics
+	endif
 
-    call lightline#update()
+	"call lightline#update()
 endfunction
 
 "}}}
