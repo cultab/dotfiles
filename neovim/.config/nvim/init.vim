@@ -3,45 +3,29 @@
 set nocompatible
 set relativenumber
 set number
-set tabstop=8
+set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
-set cindent
+set noexpandtab                     " use ta🅱️ s
 set smarttab
 set autoindent
-set modeline
+set cindent
 set splitbelow
 set splitright
 filetype plugin indent on
 set autochdir
-
-" Assume .h files are c headers instead of cpp
-let g:c_syntax_for_h = 1
-
-" Required for operations modifying multiple buffers like rename. with langclient
-set hidden
-
-" Use 'normal' clipboard by default
-set clipboard+=unnamedplus
-
-" enable mouse for a(ll) modes
-set mouse=a
-
-" push more characters through to the terminal per cycle
-set ttyfast
-
-" auto-update if changes are detected
-set autoread
-
-" assume the 'g' in s/../../g
-set gdefault
-
-" don't leave a mess
+let g:c_syntax_for_h = 1            " Assume .h files are c headers instead of cpp
+set hidden                          " Required for operations modifying multiple buffers like rename. with langclient
+set clipboard+=unnamedplus          " Use 'normal' clipboard by default
+set mouse=a                         " enable mouse for a(ll) modes
+set ttyfast                         " push more characters through to the terminal per cycle
+set autoread                        " auto-update if changes are detected
+set gdefault                        " assume the 'g' in s/../../g
 set backup
-set backupdir=~/.config/nvim/backup
+set backupdir=~/.config/nvim/backup " don't leave a mess
 set noswapfile
 set backupskip=/tmp/*
+set modeline
 "}}}
 
 " Installed Plugins {{{
@@ -56,6 +40,10 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'jiangmiao/auto-pairs'
+
+" Text manipulation
+Plug 'tpope/vim-surround'
+Plug 'junegunn/vim-easy-align'
 
 " (Optional from langclient) Multi-entry selection UI.
 Plug 'junegunn/fzf'
@@ -76,11 +64,11 @@ Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 
 " Misc
+Plug 'neomake/neomake'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/vim-scripts/CycleColor'
 
 " Disabled
-"Plug 'neomake/neomake'
 "Plug 'captbaritone/better-indent-support-for-php-with-html'
 
 call plug#end()
@@ -124,7 +112,18 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Folds {{{
 
 set foldmethod=marker
-autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10
+augroup my_autocmds
+autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10 
+autocmd FileType sh,bash call NeomakeConfig()
+augroup end
+
+function! NeomakeConfig()
+    :Neomake
+    call neomake#configure#automake('nw', 750)
+    call neomake#configure#automake('rw', 1000)
+    call neomake#configure#automake('w')
+endfunction
+
 
 "}}}
 
@@ -155,51 +154,59 @@ let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
 
-" TODO fix this json? thing
-let g:lightline = { 'colorscheme' : 'one' }
-let g:lightline.active = {
-    \   'left': [ [ 'mode', 'paste' ],
-    \           [ 'filename', 'modified', 'readonly' ] ],
-    \   'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
-let g:lightline.inactive = {
-    \   'left': [ [ 'filename' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ] ] }
-let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component = { 'lineinfo': ' %3l:%-2v', 'asd' : 'asd'}
-let g:lightline.component_type = {
-    \   'buffers'  : 'tabsel',
-    \   'readonly' : 'error',
-    \   'err_cnt'  : 'error',
-    \   'wrn_cnt'  : 'warning' }
-let g:lightline.component_function = {
-    \   'err_cnt'  : 'LightlineLspErrorCount',
-    \   'wrn_cnt'  : 'LightlineLspWarningCount'}
-let g:lightline.component_expand  = {
-    \   'buffers'  : 'lightline#bufferline#buffers',
-    \   'readonly' : 'LightlineReadonly',
-    \   'err_cnt'  : 'LightlineLspErrorCount',
-    \   'wrn_cnt'  : 'LightlineLspWarningCount'}
-let g:lightline.separator    = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
-
-function! LightlineReadonly()
-        return &readonly ? '' : ''
-endfunction
+let g:lightline = {
+    \   'colorscheme' : 'one',
+    \   'active' : {
+    \       'left' : [ [ 'mode', 'paste' ],
+    \                [ 'filename', 'modified', 'readonly' ] ],
+    \       'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
+    \                [ 'percent' ],
+    \                [ 'fileformat', 'fileencoding', 'filetype' ] ] 
+    \   },
+    \   'inactive' : {
+    \       'left' : [ [ 'filename' ] ],
+    \       'right': [ [ 'lineinfo' ],
+    \                [ 'percent' ] ]
+    \   },
+    \   'tabline' : {'left': [['buffers']], 'right': [['close']]},
+    \   'component' : { 'lineinfo': ' %3l:%-2v'},
+    \   'component_type' : {
+    \       'buffers'  : 'tabsel',
+    \       'readonly' : 'error',
+    \       'err_cnt'  : 'error',
+    \       'wrn_cnt'  : 'warning' 
+    \   },
+    \   'component_function' : {
+    \       'err_cnt'  : 'LightlineLspErrorCount',
+    \       'wrn_cnt'  : 'LightlineLspWarningCount'
+    \   },
+    \   'component_expand' : {
+    \       'buffers'  : 'lightline#bufferline#buffers',
+    \       'readonly' : 'LightlineReadonly',
+    \       'err_cnt'  : 'LightlineLspErrorCount',
+    \       'wrn_cnt'  : 'LightlineLspWarningCount'
+    \   },
+    \   'separator'    : { 'left': '', 'right': '' },
+    \   'subseparator' : { 'left': '', 'right': '' },
+    \}
 
 " Lightline Functions {{{
+
+function! LightlineReadonly()
+    return &readonly ? '' : ''
+endfunction
 
 " The following is practicaly stolen right out of
 " airline's interface with LanguageClient
 
 augroup LanguageClient_config
     autocmd!
+    autocmd User LanguageClientStarted setlocal signcolumn=yes
+    autocmd User LanguageClientStopped setlocal signcolumn=auto
     autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
 augroup END
 
-" Severity codes from the LSP spec
+" Severity codes from the LSP spec ✗
 let s:severity_error = 1
 let s:severity_warning = 2
 let s:severity_info = 3
@@ -211,13 +218,13 @@ let s:diagnostics = {  }
 " calls LightlineLspGetTypeCount with type = error
 function! LightlineLspErrorCount()
     let cnt = LightlineLspGetTypeCount(s:severity_error)
-    return cnt == 0 ? '' : printf('✗:%d', cnt)
+    return cnt == 0 ? '' : printf(':%d', cnt)
 endfunction
 
 " calls LightlineLspGetTypeCount with type = warning
 function! LightlineLspWarningCount()
     let cnt = LightlineLspGetTypeCount(s:severity_warning)
-    return cnt == 0 ? '' : printf('◆:%d', cnt)
+    return cnt == 0 ? '' : printf(':%d', cnt)
 endfunction
 
 " counts keys with severity == type
@@ -261,7 +268,7 @@ map <space> <leader>
 nnoremap <leader>l :ls<CR>:b<space>
 
 " edit vimrc
-noremap <leader>er :e $MYVIMRC<CR>
+noremap <leader>ec :e $MYVIMRC<CR>
 
 " reload config
 noremap <leader>rc :so $MYVIMRC<CR>
@@ -275,6 +282,12 @@ noremap <leader>rc :so $MYVIMRC<CR>
 "map <C-j> <C-w>j
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " This unsets the last search pattern register by hitting ESC
 nnoremap <ESC> :nohlsearch<CR>
