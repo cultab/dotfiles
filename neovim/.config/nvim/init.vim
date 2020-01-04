@@ -127,7 +127,7 @@ endfunction
 
 "}}}
 
-" Visual Settings + Lightline settings and function {{{
+" Visual Settings + Lightline settings and functions {{{
 
 " more colors ?
 set termguicolors
@@ -177,14 +177,14 @@ let g:lightline = {
     \       'wrn_cnt'  : 'warning' 
     \   },
     \   'component_function' : {
-    \       'err_cnt'  : 'LightlineLspErrorCount',
-    \       'wrn_cnt'  : 'LightlineLspWarningCount'
+    \       'err_cnt'  : 'LightlineErrorCount',
+    \       'wrn_cnt'  : 'LightlineWarningCount'
     \   },
     \   'component_expand' : {
     \       'buffers'  : 'lightline#bufferline#buffers',
     \       'readonly' : 'LightlineReadonly',
-    \       'err_cnt'  : 'LightlineLspErrorCount',
-    \       'wrn_cnt'  : 'LightlineLspWarningCount'
+    \       'err_cnt'  : 'LightlineErrorCount',
+    \       'wrn_cnt'  : 'LightlineWarningCount'
     \   },
     \   'separator'    : { 'left': '', 'right': '' },
     \   'subseparator' : { 'left': '', 'right': '' },
@@ -198,15 +198,15 @@ endfunction
 
 " The following is practicaly stolen right out of
 " airline's interface with LanguageClient
-
-augroup LanguageClient_config
+augroup lint_config
     autocmd!
     autocmd User LanguageClientStarted setlocal signcolumn=yes
     autocmd User LanguageClientStopped setlocal signcolumn=auto
     autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
+	autocmd User NeomakeCountsChanged call s:get_Nmdiagnostics()
 augroup END
 
-" Severity codes from the LSP spec ✗
+" Severity codes from the LSP spec 
 let s:severity_error = 1
 let s:severity_warning = 2
 let s:severity_info = 3
@@ -214,21 +214,45 @@ let s:severity_hint = 4
 
 " gets filled on autocmd
 let s:diagnostics = {  }
+let s:NmStatuslineCounts = {  }
 
-" calls LightlineLspGetTypeCount with type = error
-function! LightlineLspErrorCount()
-    let cnt = LightlineLspGetTypeCount(s:severity_error)
-    return cnt == 0 ? '' : printf(':%d', cnt)
+" ✖✗
+" calls LightlineLcGetTypeCount with type = error
+function! LightlineErrorCount()
+	let cnt = LightlineLcGetTypeCount(s:severity_error)
+	if (cnt == 0)
+		let cnt = LightlineNmGetTypeCount(s:severity_error)
+	endif
+    return cnt == 0 ? '' : printf('%d ', cnt)
 endfunction
 
-" calls LightlineLspGetTypeCount with type = warning
-function! LightlineLspWarningCount()
-    let cnt = LightlineLspGetTypeCount(s:severity_warning)
-    return cnt == 0 ? '' : printf(':%d', cnt)
+" calls LightlineLcGetTypeCount with type = warning
+
+function! LightlineWarningCount()
+	let cnt = LightlineLcGetTypeCount(s:severity_warning)
+	if (cnt == 0)
+		let cnt = LightlineNmGetTypeCount(s:severity_warning)
+	endif
+    return cnt == 0 ? '' : printf('%d ', cnt)
+endfunction
+
+function! LightlineNmGetTypeCount(type)
+	let cnt = 0
+	let key = '0'
+	if (a:type == s:severity_error)
+		let key = 'E'
+	endif
+	if (a:type == s:severity_warning)
+		let key = 'W'
+	endif
+	if has_key(s:NmStatuslineCounts, key)
+		let cnt = get(s:NmStatuslineCounts, key, 0)
+	endif
+	return cnt
 endfunction
 
 " counts keys with severity == type
-function! LightlineLspGetTypeCount(type)
+function! LightlineLcGetTypeCount(type)
     let cnt = 0
     for d in get(s:diagnostics, expand('%:p'), [])
         if has_key(d, 'severity') && (d.severity == a:type)
@@ -240,6 +264,11 @@ endfunction
 
 function! s:get_diagnostics()
     call LanguageClient#getState(function("s:record_diagnostics"))
+endfunction
+
+function! s:get_Nmdiagnostics()
+	let s:NmStatuslineCounts = (neomake#statusline#LoclistCounts())
+    call lightline#update()
 endfunction
 
 function! s:record_diagnostics(state)
