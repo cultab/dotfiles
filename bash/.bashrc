@@ -62,6 +62,7 @@ alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
+alias svim='vim -u ~/projects/SpaceVim/vimrc'
 alias vimdiff="vim -d"
 alias e="vim"
 
