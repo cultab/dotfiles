@@ -95,7 +95,7 @@ call deoplete#custom#source('_', 'max_abbr_width', 0)
 
 let g:LanguageClient_serverCommands = {
 	\ 'python': ['~/.local/bin/pyls'],
-	\ 'c'	 : ['/bin/clangd'],
+	\ 'c'     : ['/bin/clangd'],
 	\ 'cpp'   : ['/bin/clangd']
 	\}
 
