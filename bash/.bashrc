@@ -11,7 +11,7 @@ fi
 
 
 if [[ -z "$TMUX" ]] ;then
-    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
+    ID="$(tmux ls | grep -vm1 attached | cut -d: -f1)" # get the id of a deattached session
     if [[ -z "$ID" ]] ;then # if not available create a new one
         exec tmux new-session
     else
@@ -65,6 +65,7 @@ alias egrep="egrep --color=auto"
 alias svim='vim -u ~/projects/SpaceVim/vimrc'
 alias vimdiff="vim -d"
 alias e="vim"
+alias micro"micro -matchbraceleft true -keepautoindent true -colorcolumn 80 -scrollbar true"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
