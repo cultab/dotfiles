@@ -5,10 +5,10 @@ if [[ $- != *i* ]]; then
     return
 fi
 
-#if running in a graphical env, run tmux
-#if [[ $DISPLAY ]]; then
-#    [[ -z "$TMUX" ]] && exec tmux new-session
-#fi
+if [ -f ~/bin/sensible.bash ]; then
+   source ~/bin/sensible.bash
+fi
+
 
 if [[ -z "$TMUX" ]] ;then
     ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
@@ -76,7 +76,7 @@ alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
 search () {
-    find / -name $@ 2> /dev/null
+    find / -name "$@" 2> /dev/null
 }
 
 export NNN_CONTEXT_COLORS="2136"                        # use a different color for each context
