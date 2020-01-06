@@ -16,7 +16,6 @@ filetype plugin indent on
 set autochdir
 let g:c_syntax_for_h = 1   " Assume .h files are c headers instead of cpp
 set hidden                 " Required for operations modifying multiple buffers like rename. with langclient
-set clipboard+=unnamedplus " Use 'normal' clipboard by default
 set mouse=a                " enable mouse for a(ll) modes
 set ttyfast                " push more characters through to the terminal per cycle
 set autoread               " auto-update if changes are detected
@@ -145,9 +144,13 @@ set cursorline
 
 
 " Colorscheme Options
-colorscheme onedark
+let g:onedark_hide_endofbuffer = 1
+let g:onedark_terminal_italics = 1
 
-" Lightline options
+colorscheme onedark "after onedark settings
+
+
+"Lightline options
 
 let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline#bufferline#enable_devicons = 1
@@ -300,6 +303,13 @@ noremap <leader>ec :e $MYVIMRC<CR>
 
 " reload config
 noremap <leader>rc :so $MYVIMRC<CR>
+
+" Deal with the system clipboard CREDIT: Blaradox
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>P "+P
 
 "}}}
 
