@@ -144,20 +144,22 @@ set wrap
 " highlight current line
 set cursorline
 
-
 " Colorscheme Options
 let g:palenight_terminal_italics = 1
 "let g:onedark_terminal_italics = 1
 
 colorscheme palenight "after settings
 
-
-"Lightline options
+" Bufferline options
 let g:lightline#bufferline#show_number = 2
 let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
+if has('gui_running')
+	set guioptions-=e
+endif
 
+" Lightline options
 let g:lightline = {
 	\   'colorscheme' : 'palenight',
 	\   'active' : {
