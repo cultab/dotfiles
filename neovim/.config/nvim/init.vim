@@ -47,15 +47,15 @@ Plug 'junegunn/vim-easy-align'
 " (Optional from langclient) Multi-entry selection UI.
 Plug 'junegunn/fzf'
 
-" Syntax highlighting
+" Highlighting
 Plug 'sheerun/vim-polyglot'
+Plug 'lilydjwg/colorizer'
 
 " Visual
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'lilydjwg/colorizer'
 
 " Colorschemes
 Plug 'cultab/plastic.vim'
@@ -67,6 +67,7 @@ Plug 'morhetz/gruvbox'
 Plug 'neomake/neomake'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/vim-scripts/CycleColor'
+Plug 'tpope/vim-sensible'
 
 " Disabled
 "Plug 'captbaritone/better-indent-support-for-php-with-html'
@@ -145,20 +146,20 @@ set cursorline
 
 
 " Colorscheme Options
-"let g:palenight_terminal_italics=1
-let g:onedark_terminal_italics = 1
+let g:palenight_terminal_italics = 1
+"let g:onedark_terminal_italics = 1
 
-colorscheme onedark "after settings
+colorscheme palenight "after settings
 
 
 "Lightline options
-
+let g:lightline#bufferline#show_number = 2
 let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
 
 let g:lightline = {
-	\   'colorscheme' : 'onedark',
+	\   'colorscheme' : 'palenight',
 	\   'active' : {
 	\	   'left' : [ [ 'mode', 'paste' ],
 	\				[ 'filename', 'modified', 'readonly' ] ],
@@ -296,16 +297,16 @@ map <space> <leader>
 " toggle folds does not work
 " nnoremap <leader> <space> za
 
-" show buffer list and wait for input to choose to which to switch to
-nnoremap <leader>bl :ls<CR>
-nnoremap <leader>be :b<space>
-nnoremap <leader>bn :bn<CR>
-nnoremap <leader>bp :bp<CR>
+" buffer bindings
+nnoremap <leader>bl :ls<CR>   " list buffers
+nnoremap <leader>be :b<space> " edit buffer
+nnoremap <leader>bn :bn<CR>   " next buffer
+nnoremap <leader>bp :bp<CR>   " previews buffer
 nnoremap <leader>b1 :b1<CR>
 nnoremap <leader>b2 :b2<CR>
 nnoremap <leader>b3 :b3<CR>
 nnoremap <leader>b4 :b4<CR>
-nnoremap <leader>bt :b#<CR>
+nnoremap <leader>bt :b#<CR>   " last used buffer
 
 " edit vimrc
 noremap <leader>ec :e $MYVIMRC<CR>
