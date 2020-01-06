@@ -298,21 +298,25 @@ map <space> <leader>
 " nnoremap <leader> <space> za
 
 " buffer bindings
-nnoremap <leader>bl :ls<CR>   " list buffers
-nnoremap <leader>be :b<space> " edit buffer
-nnoremap <leader>bn :bn<CR>   " next buffer
-nnoremap <leader>bp :bp<CR>   " previews buffer
-nnoremap <leader>b1 :b1<CR>
-nnoremap <leader>b2 :b2<CR>
-nnoremap <leader>b3 :b3<CR>
-nnoremap <leader>b4 :b4<CR>
-nnoremap <leader>bt :b#<CR>   " last used buffer
+nnoremap <leader>bl :ls<CR>                          " list buffers
+nnoremap <leader>bt :b#<CR>                          " last used buffer
+nnoremap <leader>be :b<space>                        " edit buffer
+nnoremap <leader>bn :bn<CR>                          " next buffer
+nnoremap <leader>bp :bp<CR>                          " previews buffer
+nnoremap <Leader>b1 <Plug>lightline#bufferline#go(1) " goto buffer in bufferline
+nnoremap <Leader>b2 <Plug>lightline#bufferline#go(2)
+nnoremap <Leader>b3 <Plug>lightline#bufferline#go(3)
+nnoremap <Leader>b4 <Plug>lightline#bufferline#go(4)
+nnoremap <Leader>b5 <Plug>lightline#bufferline#go(5)
+nnoremap <Leader>b6 <Plug>lightline#bufferline#go(6)
+nnoremap <Leader>b7 <Plug>lightline#bufferline#go(7)
+nnoremap <Leader>b8 <Plug>lightline#bufferline#go(8)
+nnoremap <Leader>b9 <Plug>lightline#bufferline#go(9)
+nnoremap <Leader>b0 <Plug>lightline#bufferline#go(10)
 
-" edit vimrc
-noremap <leader>ec :e $MYVIMRC<CR>
+noremap <leader>ec :e $MYVIMRC<CR>  " edit vimrc
+noremap <leader>rc :so $MYVIMRC<CR> " reload config
 
-" reload config
-noremap <leader>rc :so $MYVIMRC<CR>
 
 " Deal with the system clipboard CREDIT: Blaradox
 nnoremap <leader>y "+y
