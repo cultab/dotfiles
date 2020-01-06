@@ -60,6 +60,7 @@ Plug 'lilydjwg/colorizer'
 " Colorschemes
 Plug 'cultab/plastic.vim'
 Plug 'joshdick/onedark.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'morhetz/gruvbox'
 
 " Misc
@@ -144,10 +145,10 @@ set cursorline
 
 
 " Colorscheme Options
-let g:onedark_hide_endofbuffer = 1
+"let g:palenight_terminal_italics=1
 let g:onedark_terminal_italics = 1
 
-colorscheme onedark "after onedark settings
+colorscheme onedark "after settings
 
 
 "Lightline options
@@ -157,11 +158,11 @@ let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
 
 let g:lightline = {
-	\   'colorscheme' : 'one',
+	\   'colorscheme' : 'onedark',
 	\   'active' : {
 	\	   'left' : [ [ 'mode', 'paste' ],
 	\				[ 'filename', 'modified', 'readonly' ] ],
-	\	   'right': [ [ 'wrn_cnt', 'err_cnt', 'lineinfo' ],
+	\	   'right': [ [ 'err_cnt', 'wrn_cnt', 'lineinfo' ],
 	\				[ 'percent' ],
 	\				[ 'fileformat', 'fileencoding', 'filetype' ] ]
 	\   },
@@ -270,7 +271,7 @@ endfunction
 
 function! s:get_Nmdiagnostics()
 	let s:NmStatuslineCounts = (neomake#statusline#LoclistCounts())
-	"call lightline#update()
+	call lightline#update()
 endfunction
 
 function! s:record_diagnostics(state)
@@ -280,7 +281,7 @@ function! s:record_diagnostics(state)
 		let s:diagnostics = result.diagnostics
 	endif
 
-	"call lightline#update()
+	call lightline#update()
 endfunction
 
 "}}}
@@ -296,7 +297,15 @@ map <space> <leader>
 " nnoremap <leader> <space> za
 
 " show buffer list and wait for input to choose to which to switch to
-nnoremap <leader>l :ls<CR>:b<space>
+nnoremap <leader>bl :ls<CR>
+nnoremap <leader>be :b<space>
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>b1 :b1<CR>
+nnoremap <leader>b2 :b2<CR>
+nnoremap <leader>b3 :b3<CR>
+nnoremap <leader>b4 :b4<CR>
+nnoremap <leader>bt :b#<CR>
 
 " edit vimrc
 noremap <leader>ec :e $MYVIMRC<CR>
