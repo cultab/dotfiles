@@ -43,6 +43,7 @@ Plug 'jiangmiao/auto-pairs'
 " Text manipulation
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
+Plug 'godlygeek/tabular'
 
 " (Optional from langclient) Multi-entry selection UI.
 Plug 'junegunn/fzf'
@@ -58,14 +59,17 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 
 " Colorschemes
+Plug 'cultab/palenight.vim'
 Plug 'cultab/plastic.vim'
 Plug 'joshdick/onedark.vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'morhetz/gruvbox'
+
+" Tmux intergration
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Misc
 Plug 'neomake/neomake'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/vim-scripts/CycleColor'
 Plug 'tpope/vim-sensible'
 
@@ -73,6 +77,14 @@ Plug 'tpope/vim-sensible'
 "Plug 'captbaritone/better-indent-support-for-php-with-html'
 
 call plug#end()
+"}}}
+
+" Miscellaneous Plugin Settings{{{
+
+
+let g:VimuxOrientation = "h"
+
+
 "}}}
 
 " Autocomplete & LanguageClient {{{
@@ -159,8 +171,11 @@ if has('gui_running')
 	set guioptions-=e
 endif
 
+"symbols cache
+" ✖✗
+
 " Lightline options
-let g:lightline = {
+let g:lightline = {	
 	\   'colorscheme' : 'palenight',
 	\   'active' : {
 	\	   'left' : [ [ 'mode', 'paste' ],
@@ -192,8 +207,8 @@ let g:lightline = {
 	\	   'err_cnt'  : 'LightlineErrorCount',
 	\	   'wrn_cnt'  : 'LightlineWarningCount'
 	\   },
-	\   'separator'	: { 'left': '', 'right': '' },
-	\   'subseparator' : { 'left': '', 'right': '' },
+	\   'separator'	: { 'left': '', 'right': '' },
+	\   'subseparator' : { 'left': '', 'right': '|' },
 	\}
 
 " Lightline Functions {{{
@@ -222,7 +237,6 @@ let s:severity_hint = 4
 let s:diagnostics = {  }
 let s:NmStatuslineCounts = {  }
 
-" ✖✗
 " calls LightlineLcGetTypeCount with type = error
 function! LightlineErrorCount()
 	let cnt = LightlineLcGetTypeCount(s:severity_error)
@@ -296,16 +310,22 @@ endfunction
 " so much more convenient
 map <space> <leader>
 
-" toggle folds does not work
-" nnoremap <leader> <space> za
-
-" buffer bindings
-nnoremap <leader>bl :ls<CR>                          " list buffers
-nnoremap <leader>bt :b#<CR>                          " last used buffer
-nnoremap <leader>be :b<space>                        " edit buffer
-nnoremap <leader>bn :bn<CR>                          " next buffer
-nnoremap <leader>bp :bp<CR>                          " previews buffer
-nnoremap <Leader>b1 <Plug>lightline#bufferline#go(1) " goto buffer in bufferline
+" list buffers
+nnoremap <leader>bl :ls:<CR>
+" buffer command
+nnoremap <leader>bc :ls<CR>:b
+" last used buffer
+nnoremap <leader>bt :b#<CR>                          
+" edit buffer
+nnoremap <leader>be :b<space>                        
+" delete current buffer
+nnoremap <leader>bd :bdelete<CR>
+" next buffer
+nnoremap <leader>bn :bn<CR>                          
+" previews buffer
+nnoremap <leader>bp :bp<CR>                          
+" goto buffer in bufferline
+nnoremap <Leader>b1 <Plug>lightline#bufferline#go(1) 
 nnoremap <Leader>b2 <Plug>lightline#bufferline#go(2)
 nnoremap <Leader>b3 <Plug>lightline#bufferline#go(3)
 nnoremap <Leader>b4 <Plug>lightline#bufferline#go(4)
@@ -316,9 +336,26 @@ nnoremap <Leader>b8 <Plug>lightline#bufferline#go(8)
 nnoremap <Leader>b9 <Plug>lightline#bufferline#go(9)
 nnoremap <Leader>b0 <Plug>lightline#bufferline#go(10)
 
-noremap <leader>ec :e $MYVIMRC<CR>  " edit vimrc
-noremap <leader>rc :so $MYVIMRC<CR> " reload config
+" edit vimrc
+noremap <leader>ce :e $MYVIMRC<CR>
+" reload config
+noremap <leader>cr :so $MYVIMRC<CR>
 
+
+" vimux run last command
+map <leader>vl :VimuxRunLastCommand<CR>
+" Prompt for a command to run map
+map <Leader>vp :VimuxPromptCommand<CR>
+map <Leader>vm :VimuxPromptCommand("make ")<CR>
+
+" plug install
+nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>pc :PlugClean<CR>
+
+" text tabulirize
+noremap <leader>tt :Tabularize<space>/
+" text align
+noremap <leader>ta :EasyAlign<CR>
 
 " Deal with the system clipboard CREDIT: Blaradox
 nnoremap <leader>y "+y
@@ -337,14 +374,11 @@ nnoremap <leader>P "+P
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" split prefix, C-w is taken by TMUX
+nnoremap <C-a> <C-w>
 
 " This unsets the last search pattern register by hitting ESC
-nnoremap <ESC> :nohlsearch<CR>
+nnoremap <silent><ESC> :nohlsearch<CR>
 
 " Move text
 nnoremap <A-j> :m .+1<CR>==
@@ -364,7 +398,7 @@ nnoremap <f3> :CycleColorPrev<cr>
 tnoremap <Esc> <C-\><C-n>
 
 " editing important files w/o running vim as root
-cnoremap w!! w !doas tee % > /dev/null
+cnoremap w!! w !sudo tee % > /dev/null
 
 " I never use Ex mode, so re-run macros instead
 nnoremap Q @@
