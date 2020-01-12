@@ -9,41 +9,19 @@ if [ -f ~/bin/sensible.bash ]; then
    source ~/bin/sensible.bash
 fi
 
-
 if [[ -z "$TMUX" ]] ;then
-    ID="$(tmux ls | grep -vm1 attached | cut -d: -f1)" # get the id of a deattached session
-    if [[ -z "$ID" ]] ;then # if not available create a new one
-        exec tmux new-session
-    else
-        exec tmux attach-session -t "$ID" # if available attach to it
-    fi
+	ID="$(tmux ls | grep -vm1 attached | cut -d: -f1)" # get the id of a deattached session
+	if [[ -z "$ID" ]] ;then                            # if not available create a new one
+		exec tmux new-session
+	else
+		exec tmux attach-session -t "$ID"              # if available attach to it
+	fi
 fi
 
 # Use bash-completion, if available
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
 fi
-
-#these where a mistake
-#they broke autocmpl
-#complete -c sudo
-#complete -c doas
-
-#PROMPT_COMMAND='(retval=$?;tput cup "$LINES";exit $retval)'
-
-#blink="\[\e[5m\]";
-#bold="\[\e[1m\]";
-#o_br="\[\e[38;5;9m\][";
-#user="\[\e[38;5;11m\]\u";
-#at="\[\e[38;5;10m\]@";
-#host="\[\e[38;5;14m\]\H:";
-#dir="\[\e[38;5;13m\]\W";
-#c_br="\[\e[38;5;9m\]]";
-#doll="\[\e[38;5;7m\]\$ ";
-#reset="\[\e[m\]";
-##reset_cursor='\033]50;CursorShape=1\x7'
-#
-#export PS1="$bold$o_br$user$at$host$dir$c_br$doll$reset"
 
 alias wtf="netbsd-wtf -o"
 
@@ -65,7 +43,7 @@ alias egrep="egrep --color=auto"
 alias svim='vim -u ~/projects/SpaceVim/vimrc'
 alias vimdiff="vim -d"
 alias e="vim"
-alias micro"micro -matchbraceleft true -keepautoindent true -colorcolumn 80 -scrollbar true"
+alias micro="micro -matchbraceleft true -keepautoindent true -colorcolumn 80 -scrollbar true"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -77,12 +55,18 @@ alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
 search () {
-    find / -name "$@" 2> /dev/null
+	path="$1"
+	shift
+	if [[ ! -d "$path" ]]; then
+		echo "Usage: search <path> <pattern>"
+		return
+	fi
+    find "$path" -name "$@" 2> /dev/null
 }
 
-export NNN_CONTEXT_COLORS="2136"                        # use a different color for each context
-export NNN_TRASH=1                                      # trash (needs trash-cli) instead of delete
-export NNN_USE_EDITOR=1                                 # use the $EDITOR when opening text files
+export NNN_CONTEXT_COLORS="2136"     # use a different color for each context
+export NNN_TRASH=1                   # trash (needs trash-cli) instead of delete
+export NNN_USE_EDITOR=1              # use the $EDITOR when opening text files
 
 # stolen from https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash
 n ()
@@ -128,6 +112,8 @@ export MYVIMRC=~/.config/nvim/init.vim
 
 export EDITOR="vim"
 
+export LS_COLORS="" # empty ls colors
+
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
 export LESS_TERMCAP_md=$(tput bold; tput setaf 4)            # begin blink
@@ -146,3 +132,24 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 # starship prompt
 eval "$(starship init bash)"
+
+#these where a mistake
+#they broke autocmpl
+#complete -c sudo
+#complete -c doas
+
+#PROMPT_COMMAND='(retval=$?;tput cup "$LINES";exit $retval)'
+
+#blink="\[\e[5m\]";
+#bold="\[\e[1m\]";
+#o_br="\[\e[38;5;9m\][";
+#user="\[\e[38;5;11m\]\u";
+#at="\[\e[38;5;10m\]@";
+#host="\[\e[38;5;14m\]\H:";
+#dir="\[\e[38;5;13m\]\W";
+#c_br="\[\e[38;5;9m\]]";
+#doll="\[\e[38;5;7m\]\$ ";
+#reset="\[\e[m\]";
+##reset_cursor='\033]50;CursorShape=1\x7'
+#
+#export PS1="$bold$o_br$user$at$host$dir$c_br$doll$reset"

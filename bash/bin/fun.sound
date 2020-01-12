@@ -1,0 +1,1 @@
+cat ganou.txt | espeak -v el
