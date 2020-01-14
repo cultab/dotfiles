@@ -30,10 +30,14 @@ alias xr="doas xbps-remove -R"
 alias xs="xbps-query -Rs"
 alias xq="xbps-query"
 
-alias ls="exa --group-directories-first"
-alias ll="exa -l --group-directories-first"
-alias la="exa -la --group-directories-first"
-alias lt="exa --tree --group-directories-first"
+#alias ls="exa --group-directories-first"
+#alias ll="exa -l --group-directories-first"
+#alias la="exa -la --group-directories-first"
+#alias lt="exa --tree --group-directories-first"
+alias ls="lsd --group-dirs=first"
+alias ll="lsd --group-dirs=first --long"
+alias la="lsd --group-dirs=first --long --all"
+alias lt="lsd --group-dirs=first --tree"
 
 alias diff="diff --color=auto"
 alias grep="grep --color=auto"
@@ -112,7 +116,7 @@ export MYVIMRC=~/.config/nvim/init.vim
 
 export EDITOR="vim"
 
-export LS_COLORS="" # empty ls colors
+export LS_COLORS=$(dircolors)
 
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
