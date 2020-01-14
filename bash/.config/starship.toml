@@ -1,0 +1,8 @@
+[username]
+show_always = true
+[hostname]
+ssh_only = false
+[character]
+symbol = "❱"
+use_symbol_for_status = true
+error_symbol = "✘"
