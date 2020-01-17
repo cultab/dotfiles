@@ -9,12 +9,14 @@ if [ -f ~/bin/sensible.bash ]; then
    source ~/bin/sensible.bash
 fi
 
-if [[ -z "$TMUX" ]] ;then
-	ID="$(tmux ls | grep -vm1 attached | cut -d: -f1)" # get the id of a deattached session
-	if [[ -z "$ID" ]] ;then                            # if not available create a new one
-		exec tmux new-session
-	else
-		exec tmux attach-session -t "$ID"              # if available attach to it
+if [[ "$DISPLAY" ]] ;then
+	if [[ -z "$TMUX" ]] ;then
+		ID="$(tmux ls | grep -vm1 attached | cut -d: -f1)" # get the id of a deattached session
+		if [[ -z "$ID" ]] ;then                            # if not available create a new one
+			exec tmux new-session
+		else
+			exec tmux attach-session -t "$ID"              # if available attach to it
+		fi
 	fi
 fi
 
@@ -110,7 +112,9 @@ n ()
 }
 
 #keymaps cause .xinirc is not enough..
-setxkbmap -option caps:swapescape
+if [[ "$DISPLAY" ]]; then
+	setxkbmap -option caps:swapescape
+fi
 
 export MYVIMRC=~/.config/nvim/init.vim
 
