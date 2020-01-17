@@ -1,0 +1,10 @@
+#!/bin/sh
+
+power=$(upower -i $(upower -e | grep BAT0) | grep -E "state" | cut -d ':' -f 2 | sed 's/ //g')
+if [ "discharging" = "$power" ]; then
+	logger "LID closed while discharging, suspending"
+	zzz
+else
+	logger "LID closed while on power, locking screen"
+	slock
+fi
