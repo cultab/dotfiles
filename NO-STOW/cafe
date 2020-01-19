@@ -1,0 +1,2 @@
+touch /tmp/caffeinated
+(sleep $@ && rm /tmp/caffeinated)&
