@@ -111,11 +111,6 @@ n ()
     export VISUAL=$VISUAL_BAK
 }
 
-#keymaps cause .xinirc is not enough..
-if [[ "$DISPLAY" ]]; then
-	setxkbmap -option caps:swapescape
-fi
-
 export MYVIMRC=~/.config/nvim/init.vim
 
 export EDITOR="vim"
