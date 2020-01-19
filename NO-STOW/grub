@@ -1,0 +1,23 @@
+#
+# Configuration file for GRUB.
+#
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+#GRUB_HIDDEN_TIMEOUT_QUIET=false
+GRUB_TIMEOUT=1
+GRUB_DISTRIBUTOR="Void"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=4 slub_debug=P page_poison=1"
+# Uncomment to use basic console
+GRUB_TERMINAL_INPUT=console
+# Uncomment to disable graphical terminal
+GRUB_TERMINAL_OUTPUT=gfxterm
+# Make sure this image exists
+GRUB_BACKGROUND=/home/evan/Pictures/void_splash.png
+GRUB_GFXMODE=1600x900x32
+GRUB_GFXPAYLOAD_LINUX=keep
+#GRUB_DISABLE_LINUX_UUID=true
+#GRUB_DISABLE_RECOVERY=true
+# Uncomment and set to the desired menu colors.  Used by normal and wallpaper
+# modes only.  Entries specified as foreground/background.
+GRUB_COLOR_NORMAL="white/black"
+GRUB_COLOR_HIGHLIGHT="yellow/cyan"
