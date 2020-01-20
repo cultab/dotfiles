@@ -1,0 +1,9 @@
+nvim
+clangd
+python
+acpi event thingy
+tlp power management
+starship prompt
+exa or lsd
+bluetooth (check gentoo wiki)
+

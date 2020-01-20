@@ -1,0 +1,10 @@
+install fingerprint-gui, maybe also fprintd
+
+chgrp /dev/bus/usb (output of lsusb) plugdev
+
+usermod -a -G plugdev $USER
+
+# place in /etc/pam.d/{su,sudo,xyz}
+# take care of the order e.g. not before pam_rrotok.so
+auth sufficient pam_fingerprint-gui.so
+
