@@ -5,8 +5,17 @@ if [[ $- != *i* ]]; then
     return
 fi
 
+if [[ -d ~/bin ]]; then
+	PATH+="$HOME/bin"
+fi
+
 if [ -f ~/bin/sensible.bash ]; then
    source ~/bin/sensible.bash
+fi
+
+# Use bash-completion, if available
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+	source /usr/share/bash-completion/bash_completion
 fi
 
 if [[ "$DISPLAY" ]] ;then
@@ -20,11 +29,6 @@ if [[ "$DISPLAY" ]] ;then
 	fi
 fi
 
-# Use bash-completion, if available
-if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-    source /usr/share/bash-completion/bash_completion
-fi
-
 alias wtf="netbsd-wtf -o"
 
 alias xi="doas xbps-install -Su"
@@ -32,10 +36,6 @@ alias xr="doas xbps-remove -R"
 alias xs="xbps-query -Rs"
 alias xq="xbps-query"
 
-#alias ls="exa --group-directories-first"
-#alias ll="exa -l --group-directories-first"
-#alias la="exa -la --group-directories-first"
-#alias lt="exa --tree --group-directories-first"
 alias ls="lsd --group-dirs=first"
 alias ll="lsd --group-dirs=first --long"
 alias la="lsd --group-dirs=first --long --all"
