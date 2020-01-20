@@ -1,5 +1,9 @@
+.directory
+.netrwhist
+
 neovim/.config/nvim/plugged
 neovim/.config/nvim/backup
 neovim/.config/nvim/colors
-.directory
-.netrwhist
+
+bash/bin/vpm
+bash/bin/vsv
