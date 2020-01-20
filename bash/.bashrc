@@ -6,7 +6,7 @@ if [[ $- != *i* ]]; then
 fi
 
 if [[ -d ~/bin ]]; then
-	PATH+="$HOME/bin"
+	PATH+=":$HOME/bin"
 fi
 
 if [ -f ~/bin/sensible.bash ]; then
@@ -31,10 +31,12 @@ fi
 
 alias wtf="netbsd-wtf -o"
 
-alias xi="doas xbps-install -Su"
-alias xr="doas xbps-remove -R"
+alias xi="sudo xbps-install -Su"
+alias xr="sudo xbps-remove -R"
 alias xs="xbps-query -Rs"
-alias xq="xbps-query"
+alias xq="xbps-query -R"
+alias xls="xbps-query -s"
+alias xlq="xbps-query"
 
 alias ls="lsd --group-dirs=first"
 alias ll="lsd --group-dirs=first --long"
@@ -46,10 +48,8 @@ alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
-alias svim='vim -u ~/projects/SpaceVim/vimrc'
 alias vimdiff="vim -d"
 alias e="vim"
-alias micro="micro -matchbraceleft true -keepautoindent true -colorcolumn 80 -scrollbar true"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
