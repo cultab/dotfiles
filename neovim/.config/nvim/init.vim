@@ -336,21 +336,20 @@ nnoremap <Leader>b8 <Plug>lightline#bufferline#go(8)
 nnoremap <Leader>b9 <Plug>lightline#bufferline#go(9)
 nnoremap <Leader>b0 <Plug>lightline#bufferline#go(10)
 
-" edit vimrc
-noremap <leader>ce :e $MYVIMRC<CR>
-" reload config
-noremap <leader>cr :so $MYVIMRC<CR>
-
-
 " vimux run last command
 map <leader>vl :VimuxRunLastCommand<CR>
 " Prompt for a command to run map
 map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vm :VimuxPromptCommand("make ")<CR>
 
-" plug install
-nnoremap <leader>pi :PlugInstall<CR>
-nnoremap <leader>pc :PlugClean<CR>
+" edit vimrc
+noremap <leader>ce :e $MYVIMRC<CR>
+" reload config
+noremap <leader>cr :so $MYVIMRC<CR>
+
+" config plug install
+nnoremap <leader>cpi :PlugInstall<CR>
+nnoremap <leader>cpc :PlugClean<CR>
 
 " text tabulirize
 noremap <leader>tt :Tabularize<space>/
