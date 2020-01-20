@@ -13,16 +13,20 @@ col=13
 row=2
 col=13
 
-[/home/evan/Desktop/a.out]
-row=2
+[/home/evan/Desktop/asd.desktop]
+row=3
+col=0
+
+[/home/evan/Desktop/squares.c]
+row=0
 col=14
 
 [/home/evan/Desktop/ask1 THE LAST COPY OF ORIGINAL ASK1 BINARY]
 row=1
 col=13
 
-[/home/evan/Desktop/squares.c]
-row=0
+[/home/evan/Desktop/a.out]
+row=2
 col=14
 
 [Trash]
