@@ -5,10 +5,12 @@ if [[ $- != *i* ]]; then
     return
 fi
 
+# add ~/bin to $PATH
 if [[ -d ~/bin ]]; then
 	PATH+=":$HOME/bin"
 fi
 
+# source sensible bash
 if [ -f ~/bin/sensible.bash ]; then
    source ~/bin/sensible.bash
 fi
@@ -31,12 +33,7 @@ fi
 
 alias wtf="netbsd-wtf -o"
 
-alias xi="sudo xbps-install -Su"
 alias xr="sudo xbps-remove -R"
-alias xs="xbps-query -Rs"
-alias xq="xbps-query -R"
-alias xls="xbps-query -s"
-alias xlq="xbps-query"
 
 alias ls="lsd --group-dirs=first"
 alias ll="lsd --group-dirs=first --long"
@@ -59,6 +56,20 @@ alias q="exit"
 
 alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
+
+xs () {
+    xpkg -a |
+        fzf -m --preview 'xq -Rs {1}' \
+            --preview-window=right:66%:wrap |
+        xargs -ro xi 
+}
+
+xd () {
+    xpkg -m |
+        fzf -m --preview 'xq {1}' \
+            --preview-window=right:66%:wrap |
+        xargs -ro sudo xbps-remove -R
+}
 
 search () {
 	path="$1"
