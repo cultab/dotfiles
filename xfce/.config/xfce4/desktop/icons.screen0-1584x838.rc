@@ -1,6 +1,34 @@
 [xfdesktop-version-4.10.3+-rcfile_format]
 4.10.3+=true
 
+[/home/evan/Desktop/Playlist.m3u]
+row=1
+col=14
+
+[/home/evan/Desktop/myosevka.zip]
+row=0
+col=13
+
+[/home/evan/Desktop/IDA Freeware.desktop]
+row=2
+col=13
+
+[/home/evan/Desktop/asd.desktop]
+row=3
+col=0
+
+[/home/evan/Desktop/squares.c]
+row=0
+col=14
+
+[/home/evan/Desktop/ask1 THE LAST COPY OF ORIGINAL ASK1 BINARY]
+row=1
+col=13
+
+[/home/evan/Desktop/a.out]
+row=2
+col=14
+
 [Trash]
 row=0
 col=0

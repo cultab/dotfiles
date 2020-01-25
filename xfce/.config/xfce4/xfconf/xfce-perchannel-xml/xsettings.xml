@@ -35,6 +35,8 @@
     <property name="CursorThemeName" type="string" value="default"/>
     <property name="CursorThemeSize" type="empty"/>
     <property name="DecorationLayout" type="string" value="close,maximize,minimize,menu:"/>
+    <property name="ShellShowsMenubar" type="bool" value="true"/>
+    <property name="ShellShowsAppmenu" type="bool" value="true"/>
   </property>
   <property name="Gdk" type="empty">
     <property name="WindowScalingFactor" type="int" value="1"/>

@@ -1,6 +1,6 @@
 only_maximized=false
 show_on_desktop=false
-sync_wm_theme=true
+sync_wm_theme=false
 button_layout=CMH
 theme=Arc-Dark
 inactive_text_alpha=60
