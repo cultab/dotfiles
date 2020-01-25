@@ -33,7 +33,10 @@ fi
 
 alias wtf="netbsd-wtf -o"
 
-alias xr="sudo xbps-remove -R"
+alias e="vim"
+alias vimdiff="vim -d"
+
+alias cat="bat"
 
 alias ls="lsd --group-dirs=first"
 alias ll="lsd --group-dirs=first --long"
@@ -45,8 +48,6 @@ alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
-alias vimdiff="vim -d"
-alias e="vim"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -58,17 +59,34 @@ alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
 xs () {
-    xpkg -a |
+	if [ "$@" ]; then
+		xi "$@"
+		return
+	fi
+	xpkg -a |
         fzf -m --preview 'xq -Rs {1}' \
             --preview-window=right:66%:wrap |
-        xargs -ro xi 
+        xargs -ro xi -y 
 }
 
-xd () {
+xr () {
+	if [ "$@" ]; then
+		sudo xbps-remove -R "$@"
+		return
+	fi
     xpkg -m |
         fzf -m --preview 'xq {1}' \
             --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-remove -R
+		xargs -ro sudo xbps-remove -Ry
+}
+
+google () {
+	if [[ -z $* ]]; then
+		echo "google: missing query"
+		return
+	fi
+	query=$(echo "https://www.startpage.com/rvd/search?query=$@" | sed -e 's/+/%2B/g' -e 's/ /+/g')
+	vivaldi-snapshot "$query" 2> /dev/null &
 }
 
 search () {
