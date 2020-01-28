@@ -367,11 +367,12 @@ nnoremap <leader>P "+P
 
 " Miscellaneous Mappings{{{
 
-" Easy window navigation
-"map <C-h> <C-w>h
-"map <C-j> <C-w>j
-"map <C-k> <C-w>k
-"map <C-l> <C-w>l
+" Custom Key Bindings
+
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
 
 " split prefix, C-w is taken by TMUX
 nnoremap <C-a> <C-w>
@@ -380,14 +381,10 @@ nnoremap <C-a> <C-w>
 nnoremap <silent><ESC> :nohlsearch<CR>
 
 " Move text
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-
-" tabs
-"nnoremap <A-h> :tabprevious<CR>
-"nnoremap <A-l> :tabnext<CR>
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " CycleColors, it's bound in the plugin but incase I forget
 nnoremap <f4> :CycleColorNext<cr>
