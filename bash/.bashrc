@@ -65,7 +65,7 @@ xi () {
 	xpkg -a |
         fzf -m --preview 'xq -Rs {1}' \
             --preview-window=right:66%:wrap |
-        xargs -ro xi -y 
+        xargs -ro sudo xbps-install -y 
 }
 
 xr () {
