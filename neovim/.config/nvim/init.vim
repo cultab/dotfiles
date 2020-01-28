@@ -81,13 +81,12 @@ call plug#end()
 
 " Miscellaneous Plugin Settings{{{
 
-
 let g:VimuxOrientation = "h"
-
+let g:tmux_navigator_no_mappings = 1
 
 "}}}
 
-" Autocomplete & LanguageClient {{{
+" Autocomplete & related settings {{{
 " complete from highlight files
 set omnifunc=syntaxcomplete#Complete
 " autocomplete don't insert
@@ -122,15 +121,15 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 "}}}
 
-" Per FileType Settings {{{
+" Per Filetype Settings {{{
 
 set foldmethod=marker
 augroup my_autocmds
 autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10
-autocmd FileType sh,bash call NeomakeConfig()
+autocmd FileType sh,bash call NeomakeInit()
 augroup end
 
-function! NeomakeConfig()
+function! NeomakeInit()
 	:Neomake
 	call neomake#configure#automake('nw', 750)
 	call neomake#configure#automake('rw', 1000)
@@ -342,9 +341,12 @@ map <leader>vl :VimuxRunLastCommand<CR>
 map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vm :VimuxPromptCommand("make ")<CR>
 
-" edit vimrc
-noremap <leader>ce :e $MYVIMRC<CR>
-" reload config
+" edit configs
+noremap <leader>cb :e ~/.bashrc<CR>
+noremap <leader>ct :e ~/.tmux.conf<CR>
+noremap <leader>cs :e $repos/st/config.h<CR>
+noremap <leader>cv :e $MYVIMRC<CR>
+" reload vim config
 noremap <leader>cr :so $MYVIMRC<CR>
 
 " config plug install
