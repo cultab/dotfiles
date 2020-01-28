@@ -40,14 +40,13 @@ alias cat="bat"
 
 alias ls="lsd --group-dirs=first"
 alias ll="lsd --group-dirs=first --long"
-alias la="lsd --group-dirs=first --long --all"
+alias la="lsd --group-dirs=first --long --almost-all"
 alias lt="lsd --group-dirs=first --tree"
 
 alias diff="diff --color=auto"
 alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
-
 
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -58,9 +57,9 @@ alias q="exit"
 alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
-xs () {
-	if [ "$@" ]; then
-		xi "$@"
+xi () {
+	if [ "$@" ] || [ "$1" = -u ]; then
+		sudo xbps-install -Su "$@"
 		return
 	fi
 	xpkg -a |
@@ -85,7 +84,7 @@ google () {
 		echo "google: missing query"
 		return
 	fi
-	query=$(echo "https://www.startpage.com/rvd/search?query=$@" | sed -e 's/+/%2B/g' -e 's/ /+/g')
+	query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
 	vivaldi-snapshot "$query" 2> /dev/null &
 }
 
