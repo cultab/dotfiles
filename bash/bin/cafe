@@ -1,2 +1,9 @@
-touch /tmp/caffeinated
-(sleep $@ && rm /tmp/caffeinated)&
+#!/bin/sh
+set -e
+
+if [ ! -f /tmp/caffeinated ]; then
+	touch /tmp/caffeinated
+else 
+	echo "Can't cafe, already caffeinated!"
+	exit 1
+fi
