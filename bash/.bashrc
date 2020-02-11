@@ -11,8 +11,8 @@ if [[ -d ~/bin ]]; then
 fi
 
 # source sensible bash
-if [ -f ~/bin/sensible.bash ]; then
-   source ~/bin/sensible.bash
+if [ -f ~/.local/bash/sensible.bash ]; then
+   source ~/.local/bash/sensible.bash
 fi
 
 # Use bash-completion, if available
