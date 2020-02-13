@@ -4,6 +4,12 @@ logfile=/tmp/nnnvim.log
 socket=/tmp/nnnvim
 timestamp=$(date)
 
+# if not inside a tmux session just launch vim
+if [ -z $TMUX ]; then
+	nvim "$@"
+	exit
+fi
+
 echo "$timestamp handle start" >> $logfile
 if [ -S $socket ]; then
 	echo "$timestamp connecting to existing split" >> $logfile
