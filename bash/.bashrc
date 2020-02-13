@@ -33,7 +33,6 @@ fi
 
 alias wtf="netbsd-wtf -o"
 
-alias e="vim"
 alias vimdiff="vim -d"
 
 alias cat="bat"
@@ -86,6 +85,7 @@ google () {
 	fi
 	query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
 	vivaldi-snapshot "$query" 2> /dev/null &
+	disown
 }
 
 search () {
@@ -96,6 +96,12 @@ search () {
 		return
 	fi
     find "$path" -name "$@" 2> /dev/null
+}
+
+nnnvim ()
+{
+	tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
+	n
 }
 
 export NNN_CONTEXT_COLORS="2136"     # use a different color for each context
@@ -119,7 +125,7 @@ n ()
 
     # backup VISUAL and set it so as to open vim in a new tmux pane
     VISUAL_BAK=$VISUAL
-    export VISUAL="tmux split-window -h vim"
+    export VISUAL="nnnvim_handle"
     # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
     # stty start undef
     # stty stop undef
