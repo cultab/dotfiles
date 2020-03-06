@@ -1,8 +1,10 @@
 [username]
 show_always = false
+
 [hostname]
 ssh_only = true
+
 [character]
-symbol = "❱"
+error_symbol = "✖"
 use_symbol_for_status = true
-error_symbol = "✘"
+style_failure = "bold red"

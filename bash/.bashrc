@@ -15,6 +15,14 @@ if [ -f ~/.local/bash/sensible.bash ]; then
    source ~/.local/bash/sensible.bash
 fi
 
+# IMPORTAND: starship goes after sensible.bash
+
+# starship prompt
+eval "$(starship init bash)"
+
+# simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
+#PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
+
 # Use bash-completion, if available
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 	source /usr/share/bash-completion/bash_completion
@@ -32,6 +40,8 @@ if [[ "$DISPLAY" ]] ;then
 fi
 
 alias wtf="netbsd-wtf -o"
+
+alias coomit="git commit"
 
 alias vimdiff="vim -d"
 
@@ -57,7 +67,10 @@ alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
 xi () {
-	if [ "$@" ] || [ "$1" = -u ]; then
+	if [ "$@" ]; then
+		if [ "$1" = "-u" ]; then
+			shift
+		fi
 		sudo xbps-install -Su "$@"
 		return
 	fi
@@ -96,6 +109,14 @@ search () {
 		return
 	fi
     find "$path" -name "$@" 2> /dev/null
+}
+
+tst () {
+	history | 
+	fzf --no-sort --tac |
+	sed 's/  / /g' |
+	cut --complement -d ' ' -f 1-4
+	xargs 'bash -c'
 }
 
 nnnvim ()
@@ -166,9 +187,6 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
-
-# starship prompt
-eval "$(starship init bash)"
 
 #these where a mistake
 #they broke autocmpl
