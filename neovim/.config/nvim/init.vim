@@ -69,6 +69,7 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Misc
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'neomake/neomake'
 Plug 'https://github.com/vim-scripts/CycleColor'
 Plug 'tpope/vim-sensible'
@@ -90,11 +91,11 @@ let g:tmux_navigator_no_mappings = 1
 " complete from highlight files
 set omnifunc=syntaxcomplete#Complete
 " autocomplete don't insert
-set completeopt=longest,menuone,noinsert
-",preview
+set completeopt=longest,menuone,noinsert,noselect,preview
 
 " SuperTab
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " Start deoplete,echodoc automatically
 let g:deoplete#enable_at_startup = 1
@@ -162,10 +163,9 @@ let g:palenight_terminal_italics = 1
 colorscheme palenight "after settings
 
 " Bufferline options
-let g:lightline#bufferline#show_number = 2
+let g:lightline#bufferline#show_number = 1
 let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline#bufferline#enable_devicons = 1
-let g:lightline#bufferline#unicode_symbols = 1
 if has('gui_running')
 	set guioptions-=e
 endif
@@ -206,8 +206,8 @@ let g:lightline = {
 	\	   'err_cnt'  : 'LightlineErrorCount',
 	\	   'wrn_cnt'  : 'LightlineWarningCount'
 	\   },
-	\   'separator'	: { 'left': '', 'right': '' },
-	\   'subseparator' : { 'left': '', 'right': '|' },
+	\   'separator'	: { 'left': '', 'right': '' },
+	\   'subseparator' : { 'left': '|', 'right': '|' },
 	\}
 
 " Lightline Functions {{{
@@ -304,36 +304,56 @@ endfunction
 
 "}}}
 
+"{{{ Markdown Preview
+
+let g:mkdp_browser = 'vivaldi-snapshot'
+
+"}}}
+
+"{{{ fzf settings
+
+" Using floating windows of Neovim to start fzf
+if has('nvim')
+	let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
+
+	function! FloatingFZF()
+		let width = float2nr(&columns * 0.9)
+		let height = float2nr(&lines * 0.6)
+		let opts = { 'relative': 'editor',
+		           \ 'row': (&lines - height) / 2,
+		           \ 'col': (&columns - width) / 2,
+		           \ 'width': width,
+		           \ 'height': height }
+
+		let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+		call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+	endfunction
+
+	let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+endif
+
+"}}}
+
 " Leader Mappings{{{
 
 " so much more convenient
 map <space> <leader>
 
-" list buffers
+" TODO: consider Unite.vim or any other buffer managing plugin
+
+" fzf
+nnoremap <leader>f :FZF<CR>
+
+" list
 nnoremap <leader>bl :ls:<CR>
-" buffer command
+" edit
+nnoremap <leader>be :b<space>
+" command
 nnoremap <leader>bc :ls<CR>:b
 " last used buffer
 nnoremap <leader>bt :b#<CR>                          
-" edit buffer
-nnoremap <leader>be :b<space>                        
 " delete current buffer
 nnoremap <leader>bd :bdelete<CR>
-" next buffer
-nnoremap <leader>bn :bn<CR>                          
-" previews buffer
-nnoremap <leader>bp :bp<CR>                          
-" goto buffer in bufferline
-nnoremap <Leader>b1 <Plug>lightline#bufferline#go(1) 
-nnoremap <Leader>b2 <Plug>lightline#bufferline#go(2)
-nnoremap <Leader>b3 <Plug>lightline#bufferline#go(3)
-nnoremap <Leader>b4 <Plug>lightline#bufferline#go(4)
-nnoremap <Leader>b5 <Plug>lightline#bufferline#go(5)
-nnoremap <Leader>b6 <Plug>lightline#bufferline#go(6)
-nnoremap <Leader>b7 <Plug>lightline#bufferline#go(7)
-nnoremap <Leader>b8 <Plug>lightline#bufferline#go(8)
-nnoremap <Leader>b9 <Plug>lightline#bufferline#go(9)
-nnoremap <Leader>b0 <Plug>lightline#bufferline#go(10)
 
 " vimux run last command
 map <leader>vl :VimuxRunLastCommand<CR>
@@ -352,6 +372,7 @@ noremap <leader>cr :so $MYVIMRC<CR>
 " config plug install
 nnoremap <leader>cpi :PlugInstall<CR>
 nnoremap <leader>cpc :PlugClean<CR>
+nnoremap <leader>cpu :PlugUpdate<CR>
 
 " text tabulirize
 noremap <leader>tt :Tabularize<space>/
@@ -371,10 +392,10 @@ nnoremap <leader>P "+P
 
 " Custom Key Bindings
 
-nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
 
 " split prefix, C-w is taken by TMUX
 nnoremap <C-a> <C-w>
@@ -389,8 +410,8 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " CycleColors, it's bound in the plugin but incase I forget
-nnoremap <f4> :CycleColorNext<cr>
-nnoremap <f3> :CycleColorPrev<cr>
+nnoremap <f4> :CycleColorNext<CR>
+nnoremap <f3> :CycleColorPrev<CR>
 
 " Go into normal mode with Esc from terminal mode
 tnoremap <Esc> <C-\><C-n>
