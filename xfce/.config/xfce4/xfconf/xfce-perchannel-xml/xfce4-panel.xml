@@ -16,10 +16,13 @@
         <value type="int" value="4"/>
         <value type="int" value="10"/>
         <value type="int" value="6"/>
-        <value type="int" value="7"/>
-        <value type="int" value="5"/>
-        <value type="int" value="1"/>
+        <value type="int" value="16"/>
         <value type="int" value="9"/>
+        <value type="int" value="5"/>
+        <value type="int" value="7"/>
+        <value type="int" value="15"/>
+        <value type="int" value="1"/>
+        <value type="int" value="13"/>
         <value type="int" value="12"/>
         <value type="int" value="3"/>
         <value type="int" value="14"/>
@@ -30,9 +33,9 @@
       <property name="background-style" type="uint" value="1"/>
       <property name="nrows" type="uint" value="1"/>
       <property name="background-rgba" type="array">
-        <value type="double" value="0.118444"/>
-        <value type="double" value="0.123523"/>
-        <value type="double" value="0.173333"/>
+        <value type="double" value="0.180392"/>
+        <value type="double" value="0.203922"/>
+        <value type="double" value="0.211765"/>
         <value type="double" value="1.000000"/>
       </property>
     </property>
@@ -68,7 +71,7 @@
     </property>
     <property name="plugin-7" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
-      <property name="mpris-players" type="string" value="chromium.instance14809"/>
+      <property name="mpris-players" type="string" value="chromium.instance14809;chromium.instance16243;chromium.instance2422;chromium.instance2574;chromium.instance2599;chromium.instance3442"/>
     </property>
     <property name="plugin-1" type="string" value="xkb">
       <property name="display-type" type="uint" value="2"/>
@@ -91,13 +94,16 @@
     </property>
     <property name="plugin-5" type="string" value="separator">
       <property name="expand" type="bool" value="false"/>
-      <property name="style" type="uint" value="2"/>
+      <property name="style" type="uint" value="1"/>
     </property>
     <property name="plugin-10" type="string" value="separator">
-      <property name="style" type="uint" value="2"/>
+      <property name="style" type="uint" value="1"/>
     </property>
     <property name="plugin-3" type="string" value="separator">
-      <property name="style" type="uint" value="2"/>
+      <property name="style" type="uint" value="1"/>
     </property>
+    <property name="plugin-13" type="string" value="separator"/>
+    <property name="plugin-15" type="string" value="separator"/>
+    <property name="plugin-16" type="string" value="separator"/>
   </property>
 </channel>
