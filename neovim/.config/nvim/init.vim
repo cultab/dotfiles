@@ -6,7 +6,7 @@ set number
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set noexpandtab					 " use ta🅱️ s
+set expandtab					 " no ta🅱️ s
 set smarttab
 set autoindent
 set cindent
@@ -33,7 +33,6 @@ call plug#begin("~/.config/nvim/plugged")
 "Autocomplete
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/echodoc.vim'
-Plug 'ervandew/supertab'
 Plug 'autozimu/LanguageClient-neovim', {
 	\ 'branch': 'next',
 	\ 'do': 'bash install.sh',
@@ -50,6 +49,8 @@ Plug 'junegunn/fzf'
 
 " Highlighting
 Plug 'sheerun/vim-polyglot'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'lilydjwg/colorizer'
 
 " Visual
@@ -69,9 +70,8 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Misc
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'neomake/neomake'
-Plug 'https://github.com/vim-scripts/CycleColor'
+Plug 'vim-scripts/CycleColor'
 Plug 'tpope/vim-sensible'
 
 " Disabled
@@ -82,6 +82,8 @@ call plug#end()
 
 " Miscellaneous Plugin Settings{{{
 
+"let g:pandoc#modules#disabled = ["folding"]
+
 let g:VimuxOrientation = "h"
 let g:tmux_navigator_no_mappings = 1
 
@@ -91,15 +93,12 @@ let g:tmux_navigator_no_mappings = 1
 " complete from highlight files
 set omnifunc=syntaxcomplete#Complete
 " autocomplete don't insert
-set completeopt=longest,menuone,noinsert,noselect,preview
-
-" SuperTab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+set completeopt=menuone,preview
 
 " Start deoplete,echodoc automatically
 let g:deoplete#enable_at_startup = 1
 let g:echodoc_enable_at_startup = 1
+
 " floating window
 let g:echodoc#type = 'floating'
 
@@ -108,17 +107,10 @@ call deoplete#custom#source('_', 'max_abbr_width', 0)
 
 let g:LanguageClient_serverCommands = {
 	\ 'python': ['~/.local/bin/pyls'],
+    \ 'vhdl'  : ['hdl_checker', '--lsp'],
 	\ 'c'     : ['/bin/clangd'],
 	\ 'cpp'   : ['/bin/clangd']
 	\}
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> U :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
-" enter inserts seletion
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 "}}}
 
@@ -128,6 +120,8 @@ set foldmethod=marker
 augroup my_autocmds
 autocmd FileType c,h,java,cpp,hpp setlocal nofoldenable foldmethod=syntax foldnestmax=1 foldminlines=10
 autocmd FileType sh,bash call NeomakeInit()
+autocmd FileType rmd map <F6> :!echo<space>-e<space>"require(rmarkdown)\nrender('<c-r>%')"<space>\|<space>R<space>--vanilla<CR>
+autocmd FileType rmd setlocal nowrap
 augroup end
 
 function! NeomakeInit()
@@ -339,6 +333,9 @@ endif
 " so much more convenient
 map <space> <leader>
 
+" easier repeat
+map <leader><space> .
+
 " TODO: consider Unite.vim or any other buffer managing plugin
 
 " fzf
@@ -390,7 +387,16 @@ nnoremap <leader>P "+P
 
 " Miscellaneous Mappings{{{
 
-" Custom Key Bindings
+" langclient
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> U :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" enter inserts seletion
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-g>u\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-g>u\<S-Tab>"
 
 nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
 nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
@@ -415,9 +421,6 @@ nnoremap <f3> :CycleColorPrev<CR>
 
 " Go into normal mode with Esc from terminal mode
 tnoremap <Esc> <C-\><C-n>
-
-" editing important files w/o running vim as root
-cnoremap w!! w !sudo tee % > /dev/null
 
 " I never use Ex mode, so re-run macros instead
 nnoremap Q @@
