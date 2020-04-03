@@ -46,6 +46,7 @@
       <property name="show-frame" type="bool" value="false"/>
       <property name="square-icons" type="bool" value="true"/>
       <property name="names-ordered" type="array">
+        <value type="string" value="skypeforlinux"/>
         <value type="string" value="barrier"/>
         <value type="string" value="teamviewer"/>
         <value type="string" value="extraterm"/>
@@ -71,7 +72,7 @@
     </property>
     <property name="plugin-7" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
-      <property name="mpris-players" type="string" value="chromium.instance14809;chromium.instance16243;chromium.instance2422;chromium.instance2574;chromium.instance2599;chromium.instance3442"/>
+      <property name="mpris-players" type="string" value="chromium.instance13255;chromium.instance14809;chromium.instance16243;chromium.instance2422;chromium.instance2574;chromium.instance2599;chromium.instance3442;chromium.instance5504;chromium.instance9871"/>
     </property>
     <property name="plugin-1" type="string" value="xkb">
       <property name="display-type" type="uint" value="2"/>
