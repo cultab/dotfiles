@@ -7,18 +7,18 @@ fi
 
 # add ~/bin to $PATH
 if [[ -d ~/bin ]]; then
-	PATH+=":$HOME/bin"
+	PATH+=":$HOME/bin:./"
 fi
+
+# starship prompt
+eval "$(starship init bash)"
+
+# IMPORTAND: starship goes before sensible.bash
 
 # source sensible bash
 if [ -f ~/.local/bash/sensible.bash ]; then
    source ~/.local/bash/sensible.bash
 fi
-
-# IMPORTAND: starship goes after sensible.bash
-
-# starship prompt
-eval "$(starship init bash)"
 
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
@@ -71,7 +71,7 @@ xi () {
 		if [ "$1" = "-u" ]; then
 			shift
 		fi
-		sudo xbps-install -Su "$@"
+		sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
 		return
 	fi
 	xpkg -a |
@@ -111,11 +111,11 @@ search () {
     find "$path" -name "$@" 2> /dev/null
 }
 
-tst () {
+hist () {
 	history | 
 	fzf --no-sort --tac |
 	sed 's/  / /g' |
-	cut --complement -d ' ' -f 1-4
+	cut --complement -d ' ' -f 1-4 |
 	xargs 'bash -c'
 }
 
