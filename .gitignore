@@ -1,9 +1,11 @@
 .directory
 .netrwhist
 
-neovim/.config/nvim/plugged
+neovim/.config/nvim/autoload
 neovim/.config/nvim/backup
 neovim/.config/nvim/colors
+neovim/.config/nvim/plugged
+neovim/.config/nvim/undo
 
 bash/bin/vpm
 bash/bin/vsv
