@@ -28,16 +28,16 @@ if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 	source /usr/share/bash-completion/bash_completion
 fi
 
-if [[ "$DISPLAY" ]] ;then
-	if [[ -z "$TMUX" ]] ;then
-		ID="$(tmux ls | grep -vm1 attached | cut -d: -f1)" # get the id of a deattached session
-		if [[ -z "$ID" ]] ;then                            # if not available create a new one
-			exec tmux new-session
-		else
-			exec tmux attach-session -t "$ID"              # if available attach to it
-		fi
-	fi
-fi
+# pandoc completion
+eval "$(pandoc --bash-completion)"
+
+start_tmux() {
+    [[ -z "$TMUX" ]] && exec tmux
+}
+
+start_tmux
+
+set -o vi
 
 alias wtf="netbsd-wtf -o"
 
@@ -119,6 +119,10 @@ hist () {
 	xargs 'bash -c'
 }
 
+mkcd () {
+    mkdir "$1" && cd "$1"
+}
+
 nnnvim ()
 {
 	tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
@@ -161,7 +165,6 @@ n ()
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
 
-    # reset VISUAL
     unset VISUAL
     export VISUAL=$VISUAL_BAK
 }
@@ -187,24 +190,3 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
-
-#these where a mistake
-#they broke autocmpl
-#complete -c sudo
-#complete -c doas
-
-#PROMPT_COMMAND='(retval=$?;tput cup "$LINES";exit $retval)'
-
-#blink="\[\e[5m\]";
-#bold="\[\e[1m\]";
-#o_br="\[\e[38;5;9m\][";
-#user="\[\e[38;5;11m\]\u";
-#at="\[\e[38;5;10m\]@";
-#host="\[\e[38;5;14m\]\H:";
-#dir="\[\e[38;5;13m\]\W";
-#c_br="\[\e[38;5;9m\]]";
-#doll="\[\e[38;5;7m\]\$ ";
-#reset="\[\e[m\]";
-##reset_cursor='\033]50;CursorShape=1\x7'
-#
-#export PS1="$bold$o_br$user$at$host$dir$c_br$doll$reset"

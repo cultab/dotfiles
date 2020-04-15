@@ -5,6 +5,52 @@ show_always = false
 ssh_only = true
 
 [character]
-error_symbol = "✖"
+symbol = "❯ "
+error_symbol = " "
 use_symbol_for_status = true
-style_failure = "bold red"
+style_success = "green"
+style_failure = "red"
+
+[aws]
+symbol = " "
+
+[battery]
+full_symbol = ""
+charging_symbol = ""
+discharging_symbol = ""
+
+[conda]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
