@@ -8,6 +8,7 @@
       <value type="string" value="jetbrains-toolbox"/>
       <value type="string" value="MEGAsync"/>
       <value type="string" value="NetworkManager(nm-tray)"/>
+      <value type="string" value="notify-send"/>
       <value type="string" value="Skype"/>
       <value type="string" value="Thunar"/>
       <value type="string" value="vivaldi-snapshot"/>

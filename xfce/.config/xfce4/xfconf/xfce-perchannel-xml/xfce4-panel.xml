@@ -72,7 +72,7 @@
     </property>
     <property name="plugin-7" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
-      <property name="mpris-players" type="string" value="chromium.instance13255;chromium.instance14809;chromium.instance16243;chromium.instance2422;chromium.instance2574;chromium.instance2599;chromium.instance3442;chromium.instance5504;chromium.instance9871"/>
+      <property name="mpris-players" type="string" value="chromium.instance13255;chromium.instance14809;chromium.instance16243;chromium.instance2422;chromium.instance2574;chromium.instance2599;chromium.instance28703;chromium.instance3442;chromium.instance4290;chromium.instance5504;chromium.instance7517;chromium.instance9871"/>
     </property>
     <property name="plugin-1" type="string" value="xkb">
       <property name="display-type" type="uint" value="2"/>
