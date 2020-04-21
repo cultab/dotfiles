@@ -2,79 +2,93 @@
 set nocompatible
 set relativenumber
 set number
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab                     " no ta🅱️ s
 set shiftround " round indent to shiftwidth
+
 filetype plugin indent on
 set smarttab
 set autoindent
 set cindent
+set nowrap
+set breakindent
+
 set splitbelow
 set splitright
-let g:c_syntax_for_h = 1   " Assume .h files are c headers instead of cpp
 set noautochdir
 set hidden                 " Required for operations modifying multiple buffers like rename. with langclient
 set mouse=a                " enable mouse for a(ll) modes
+
 set autoread               " auto-update if changes are detected
+
+set inccommand=split " show substitutions live
 set incsearch
 set gdefault               " assume the 'g' in s/../../g
+set ignorecase
 set smartcase " all lower search is case insensitive
+
 set foldmethod=marker
+
 set scrolloff=3 " keep lines above and below cursor
-set inccommand=split " show substitutions live
+set sidescroll=6
+
 set shortmess+=c
+
 set backup
 set backupdir=~/.config/nvim/backup " don't leave a mess
 set backupskip=/tmp/*
 set undofile
 set undodir=~/.config/nvim/undo
 set noswapfile
+
 set clipboard+=unnamedplus
-set termguicolors " more colors ?
-syntax on
+
 set lazyredraw
 set modeline
-set signcolumn=yes " Always draw the signcolumn.
+
 set noshowmode
 set showcmd
-set nowrap
-set breakindent
+set signcolumn=auto " Always draw the signcolumn.
+
 set cursorline " highlight current line
+set termguicolors " more colors ?
 set background=dark
 set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
 
+let g:c_syntax_for_h = 1   " Assume .h files are c headers instead of cpp
 
 "}}}
 
 "{{{ Autocommands 
 
-"augroup close_preview_split
-"    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
-"augroup END
+if has("nvim")
+    augroup termBinds
+        autocmd!
+        autocmd TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+        autocmd FileType fzf tunmap <buffer> <Esc>
+    augroup END
 
-augroup PrettyIndent
-    autocmd!
-    autocmd TextChanged * call PrettyIndent()
-    autocmd BufEnter * call PrettyIndent()
-    autocmd InsertLeave * call PrettyIndent()
-augroup END
+    augroup filetype_autocmds
+        autocmd!
+        autocmd FileType rmd,md map <F6> :!R -e 'require(rmarkdown); render("./'%'");'<CR>
+        autocmd FileType sh,bash,vhdl call neomake#configure#automake('nwri', 0)
+    augroup end
+endif
 
 augroup auto_sauce
-    autocmd! BufWritePost $MYVIMRC source $MYVIMRC
-    autocmd! BufWritePost *.tmux,*.tmux.conf silent !tmux source-file ~/.tmux.conf
-    autocmd! BufWritePost ~/.bashrc silent !source ~/.bashrc "seems like it does nothing lol
+    autocmd!
+    autocmd BufWritePost init.vim nested source $MYVIMRC
+    autocmd BufWritePost *.tmux,*.tmux.conf silent !tmux source-file ~/.tmux.conf
+    autocmd BufWritePost ~/.bashrc silent !source ~/.bashrc "seems like it does nothing lol
 augroup END
 
 augroup lazy_load
+    autocmd!
     autocmd InsertEnter * call deoplete#enable()
     autocmd InsertEnter * call echodoc#enable()
-augroup end
-
-augroup filetype_autocmds
-    autocmd FileType rmd,md map <F6> :!R -e 'require(rmarkdown); render("./'%'");'<CR>
-    autocmd FileType sh,bash call NeomakeInit()
 augroup end
 
 " relative line numbers in normal mode, absolute numbers in insert mode
@@ -83,6 +97,17 @@ augroup numbertoggle
     autocmd InsertLeave * set relativenumber
     autocmd InsertEnter * set norelativenumber
 augroup END
+
+"augroup close_preview_split
+"    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
+"augroup END
+
+"augroup PrettyIndent
+"    autocmd!
+"    autocmd TextChanged * call PrettyIndent()
+"    autocmd BufEnter * call PrettyIndent()
+"    autocmd InsertLeave * call PrettyIndent()
+"augroup END
 
 "}}}
 
@@ -100,13 +125,6 @@ augroup END
 function! Render_R()
     :!R -e 'require(rmarkdown); render("./'%'");'
     echo 'Done!'
-endfunction
-
-function! NeomakeInit()
-    :Neomake
-    call neomake#configure#automake('nw', 750)
-    call neomake#configure#automake('rw', 1000)
-    call neomake#configure#automake('w')
 endfunction
 
 function! PrettyIndent()
@@ -156,24 +174,26 @@ Plug 'neomake/neomake'
 Plug 'jiangmiao/auto-pairs'
 
 " Text manipulation
-Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
+Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
 
-" (Optional from langclient) Multi-entry selection UI.
+" fzf
 Plug 'junegunn/fzf'
 
 " Highlighting
 Plug 'lilydjwg/colorizer'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'tmux-plugins/vim-tmux'
 
 " Visual
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'mhinz/vim-startify'
-Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/CycleColor'
+Plug 'edkolev/tmuxline.vim'
+Plug 'ryanoasis/vim-devicons'
 
 " Colorschemes
 Plug 'cultab/palenight.vim'
@@ -183,18 +203,24 @@ Plug 'cultab/plastic.vim'
 
 " Tmux intergration
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'edkolev/tmuxline.vim'
 Plug 'benmills/vimux'
+
 
 " Misc
 Plug 'tpope/vim-sensible'
+Plug '~/.fonts/scientifica/ligature_plugins'
 
 call plug#end()
 "}}}
 
 " Plugin Settings {{{
 
-" ctest
+" Completion Settings
+set omnifunc=syntaxcomplete#Complete
+set listchars=tab:┊\ ,nbsp:␣,trail:·,extends:>,precedes:<
+set fillchars=vert:\│
+set complete=.,w,b,i,u,t,
+set completefunc=LanguageClient#complete
 set completeopt=menu,longest
 
 call deoplete#custom#source('_', 'matchers', ['matcher_head', 'matcher_length'])
@@ -209,24 +235,20 @@ let g:LanguageClient_serverCommands = {
     \ 'c'     : ['/bin/clangd','--suggest-missing-includes' ],
     \ 'cpp'   : ['/bin/clangd','--suggest-missing-includes' ],
     \ 'python': ['~/.local/bin/pyls'],
-    \ 'vhdl'  : ['hdl_checker', '--lsp']
     \}
 
+    "\ 'vhdl'  : ['hdl_checker', '--lsp']
 "let g:pandoc#modules#disabled = ["folding"]
 
 let g:VimuxOrientation = "h"
 let g:tmux_navigator_no_mappings = 1
-
-let g:indentLine_setColors = 0
-let g:pretty_indent_namespace = nvim_create_namespace('pretty_indent')
-let g:indentLine_char = '│'
 
 "}}}
 
 " Visual + Lightline settings {{{
 
 " Colorscheme Options
-let g:palenight_terminal_italics = 1
+"let g:palenight_terminal_italics = 1
 "let g:onedark_terminal_italics = 1
 
 colorscheme palenight "after settings
@@ -235,12 +257,10 @@ colorscheme palenight "after settings
 let g:lightline#bufferline#show_number = 1
 let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline#bufferline#enable_devicons = 1
-if has('gui_running')
+
+if has('gui_running') " disable gui bufferline
     set guioptions-=e
 endif
-
-"symbols cache
-" ✖✗
 
 " Lightline options
 let g:lightline = {    
@@ -282,6 +302,9 @@ let g:lightline = {
     \}
 
 " Lightline Functions {{{
+
+"symbols cache
+" ✖✗
 
 function! LightlineReadonly()
     return &readonly ? '' : ''
@@ -375,12 +398,12 @@ endfunction
 
 "}}}
 
-"{{{ fzf settings
+"{{{ fzf settings TODO: fix this mess
 
 " Using floating windows of Neovim to start fzf
 
 if has('nvim')
-    let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
+    let $FZF_DEFAULT_OPTS .= ' --border --margin=0 --preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1}" --preview-window=right:75%'
 
     function! FloatingFZF()
         let width = float2nr(&columns * 0.9)
@@ -398,6 +421,23 @@ if has('nvim')
     let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 endif
 
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Leader>fb :call fzf#run(fzf#wrap(
+            \{'source': reverse(<sid>buflist()),
+            \ 'sink': function('<sid>bufopen'), 
+            \ 'options': '+m'}
+            \))<CR>
+
 "}}}
 
 " Mappings {{{
@@ -407,8 +447,6 @@ map <space> <leader>
 
 " easier repeat
 map <leader><space> .
-
-" TODO: consider Unite.vim or any other buffer managing plugin
 
 " fzf
 nnoremap <leader>ff :FZF<CR>
@@ -439,6 +477,7 @@ map <Leader>cc :VimuxPromptCommand<CR>
 noremap <leader>cb :e ~/.bashrc<CR>
 noremap <leader>ct :e ~/.tmux.conf<CR>
 noremap <leader>cs :e $repos/st/config.h<CR>
+noremap <leader>cd :e $repos/dwm/config.h<CR>
 noremap <leader>cv :e $MYVIMRC<CR>
 " reload vim config
 noremap <leader>cr :so $MYVIMRC<CR>
@@ -471,11 +510,6 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-g>u\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-g>u\<S-Tab>"
 
-nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
-nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
-nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
-nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
-
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -489,10 +523,14 @@ nnoremap <silent> # #zz
 nnoremap <silent><ESC> :nohlsearch<CR>
 
 " easier navigation in normal / visual / operator pending mode
-noremap K {
-noremap J }
 noremap H ^
 noremap L $
+
+nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
+nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
+nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
+nnoremap <silent> <C-w>o :TmuxNavigatePrevious<cr>
 
 " Change text without putting the text into register,
 nnoremap c "_c
@@ -500,16 +538,9 @@ nnoremap C "_C
 nnoremap cc "_cc
 nnoremap x "_x
 
-" Move text
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-
 " CycleColors, it's bound in the plugin but incase I forget
 nnoremap <f4> :CycleColorNext<CR>
 nnoremap <f3> :CycleColorPrev<CR>
-
-" Go into normal mode with Esc from terminal mode
-tnoremap <Esc> <C-\><C-n>
 
 " I never use Ex mode, so re-run macros instead
 nnoremap Q @@
@@ -517,6 +548,8 @@ nnoremap Q @@
 " sane movement through wrapping lines
 noremap j gj
 noremap k gk
+noremap ξ gj
+noremap κ gk
 
 " sometimes I get off the shift key too slowly
 cnoremap W w
