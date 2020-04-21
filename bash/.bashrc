@@ -5,9 +5,9 @@ if [[ $- != *i* ]]; then
     return
 fi
 
-# add ~/bin to $PATH
+# add stuff to $PATH
 if [[ -d ~/bin ]]; then
-	PATH+=":$HOME/bin:./"
+	PATH+=":$HOME/bin:./:$HOME/.local/share/applications"
 fi
 
 # starship prompt
@@ -32,12 +32,10 @@ fi
 eval "$(pandoc --bash-completion)"
 
 start_tmux() {
-    [[ -z "$TMUX" ]] && exec tmux
+    [[ $DISPLAY ]] && [[ -z "$TMUX" ]] && exec tmux
 }
 
 start_tmux
-
-set -o vi
 
 alias wtf="netbsd-wtf -o"
 
@@ -66,6 +64,11 @@ alias q="exit"
 alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
+alias stress_mem="stress-ng --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+
+#export FZF_DEFAULT_OPTS='--ansi '
+#export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude '.git' --color=always'
+
 xi () {
 	if [ "$@" ]; then
 		if [ "$1" = "-u" ]; then
@@ -77,7 +80,7 @@ xi () {
 	xpkg -a |
         fzf -m --preview 'xq -Rs {1}' \
             --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-install -y 
+        xargs -ro sudo xbps-install -Suy 
 }
 
 xr () {
@@ -116,7 +119,7 @@ hist () {
 	fzf --no-sort --tac |
 	sed 's/  / /g' |
 	cut --complement -d ' ' -f 1-4 |
-	xargs 'bash -c'
+	xargs bash -c
 }
 
 mkcd () {

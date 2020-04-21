@@ -12,5 +12,9 @@ bash/bin/vsv
 bash/bin/remove-vivaldi-snapshot.sh
 bash/bin/vivaldi-snapshot
 
+tmux/.config/tmux/plugins
+
 xfce/.config/xfce4/desktop
+
+kakoune/.config/kak/plugins
 

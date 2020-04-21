@@ -89,13 +89,15 @@ case "$1" in
 				touch /tmp/caffeinated
 				slock
 				return;
+			else
+				logger "LID closed, suspending..."
+                slock &
+				zzz
 			fi
-			logger "LID closed, suspending..."
-			zzz
 			;;
 		open)	
 			logger "LID opened"
-			rm /tmp/caffeinated
+			test -f /tmp/caffeinated && rm /tmp/caffeinated
 			;;
 		*) logger "ACPI action undefined (LID): $2";;
 	esac

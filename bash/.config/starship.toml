@@ -13,6 +13,7 @@ style_failure = "red"
 
 [aws]
 symbol = " "
+style = "yellow"
 
 [battery]
 full_symbol = ""
@@ -23,6 +24,7 @@ discharging_symbol = ""
 symbol = " "
 
 [git_branch]
+style = "purple"
 symbol = " "
 
 [golang]

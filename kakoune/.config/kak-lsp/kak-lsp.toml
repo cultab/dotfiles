@@ -1,0 +1,14 @@
+[language.c_cpp]
+filetypes = ["c", "cpp"]
+roots = ["compile_commands.json", ".clangd"]
+command = "clangd"
+
+[language.py]
+filetypes = ["py", "python"]
+roots = [".py"]
+command = "pyls"
+
+[language.vhdl]
+filetypes = ["vhdl", "vhd"]
+roots = [".vhd"]
+command = "ghdl-ls"
