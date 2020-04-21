@@ -1,0 +1,22 @@
+#!/bin/bash
+
+batperc=$(upower -i $(upower -e | grep BAT0) | grep 'percentage' | cut -d ':' -f 2 | sed -E 's/\s+//g' | sed 's/%//g')
+
+bat_width=$(echo "$batperc/3" | bc)
+bat_width=$(echo "30-$bat_width" | bc)
+
+
+
+
+bat_color=""
+
+if [ $batperc -le 10 ]; then
+    bat_color="#ffff00"
+elif [ $batperc -le 5 ]; then
+    bat_color="#ff0000"
+else
+    bat_color="#00ee00"
+fi
+
+bat="^r0,7,2,4^^r2,4,22,10^^c$bat_color^^r3,5,20,8^^c#ffffff^^r10,5,13,8^^d^^f24^"
+echo "$bat"
