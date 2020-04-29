@@ -1,14 +1,15 @@
 # .bashrc
 
-# If not running interactively, don't do anything
+# add stuff to $PATH
+if [[ -d ~/bin ]]; then
+	PATH+=":$HOME/bin:./:$HOME/.local/share/applications:$HOME/go/bin"
+fi
+
+# If not running interactively, don't do anything more
 if [[ $- != *i* ]]; then 
     return
 fi
 
-# add stuff to $PATH
-if [[ -d ~/bin ]]; then
-	PATH+=":$HOME/bin:./:$HOME/.local/share/applications"
-fi
 
 # starship prompt
 eval "$(starship init bash)"
@@ -20,22 +21,28 @@ if [ -f ~/.local/bash/sensible.bash ]; then
    source ~/.local/bash/sensible.bash
 fi
 
-# simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
-#PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
-
 # Use bash-completion, if available
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 	source /usr/share/bash-completion/bash_completion
 fi
 
 # pandoc completion
-eval "$(pandoc --bash-completion)"
+if [ -x "$(command -v pandoc)" ]; then
+    eval "$(pandoc --bash-completion)"
+fi
 
-start_tmux() {
-    [[ $DISPLAY ]] && [[ -z "$TMUX" ]] && exec tmux
-}
+# startx
+[[ -z $DISPLAY ]] && startx
 
-start_tmux
+# start tmux
+#[[ $DISPLAY ]] && [[ -z "$TMUX" ]] && exec tmux
+
+# Exports
+export BROWSER="vivaldi-stable"
+export GOPATH=$HOME/go
+export EDITOR="vim"
+
+export LS_COLORS=$(dircolors)
 
 alias wtf="netbsd-wtf -o"
 
@@ -45,10 +52,14 @@ alias vimdiff="vim -d"
 
 alias cat="bat"
 
-alias ls="lsd --group-dirs=first"
-alias ll="lsd --group-dirs=first --long"
-alias la="lsd --group-dirs=first --long --almost-all"
-alias lt="lsd --group-dirs=first --tree"
+#alias ls="lsd --group-dirs=first"
+#alias ll="lsd --group-dirs=first --long"
+#alias la="lsd --group-dirs=first --long --almost-all"
+#alias lt="lsd --group-dirs=first --tree"
+alias ls="exa --group-directories-first"
+alias ll="exa --group-directories-first --long"
+alias la="exa --group-directories-first --long --all"
+alias lt="exa --group-directories-first --tree"
 
 alias diff="diff --color=auto"
 alias grep="grep --color=auto"
@@ -64,7 +75,7 @@ alias q="exit"
 alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
-alias stress_mem="stress-ng --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
 
 #export FZF_DEFAULT_OPTS='--ansi '
 #export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude '.git' --color=always'
@@ -100,7 +111,7 @@ google () {
 		return
 	fi
 	query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
-	vivaldi-snapshot "$query" 2> /dev/null &
+	$BROWSER "$query" 2> /dev/null &
 	disown
 }
 
@@ -119,7 +130,7 @@ hist () {
 	fzf --no-sort --tac |
 	sed 's/  / /g' |
 	cut --complement -d ' ' -f 1-4 |
-	xargs bash -c
+    xclip -i
 }
 
 mkcd () {
@@ -132,13 +143,13 @@ nnnvim ()
 	n
 }
 
-export NNN_CONTEXT_COLORS="2136"     # use a different color for each context
-export NNN_TRASH=1                   # trash (needs trash-cli) instead of delete
-export NNN_USE_EDITOR=1              # use the $EDITOR when opening text files
-
 # stolen from https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash
 n ()
 {
+    export NNN_CONTEXT_COLORS="2136"     # use a different color for each context
+    export NNN_TRASH=1                   # trash (needs trash-cli) instead of delete
+    export NNN_USE_EDITOR=1              # use the $EDITOR when opening text files
+
     # Block nesting of nnn in subshells
     if [ "${NNNLVL:-0}" -ge 1 ]; then
         echo "nnn is already running"
@@ -172,11 +183,6 @@ n ()
     export VISUAL=$VISUAL_BAK
 }
 
-export MYVIMRC=~/.config/nvim/init.vim
-
-export EDITOR="vim"
-
-export LS_COLORS=$(dircolors)
 
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
@@ -193,3 +199,7 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
+
+# simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
+#PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
+

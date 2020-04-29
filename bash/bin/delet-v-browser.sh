@@ -1,1 +1,0 @@
-/home/evan/.local/share/remove-vivaldi-snapshot.sh
