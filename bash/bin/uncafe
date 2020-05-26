@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-if [ -f /tmp/caffeinated ]; then
-	rm /tmp/caffeinated 2> /dev/null 
+if [ -f /tmp/cafe ]; then
+	rm /tmp/cafe 2> /dev/null 
 else 
-	echo "Can't uncafe, not caffeinated!";
+	echo "Nothing to uncaffienate.";
 	exit 1
 fi
