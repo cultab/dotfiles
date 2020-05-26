@@ -1,7 +1,22 @@
+
+"                        _                                                                              
+"                       | |                                                                                    
+"    _             _    | |               _                                                                   
+"   |_|           |_|   | |              |_|                                                                  
+"    _   ______    _   _| |_    __   __   _    ___________       _                                                           
+"   | | |  __  |  | | |_   _|   \ \ / /  | |  |  __   __  |    _| |_                                                         
+"   | | | |  | |  | |   | |      \ v /   | |  | |  | |  | |   |_   _|                                                        
+"   | | | |  | |  | |   | |   _   \ /    | |  | |  | |  | |     |_|                                                           
+"   |_| |_|  |_|  |_|   |_|  |_|   v     |_|  |_|  |_|  |_|                                                                  
+"  ___________________________________________________________________                                            
+" |___________________________________________________________________|                                           
+"                                                                                                       
+
 "Basic Settings {{{
 set nocompatible
 set relativenumber
 set number
+set signcolumn=yes
 
 set tabstop=4
 set softtabstop=4
@@ -51,10 +66,9 @@ set modeline
 
 set noshowmode
 set showcmd
-set signcolumn=auto " Always draw the signcolumn.
 
 set cursorline " highlight current line
-set termguicolors " more colors ?
+set colorcolumn=80
 set background=dark
 set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
 
@@ -74,14 +88,19 @@ if has("nvim")
     augroup filetype_autocmds
         autocmd!
         autocmd FileType rmd,md map <F6> :!R -e 'require(rmarkdown); render("./'%'");'<CR>
-        autocmd FileType sh,bash,vhdl call neomake#configure#automake('nwri', 0)
+        autocmd FileType sh,bash,vhdl,java call neomake#configure#automake('nwri', 0)
     augroup end
 endif
+
+augroup formating
+    autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+augroup END
 
 augroup auto_sauce
     autocmd!
     autocmd BufWritePost init.vim nested source $MYVIMRC
     autocmd BufWritePost *.tmux,*.tmux.conf silent !tmux source-file ~/.tmux.conf
+    autocmd BufWritePost ~/.config/xrdb/Xresources silent !xrdb -merge -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources
     autocmd BufWritePost ~/.bashrc silent !source ~/.bashrc "seems like it does nothing lol
 augroup END
 
@@ -98,16 +117,16 @@ augroup numbertoggle
     autocmd InsertEnter * set norelativenumber
 augroup END
 
-"augroup close_preview_split
-"    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
-"augroup END
+" fix langclient hover
+augroup markdown_language_client_commands
+    autocmd!
+    autocmd WinLeave __LanguageClient__ ++nested call <SID>fixLanguageClientHover()
+augroup END
 
-"augroup PrettyIndent
-"    autocmd!
-"    autocmd TextChanged * call PrettyIndent()
-"    autocmd BufEnter * call PrettyIndent()
-"    autocmd InsertLeave * call PrettyIndent()
-"augroup END
+augroup close_preview_split
+    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
+augroup END
+
 
 "}}}
 
@@ -127,27 +146,13 @@ function! Render_R()
     echo 'Done!'
 endfunction
 
-function! PrettyIndent()
-    let l:view=winsaveview()
-    call cursor(1, 1)
-    call nvim_buf_clear_namespace(0, g:pretty_indent_namespace, 1, -1)
-    while 1
-        let l:match = search('^$', 'W')
-        if l:match ==# 0
-            break
-        endif
-        let l:indent = cindent(l:match)
-        if l:indent > 0
-            call nvim_buf_set_virtual_text(
-            \   0,
-            \   g:pretty_indent_namespace,
-            \   l:match - 1,
-            \   [[repeat(repeat(' ', &shiftwidth - 1) . '│', l:indent / &shiftwidth), 'IndentGuide']],
-            \   {}
-            \)
-        endif
-    endwhile
-    call winrestview(l:view)
+function! s:fixLanguageClientHover()
+    setlocal wrap
+    setlocal modifiable
+    setlocal conceallevel=2
+    normal i
+    setlocal nonu nornu
+    setlocal nomodifiable
 endfunction
 
 "}}}
@@ -172,39 +177,40 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neco-vim'
 Plug 'neomake/neomake'
 Plug 'jiangmiao/auto-pairs'
+Plug 'artur-shaik/vim-javacomplete2'
 
 " Text manipulation
-Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 
 " fzf
 Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Highlighting
 Plug 'lilydjwg/colorizer'
+Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'tmux-plugins/vim-tmux'
 
 " Visual
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'mhinz/vim-startify'
-Plug 'vim-scripts/CycleColor'
-Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'vim-scripts/CycleColor'
 
 " Colorschemes
 Plug 'cultab/palenight.vim'
-Plug 'joshdick/onedark.vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'cultab/plastic.vim'
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'lifepillar/vim-solarized8'
+Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'romgrk/github-light.vim'
 
 " Tmux intergration
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
-
+Plug 'christoomey/vim-tmux-navigator'
 
 " Misc
 Plug 'tpope/vim-sensible'
@@ -215,7 +221,6 @@ call plug#end()
 
 " Plugin Settings {{{
 
-" Completion Settings
 set omnifunc=syntaxcomplete#Complete
 set listchars=tab:┊\ ,nbsp:␣,trail:·,extends:>,precedes:<
 set fillchars=vert:\│
@@ -232,9 +237,10 @@ let g:echodoc#type = 'floating'
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 
 let g:LanguageClient_serverCommands = {
-    \ 'c'     : ['/bin/clangd','--suggest-missing-includes' ],
-    \ 'cpp'   : ['/bin/clangd','--suggest-missing-includes' ],
+    \ 'c'   : ['/bin/clangd','--suggest-missing-includes' ],
+    \ 'cpp' : ['/bin/clangd','--suggest-missing-includes' ],
     \ 'python': ['~/.local/bin/pyls'],
+    \ 'go'  : ['gopls'],
     \}
 
     "\ 'vhdl'  : ['hdl_checker', '--lsp']
@@ -243,15 +249,25 @@ let g:LanguageClient_serverCommands = {
 let g:VimuxOrientation = "h"
 let g:tmux_navigator_no_mappings = 1
 
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_guide_size = 1
+
+
 "}}}
 
 " Visual + Lightline settings {{{
 
 " Colorscheme Options
-"let g:palenight_terminal_italics = 1
-"let g:onedark_terminal_italics = 1
+set termguicolors
 
-colorscheme palenight "after settings
+let g:palenight_terminal_italics = 1
+
+let g:solarized_extra_hi_groups = 1
+
+
+set background=light
+colorscheme selenized_bw
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -264,7 +280,7 @@ endif
 
 " Lightline options
 let g:lightline = {    
-    \   'colorscheme' : 'palenight',
+    \   'colorscheme' : 'selenized_white',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
@@ -297,9 +313,12 @@ let g:lightline = {
     \       'err_cnt'  : 'LightlineErrorCount',
     \       'wrn_cnt'  : 'LightlineWarningCount'
     \   },
-    \   'separator'    : { 'left': '', 'right': '' },
-    \   'subseparator' : { 'left': '', 'right': '' },
+    \   'separator'    : { 'left': '', 'right': '' },
+    \   'subseparator' : { 'left': '', 'right': '' },
     \}
+
+    " \   'separator'    : { 'left': '', 'right': '' },
+    " \   'subseparator' : { 'left': '', 'right': '' },
 
 " Lightline Functions {{{
 
@@ -403,7 +422,7 @@ endfunction
 " Using floating windows of Neovim to start fzf
 
 if has('nvim')
-    let $FZF_DEFAULT_OPTS .= ' --border --margin=0 --preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1}" --preview-window=right:75%'
+    let $FZF_DEFAULT_OPTS .= '--preview-window=right:75%'
 
     function! FloatingFZF()
         let width = float2nr(&columns * 0.9)
@@ -432,12 +451,6 @@ function! s:bufopen(e)
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
 
-nnoremap <silent> <Leader>fb :call fzf#run(fzf#wrap(
-            \{'source': reverse(<sid>buflist()),
-            \ 'sink': function('<sid>bufopen'), 
-            \ 'options': '+m'}
-            \))<CR>
-
 "}}}
 
 " Mappings {{{
@@ -446,16 +459,24 @@ nnoremap <silent> <Leader>fb :call fzf#run(fzf#wrap(
 map <space> <leader>
 
 " easier repeat
-map <leader><space> .
+"map <leader><space> .
 
 " fzf
-nnoremap <leader>ff :FZF<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>fl :Lines<CR>
+nnoremap <leader>fa :Ag<CR>
+nnoremap <leader>fh :Helptags<CR>
+nnoremap <leader>fc :Colors<CR>
+nnoremap <leader>ft :Tags<CR>
 
 " langclient
 nnoremap <leader>sm :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>sa :call LanguageClient#textDocument_codeAction()<CR>
-"nnoremap <leader>sa :call LanguageClient#handleCodeLensAction()<CR>
-"nnoremap <leader>sa :call LanguageClient#handleCodeLensAction()<CR>
+nnoremap <F5>       :call LanguageClient_contextMenu()<CR>
+nnoremap <silent>Y  :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent><F2> :call LanguageClient#textDocument_rename()<CR>
 
 " list
 nnoremap <leader>bl :ls:<CR>
@@ -492,19 +513,6 @@ noremap <leader>tt :Tabularize<space>/
 " text align
 noremap <leader>ta :EasyAlign<CR>
 
-" Deal with the system clipboard CREDIT: Blaradox
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
-nnoremap <leader>P "+P
-
-" langclient
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> U :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
 " enter inserts seletion
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-g>u\<Tab>"
@@ -515,6 +523,9 @@ nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
+
+" cut line
+nnoremap S i<CR><ESC>k$
 
 " split prefix, C-w is taken by TMUX
 " nnoremap <C-a> <C-w>
@@ -551,11 +562,12 @@ noremap k gk
 noremap ξ gj
 noremap κ gk
 
-" sometimes I get off the shift key too slowly
-cnoremap W w
-cnoremap Q q
-cnoremap Wq wq
-cnoremap WQ wq
+" sometimes I get off the shift key too slowly, ~~maybe don't do it then?~~,
+" HA abbr to the rescue
+cabbr Q q
+cabbr W w
+cabbr Wq wq
+cabbr WQ wq
 
 " Output the current syntax group
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
