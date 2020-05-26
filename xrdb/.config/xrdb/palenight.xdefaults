@@ -1,0 +1,22 @@
+/* palenight */
+
+#define base00 #222222
+#define base01 #ff5370
+#define base02 #c3e88d
+#define base03 #ffcb6b
+#define base04 #82b1ff
+#define base05 #c279ea
+#define base06 #89ddff
+#define base07 #d7d7d7
+#define base08 #181a1f
+#define base09 #ff4350
+#define base0A #b3e85d
+#define base0B #ffdf32
+#define base0C #72a1ef
+#define base0D #b772da
+#define base0E #79ddef
+#define base0F #f8f8f8
+#define basefg base07
+#define basebg base00
+#define basecc base07
+#define basesb base0A

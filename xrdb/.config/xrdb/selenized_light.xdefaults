@@ -1,0 +1,29 @@
+!---------------------------------------------------------------------------
+! Selenized light color palette for urxvt and X Window System
+!
+#define    bg_0        #fbf3db
+#define    bg_1        #e9e4d0
+#define    bg_2        #cfcebe
+#define    dim_0       #909995
+#define    fg_0        #53676d
+#define    fg_1        #3a4d53
+
+#define    red         #d2212d
+#define    green       #489100
+#define    yellow      #ad8900
+#define    blue        #0072d4
+#define    magenta     #ca4898
+#define    cyan        #009c8f
+#define    orange      #c25d1e
+#define    violet      #8762c6
+
+#define    br_red      #cc1729
+#define    br_green    #428b00
+#define    br_yellow   #a78300
+#define    br_blue     #006dce
+#define    br_magenta  #c44392
+#define    br_cyan     #00978a
+#define    br_orange   #bc5819
+#define    br_violet   #825dc0
+
+#include "selenized_translate.xdefaults"

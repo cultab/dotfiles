@@ -1,0 +1,22 @@
+! Translate selenized names to my names
+
+#define base00 bg_1
+#define base01 red
+#define base02 green
+#define base03 yellow
+#define base04 blue
+#define base05 magenta
+#define base06 cyan
+#define base07 dim_0
+#define base08 bg_2
+#define base09 br_red
+#define base0A br_green
+#define base0B br_yellow
+#define base0C br_blue
+#define base0D br_magenta
+#define base0E br_cyan
+#define base0F fg_1
+#define basefg fg_0
+#define basebg bg_0
+#define basecc fg_1
+#define basesb blue
