@@ -1,0 +1,1 @@
+/home/evan/repos/dwm-bar/dwm_bar.sh
