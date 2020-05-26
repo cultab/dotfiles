@@ -10,6 +10,8 @@ if [[ $- != *i* ]]; then
     return
 fi
 
+# colors
+#msgcat  --color=test | head -10 | tail -8
 
 # starship prompt
 eval "$(starship init bash)"
@@ -31,11 +33,8 @@ if [ -x "$(command -v pandoc)" ]; then
     eval "$(pandoc --bash-completion)"
 fi
 
-# startx
-[[ -z $DISPLAY ]] && startx
-
-# start tmux
-#[[ $DISPLAY ]] && [[ -z "$TMUX" ]] && exec tmux
+# colors! wow!
+$(fd . ~/repos/Color-Scripts/color-scripts/ | grep -v pipe | shuf -n 1)
 
 # Exports
 export BROWSER="vivaldi-stable"
@@ -61,10 +60,7 @@ alias ll="exa --group-directories-first --long"
 alias la="exa --group-directories-first --long --all"
 alias lt="exa --group-directories-first --tree"
 
-alias diff="diff --color=auto"
 alias grep="grep --color=auto"
-alias fgrep="fgrep --color=auto"
-alias egrep="egrep --color=auto"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -76,6 +72,8 @@ alias mpiall="mpirun --use-hwthread-cpus"
 alias mpirf="mpirun --oversubscribe"
 
 alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+
+alias pse="ps aux | grep"
 
 #export FZF_DEFAULT_OPTS='--ansi '
 #export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude '.git' --color=always'
@@ -89,8 +87,7 @@ xi () {
 		return
 	fi
 	xpkg -a |
-        fzf -m --preview 'xq -Rs {1}' \
-            --preview-window=right:66%:wrap |
+        fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
         xargs -ro sudo xbps-install -Suy 
 }
 
@@ -100,9 +97,8 @@ xr () {
 		return
 	fi
     xpkg -m |
-        fzf -m --preview 'xq {1}' \
-            --preview-window=right:66%:wrap |
-		xargs -ro sudo xbps-remove -Ry
+        fzf -m --preview 'xbps-query {1}' --preview-window=right:66%:wrap |
+		xargs -ro sudo xbps-remove -Roy
 }
 
 google () {
