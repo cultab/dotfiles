@@ -3,7 +3,6 @@
 
 neovim/.config/nvim/autoload
 neovim/.config/nvim/backup
-neovim/.config/nvim/colors
 neovim/.config/nvim/plugged
 neovim/.config/nvim/undo
 neovim/.config/nvim/spell
