@@ -1,5 +1,5 @@
 [global]
-font = Iosevka Term 11
+font = Terminus 12
 
 # Allow a small subset of html markup:
 #   <b>bold</b>
@@ -148,11 +148,11 @@ dmenu = /usr/bin/dmenu -p dunst:
 browser = /usr/bin/firefox -new-tab
 
 # Align icons left/right/off
-icon_position = off
+icon_position = right
 max_icon_size = 80
 
 # Paths to default icons.
-icon_path = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
+icon_path = /usr/share/icons/gnome/16x16/mimetypes/:/usr/share/icons/gnome/48x48/status/:/usr/share/icons/gnome/16x16/devices/:/usr/share/icons/gnome/48x48/notifications/:/usr/share/icons/gnome/48x48/emblems/
 
 frame_width = 3
 frame_color = "#8EC07C"
@@ -181,24 +181,21 @@ context = ctrl+shift+period
 [urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
-frame_color = "#3B7C87"
-foreground = "#3B7C87"
-background = "#191311"
-#background = "#2B313C"
+frame_color = "#82b1ff"
+foreground = "#82b1ff"
+background = "#292d3d"
 timeout = 4
 
 [urgency_normal]
-frame_color = "#5B8234"
-foreground = "#5B8234"
-background = "#191311"
-#background = "#2B313C"
+frame_color = "#c3e88d"
+foreground = "#c3e88d"
+background = "#292d3d"
 timeout = 6
 
 [urgency_critical]
-frame_color = "#B7472A"
-foreground = "#B7472A"
-background = "#191311"
-#background = "#2B313C"
+frame_color = "#ff5470"
+foreground = "#ff5470"
+background = "#292d3d"
 timeout = 8
 
 
