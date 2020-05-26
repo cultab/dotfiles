@@ -87,11 +87,11 @@ case "$1" in
 				logger "LID closed while caffeinated, locking screen and un-caffeinating"
 				rm /tmp/cafe
 				touch /tmp/caffeinated
-				slock
-				return;
+                xautolock -locknow
 			else
 				logger "LID closed, suspending..."
-                slock &
+                xautolock -locknow
+                sleep 5
 				zzz
 			fi
 			;;
