@@ -133,53 +133,6 @@ mkcd () {
     mkdir "$1" && cd "$1"
 }
 
-nnnvim ()
-{
-	tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
-	n
-}
-
-# stolen from https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash
-n ()
-{
-    export NNN_CONTEXT_COLORS="2136"     # use a different color for each context
-    export NNN_TRASH=1                   # trash (needs trash-cli) instead of delete
-    export NNN_USE_EDITOR=1              # use the $EDITOR when opening text files
-
-    # Block nesting of nnn in subshells
-    if [ "${NNNLVL:-0}" -ge 1 ]; then
-        echo "nnn is already running"
-        return
-    fi
-
-    # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
-    # To cd on quit only on ^G, remove the "export" as in:
-    #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-    # NOTE: NNN_TMPFILE is fixed, should not be modified
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
-    # backup VISUAL and set it so as to open vim in a new tmux pane
-    VISUAL_BAK=$VISUAL
-    export VISUAL="nnnvim_handle"
-    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
-    # stty start undef
-    # stty stop undef
-    # stty lwrap undef
-    # stty lnext undef
-
-    # use -E for detached editing
-    nnn -E "$@"
-
-    if [ -f "$NNN_TMPFILE" ]; then
-            . "$NNN_TMPFILE"
-            rm -f "$NNN_TMPFILE" > /dev/null
-    fi
-
-    unset VISUAL
-    export VISUAL=$VISUAL_BAK
-}
-
-
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
 export LESS_TERMCAP_md=$(tput bold; tput setaf 4)            # begin blink
@@ -199,3 +152,8 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
+nnnvim ()
+{
+	tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
+	n
+}
