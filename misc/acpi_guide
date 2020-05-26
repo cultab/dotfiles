@@ -1,0 +1,3 @@
+sudo mv handler.sh /etc/acpi/
+sudoedit /etc/elogind/logind.conf
+
