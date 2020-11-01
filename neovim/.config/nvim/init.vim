@@ -207,6 +207,7 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-solarized8'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'romgrk/github-light.vim'
+Plug 'romgrk/doom-one.vim'
 
 " Tmux intergration
 Plug 'benmills/vimux'
@@ -267,7 +268,7 @@ let g:solarized_extra_hi_groups = 1
 
 
 set background=light
-colorscheme selenized_bw
+colorscheme doom-one
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -280,7 +281,7 @@ endif
 
 " Lightline options
 let g:lightline = {    
-    \   'colorscheme' : 'selenized_white',
+    \   'colorscheme' : 'one',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],

@@ -2,12 +2,17 @@
 
 # add stuff to $PATH
 if [[ -d ~/bin ]]; then
-	PATH+=":$HOME/bin:./:$HOME/.local/share/applications:$HOME/go/bin"
+	PATH+=":$HOME/bin:./:$HOME/.local/share/applications:$HOME/go/bin:$HOME/.cargo/bin"
 fi
 
 # If not running interactively, don't do anything more
 if [[ $- != *i* ]]; then 
     return
+fi
+
+if [[ $WSLENV ]]; then
+	if [[ $(pwd) == "/mnt/c/Users/evan" ]]; then cd ~; fi
+	if [ ! $TMUX ]; then exec tmux ; fi
 fi
 
 # colors
@@ -83,12 +88,22 @@ xi () {
 		if [ "$1" = "-u" ]; then
 			shift
 		fi
-		sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
+		if [ $(command -v xbps-install) ]; then
+			sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
+		elif [ $(command -v apt) ]; then
+			sudo apt install "$@"
+		fi
 		return
 	fi
-	xpkg -a |
-        fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-install -Suy 
+	if [ $(command -v xbps-install) ]; then
+		xpkg -a |
+			fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
+			xargs -ro sudo xbps-install -Suy 
+	elif [ $(command -v apt) ]; then
+		apt-cache pkgnames --generate |
+			fzf -m --preview 'apt-cache showpkg {1}' --preview-window=right:66%:wrap |
+			xargs -ro sudo apt-get install -y 
+	fi
 }
 
 xr () {
