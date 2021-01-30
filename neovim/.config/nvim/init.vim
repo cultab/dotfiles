@@ -18,12 +18,6 @@ set relativenumber
 set number
 set signcolumn=yes
 
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab                     " no ta🅱️ s
-set shiftround " round indent to shiftwidth
-
 filetype plugin indent on
 set smarttab
 set autoindent
@@ -31,19 +25,26 @@ set cindent
 set nowrap
 set breakindent
 
+set noexpandtab  " use ta🅱️ s
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround " round indent to shiftwidth
+
 set splitbelow
 set splitright
-set noautochdir
-set hidden                 " Required for operations modifying multiple buffers like rename. with langclient
-set mouse=a                " enable mouse for a(ll) modes
+set autochdir  " automatically change directory
+set hidden  " Required for operations modifying multiple buffers like rename. with langclient
+set mouse=a  " enable mouse for a(ll) modes
 
-set autoread               " auto-update if changes are detected
+set autoread " auto-update if changes are detected, that's a big IF btw
 
 set inccommand=split " show substitutions live
 set incsearch
-set gdefault               " assume the 'g' in s/../../g
+set gdefault  " assume the 'g' in s/../../g
 set ignorecase
 set smartcase " all lower search is case insensitive
+set spelllang=el
 
 set foldmethod=marker
 
@@ -55,8 +56,8 @@ set shortmess+=c
 set backup
 set backupdir=~/.config/nvim/backup " don't leave a mess
 set backupskip=/tmp/*
-set undofile
 set undodir=~/.config/nvim/undo
+set undofile
 set noswapfile
 
 set clipboard+=unnamedplus
@@ -93,15 +94,18 @@ if has("nvim")
 endif
 
 augroup formating
+    autocmd!
     autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+    " autocmd BufWritePre *.py :call LanguageClient#textDocument_formatting_sync()
 augroup END
 
 augroup auto_sauce
     autocmd!
     autocmd BufWritePost init.vim nested source $MYVIMRC
     autocmd BufWritePost *.tmux,*.tmux.conf silent !tmux source-file ~/.tmux.conf
-    autocmd BufWritePost ~/.config/xrdb/Xresources silent !xrdb -merge -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources
+    autocmd BufWritePost *.xdefaults silent !xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
     autocmd BufWritePost ~/.bashrc silent !source ~/.bashrc "seems like it does nothing lol
+    autocmd BufWritePost *.tex,*.latex silent !xelatex % 
 augroup END
 
 augroup lazy_load
@@ -124,7 +128,14 @@ augroup markdown_language_client_commands
 augroup END
 
 augroup close_preview_split
+    autocmd!
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
+augroup END
+
+" not yet supported
+augroup lang_cliennt
+    autocmd!
+    autocmd User LanguageServerCrashed * echo OUPS OUPS
 augroup END
 
 
@@ -176,8 +187,10 @@ Plug 'Shougo/echodoc.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neco-vim'
 Plug 'neomake/neomake'
-Plug 'jiangmiao/auto-pairs'
 Plug 'artur-shaik/vim-javacomplete2'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
 
 " Text manipulation
 Plug 'godlygeek/tabular'
@@ -202,7 +215,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/CycleColor'
 
 " Colorschemes
-Plug 'cultab/palenight.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-solarized8'
 Plug 'shinchu/lightline-gruvbox.vim'
@@ -214,7 +227,7 @@ Plug 'christoomey/vim-tmux-navigator'
 
 " Misc
 Plug 'tpope/vim-sensible'
-Plug '~/.fonts/scientifica/ligature_plugins'
+"Plug '~/.fonts/scientifica/ligature_plugins'
 
 call plug#end()
 "}}}
@@ -236,11 +249,13 @@ let g:echodoc#type = 'floating'
 " Change the truncate width of completions.
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 
+let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
+
 let g:LanguageClient_serverCommands = {
-    \ 'c'   : ['/bin/clangd','--suggest-missing-includes' ],
-    \ 'cpp' : ['/bin/clangd','--suggest-missing-includes' ],
-    \ 'python': ['~/.local/bin/pyls'],
-    \ 'go'  : ['gopls'],
+    \ 'python' : ['~/.local/bin/pyls'],
+    \ 'cpp'    : ['/bin/clangd','--suggest-missing-includes' ],
+    \ 'go'     : ['gopls'],
+    \ 'c'      : ['/bin/clangd','--suggest-missing-includes' ],
     \}
 
     "\ 'vhdl'  : ['hdl_checker', '--lsp']
@@ -253,6 +268,10 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_guide_size = 1
 
+" adding the default first
+let g:AutoPairs={'```': '```', '`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '''''''': '''''''', '[': ']', '"""': '"""'}
+" adding extra TODO: autocommand for markdown, rmarkdown,tex files
+let g:AutoPairs['$']='$'
 
 "}}}
 
@@ -262,12 +281,13 @@ let g:indent_guides_guide_size = 1
 set termguicolors
 
 let g:palenight_terminal_italics = 1
-
 let g:solarized_extra_hi_groups = 1
+let g:lightline#colorscheme#github_light#faithful = 0
 
 
-set background=light
-colorscheme selenized_bw
+"colo github-light
+colorscheme palenight
+
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -280,7 +300,7 @@ endif
 
 " Lightline options
 let g:lightline = {    
-    \   'colorscheme' : 'selenized_white',
+    \   'colorscheme' : 'palenight',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
@@ -422,22 +442,23 @@ endfunction
 " Using floating windows of Neovim to start fzf
 
 if has('nvim')
-    let $FZF_DEFAULT_OPTS .= '--preview-window=right:75%'
 
-    function! FloatingFZF()
-        let width = float2nr(&columns * 0.9)
-        let height = float2nr(&lines * 0.6)
-        let opts = { 'relative': 'editor',
-                   \ 'row': (&lines - height) / 2,
-                   \ 'col': (&columns - width) / 2,
-                   \ 'width': width,
-                   \ 'height': height }
+    let $FZF_DEFAULT_OPTS = '--preview-window=right:75% --preview=bat'
+    let g:LanguageClient_selectionUI = 'fzf' " TODO: make a bug report that this is not actually default
+    " function! FloatingFZF()
+    "     let width = float2nr(&columns * 0.9)
+    "     let height = float2nr(&lines * 0.6)
+    "     let opts = { 'relative': 'editor',
+    "                \ 'row': (&lines - height) / 2,
+    "                \ 'col': (&columns - width) / 2,
+    "                \ 'width': width,
+    "                \ 'height': height }
 
-        let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-        call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
-    endfunction
+    "     let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    "     call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+    " endfunction
 
-    let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+    " let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 endif
 
 function! s:buflist()
@@ -471,11 +492,11 @@ nnoremap <leader>fc :Colors<CR>
 nnoremap <leader>ft :Tags<CR>
 
 " langclient
-nnoremap <leader>sm :call LanguageClient_contextMenu()<CR>
-nnoremap <leader>sa :call LanguageClient#textDocument_codeAction()<CR>
-nnoremap <F5>       :call LanguageClient_contextMenu()<CR>
-nnoremap <silent>Y  :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <leader>sa   :call LanguageClient#textDocument_codeAction()<CR>
+nnoremap <leader>sm	  :call LanguageClient_contextMenu()<CR>
+nnoremap <F5>         :call LanguageClient_contextMenu()<CR>
+nnoremap <silent>Y    :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent>gd   :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent><F2> :call LanguageClient#textDocument_rename()<CR>
 
 " list
@@ -497,9 +518,10 @@ map <Leader>cc :VimuxPromptCommand<CR>
 " edit configs
 noremap <leader>cb :e ~/.bashrc<CR>
 noremap <leader>ct :e ~/.tmux.conf<CR>
-noremap <leader>cs :e $repos/st/config.h<CR>
-noremap <leader>cd :e $repos/dwm/config.h<CR>
+noremap <leader>cs :e ~/repos/st/config.h<CR>
+noremap <leader>cd :e ~/repos/dwm/config.h<CR>
 noremap <leader>cv :e $MYVIMRC<CR>
+noremap <leader>cx :e ~/.config/xrdb/<CR>
 " reload vim config
 noremap <leader>cr :so $MYVIMRC<CR>
 
@@ -513,9 +535,10 @@ noremap <leader>tt :Tabularize<space>/
 " text align
 noremap <leader>ta :EasyAlign<CR>
 
-" enter inserts seletion
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-g>u\<Tab>"
+" enter inserts seletion, C-CR otherwise text is literaly inserted
+inoremap <expr> <C-CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" select with tab
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<C-g>u\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-g>u\<S-Tab>"
 
 " Search results centered please
@@ -543,11 +566,11 @@ nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
 nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
 nnoremap <silent> <C-w>o :TmuxNavigatePrevious<cr>
 
-" Change text without putting the text into register,
-nnoremap c "_c
-nnoremap C "_C
-nnoremap cc "_cc
-nnoremap x "_x
+" Change text without putting the text into register
+noremap c "_c
+noremap C "_C
+noremap cc "_cc
+noremap x "_x
 
 " CycleColors, it's bound in the plugin but incase I forget
 nnoremap <f4> :CycleColorNext<CR>

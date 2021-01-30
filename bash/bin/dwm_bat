@@ -5,9 +5,6 @@ batperc=$(upower -i $(upower -e | grep BAT0) | grep 'percentage' | cut -d ':' -f
 bat_width=$(echo "$batperc/3" | bc)
 bat_width=$(echo "30-$bat_width" | bc)
 
-
-
-
 bat_color=""
 
 if [ $batperc -le 10 ]; then

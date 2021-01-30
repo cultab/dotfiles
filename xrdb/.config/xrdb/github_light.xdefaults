@@ -19,7 +19,7 @@
 #define basefg base07
 #define basebg base00
 #define basecc base07
-#define basesb base02
+#define basesb base0E
 
 /* #c59000 */
 /* #0366d6 */

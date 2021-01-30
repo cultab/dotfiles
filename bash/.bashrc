@@ -1,17 +1,17 @@
 # .bashrc
 
-# add stuff to $PATH
-if [[ -d ~/bin ]]; then
-	PATH+=":$HOME/bin:./:$HOME/.local/share/applications:$HOME/go/bin"
-fi
-
 # If not running interactively, don't do anything more
 if [[ $- != *i* ]]; then 
     return
 fi
 
-# colors
-#msgcat  --color=test | head -10 | tail -8
+if [[ $DISPLAY = "localhost:10.0" ]]; then
+    #setxkbmap -option caps:swapescape
+    setxkbmap -option grp:lalt_lshift_toggle
+    setxkbmap -layout us,gr
+
+    xset r rate 250 50;
+fi
 
 # starship prompt
 eval "$(starship init bash)"
@@ -20,12 +20,12 @@ eval "$(starship init bash)"
 
 # source sensible bash
 if [ -f ~/.local/bash/sensible.bash ]; then
-   source ~/.local/bash/sensible.bash
+    source ~/.local/bash/sensible.bash
 fi
 
 # Use bash-completion, if available
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-	source /usr/share/bash-completion/bash_completion
+    source /usr/share/bash-completion/bash_completion
 fi
 
 # pandoc completion
@@ -34,103 +34,94 @@ if [ -x "$(command -v pandoc)" ]; then
 fi
 
 # colors! wow!
-$(fd . ~/repos/Color-Scripts/color-scripts/ | grep -v pipe | shuf -n 1)
+#$(fd . ~/repos/Color-Scripts/color-scripts/ | grep -v pipe | shuf -n 1)
+~/repos/Color-Scripts/color-scripts/panes
 
 # Exports
 export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/go
 export EDITOR="vim"
-
 export LS_COLORS=$(dircolors)
 
 alias wtf="netbsd-wtf -o"
-
 alias coomit="git commit"
-
 alias vimdiff="vim -d"
-
-alias cat="bat"
-
-#alias ls="lsd --group-dirs=first"
-#alias ll="lsd --group-dirs=first --long"
-#alias la="lsd --group-dirs=first --long --almost-all"
-#alias lt="lsd --group-dirs=first --tree"
+alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+alias pse="ps aux | grep"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias q="exit"
 alias ls="exa --group-directories-first"
 alias ll="exa --group-directories-first --long"
 alias la="exa --group-directories-first --long --all"
 alias lt="exa --group-directories-first --tree"
-
 alias grep="grep --color=auto"
 
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -iv"
-
-alias q="exit"
-
-alias mpiall="mpirun --use-hwthread-cpus"
-alias mpirf="mpirun --oversubscribe"
-
-alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
-
-alias pse="ps aux | grep"
-
-#export FZF_DEFAULT_OPTS='--ansi '
-#export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude '.git' --color=always'
+#alias mpiall="mpirun --use-hwthread-cpus"
+#alias mpirf="mpirun --oversubscribe"
+#alias ls="lsd --group-dirs=first"
+#alias ll="lsd --group-dirs=first --long"
+#alias la="lsd --group-dirs=first --long --almost-all"
+#alias lt="lsd --group-dirs=first --tree"
 
 xi () {
-	if [ "$@" ]; then
-		if [ "$1" = "-u" ]; then
-			shift
-		fi
-		sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
-		return
-	fi
-	xpkg -a |
+    if [ "$@" ]; then
+        if [ "$1" = "-u" ]; then
+            shift
+        fi
+        sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
+        return
+    fi
+    xpkg -a |
         fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
         xargs -ro sudo xbps-install -Suy 
-}
+    }
 
 xr () {
-	if [ "$@" ]; then
-		sudo xbps-remove -R "$@"
-		return
-	fi
+    if [ "$@" ]; then
+        sudo xbps-remove -R "$@"
+        return
+    fi
     xpkg -m |
         fzf -m --preview 'xbps-query {1}' --preview-window=right:66%:wrap |
-		xargs -ro sudo xbps-remove -Roy
-}
+        xargs -ro sudo xbps-remove -Roy
+    }
 
 google () {
-	if [[ -z $* ]]; then
-		echo "google: missing query"
-		return
-	fi
-	query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
-	$BROWSER "$query" 2> /dev/null &
-	disown
+    if [[ -z $* ]]; then
+        echo "google: missing query"
+        return
+    fi
+    query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
+    $BROWSER "$query" 2> /dev/null &
+    disown
 }
 
 search () {
-	path="$1"
-	shift
-	if [[ ! -d "$path" ]]; then
-		echo "Usage: search <path> <pattern>"
-		return
-	fi
+    path="$1"
+    shift
+    if [[ ! -d "$path" ]]; then
+        echo "Usage: search <path> <pattern>"
+        return
+    fi
     find "$path" -name "$@" 2> /dev/null
 }
 
 hist () {
-	history | 
-	fzf --no-sort --tac |
-	sed 's/  / /g' |
-	cut --complement -d ' ' -f 1-4 |
-    xclip -i
-}
+    history | 
+        fzf --no-sort --tac |
+        sed 's/  / /g' |
+        cut --complement -d ' ' -f 1-4 |
+        xclip -i
+    }
 
 mkcd () {
     mkdir "$1" && cd "$1"
+}
+
+rmd_template () {
+    cp -r ~/Documents/template/* ./
 }
 
 # man colors
@@ -154,6 +145,6 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 nnnvim ()
 {
-	tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
-	n
+    tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
+    n
 }

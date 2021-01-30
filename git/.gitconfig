@@ -1,3 +1,9 @@
 [user]
 	email = rroarck@gmail.com
 	name = cultab
+[core]
+	autocrlf = input
+[gui]
+	recentrepo = /home/evan/repos/dwm
+[pull]
+	rebase = false

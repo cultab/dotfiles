@@ -19,4 +19,4 @@
 #define basefg base0C
 #define basebg base00
 #define basecc base0E
-#define basesb base0A
+#define basesb base02

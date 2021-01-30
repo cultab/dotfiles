@@ -1,0 +1,11 @@
+After installing the recommended libs also
+install ALL these + maybe the x64 versions
+
+libgpg-error-32bit-1.38_1
+libnss-cache-32bit-0.17_1
+libva-intel-driver-32bit-2.4.0_2
+mesa-32bit-20.1.6_1
+mesa-dri-32bit-20.1.6_1
+mesa-intel-dri-32bit-20.1.6_1
+mesa-vulkan-intel-32bit-20.1.6_1
+vulkan-loader-32bit-1.2.141_1

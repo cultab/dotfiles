@@ -1,7 +1,8 @@
-#include "./selenized_white.xdefaults"
+#include "./palenight.xdefaults"
 
-*.font:  Hack Nerd Font Mono:size=11
-!*.font:  Terminus :size=8
+*.font:  Iosevka:size=12
+!*.font:  Terminus :size=10
+!*.font:  Ttyp0 :size=12
 
 *.color0:  base00
 *.color1:  base01
@@ -24,12 +25,12 @@
 *.background:  basebg
 *.cursorColor: basecc
 
-dwm.normbordercolor: base00
-dwm.normbgcolor:     base00
-dwm.normfgcolor:     base07
+dwm.normbordercolor: basebg
+dwm.normbgcolor:     basebg
+dwm.normfgcolor:     basefg
 dwm.selbordercolor:  basesb
 dwm.selbgcolor:      basesb
-dwm.selfgcolor:      base00
+dwm.selfgcolor:      basebg
 
 Xft.autohint: 0
 Xft.antialias: 1
@@ -38,3 +39,19 @@ Xft.hintstyle: hintslight
 Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
+
+! gnuplot settings
+gnuplot*dashed: on
+gnuplot*borderDashes:   0
+gnuplot*axisDashes:    16
+gnuplot*line1Dashes:    0
+gnuplot*line2Dashes:   42
+gnuplot*line3Dashes:   13
+gnuplot*line4Dashes:   44
+gnuplot*line5Dashes:   15
+gnuplot*line6Dashes: 4441
+gnuplot*line7Dashes:   42
+gnuplot*line8Dashes:   13
+
+gnuplot*font: mbfont:-misc-fixed-medium-r-normal-*-*-*-100-100-*-*-iso10646-*
+gnuplot*encoding: utf-8
