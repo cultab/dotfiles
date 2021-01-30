@@ -1,5 +1,10 @@
 # .bashrc
 
+# add stuff to $PATH
+if [[ -d ~/bin ]]; then
+	PATH+=":$HOME/bin:./:$HOME/.local/share/applications:$HOME/go/bin:$HOME/.cargo/bin"
+fi
+
 # If not running interactively, don't do anything more
 if [[ $- != *i* ]]; then 
     return
@@ -12,6 +17,16 @@ if [[ $DISPLAY = "localhost:10.0" ]]; then
 
     xset r rate 250 50;
 fi
+
+if [[ $WSLENV ]]; then
+	export DISPLAY=:2
+	export PULSE_SERVER=tcp:127.0.0.1
+	if [[ $(pwd) == "/mnt/c/Users/evan" ]]; then cd ~; fi
+	if [ ! $TMUX ]; then exec tmux ; fi
+fi
+
+# colors
+#msgcat  --color=test | head -10 | tail -8
 
 # starship prompt
 eval "$(starship init bash)"

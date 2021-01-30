@@ -93,6 +93,13 @@ if has("nvim")
     augroup end
 endif
 
+if system('uname -r') =~ "Microsoft"
+    augroup Yank
+        autocmd!
+        autocmd TextYankPost * :call system('clip.exe ',@")
+    augroup END
+endif
+
 augroup formating
     autocmd!
     autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
@@ -220,6 +227,7 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-solarized8'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'romgrk/github-light.vim'
+Plug 'romgrk/doom-one.vim'
 
 " Tmux intergration
 Plug 'benmills/vimux'
@@ -240,7 +248,6 @@ set fillchars=vert:\│
 set complete=.,w,b,i,u,t,
 set completefunc=LanguageClient#complete
 set completeopt=menu,longest
-
 call deoplete#custom#source('_', 'matchers', ['matcher_head', 'matcher_length'])
 
 " floating window
@@ -285,9 +292,10 @@ let g:solarized_extra_hi_groups = 1
 let g:lightline#colorscheme#github_light#faithful = 0
 
 
-"colo github-light
-colorscheme palenight
 
+colo github-light
+set background=light
+colorscheme doom-one
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -300,7 +308,7 @@ endif
 
 " Lightline options
 let g:lightline = {    
-    \   'colorscheme' : 'palenight',
+    \   'colorscheme' : 'one',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
@@ -481,6 +489,10 @@ map <space> <leader>
 
 " easier repeat
 "map <leader><space> .
+
+if system('uname -r') =~ "Microsoft"
+        nnoremap <leader>p :let @+=system('powershell.exe -Command Get-Clipboard')<CR> p
+endif
 
 " fzf
 nnoremap <leader>ff :Files<CR>
