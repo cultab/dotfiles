@@ -294,8 +294,8 @@ let g:lightline#colorscheme#github_light#faithful = 0
 
 
 colo github-light
-set background=light
-colorscheme doom-one
+"set background=light
+colorscheme palenight
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -308,7 +308,7 @@ endif
 
 " Lightline options
 let g:lightline = {    
-    \   'colorscheme' : 'one',
+    \   'colorscheme' : 'palenight',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
