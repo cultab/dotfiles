@@ -92,6 +92,13 @@ if has("nvim")
     augroup end
 endif
 
+if system('uname -r') =~ "Microsoft"
+    augroup Yank
+        autocmd!
+        autocmd TextYankPost * :call system('clip.exe ',@")
+    augroup END
+endif
+
 augroup formating
     autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
 augroup END
@@ -228,7 +235,6 @@ set fillchars=vert:\│
 set complete=.,w,b,i,u,t,
 set completefunc=LanguageClient#complete
 set completeopt=menu,longest
-
 call deoplete#custom#source('_', 'matchers', ['matcher_head', 'matcher_length'])
 
 " floating window
@@ -461,6 +467,10 @@ map <space> <leader>
 
 " easier repeat
 "map <leader><space> .
+
+if system('uname -r') =~ "Microsoft"
+        nnoremap <leader>p :let @+=system('powershell.exe -Command Get-Clipboard')<CR> p
+endif
 
 " fzf
 nnoremap <leader>ff :Files<CR>

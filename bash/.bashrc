@@ -11,6 +11,8 @@ if [[ $- != *i* ]]; then
 fi
 
 if [[ $WSLENV ]]; then
+	export DISPLAY=:2
+	export PULSE_SERVER=tcp:127.0.0.1
 	if [[ $(pwd) == "/mnt/c/Users/evan" ]]; then cd ~; fi
 	if [ ! $TMUX ]; then exec tmux ; fi
 fi
