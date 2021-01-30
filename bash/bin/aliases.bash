@@ -1,0 +1,23 @@
+#!/bin/bash
+
+alias wtf="netbsd-wtf -o"
+alias coomit="git commit"
+alias vimdiff="vim -d"
+alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+alias pse="ps aux | grep"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias q="exit"
+alias ls="exa --group-directories-first"
+alias ll="exa --group-directories-first --long"
+alias la="exa --group-directories-first --long --all"
+alias lt="exa --group-directories-first --tree"
+alias grep="grep --color=auto"
+
+#alias mpiall="mpirun --use-hwthread-cpus"
+#alias mpirf="mpirun --oversubscribe"
+#alias ls="lsd --group-dirs=first"
+#alias ll="lsd --group-dirs=first --long"
+#alias la="lsd --group-dirs=first --long --almost-all"
+#alias lt="lsd --group-dirs=first --tree"

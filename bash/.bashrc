@@ -10,6 +10,7 @@ if [[ $- != *i* ]]; then
     return
 fi
 
+# if remove x11
 if [[ $DISPLAY = "localhost:10.0" ]]; then
     #setxkbmap -option caps:swapescape
     setxkbmap -option grp:lalt_lshift_toggle
@@ -18,6 +19,7 @@ if [[ $DISPLAY = "localhost:10.0" ]]; then
     xset r rate 250 50;
 fi
 
+# if WSL
 if [[ $WSLENV ]]; then
 	export DISPLAY=:2
 	export PULSE_SERVER=tcp:127.0.0.1
@@ -58,87 +60,6 @@ export GOPATH=$HOME/go
 export EDITOR="vim"
 export LS_COLORS=$(dircolors)
 
-alias wtf="netbsd-wtf -o"
-alias coomit="git commit"
-alias vimdiff="vim -d"
-alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
-alias pse="ps aux | grep"
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -iv"
-alias q="exit"
-alias ls="exa --group-directories-first"
-alias ll="exa --group-directories-first --long"
-alias la="exa --group-directories-first --long --all"
-alias lt="exa --group-directories-first --tree"
-alias grep="grep --color=auto"
-
-#alias mpiall="mpirun --use-hwthread-cpus"
-#alias mpirf="mpirun --oversubscribe"
-#alias ls="lsd --group-dirs=first"
-#alias ll="lsd --group-dirs=first --long"
-#alias la="lsd --group-dirs=first --long --almost-all"
-#alias lt="lsd --group-dirs=first --tree"
-
-xi () {
-    if [ "$@" ]; then
-        if [ "$1" = "-u" ]; then
-            shift
-        fi
-        sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
-        return
-    fi
-    xpkg -a |
-        fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-install -Suy 
-    }
-
-xr () {
-    if [ "$@" ]; then
-        sudo xbps-remove -R "$@"
-        return
-    fi
-    xpkg -m |
-        fzf -m --preview 'xbps-query {1}' --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-remove -Roy
-    }
-
-google () {
-    if [[ -z $* ]]; then
-        echo "google: missing query"
-        return
-    fi
-    query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
-    $BROWSER "$query" 2> /dev/null &
-    disown
-}
-
-search () {
-    path="$1"
-    shift
-    if [[ ! -d "$path" ]]; then
-        echo "Usage: search <path> <pattern>"
-        return
-    fi
-    find "$path" -name "$@" 2> /dev/null
-}
-
-hist () {
-    history | 
-        fzf --no-sort --tac |
-        sed 's/  / /g' |
-        cut --complement -d ' ' -f 1-4 |
-        xclip -i
-    }
-
-mkcd () {
-    mkdir "$1" && cd "$1"
-}
-
-rmd_template () {
-    cp -r ~/Documents/template/* ./
-}
-
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
 export LESS_TERMCAP_md=$(tput bold; tput setaf 4)            # begin blink
@@ -158,8 +79,8 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
-nnnvim ()
-{
-    tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
-    n
-}
+# shellcheck source=./bin/aliases.bash
+source ~/bin/aliases.bash
+
+# shellcheck source=./bin/functions.bash
+source ~/bin/functions.bash
