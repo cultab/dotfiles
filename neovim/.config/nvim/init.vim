@@ -44,7 +44,7 @@ set incsearch
 set gdefault  " assume the 'g' in s/../../g
 set ignorecase
 set smartcase " all lower search is case insensitive
-set spelllang=el
+set spelllang=el,en
 
 set foldmethod=marker
 
