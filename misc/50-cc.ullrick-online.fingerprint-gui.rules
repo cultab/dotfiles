@@ -1,0 +1,9 @@
+// Allow any user in the 'plugdev' group to read fingerprint data
+// without entering a password.
+
+polkit.addRule(function(action, subject) {
+    if (action.id == "cc.ullrich-online.fingerprint-gui.read" &&
+        subject.isInGroup("plugdev")) {
+        return polkit.Result.YES;
+    }
+});
