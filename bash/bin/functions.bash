@@ -44,7 +44,7 @@ search () {
 }
 
 hist () {
-    history | 
+    history |
         fzf --no-sort --tac |
         sed 's/  / /g' |
         cut --complement -d ' ' -f 1-4 |
@@ -59,8 +59,8 @@ rmd_template () {
     cp -r ~/Documents/template/* ./
 }
 
-nnnvim ()
-{
-    tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
-    n
-}
+# nnnvim ()
+# {
+#     tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;
+#     n
+# }

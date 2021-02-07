@@ -50,6 +50,18 @@ if [ -x "$(command -v pandoc)" ]; then
     eval "$(pandoc --bash-completion)"
 fi
 
+# fzf
+if [ -d /usr/share/doc/fzf/ ]; then
+    source /usr/share/doc/fzf/completion.bash
+    source /usr/share/doc/fzf/key-bindings.bash
+fi
+
+# shellcheck source=./bin/aliases.bash
+source ~/bin/aliases.bash
+
+# shellcheck source=./bin/functions.bash
+source ~/bin/functions.bash
+
 # colors! wow!
 #$(fd . ~/repos/Color-Scripts/color-scripts/ | grep -v pipe | shuf -n 1)
 ~/repos/Color-Scripts/color-scripts/panes
@@ -58,7 +70,8 @@ fi
 export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/go
 export EDITOR="vim"
-export LS_COLORS=$(dircolors)
+# export LS_COLORS=$(dircolors)
+export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore"
 
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
@@ -76,11 +89,7 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
+export LESS="--mouse --wheel-lines=2"
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
-# shellcheck source=./bin/aliases.bash
-source ~/bin/aliases.bash
-
-# shellcheck source=./bin/functions.bash
-source ~/bin/functions.bash
