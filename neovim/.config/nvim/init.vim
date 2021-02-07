@@ -1,20 +1,20 @@
 
-"                        _                                                                              
-"                       | |                                                                                    
-"    _             _    | |               _                                                                   
-"   |_|           |_|   | |              |_|                                                                  
-"    _   ______    _   _| |_    __   __   _    ___________       _                                                           
-"   | | |  __  |  | | |_   _|   \ \ / /  | |  |  __   __  |    _| |_                                                         
-"   | | | |  | |  | |   | |      \ v /   | |  | |  | |  | |   |_   _|                                                        
-"   | | | |  | |  | |   | |   _   \ /    | |  | |  | |  | |     |_|                                                           
-"   |_| |_|  |_|  |_|   |_|  |_|   v     |_|  |_|  |_|  |_|                                                                  
-"  ___________________________________________________________________                                            
-" |___________________________________________________________________|                                           
-"                                                                                                       
+"                        _
+"                       | |
+"    _             _    | |               _
+"   |_|           |_|   | |              |_|
+"    _   ______    _   _| |_    __   __   _    ___________       _
+"   | | |  __  |  | | |_   _|   \ \ / /  | |  |  __   __  |    _| |_
+"   | | | |  | |  | |   | |      \ v /   | |  | |  | |  | |   |_   _|
+"   | | | |  | |  | |   | |   _   \ /    | |  | |  | |  | |     |_|
+"   |_| |_|  |_|  |_|   |_|  |_|   v     |_|  |_|  |_|  |_|
+"  ___________________________________________________________________
+" |___________________________________________________________________|
+"
 
 "Basic Settings {{{
 set nocompatible
-set relativenumber
+"set relativenumber
 set number
 set signcolumn=yes
 
@@ -25,7 +25,7 @@ set cindent
 set nowrap
 set breakindent
 
-set noexpandtab  " use ta🅱️ s
+set expandtab  " no ta🅱️ s
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -71,7 +71,9 @@ set showcmd
 set cursorline " highlight current line
 set colorcolumn=80
 set background=dark
-set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
+"set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,ΣW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
+set keymap=greek_utf-8
+set iminsert=0  " default to english
 
 let g:c_syntax_for_h = 1   " Assume .h files are c headers instead of cpp
 
@@ -100,7 +102,7 @@ if system('uname -r') =~ "Microsoft"
     augroup END
 endif
 
-augroup formating
+augroup auto_formating
     autocmd!
     autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
     " autocmd BufWritePre *.py :call LanguageClient#textDocument_formatting_sync()
@@ -121,30 +123,24 @@ augroup lazy_load
     autocmd InsertEnter * call echodoc#enable()
 augroup end
 
-" relative line numbers in normal mode, absolute numbers in insert mode
-augroup numbertoggle
-    autocmd!
-    autocmd InsertLeave * set relativenumber
-    autocmd InsertEnter * set norelativenumber
-augroup END
+" relative line numbers in normal mode, absolute numbers in insert mode | ehhh..
+" augroup numbertoggle
+"     autocmd!
+"     autocmd InsertLeave * set relativenumber
+"     autocmd InsertEnter * set norelativenumber
+" augroup END
 
-" fix langclient hover
-augroup markdown_language_client_commands
+"fix langclient hover
+augroup customize_langclient_hover
     autocmd!
-    autocmd WinLeave __LanguageClient__ ++nested call <SID>fixLanguageClientHover()
+    autocmd WinLeave __LCNHover__ ++nested call <SID>fixLanguageClientHover()
+    autocmd User LanguageServerCrashed * echo OUPS OUPS
 augroup END
 
 augroup close_preview_split
     autocmd!
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 augroup END
-
-" not yet supported
-augroup lang_cliennt
-    autocmd!
-    autocmd User LanguageServerCrashed * echo OUPS OUPS
-augroup END
-
 
 "}}}
 
@@ -166,11 +162,8 @@ endfunction
 
 function! s:fixLanguageClientHover()
     setlocal wrap
-    setlocal modifiable
     setlocal conceallevel=2
-    normal i
     setlocal nonu nornu
-    setlocal nomodifiable
 endfunction
 
 "}}}
@@ -181,7 +174,7 @@ endfunction
 
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -214,6 +207,7 @@ Plug 'lilydjwg/colorizer'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'plasticboy/vim-markdown'
 
 " Visual
 Plug 'itchyny/lightline.vim'
@@ -231,7 +225,7 @@ Plug 'romgrk/doom-one.vim'
 
 " Tmux intergration
 Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
+"Plug 'christoomey/vim-tmux-navigator'
 
 " Misc
 Plug 'tpope/vim-sensible'
@@ -244,6 +238,7 @@ call plug#end()
 
 set omnifunc=syntaxcomplete#Complete
 set listchars=tab:┊\ ,nbsp:␣,trail:·,extends:>,precedes:<
+set list
 set fillchars=vert:\│
 set complete=.,w,b,i,u,t,
 set completefunc=LanguageClient#complete
@@ -291,11 +286,9 @@ let g:palenight_terminal_italics = 1
 let g:solarized_extra_hi_groups = 1
 let g:lightline#colorscheme#github_light#faithful = 0
 
-
-
-colo github-light
-"set background=light
-colorscheme palenight
+"colo github-light
+set background=dark
+colorscheme gruvbox8_hard
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -307,8 +300,8 @@ if has('gui_running') " disable gui bufferline
 endif
 
 " Lightline options
-let g:lightline = {    
-    \   'colorscheme' : 'palenight',
+let g:lightline = {
+    \   'colorscheme' : 'gruvbox8',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
@@ -487,11 +480,8 @@ endfunction
 " so much more convenient
 map <space> <leader>
 
-" easier repeat
-"map <leader><space> .
-
 if system('uname -r') =~ "Microsoft"
-        nnoremap <leader>p :let @+=system('powershell.exe -Command Get-Clipboard')<CR> p
+    nnoremap <leader>p :let @+=system('powershell.exe -Command Get-Clipboard')<CR> p
 endif
 
 " fzf
@@ -518,7 +508,7 @@ nnoremap <leader>be :b<space>
 " command
 nnoremap <leader>bb :ls<CR>:b
 " last used buffer
-nnoremap <leader>bt :b#<CR>                          
+nnoremap <leader>bt :b#<CR>
 " delete current buffer
 nnoremap <leader>bd :bdelete<CR>
 
@@ -572,15 +562,18 @@ nnoremap <silent><ESC> :nohlsearch<CR>
 noremap H ^
 noremap L $
 
-nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
-nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
-nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
-nnoremap <silent> <C-w>o :TmuxNavigatePrevious<cr>
+" nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
+" nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-w>o :TmuxNavigatePrevious<cr>
 
 " Change text without putting the text into register
 noremap c "_c
 noremap C "_C
+vnoremap p "_dP
+" capital P does use the register
+vnoremap P p
 noremap cc "_cc
 noremap x "_x
 
