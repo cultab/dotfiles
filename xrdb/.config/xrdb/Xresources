@@ -1,4 +1,4 @@
-#include "./palenight.xdefaults"
+#include "./gruvbox.xdefaults"
 
 *.font:  Iosevka:size=12
 !*.font:  Terminus :size=10
