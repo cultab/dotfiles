@@ -1,0 +1,11 @@
+# Set the theme to "TwoDark"
+--theme="base16"
+
+# Show line numbers, Git modifications and file header (but no grid)
+--style="numbers,changes,header"
+
+# Use italic text on the terminal (not supported on all terminals)
+--italic-text=always
+
+# Use bash syntax for .tmux.conf
+#--map-syntax ".tmux.conf:sh"
