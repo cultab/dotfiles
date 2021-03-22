@@ -1,0 +1,66 @@
+#include "./gruvbox.xdefaults"
+
+!*font:  Iosevka :size=12
+!*font:  FuraCode Nerd Font:size=12:style=Retina,Regular
+!*font:  Iosevka Custom:size=12:style=Regular
+!*font:  Terminus :size=10
+!*font:  Ttyp0 :size=12
+*font:  Victor Mono Nerd Font:size=13
+
+*color0:  base00
+*color1:  base01
+*color2:  base02
+*color3:  base03
+*color4:  base04
+*color5:  base05
+*color6:  base06
+*color7:  base07
+*color8:  base08
+*color9:  base09
+*color10: base0A
+*color11: base0B
+*color12: base0C
+*color13: base0D
+*color14: base0E
+*color15: base0F
+
+*foreground:  basefg
+*background:  basebg
+*cursorColor: basecc
+
+dwm.normbordercolor: basebg
+dwm.normbgcolor:     basebg
+dwm.normfgcolor:     basefg
+dwm.selbordercolor:  basesb
+dwm.selbgcolor:      basesb
+dwm.selfgcolor:      basebg
+
+!dmenu.font:
+!dmenu.background: basebg
+!dmenu.foreground: basefg
+dmenu.selbackground: basesb
+dmenu.selforeground: basebg
+
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+! gnuplot settings
+gnuplot*dashed: on
+gnuplot*borderDashes:   0
+gnuplot*axisDashes:    16
+gnuplot*line1Dashes:    0
+gnuplot*line2Dashes:   42
+gnuplot*line3Dashes:   13
+gnuplot*line4Dashes:   44
+gnuplot*line5Dashes:   15
+gnuplot*line6Dashes: 4441
+gnuplot*line7Dashes:   42
+gnuplot*line8Dashes:   13
+
+gnuplot*font: mbfont:-misc-fixed-medium-r-normal-*-*-*-100-100-*-*-iso10646-*
+gnuplot*encoding: utf-8
