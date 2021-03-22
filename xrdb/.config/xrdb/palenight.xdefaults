@@ -19,4 +19,4 @@
 #define basefg base07
 #define basebg #292D3E
 #define basecc #2C323C
-#define basesb base05
+#define basesb base03
