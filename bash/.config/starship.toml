@@ -5,12 +5,10 @@ show_always = false
 ssh_only = true
 
 [character]
-#symbol = "❯ "
-symbol = "ε"
-error_symbol = " "
+#symbol cache :) = "❯ "
+success_symbol = "[ε](bold green)"
+error_symbol = "[x](bold red)"
 use_symbol_for_status = true
-style_success = "green"
-style_failure = "red"
 
 [aws]
 symbol = " "

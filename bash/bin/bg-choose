@@ -1,6 +1,6 @@
 #!/bin/sh
 feh --bg-scale "$(
-    fd '.*' ~/Pictures/wallpapers/ | \
-    fzf --preview-window=down:80% \
-    --preview 'catimg {} -w $FZF_PREVIEW_COLUMNS -r 1'
+    fd '.*' ~/Pictures/wallpapers/ |
+        fzf --preview-window=down:80% \
+        --preview 'catimg {} -w $FZF_PREVIEW_COLUMNS -r 1'
 )"

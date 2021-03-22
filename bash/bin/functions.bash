@@ -59,6 +59,17 @@ rmd_template () {
     cp -r ~/Documents/template/* ./
 }
 
+enable_more_completions () {
+    # pandoc completion
+    if [ -x "$(command -v pandoc)" ]; then
+        eval "$(pandoc --bash-completion)"
+    fi
+    # flutter completion
+    if [ -x "$(command -v flutter)" ]; then
+        eval "$(flutter bash-completion)"
+    fi
+}
+
 # nnnvim ()
 # {
 #     tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;

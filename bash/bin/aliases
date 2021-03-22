@@ -1,0 +1,39 @@
+#!/bin/bash
+
+alias wtf='netbsd-wtf -o'
+alias coomit='git commit'
+alias vimdiff='vim -d'
+alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+alias pse='ps aux | grep'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias q='exit'
+
+exa_opts='--group-directories-first --git --modified --group --sort=Extension'
+alias ls="exa $exa_opts"
+alias ll="exa $exa_opts --long"
+alias la="exa $exa_opts --long --all"
+alias lt="exa $exa_opts --tree"
+
+lsd_opts='--group-dirs first --extensionsort'
+alias lsd="lsd $lsd_opts"
+alias llsd="lsd $lsd_opts -l"
+alias lasd="lsd $lsd_opts -la"
+alias ltsd="lsd $lsd_opts --tree"
+
+alias grep='grep --color=auto'
+alias term_test='dd if=/dev/urandom | base64 | lolcat'
+
+#alias mpiall="mpirun --use-hwthread-cpus"
+#alias mpirf="mpirun --oversubscribe"
+#alias ls="lsd --group-dirs=first"
+#alias ll="lsd --group-dirs=first --long"
+#alias la="lsd --group-dirs=first --long --almost-all"
+#alias lt="lsd --group-dirs=first --tree"
+
+# sudo edit testing
+alias sue='sudoedit'
+alias sued='sudoedit'
+alias suedit='sudoedit'
+alias suedo='sudoedit'

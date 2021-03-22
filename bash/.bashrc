@@ -1,39 +1,25 @@
 # .bashrc
 
-# add stuff to $PATH
-if [[ -d ~/bin ]]; then
-	PATH+=":$HOME/bin:./:$HOME/.local/share/applications:$HOME/go/bin:$HOME/.cargo/bin"
-fi
-
 # If not running interactively, don't do anything more
 if [[ $- != *i* ]]; then 
     return
 fi
 
-# if remove x11
-if [[ $DISPLAY = "localhost:10.0" ]]; then
-    #setxkbmap -option caps:swapescape
-    setxkbmap -option grp:lalt_lshift_toggle
-    setxkbmap -layout us,gr
+# if remote x11
+#if [[ $DISPLAY = "localhost:10.0" ]]; then
+#    #setxkbmap -option caps:swapescape
+#    #setxkbmap -option grp:lalt_lshift_toggle
+#    #setxkbmap -layout us,gr
 
-    xset r rate 250 50;
-fi
-
-# if WSL
-if [[ $WSLENV ]]; then
-	export DISPLAY=:2
-	export PULSE_SERVER=tcp:127.0.0.1
-	if [[ $(pwd) == "/mnt/c/Users/evan" ]]; then cd ~; fi
-	if [ ! $TMUX ]; then exec tmux ; fi
-fi
-
-# colors
-#msgcat  --color=test | head -10 | tail -8
+#    #xset r rate 250 50;
+#fi
 
 # starship prompt
 eval "$(starship init bash)"
+# IMPORTANT: starship goes before sensible.bash
 
-# IMPORTAND: starship goes before sensible.bash
+# pyenv
+eval "$(pyenv init -)"
 
 # source sensible bash
 if [ -f ~/.local/bash/sensible.bash ]; then
@@ -45,26 +31,22 @@ if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
 fi
 
-# pandoc completion
-if [ -x "$(command -v pandoc)" ]; then
-    eval "$(pandoc --bash-completion)"
-fi
-
 # fzf
 if [ -d /usr/share/doc/fzf/ ]; then
     source /usr/share/doc/fzf/completion.bash
     source /usr/share/doc/fzf/key-bindings.bash
 fi
 
-# shellcheck source=./bin/aliases.bash
-source ~/bin/aliases.bash
+# shellcheck source=./bin/aliases
+source ~/bin/aliases
 
 # shellcheck source=./bin/functions.bash
 source ~/bin/functions.bash
 
+
 # colors! wow!
 #$(fd . ~/repos/Color-Scripts/color-scripts/ | grep -v pipe | shuf -n 1)
-~/repos/Color-Scripts/color-scripts/panes
+#~/repos/Color-Scripts/color-scripts/crunchbang-mini
 
 # Exports
 export BROWSER="vivaldi-stable"
@@ -90,6 +72,7 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 export LESS+="-R --mouse --wheel-lines=2"
+
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
