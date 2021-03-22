@@ -1,9 +1,29 @@
 [xfdesktop-version-4.10.3+-rcfile_format]
 4.10.3+=true
 
-[8416A35916A34B4E]
+[/home/evan/Desktop/Playlist.m3u]
+row=6
+col=0
+
+[/home/evan/Desktop/steam.desktop]
+row=4
+col=0
+
+[/home/evan/Desktop/ModelSim PE Student Edition 10.4a.desktop]
+row=5
+col=0
+
+[/home/evan/Desktop/binaries]
 row=3
 col=0
+
+[/home/evan/Desktop/squares.c]
+row=7
+col=0
+
+[/home/evan/Desktop/myosevka.zip]
+row=0
+col=1
 
 [Trash]
 row=0
