@@ -13,46 +13,33 @@
 "
 
 "Basic Settings {{{
-set nocompatible
-"set relativenumber
-set number
-set signcolumn=yes
 
+" Indent Settings
 filetype plugin indent on
 set smarttab
 set autoindent
 set cindent
 set nowrap
 set breakindent
-
 set expandtab  " no ta🅱️ s
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set shiftround " round indent to shiftwidth
 
-set splitbelow
-set splitright
-set autochdir  " automatically change directory
-set hidden  " Required for operations modifying multiple buffers like rename. with langclient
-set mouse=a  " enable mouse for a(ll) modes
-
-set autoread " auto-update if changes are detected, that's a big IF btw
-
+" Search Settings
 set inccommand=split " show substitutions live
 set incsearch
 set gdefault  " assume the 'g' in s/../../g
 set ignorecase
 set smartcase " all lower search is case insensitive
+
 set spelllang=el,en
 
-set foldmethod=marker
-
-set scrolloff=3 " keep lines above and below cursor
-set sidescroll=6
 
 set shortmess+=c
 
+" Backup and swap
 set backup
 set backupdir=~/.config/nvim/backup " don't leave a mess
 set backupskip=/tmp/*
@@ -60,17 +47,16 @@ set undodir=~/.config/nvim/undo
 set undofile
 set noswapfile
 
+" Misc Settings
 set clipboard+=unnamedplus
-
+set splitbelow
+set splitright
+set autochdir  " automatically change directory
+set hidden  " Required for operations modifying multiple buffers like rename. with langclient
+set mouse=a  " enable mouse for a(ll) modes
+set autoread " auto-update if changes are detected, that's a big IF btw
 set lazyredraw
 set modeline
-
-set noshowmode
-set showcmd
-
-set cursorline " highlight current line
-set colorcolumn=80
-set background=dark
 "set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,ΣW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
 set keymap=greek_utf-8
 set iminsert=0  " default to english
@@ -86,12 +72,12 @@ if has("nvim")
         autocmd!
         autocmd TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
         autocmd FileType fzf tunmap <buffer> <Esc>
-    augroup END
+    augroup end
 
     augroup filetype_autocmds
         autocmd!
         autocmd FileType rmd,md map <F6> :!R -e 'require(rmarkdown); render("./'%'");'<CR>
-        autocmd FileType sh,bash,vhdl,java call neomake#configure#automake('nwri', 0)
+        autocmd FileType sh,bash,vhdl call neomake#configure#automake('nwri', 0)
     augroup end
 endif
 
@@ -99,23 +85,23 @@ if system('uname -r') =~ "Microsoft"
     augroup Yank
         autocmd!
         autocmd TextYankPost * :call system('clip.exe ',@")
-    augroup END
+    augroup end
 endif
 
 augroup auto_formating
     autocmd!
-    autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+    autocmd BufWritePre *.go,*.dart :call LanguageClient#textDocument_formatting_sync()
     " autocmd BufWritePre *.py :call LanguageClient#textDocument_formatting_sync()
-augroup END
+augroup end
 
 augroup auto_sauce
     autocmd!
     autocmd BufWritePost init.vim nested source $MYVIMRC
     autocmd BufWritePost *.tmux,*.tmux.conf silent !tmux source-file ~/.tmux.conf
-    autocmd BufWritePost *.xdefaults silent !xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
+    autocmd BufWritePost *.xdefaults silent !reload_xrdb
     autocmd BufWritePost ~/.bashrc silent !source ~/.bashrc "seems like it does nothing lol
     autocmd BufWritePost *.tex,*.latex silent !xelatex % 
-augroup END
+augroup end
 
 augroup lazy_load
     autocmd!
@@ -128,19 +114,19 @@ augroup end
 "     autocmd!
 "     autocmd InsertLeave * set relativenumber
 "     autocmd InsertEnter * set norelativenumber
-" augroup END
+" augroup end
 
 "fix langclient hover
 augroup customize_langclient_hover
     autocmd!
     autocmd WinLeave __LCNHover__ ++nested call <SID>fixLanguageClientHover()
     autocmd User LanguageServerCrashed * echo OUPS OUPS
-augroup END
+augroup end
 
 augroup close_preview_split
     autocmd!
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
-augroup END
+augroup end
 
 "}}}
 
@@ -187,8 +173,9 @@ Plug 'Shougo/echodoc.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neco-vim'
 Plug 'neomake/neomake'
-Plug 'artur-shaik/vim-javacomplete2'
+"Plug 'artur-shaik/vim-javacomplete2'
 Plug 'jiangmiao/auto-pairs'
+Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 
@@ -217,11 +204,15 @@ Plug 'vim-scripts/CycleColor'
 
 " Colorschemes
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-solarized8'
+Plug 'lifepillar/vim-gruvbox8'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'romgrk/github-light.vim'
 Plug 'romgrk/doom-one.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'deviantfero/wpgtk.vim'
 
 " Tmux intergration
 Plug 'benmills/vimux'
@@ -258,6 +249,8 @@ let g:LanguageClient_serverCommands = {
     \ 'cpp'    : ['/bin/clangd','--suggest-missing-includes' ],
     \ 'go'     : ['gopls'],
     \ 'c'      : ['/bin/clangd','--suggest-missing-includes' ],
+    \ 'java'   : ['~/bin/jdtls'],
+    \ 'dart'   : ['dart', '/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot', '--lsp']
     \}
 
     "\ 'vhdl'  : ['hdl_checker', '--lsp']
@@ -273,21 +266,43 @@ let g:indent_guides_guide_size = 1
 " adding the default first
 let g:AutoPairs={'```': '```', '`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '''''''': '''''''', '[': ']', '"""': '"""'}
 " adding extra TODO: autocommand for markdown, rmarkdown,tex files
-let g:AutoPairs['$']='$'
+augroup AutoPairsGroup
+    autocmd!
+    autocmd FileType tex,rmd,md :let g:AutoPairs['$']='$'
+augroup end
 
 "}}}
 
 " Visual + Lightline settings {{{
 
-" Colorscheme Options
+set number
+set norelativenumber
+set signcolumn=yes
+set foldmethod=marker
+
+set scrolloff=3 " keep lines above and below cursor
+set sidescroll=6
+set noshowmode
+set showcmd
+
+set colorcolumn=80
+set background=dark
+set cursorline " highlight current line
 set termguicolors
 
+" Colorscheme Options
 let g:palenight_terminal_italics = 1
 let g:solarized_extra_hi_groups = 1
 let g:lightline#colorscheme#github_light#faithful = 0
+let ayucolor="dark"
+
+let g:tokyonight_style = "night"
+let g:tokyonight_disable_italic_comment = 1
+let g:tokyonight_transparent_background = 1
+let g:tokyonight_enable_italics = 1 "only works with custom fonts, see github
 
 "colo github-light
-set background=dark
+"set background=light
 colorscheme gruvbox8_hard
 
 " Bufferline options
@@ -307,7 +322,7 @@ let g:lightline = {
     \                  [ 'filename', 'modified', 'readonly' ] ],
     \       'right': [ [ 'err_cnt', 'wrn_cnt', 'lineinfo' ],
     \                 [ 'percent' ],
-    \                  [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \                  [ 'fileformat', 'fileencoding', 'filetype', 'dev_icn' ] ]
     \   },
     \   'inactive' : {
     \       'left' : [ [ 'filename' ] ],
@@ -326,7 +341,8 @@ let g:lightline = {
     \   },
     \   'component_function' : {
     \       'err_cnt'  : 'LightlineErrorCount',
-    \       'wrn_cnt'  : 'LightlineWarningCount'
+    \       'wrn_cnt'  : 'LightlineWarningCount',
+    \       'dev_icn'  : 'GetDevicon'
     \   },
     \   'component_expand' : {
     \       'buffers'  : 'lightline#bufferline#buffers',
@@ -342,12 +358,18 @@ let g:lightline = {
     " \   'subseparator' : { 'left': '', 'right': '' },
 
 " Lightline Functions {{{
+"
 
 "symbols cache
 " ✖✗
 
+function! GetDevicon()
+    " also add a space at the end
+    return WebDevIconsGetFileTypeSymbol() . ' '
+endfunction
+
 function! LightlineReadonly()
-    return &readonly ? '' : ''
+    return &readonly ? ' ' : ''
 endfunction
 
 " The following is practicaly stolen right out of
@@ -358,7 +380,7 @@ augroup lint_config
 "    autocmd User LanguageClientStopped setlocal signcolumn=auto
     autocmd User LanguageClientDiagnosticsChanged call s:get_diagnostics()
     autocmd User NeomakeCountsChanged call s:get_Nmdiagnostics()
-augroup END
+augroup end
 
 " Severity codes from the LSP spec
 let s:severity_error = 1
@@ -376,7 +398,7 @@ function! LightlineErrorCount()
     if (cnt == 0)
         let cnt = LightlineNmGetTypeCount(s:severity_error)
     endif
-    return cnt == 0 ? '' : printf('%d ', cnt)
+    return cnt == 0 ? '' : printf('%d  ', cnt)
 endfunction
 
 " calls LightlineLcGetTypeCount with type = warning
@@ -386,7 +408,7 @@ function! LightlineWarningCount()
     if (cnt == 0)
         let cnt = LightlineNmGetTypeCount(s:severity_warning)
     endif
-    return cnt == 0 ? '' : printf('%d ', cnt)
+    return cnt == 0 ? '' : printf('%d  ', cnt)
 endfunction
 
 function! LightlineNmGetTypeCount(type)
@@ -552,7 +574,7 @@ nnoremap <silent> # #zz
 " cut line
 nnoremap S i<CR><ESC>k$
 
-" split prefix, C-w is taken by TMUX
+" split prefix, C-w is taken by tmux
 " nnoremap <C-a> <C-w>
 
 " This unsets the last search pattern register by hitting ESC
@@ -596,6 +618,8 @@ cabbr Q q
 cabbr W w
 cabbr Wq wq
 cabbr WQ wq
+cabbr Wa wa
+cabbr WA wa
 
 " Output the current syntax group
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
