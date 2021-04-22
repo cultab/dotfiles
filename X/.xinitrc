@@ -23,15 +23,15 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 ##############
 
 xhost +localhost # to allow acpi handler to xautolock -locknow
-xset r rate 250 50;
-setxkbmap -option
-setxkbmap \
-  -layout us,gr \
-  -option grp:lalt_lshift_toggle \
-  -option ctrl:nocaps \
-  -option compose:ralt
-####setxkbmap -option caps:swapescape 
-xcape  -e 'Control_L=Escape'
+#xset r rate 250 50;
+# setxkbmap -option
+# setxkbmap \
+#   -layout us,gr \
+#   -option grp:lalt_lshift_toggle \
+#   -option ctrl:nocaps \
+#   -option compose:ralt
+# setxkbmap -option caps:swapescape 
+# xcape  -e 'Control_L=Escape'
 
 ########
 # Rice #
@@ -65,7 +65,7 @@ eval $(ssh-agent)
 # Audio #
 #########
 
-pulseaudio --start
+pulseaudio --start &
 start-pulseaudio-x11 --start &
 pavucontrol &
 
