@@ -1,5 +1,7 @@
 #!/bin/bash
 
+alias startx='startx -- -ardelay 250 -arinterval 25'
+
 alias wtf='netbsd-wtf -o'
 alias coomit='git commit'
 alias vimdiff='vim -d'
