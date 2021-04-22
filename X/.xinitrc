@@ -59,7 +59,7 @@ xautolock \
     -notify 300 \
     -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
     -time 15 &
-eval $(ssh-agent)
+eval $(keyring --eval)
 
 #########
 # Audio #
