@@ -43,7 +43,6 @@ source ~/bin/aliases
 # shellcheck source=./bin/functions.bash
 source ~/bin/functions.bash
 
-
 # colors! wow!
 #$(fd . ~/repos/Color-Scripts/color-scripts/ | grep -v pipe | shuf -n 1)
 #~/repos/Color-Scripts/color-scripts/crunchbang-mini
