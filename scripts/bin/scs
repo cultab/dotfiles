@@ -1,0 +1,4 @@
+#!/bin/sh
+
+scrot -s ~/Pictures/Screenshots/
+

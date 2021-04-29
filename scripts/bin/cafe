@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+if [ ! -f /tmp/cafe ]; then
+	touch /tmp/cafe
+else 
+	echo "Can't cafe, already caffienated!"
+	exit 1
+fi
