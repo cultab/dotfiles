@@ -50,7 +50,7 @@ source ~/bin/functions.bash
 # Exports
 export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/go
-export EDITOR="vim"
+export EDITOR="nvim"
 # export LS_COLORS=$(dircolors)
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore"
 
