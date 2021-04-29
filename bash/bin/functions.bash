@@ -1,27 +1,27 @@
 #!/bin/bash
 
-xi () {
-    if [ "$@" ]; then
-        if [ "$1" = "-u" ]; then
-            shift
-        fi
-        sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
-        return
-    fi
-    xpkg -a |
-        fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-install -Suy 
-    }
+# xi () {
+#     if [ "$@" ]; then
+#         if [ "$1" = "-u" ]; then
+#             shift
+#         fi
+#         sudo xbps-install -Su "$@" || sudo xbps-install -uy xbps
+#         return
+#     fi
+#     xpkg -a |
+#         fzf -m --preview 'xbps-query -R {1}' --preview-window=right:66%:wrap |
+#         xargs -ro sudo xbps-install -Suy 
+#     }
 
-xr () {
-    if [ "$@" ]; then
-        sudo xbps-remove -R "$@"
-        return
-    fi
-    xpkg -m |
-        fzf -m --preview 'xbps-query {1}' --preview-window=right:66%:wrap |
-        xargs -ro sudo xbps-remove -Roy
-    }
+# xr () {
+#     if [ "$@" ]; then
+#         sudo xbps-remove -R "$@"
+#         return
+#     fi
+#     xpkg -m |
+#         fzf -m --preview 'xbps-query {1}' --preview-window=right:66%:wrap |
+#         xargs -ro sudo xbps-remove -Roy
+#     }
 
 google () {
     if [[ -z $* ]]; then

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
+xdotool key Super_L+F5

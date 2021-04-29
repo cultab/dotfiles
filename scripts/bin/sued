@@ -1,0 +1,13 @@
+#!/bin/sh
+
+filename=$*
+
+tmp_file=$(mktemp --suffix="$filename" --tmpdir=/tmp/)
+
+sudo cp "$filename" "$tmp_file"
+
+sudo chmod u+w "$tmp_file"
+
+$EDITOR "$tmp_file"
+
+sudo dd if="$tmp_file" of="$filename" status=none
