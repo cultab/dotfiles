@@ -213,6 +213,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'deviantfero/wpgtk.vim'
+Plug 'Reewr/vim-monokai-phoenix'
 
 " Tmux intergration
 Plug 'benmills/vimux'
@@ -303,7 +304,7 @@ let g:tokyonight_enable_italics = 1 "only works with custom fonts, see github
 
 "colo github-light
 "set background=light
-colorscheme gruvbox8_hard
+colorscheme tokyonight
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -316,7 +317,7 @@ endif
 
 " Lightline options
 let g:lightline = {
-    \   'colorscheme' : 'gruvbox8',
+    \   'colorscheme' : 'tokyonight',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],

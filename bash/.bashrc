@@ -19,7 +19,7 @@ eval "$(starship init bash)"
 # IMPORTANT: starship goes before sensible.bash
 
 # pyenv
-eval "$(pyenv init -)"
+eval "$(~/.pyenv/bin/pyenv init -)"
 
 # source sensible bash
 if [ -f ~/.local/bash/sensible.bash ]; then
