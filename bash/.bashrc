@@ -33,8 +33,13 @@ fi
 
 # fzf
 if [ -d /usr/share/doc/fzf/ ]; then
-    source /usr/share/doc/fzf/completion.bash
-    source /usr/share/doc/fzf/key-bindings.bash
+    if [ -d /usr/share/doc/fzf/examples/ ]; then
+        source /usr/share/doc/fzf/examples/completion.bash
+        source /usr/share/doc/fzf/examples/key-bindings.bash
+    else
+        source /usr/share/doc/fzf/completion.bash
+        source /usr/share/doc/fzf/key-bindings.bash
+    fi
 fi
 
 # shellcheck source=./bin/aliases
