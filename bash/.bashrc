@@ -19,7 +19,7 @@ eval "$(starship init bash)"
 # IMPORTANT: starship goes before sensible.bash
 
 # pyenv
-eval "$(pyenv init -)"
+eval "$(~/.pyenv/bin/pyenv init -)"
 
 # source sensible bash
 if [ -f ~/.local/bash/sensible.bash ]; then
@@ -33,8 +33,13 @@ fi
 
 # fzf
 if [ -d /usr/share/doc/fzf/ ]; then
-    source /usr/share/doc/fzf/completion.bash
-    source /usr/share/doc/fzf/key-bindings.bash
+    if [ -d /usr/share/doc/fzf/examples/ ]; then
+        source /usr/share/doc/fzf/examples/completion.bash
+        source /usr/share/doc/fzf/examples/key-bindings.bash
+    else
+        source /usr/share/doc/fzf/completion.bash
+        source /usr/share/doc/fzf/key-bindings.bash
+    fi
 fi
 
 # shellcheck source=./bin/aliases
@@ -50,7 +55,7 @@ source ~/bin/functions.bash
 # Exports
 export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/go
-export EDITOR="vim"
+export EDITOR="nvim"
 # export LS_COLORS=$(dircolors)
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore"
 

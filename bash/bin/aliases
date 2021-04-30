@@ -2,6 +2,7 @@
 
 alias startx='startx -- -ardelay 250 -arinterval 25'
 
+alias vim='nvim'
 alias wtf='netbsd-wtf -o'
 alias coomit='git commit'
 alias vimdiff='vim -d'
@@ -12,17 +13,24 @@ alias mv='mv -iv'
 alias rm='rm -iv'
 alias q='exit'
 
-exa_opts='--group-directories-first --git --modified --group --sort=Extension'
-alias ls="exa $exa_opts"
-alias ll="exa $exa_opts --long"
-alias la="exa $exa_opts --long --all"
-alias lt="exa $exa_opts --tree"
+if [ "$(command -v exa)" ]; then
+	exa_opts='--group-directories-first --git --modified --group --sort=Extension'
+	alias ls="exa $exa_opts"
+	alias ll="exa $exa_opts --long"
+	alias la="exa $exa_opts --long --all"
+	alias lt="exa $exa_opts --tree"
+fi
 
-lsd_opts='--group-dirs first --extensionsort'
-alias lsd="lsd $lsd_opts"
-alias llsd="lsd $lsd_opts -l"
-alias lasd="lsd $lsd_opts -la"
-alias ltsd="lsd $lsd_opts --tree"
+ls_opts='--color=auto -h'
+alias ls="ls $ls_opts"
+alias ll="ls -l $ls_opts"
+alias la="ls -la $ls_opts"
+
+# lsd_opts='--group-dirs first --extensionsort'
+# alias lsd="lsd $lsd_opts"
+# alias llsd="lsd $lsd_opts -l"
+# alias lasd="lsd $lsd_opts -la"
+# alias ltsd="lsd $lsd_opts --tree"
 
 alias grep='grep --color=auto'
 alias term_test='dd if=/dev/urandom | base64 | lolcat'
