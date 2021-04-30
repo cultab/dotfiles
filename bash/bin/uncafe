@@ -1,9 +1,0 @@
-#!/bin/sh
-set -e
-
-if [ -f /tmp/cafe ]; then
-	rm /tmp/cafe 2> /dev/null 
-else 
-	echo "Nothing to uncaffienate.";
-	exit 1
-fi

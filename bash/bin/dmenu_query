@@ -1,7 +1,0 @@
-#!/bin/sh
-
-URL='https://startpage.com/sp/search?query='
-QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
-if [ -n "$QUERY" ]; then
-  $BROWSER "${URL}${QUERY}" 2> /dev/null
-fi
