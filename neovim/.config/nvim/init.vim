@@ -215,6 +215,9 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'deviantfero/wpgtk.vim'
 Plug 'Reewr/vim-monokai-phoenix'
 
+Plug 'noahfrederick/vim-noctu'
+Plug 'jsit/disco.vim'
+
 " Tmux intergration
 Plug 'benmills/vimux'
 "Plug 'christoomey/vim-tmux-navigator'
@@ -289,7 +292,7 @@ set showcmd
 set colorcolumn=80
 set background=dark
 set cursorline " highlight current line
-set termguicolors
+set notermguicolors
 
 " Colorscheme Options
 let g:palenight_terminal_italics = 1
@@ -304,7 +307,7 @@ let g:tokyonight_enable_italics = 1 "only works with custom fonts, see github
 
 "colo github-light
 "set background=light
-colorscheme tokyonight
+colorscheme disco
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -317,7 +320,7 @@ endif
 
 " Lightline options
 let g:lightline = {
-    \   'colorscheme' : 'tokyonight',
+    \   'colorscheme' : 'landscape',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
