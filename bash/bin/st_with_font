@@ -1,7 +1,0 @@
-#!/bin/sh
-
-while read -r Font
-do
-    st -f "$Font " 
-    #Nerd Font Mono:style=Regular:autohint=true:antialias=true:pixelsize=16"
-done

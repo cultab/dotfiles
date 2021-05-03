@@ -195,6 +195,7 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'plasticboy/vim-markdown'
+Plug 'pangloss/vim-javascript'
 
 " Visual
 Plug 'itchyny/lightline.vim'
@@ -214,6 +215,7 @@ Plug 'ghifarit53/tokyonight-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'deviantfero/wpgtk.vim'
 Plug 'Reewr/vim-monokai-phoenix'
+Plug 'cultab/potato-colors'
 
 Plug 'noahfrederick/vim-noctu'
 Plug 'jsit/disco.vim'
@@ -240,24 +242,37 @@ set completefunc=LanguageClient#complete
 set completeopt=menu,longest
 call deoplete#custom#source('_', 'matchers', ['matcher_head', 'matcher_length'])
 
+let g:python3_host_prog = '/bin/python3'
+let g:python_host_prog = '/bin/python'
+
 " floating window
 let g:echodoc#type = 'floating'
 
 " Change the truncate width of completions.
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 
-let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
+let g:LanguageClient_settingsPath = [expand("~/.config/nvim/LanguageClient_settings.json"), "LanguageClient_settings.json"]
+" let $LANGUAGECLIENT_DEBUG=1
+" let g:LanguageClient_loggingLevel='DEBUG'
+" let g:LanguageClient_loggingFile =  expand('~/langClient.log') 
 
 let g:LanguageClient_serverCommands = {
-    \ 'python' : ['~/.local/bin/pyls'],
-    \ 'cpp'    : ['/bin/clangd','--suggest-missing-includes' ],
-    \ 'go'     : ['gopls'],
-    \ 'c'      : ['/bin/clangd','--suggest-missing-includes' ],
-    \ 'java'   : ['~/bin/jdtls'],
-    \ 'dart'   : ['dart', '/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot', '--lsp']
+    \ 'javascript'     : ['/bin/typescript-language-server', '--stdio'],
+    \ 'python'         : ['pylsp'],
+    \ 'java'           : ['~/repos/java-language-server/dist/javalsp'],
+    \ 'dart'           : ['dart', '/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot', '--lsp'],
+    \ 'cpp'            : ['/bin/clangd','--suggest-missing-includes' ],
+    \ 'go'             : ['gopls'],
+    \ 'c'              : ['/bin/clangd','--suggest-missing-includes' ],
+    \ 'r'              : ['R', '--slave', '-e', 'languageserver::run()'],
     \}
 
-    "\ 'vhdl'  : ['hdl_checker', '--lsp']
+    "\ 'python'         : ['pyright-langserver', '--stdio'],
+    " \ 'vhdl'  : ['hdl_checker', '--lsp']
+    " \ 'javascript'     : ['/bin/typescript-language-server', '--stdio'],
+    " \ 'typescript'     : ['/bin/typescript-language-server', '--stdio'],
+    " \ 'javascript.jsx' : ['/bin/typescript-language-server', '--stdio'],
+    " \ 'typescript.tsx' : ['/bin/typescript-language-server', '--stdio'],
 "let g:pandoc#modules#disabled = ["folding"]
 
 let g:VimuxOrientation = "h"
@@ -289,7 +304,7 @@ set sidescroll=6
 set noshowmode
 set showcmd
 
-set colorcolumn=80
+set colorcolumn=0 "80
 set background=dark
 set cursorline " highlight current line
 set notermguicolors
@@ -302,10 +317,9 @@ let ayucolor="dark"
 
 let g:tokyonight_style = "night"
 let g:tokyonight_disable_italic_comment = 1
-let g:tokyonight_transparent_background = 1
+let g:tokyonight_transparent_background = 0
 let g:tokyonight_enable_italics = 1 "only works with custom fonts, see github
 
-"colo github-light
 "set background=light
 colorscheme disco
 
@@ -534,7 +548,8 @@ nnoremap <leader>be :b<space>
 " command
 nnoremap <leader>bb :ls<CR>:b
 " last used buffer
-nnoremap <leader>bt :b#<CR>
+"nnoremap <leader>bt :b#<CR>
+nnoremap <leader>bt :echoerr('⟨leader⟩bt is concidered harmful. Use <Ctrl-^> or <Ctrl-6> instead!')<CR>
 " delete current buffer
 nnoremap <leader>bd :bdelete<CR>
 

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-while true; do
-    date_time="$(date +"[%d/%m/%Y] [%T]")"
-    xsetroot -name "$(dwm_bat)"
-    sleep 1s
-done

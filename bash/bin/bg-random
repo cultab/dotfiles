@@ -1,2 +1,0 @@
-#!/bin/sh
-feh --randomize --no-fehbg --bg-scale '/home/evan/Pictures/wallpapers/' 

@@ -18,4 +18,4 @@ xfce/.config/xfce4/desktop
 
 kakoune/.config/kak/plugins
 
-ssh/.ssh/
+ssh/.ssh/*
