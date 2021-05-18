@@ -5,20 +5,23 @@
 #define base02 #c3e05d
 #define base03 #ecbe7b
 #define base04 #2257A0
-#define base05 #a9a1e1
-#define base06 #4ddfbd
-#define base07 #dfdfef
-#define base08 #202328
+#define base05 #c678dd
+/* #define base06 #4ddfbd */
+#define base06 #5699AF
+#define base07 #DFDFDF
+#define base08 #3f444a
+/* #define base08 #202328 */
 #define base09 #ff4540
 #define base0A #98be65
 #define base0B #cc8548
 #define base0C #51afef
-#define base0D #c678dd
-#define base0E #46D9FF 
+#define base0D #a9a1e1
+#define base0E #4ddfbd
+/* #define base0E #46D9FF */
 #define base0F #dfdfdf
-#define basefg base07
+#define basefg #bbc2cf
 #define basebg #282c34
-#define basecc #2E323C
+#define basecc #e4ddd6  /* #2E323C */
 #define basesb base0A
 /*   doom-emacs
 

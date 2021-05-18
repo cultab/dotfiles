@@ -1,12 +1,10 @@
-#include "./tokyonight.xdefaults"
+#include "./doom-one.xdefaults"
 
 !*font:  Iosevka :size=12
 !*font:  FuraCode Nerd Font:size=12:style=Retina,Regular
 !*font:  Iosevka Custom:size=12:style=Regular
-!*font:  Terminus :size=8
-!*font:  Ttyp0 :size=12
-*font:  Victor Mono Nerd Font:size=11
-!*font:  Comic Mono:size=13:style=Normal
+!*font:  Terminus :size=11
+*font:  Victor Mono Nerd Font:size=13
 
 *color0:  base00
 *color1:  base01
@@ -36,7 +34,7 @@ dwm.selbordercolor:  basesb
 dwm.selbgcolor:      basesb
 dwm.selfgcolor:      basebg
 
-dmenu.font: Victor:size=13
+!dmenu.font: Victor:size=13
 !dmenu.background: basebg
 !dmenu.foreground: basefg
 dmenu.selbackground: basesb
