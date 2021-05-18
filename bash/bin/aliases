@@ -13,6 +13,11 @@ alias mv='mv -iv'
 alias rm='rm -iv'
 alias q='exit'
 
+ls_opts='--color=auto -h'
+alias ls="ls $ls_opts"
+alias ll="ls -l $ls_opts"
+alias la="ls -la $ls_opts"
+
 if [ "$(command -v exa)" ]; then
 	exa_opts='--group-directories-first --git --modified --group --sort=Extension'
 	alias ls="exa $exa_opts"
@@ -20,11 +25,6 @@ if [ "$(command -v exa)" ]; then
 	alias la="exa $exa_opts --long --all"
 	alias lt="exa $exa_opts --tree"
 fi
-
-ls_opts='--color=auto -h'
-alias ls="ls $ls_opts"
-alias ll="ls -l $ls_opts"
-alias la="ls -la $ls_opts"
 
 # lsd_opts='--group-dirs first --extensionsort'
 # alias lsd="lsd $lsd_opts"

@@ -56,7 +56,7 @@ source ~/bin/functions.bash
 export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/go
 export EDITOR="nvim"
-# export LS_COLORS=$(dircolors)
+export LS_COLORS= #$(dircolors)
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore"
 
 # man colors
