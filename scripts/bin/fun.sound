@@ -1,1 +1,1 @@
-cat ganou.txt | espeak -v el
+cat ~/bin/ganou.txt | espeak -v el -p 40 -s 170
