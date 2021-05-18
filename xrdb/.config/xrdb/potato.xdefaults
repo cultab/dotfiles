@@ -1,0 +1,22 @@
+#define base00 #37372B
+#define base01 #FF7040
+#define base02 #AFCE57
+#define base03 #d9b85d
+#define base04 #7AA2F7
+#define base05 #CC78B2
+#define base06 #86C393
+#define base07 #DFD8C0
+#define base08 #5a5b66 /* better contrast with basebg */
+#define base09 #FF4545
+#define base0A #A0FF40
+#define base0B #F6A329
+#define base0C #5CA8FF
+#define base0D #E44269
+#define base0E #80E8C8
+#define base0F #DFD8C0
+#define basefg base0F
+#define basebg #303025
+#define basecc basefg
+#define basesb base03
+
+/* #define base08 #1a1b26 */
