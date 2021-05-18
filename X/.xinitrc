@@ -28,8 +28,10 @@ xhost +localhost # to allow acpi handler to xautolock -locknow
 # setxkbmap \
 #   -layout us,gr \
 #   -option grp:lalt_lshift_toggle \
-#   -option ctrl:nocaps \
+#   -option caps:escape \
 #   -option compose:ralt
+
+#   -option ctrl:nocaps
 # setxkbmap -option caps:swapescape 
 # xcape  -e 'Control_L=Escape'
 
@@ -49,16 +51,19 @@ slstatus &
 
 ~/bin/autoshutdown_on_low_power &
 appimaged &
-barrierc --daemon --no-tray --restart --enable-crypto 192.168.1.120 &
+#barrierc --daemon --no-tray --restart --enable-crypto 192.168.1.120 &
+barrier &
 #compton -b &
 picom -b --corner-radius 7 &
-# 300 -> notify 5 mins before lock, 15 -> lock in 15 mins, 15000 ms before msg disapears
+# 300 -> notify 5 mins before lock
+# 30 -> lock in 30 mins 
+# 15000 ms before msg disapears
     # -locker 'slock -m  "Locked at $(date +%T)"' \
 xautolock \
     -locker 'slock -m  "$(cowsay $(fortune -s))"' \
     -notify 300 \
     -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
-    -time 15 &
+    -time 30 &
 eval $(keyring --eval)
 
 #########
@@ -73,11 +78,12 @@ pavucontrol &
 # Autostart #
 #############
 
-#nm-tray &
-#blueman-applet &
+kdeconnect-app &
 blueman-manager &
 megasync &
 flatpak run com.discordapp.Discord &
+#nm-tray &
+#blueman-applet &
 
 # start WM/DE
 exec dbus-launch --exit-with-session dwm
