@@ -76,15 +76,7 @@ if has("nvim")
 
     augroup filetype_autocmds
         autocmd!
-        autocmd FileType rmd,md map <F6> :!R -e 'require(rmarkdown); render("./'%'");'<CR>
         autocmd FileType sh,bash,vhdl call neomake#configure#automake('nwri', 0)
-    augroup end
-endif
-
-if system('uname -r') =~ "Microsoft"
-    augroup Yank
-        autocmd!
-        autocmd TextYankPost * :call system('clip.exe ',@")
     augroup end
 endif
 
@@ -120,7 +112,6 @@ augroup end
 augroup customize_langclient_hover
     autocmd!
     autocmd WinLeave __LCNHover__ ++nested call <SID>fixLanguageClientHover()
-    autocmd User LanguageServerCrashed * echo OUPS OUPS
 augroup end
 
 augroup close_preview_split
@@ -141,11 +132,6 @@ augroup end
 "endfunction
 "nnoremap z= :call FzfSpell()<CR>
 
-function! Render_R()
-    :!R -e 'require(rmarkdown); render("./'%'");'
-    echo 'Done!'
-endfunction
-
 function! s:fixLanguageClientHover()
     setlocal wrap
     setlocal conceallevel=2
@@ -165,7 +151,6 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.config/nvim/plugged")
-
 "Autocomplete
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh',}
 Plug 'Shougo/deoplete.nvim'
@@ -202,6 +187,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/CycleColor'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'Yggdroot/indentLine'
+
 
 " Colorschemes
 Plug 'drewtempelmeyer/palenight.vim'
@@ -216,7 +204,6 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'deviantfero/wpgtk.vim'
 Plug 'Reewr/vim-monokai-phoenix'
 Plug 'cultab/potato-colors'
-
 Plug 'noahfrederick/vim-noctu'
 Plug 'jsit/disco.vim'
 
@@ -233,11 +220,16 @@ call plug#end()
 
 " Plugin Settings {{{
 
-set omnifunc=syntaxcomplete#Complete
-set listchars=tab:┊\ ,nbsp:␣,trail:·,extends:>,precedes:<
+
+set listchars=nbsp:␣,trail:·,extends:>,precedes:<,tab:\ \ 
+"for tab : ┊
 set list
+" used as separator for windows
 set fillchars=vert:\│
+
+" completion options
 set complete=.,w,b,i,u,t,
+set omnifunc=syntaxcomplete#Complete
 set completefunc=LanguageClient#complete
 set completeopt=menu,longest
 call deoplete#custom#source('_', 'matchers', ['matcher_head', 'matcher_length'])
@@ -257,13 +249,13 @@ let g:LanguageClient_settingsPath = [expand("~/.config/nvim/LanguageClient_setti
 " let g:LanguageClient_loggingFile =  expand('~/langClient.log') 
 
 let g:LanguageClient_serverCommands = {
+    \ 'c'              : ['/bin/clangd','--suggest-missing-includes', '-background-index'],
+    \ 'cpp'            : ['/bin/clangd','--suggest-missing-includes', '-background-index'],
+    \ 'dart'           : ['dart', '/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot', '--lsp'],
+    \ 'go'             : ['gopls'],
+    \ 'java'           : ['~/repos/java-language-server/dist/javalsp'],
     \ 'javascript'     : ['/bin/typescript-language-server', '--stdio'],
     \ 'python'         : ['pylsp'],
-    \ 'java'           : ['~/repos/java-language-server/dist/javalsp'],
-    \ 'dart'           : ['dart', '/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot', '--lsp'],
-    \ 'cpp'            : ['/bin/clangd','--suggest-missing-includes' ],
-    \ 'go'             : ['gopls'],
-    \ 'c'              : ['/bin/clangd','--suggest-missing-includes' ],
     \ 'r'              : ['R', '--slave', '-e', 'languageserver::run()'],
     \}
 
@@ -273,6 +265,7 @@ let g:LanguageClient_serverCommands = {
     " \ 'typescript'     : ['/bin/typescript-language-server', '--stdio'],
     " \ 'javascript.jsx' : ['/bin/typescript-language-server', '--stdio'],
     " \ 'typescript.tsx' : ['/bin/typescript-language-server', '--stdio'],
+
 "let g:pandoc#modules#disabled = ["folding"]
 
 let g:VimuxOrientation = "h"
@@ -284,10 +277,10 @@ let g:indent_guides_guide_size = 1
 
 " adding the default first
 let g:AutoPairs={'```': '```', '`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '''''''': '''''''', '[': ']', '"""': '"""'}
-" adding extra TODO: autocommand for markdown, rmarkdown,tex files
+" then autocmd
 augroup AutoPairsGroup
     autocmd!
-    autocmd FileType tex,rmd,md :let g:AutoPairs['$']='$'
+    autocmd FileType tex,rmd :let g:AutoPairs['$']='$'
 augroup end
 
 "}}}
@@ -304,24 +297,28 @@ set sidescroll=6
 set noshowmode
 set showcmd
 
-set colorcolumn=0 "80
+let g:indentLine_setColors = 1
+let g:indentLine_char = '│' "'┊'
+let g:indentLine_bufTypeExclude = ['help', 'terminal']
+
+
+set colorcolumn=80
 set background=dark
 set cursorline " highlight current line
-set notermguicolors
 
 " Colorscheme Options
 let g:palenight_terminal_italics = 1
 let g:solarized_extra_hi_groups = 1
 let g:lightline#colorscheme#github_light#faithful = 0
 let ayucolor="dark"
-
 let g:tokyonight_style = "night"
 let g:tokyonight_disable_italic_comment = 1
 let g:tokyonight_transparent_background = 0
 let g:tokyonight_enable_italics = 1 "only works with custom fonts, see github
 
 "set background=light
-colorscheme disco
+set termguicolors
+colorscheme doom-one
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -334,7 +331,7 @@ endif
 
 " Lightline options
 let g:lightline = {
-    \   'colorscheme' : 'landscape',
+    \   'colorscheme' : 'one',
     \   'active' : {
     \       'left' : [ [ 'mode', 'paste' ],
     \                  [ 'filename', 'modified', 'readonly' ] ],
@@ -368,12 +365,20 @@ let g:lightline = {
     \       'err_cnt'  : 'LightlineErrorCount',
     \       'wrn_cnt'  : 'LightlineWarningCount'
     \   },
-    \   'separator'    : { 'left': '', 'right': '' },
-    \   'subseparator' : { 'left': '', 'right': '' },
+    \   'separator'    : { 'left': '', 'right': '' },
+    \   'subseparator' : { 'left': '', 'right': '' },
     \}
 
+"{{{ Separators
+    " \   'separator'    : { 'left': '', 'right': '' },
+    " \   'subseparator' : { 'left': '', 'right': '' },
+    " \   'separator'    : { 'left': '', 'right': '' },
+    " \   'subseparator' : { 'left': '', 'right': '' },
+    " \   'separator'    : { 'left': '', 'right': '' },
+    " \   'subseparator' : { 'left': '', 'right': '' },
     " \   'separator'    : { 'left': '', 'right': '' },
     " \   'subseparator' : { 'left': '', 'right': '' },
+"}}}
 
 " Lightline Functions {{{
 "
@@ -383,11 +388,11 @@ let g:lightline = {
 
 function! GetDevicon()
     " also add a space at the end
-    return WebDevIconsGetFileTypeSymbol() . ' '
+    return WebDevIconsGetFileTypeSymbol()
 endfunction
 
 function! LightlineReadonly()
-    return &readonly ? ' ' : ''
+    return &readonly ? '' : ''
 endfunction
 
 " The following is practicaly stolen right out of
@@ -416,7 +421,7 @@ function! LightlineErrorCount()
     if (cnt == 0)
         let cnt = LightlineNmGetTypeCount(s:severity_error)
     endif
-    return cnt == 0 ? '' : printf('%d  ', cnt)
+    return cnt == 0 ? '' : printf('%d ', cnt)
 endfunction
 
 " calls LightlineLcGetTypeCount with type = warning
@@ -426,7 +431,7 @@ function! LightlineWarningCount()
     if (cnt == 0)
         let cnt = LightlineNmGetTypeCount(s:severity_warning)
     endif
-    return cnt == 0 ? '' : printf('%d  ', cnt)
+    return cnt == 0 ? '' : printf('%d ', cnt)
 endfunction
 
 function! LightlineNmGetTypeCount(type)
@@ -519,10 +524,6 @@ endfunction
 
 " so much more convenient
 map <space> <leader>
-
-if system('uname -r') =~ "Microsoft"
-    nnoremap <leader>p :let @+=system('powershell.exe -Command Get-Clipboard')<CR> p
-endif
 
 " fzf
 nnoremap <leader>ff :Files<CR>
@@ -618,18 +619,12 @@ vnoremap P p
 noremap cc "_cc
 noremap x "_x
 
-" CycleColors, it's bound in the plugin but incase I forget
-nnoremap <f4> :CycleColorNext<CR>
-nnoremap <f3> :CycleColorPrev<CR>
-
 " I never use Ex mode, so re-run macros instead
 nnoremap Q @@
 
 " sane movement through wrapping lines
 noremap j gj
 noremap k gk
-noremap ξ gj
-noremap κ gk
 
 " sometimes I get off the shift key too slowly, ~~maybe don't do it then?~~,
 " HA abbr to the rescue
