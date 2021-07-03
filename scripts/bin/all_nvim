@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for socket in $(nvr --serverlist); do
+    # echo "nvr --nostart --servername $socket -c $*"
+    nvr --nostart --servername "$socket" "-c $*"
+done
