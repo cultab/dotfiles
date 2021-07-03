@@ -80,6 +80,11 @@ if has("nvim")
     augroup end
 endif
 
+augroup LightlineColorscheme
+    autocmd!
+    autocmd ColorScheme * call Lightline_update()
+augroup END
+
 augroup auto_formating
     autocmd!
     autocmd BufWritePre *.go,*.dart :call LanguageClient#textDocument_formatting_sync()
@@ -138,6 +143,14 @@ function! s:fixLanguageClientHover()
     setlocal nonu nornu
 endfunction
 
+function! Lightline_update()
+    if !exists('g:loaded_lightline')
+        return
+    endif
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+endfunction
 "}}}
 
 " Plugins {{{
@@ -183,6 +196,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'pangloss/vim-javascript'
 
 " Visual
+Plug 'mhinz/vim-startify'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'ryanoasis/vim-devicons'
@@ -274,6 +288,7 @@ let g:tmux_navigator_no_mappings = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_guide_size = 1
+let g:indentLine_fileTypeExclude = ['text', 'rmd']
 
 " adding the default first
 let g:AutoPairs={'```': '```', '`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '''''''': '''''''', '[': ']', '"""': '"""'}
@@ -316,9 +331,49 @@ let g:tokyonight_disable_italic_comment = 1
 let g:tokyonight_transparent_background = 0
 let g:tokyonight_enable_italics = 1 "only works with custom fonts, see github
 
+" Lightline options{{{
+let g:lightline = {
+    \   "colorscheme" : "gruvbox",
+    \   "active" : {
+    \       "left" : [ [ "mode", "paste" ],
+    \                  [ "filename", "modified", "readonly" ] ],
+    \       "right": [ [ "err_cnt", "wrn_cnt", "lineinfo" ],
+    \                 [ "percent" ],
+    \                  [ "fileformat", "fileencoding", "filetype", "dev_icn" ] ]
+    \   },
+    \   "inactive" : {
+    \       "left" : [ [ "filename" ] ],
+    \       "right": [ [ "lineinfo" ],
+    \                [ "percent" ] ]
+    \   },
+    \   "tabline" : {"left": [["buffers"]], "right": [["close"]]},
+    \   "component" : { 
+    \       "lineinfo": " %3l:%-2v"
+    \   },
+    \   "component_type" : {
+    \       "buffers"  : "tabsel",
+    \       "readonly" : "error",
+    \       "err_cnt"  : "error",
+    \       "wrn_cnt"  : "warning"
+    \   },
+    \   "component_function" : {
+    \       "err_cnt"  : "LightlineErrorCount",
+    \       "wrn_cnt"  : "LightlineWarningCount",
+    \       "dev_icn"  : "GetDevicon"
+    \   },
+    \   "component_expand" : {
+    \       "buffers"  : "lightline#bufferline#buffers",
+    \       "readonly" : "LightlineReadonly",
+    \       "err_cnt"  : "LightlineErrorCount",
+    \       "wrn_cnt"  : "LightlineWarningCount"
+    \   },
+    \   "separator"    : { "left": "", "right": "" },
+    \   "subseparator" : { "left": "", "right": "" },
+    \}"}}}
+
 "set background=light
 set termguicolors
-colorscheme doom-one
+colorscheme gruvbox8_hard
 
 " Bufferline options
 let g:lightline#bufferline#show_number = 1
@@ -328,46 +383,6 @@ let g:lightline#bufferline#enable_devicons = 1
 if has('gui_running') " disable gui bufferline
     set guioptions-=e
 endif
-
-" Lightline options
-let g:lightline = {
-    \   'colorscheme' : 'one',
-    \   'active' : {
-    \       'left' : [ [ 'mode', 'paste' ],
-    \                  [ 'filename', 'modified', 'readonly' ] ],
-    \       'right': [ [ 'err_cnt', 'wrn_cnt', 'lineinfo' ],
-    \                 [ 'percent' ],
-    \                  [ 'fileformat', 'fileencoding', 'filetype', 'dev_icn' ] ]
-    \   },
-    \   'inactive' : {
-    \       'left' : [ [ 'filename' ] ],
-    \       'right': [ [ 'lineinfo' ],
-    \                [ 'percent' ] ]
-    \   },
-    \   'tabline' : {'left': [['buffers']], 'right': [['close']]},
-    \   'component' : { 
-    \       'lineinfo': ' %3l:%-2v'
-    \   },
-    \   'component_type' : {
-    \       'buffers'  : 'tabsel',
-    \       'readonly' : 'error',
-    \       'err_cnt'  : 'error',
-    \       'wrn_cnt'  : 'warning'
-    \   },
-    \   'component_function' : {
-    \       'err_cnt'  : 'LightlineErrorCount',
-    \       'wrn_cnt'  : 'LightlineWarningCount',
-    \       'dev_icn'  : 'GetDevicon'
-    \   },
-    \   'component_expand' : {
-    \       'buffers'  : 'lightline#bufferline#buffers',
-    \       'readonly' : 'LightlineReadonly',
-    \       'err_cnt'  : 'LightlineErrorCount',
-    \       'wrn_cnt'  : 'LightlineWarningCount'
-    \   },
-    \   'separator'    : { 'left': '', 'right': '' },
-    \   'subseparator' : { 'left': '', 'right': '' },
-    \}
 
 "{{{ Separators
     " \   'separator'    : { 'left': '', 'right': '' },
