@@ -1,5 +1,7 @@
 local map = vim.api.nvim_set_keymap
 
+local lspconfig = require("lspconfig")
+
 require("lsp-colors").setup({
     Error = "#db4b4b",
     Warning = "#e0af68",
@@ -7,42 +9,20 @@ require("lsp-colors").setup({
     Hint = "#10B981"
 })
 
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
+local luadev = require("lua-dev").setup({
+    lspconfig = {
+        cmd = { '/home/evan/.local/share/nvim/lspinstall/lua/sumneko-lua-language-server' },
+        on_attach = require'completion'.on_attach,
+    }
+})
 
-require'lspconfig'.sumneko_lua.setup {
-    cmd = { '/home/evan/.local/share/nvim/lspinstall/lua/sumneko-lua-language-server' },
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = runtime_path,
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'},
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                    enable = false,
-            },
-        },
-    },
-  on_attach = require'completion'.on_attach,
-}
+lspconfig.sumneko_lua.setup(luadev)
 
-require'lspconfig'.pyls.setup{
+lspconfig.pyls.setup{
     on_attach=require'completion'.on_attach,
     cmd = { 'pylsp' }
 }
-require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
+lspconfig.clangd.setup{on_attach=require'completion'.on_attach}
 
 local opts = { noremap=true, silent=false }
 
