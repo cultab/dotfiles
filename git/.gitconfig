@@ -7,3 +7,5 @@
 	recentrepo = /home/evan/repos/dwm
 [pull]
 	rebase = false
+[init]
+	defaultBranch = master
