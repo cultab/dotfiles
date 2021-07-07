@@ -1,19 +1,13 @@
 # Theme definitions.
 
 tokyonight:
-  vim: "tokyonight"
-  lightline: "tokyonight"
-  lualine: "tokyonight"
-  xresources: "tokyonight"
+  default: "tokyonight"
 
 potato:
-  vim: "potato"
-  lightline: "potato"
-  xresources: "potato"
+  default: "potato"
 
 github_light:
-  vim: "github-light"
-  lightline: "github_light"
+  default: "github-light"
   xresources: "github_light"
 
 doom-one:
@@ -23,19 +17,11 @@ doom-one:
   xresources: "doom-one"
 
 palenight:
-  vim: "palenight"
-  lightline: "palenight"
-  xresources: "palenight"
+  default: "palenight"
 
 gruvbox:
   vim: "gruvbox8"
-  lightline: "gruvbox"
-  lualine: "gruvbox"
-  xresources: "gruvbox"
-
+  default: "gruvbox"
 
 gruvbox-flat:
-  vim: "gruvbox-flat"
-  lightline: "gruvbox-flat"
-  lualine: "gruvbox-flat"
-  xresources: "gruvbox-flat"
+  default: "gruvbox-flat"
