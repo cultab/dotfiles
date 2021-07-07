@@ -22,7 +22,9 @@
 #define basefg #bbc2cf
 #define basebg #282c34
 #define basecc #e4ddd6  /* #2E323C */
-#define basesb base0A
+#define basesb base06
+
+
 /*   doom-emacs
 
   ;; name        default   256       16

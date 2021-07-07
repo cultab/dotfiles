@@ -1,10 +1,14 @@
-#include "./doom-one.xdefaults"
+#include "./gruvbox-flat.xdefaults"
 
 !*font:  Iosevka :size=12
 !*font:  FuraCode Nerd Font:size=12:style=Retina,Regular
 !*font:  Iosevka Custom:size=12:style=Regular
 !*font:  Terminus :size=11
-*font:  Victor Mono Nerd Font:size=13
+
+!*font:   Victor Mono Nerd Font:size=11
+!st.font: Victor Mono Nerd Font Mono:size=11
+*font:   Iosevka Nerd Font:size=11
+st.font: Iosevka Nerd Font Mono:size=11
 
 *color0:  base00
 *color1:  base01
