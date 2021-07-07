@@ -57,7 +57,7 @@ export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/go
 export EDITOR="nvim"
 export LS_COLORS= #$(dircolors)
-export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore"
+export FZF_DEFAULT_COMMAND="fd"
 
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold
@@ -80,3 +80,5 @@ export LESS+="-R --mouse --wheel-lines=2"
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
+
+alias luamake=/home/evan/repos/lua-language-server/3rd/luamake/luamake
