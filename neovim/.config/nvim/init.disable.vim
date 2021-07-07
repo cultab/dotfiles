@@ -164,73 +164,74 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.config/nvim/plugged")
-"Autocomplete
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh',}
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/echodoc.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'Shougo/neco-vim'
-Plug 'neomake/neomake'
-"Plug 'artur-shaik/vim-javacomplete2'
-Plug 'jiangmiao/auto-pairs'
-Plug 'alvan/vim-closetag'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-
-" Text manipulation
-Plug 'godlygeek/tabular'
-Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-
-" fzf
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
-" Highlighting
-Plug 'lilydjwg/colorizer'
-Plug 'tmux-plugins/vim-tmux'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'plasticboy/vim-markdown'
-Plug 'pangloss/vim-javascript'
-
-" Visual
-Plug 'mhinz/vim-startify'
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'ryanoasis/vim-devicons'
-Plug 'vim-scripts/CycleColor'
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'Yggdroot/indentLine'
-
-
-" Colorschemes
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'lifepillar/vim-solarized8'
-Plug 'lifepillar/vim-gruvbox8'
-Plug 'shinchu/lightline-gruvbox.vim'
-Plug 'romgrk/github-light.vim'
-Plug 'romgrk/doom-one.vim'
-Plug 'joshdick/onedark.vim'
-Plug 'ghifarit53/tokyonight-vim'
-Plug 'ayu-theme/ayu-vim'
-Plug 'deviantfero/wpgtk.vim'
-Plug 'Reewr/vim-monokai-phoenix'
-Plug 'cultab/potato-colors'
-Plug 'noahfrederick/vim-noctu'
-Plug 'jsit/disco.vim'
-
-" Tmux intergration
-Plug 'benmills/vimux'
-"Plug 'christoomey/vim-tmux-navigator'
-
-" Misc
-Plug 'tpope/vim-sensible'
-"Plug '~/.fonts/scientifica/ligature_plugins'
-
 call plug#end()
-"}}}
+""Autocomplete
+"Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh',}
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'Shougo/echodoc.vim'
+"Plug 'sheerun/vim-polyglot'
+"Plug 'Shougo/neco-vim'
+"Plug 'neomake/neomake'
+""Plug 'artur-shaik/vim-javacomplete2'
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'alvan/vim-closetag'
+"Plug 'tpope/vim-endwise'
+"Plug 'tpope/vim-repeat'
+
+"" Text manipulation
+"Plug 'godlygeek/tabular'
+"Plug 'junegunn/vim-easy-align'
+"Plug 'tpope/vim-commentary'
+"Plug 'tpope/vim-surround'
+
+"" fzf
+"Plug 'junegunn/fzf'
+"Plug 'junegunn/fzf.vim'
+
+"" Highlighting
+"Plug 'lilydjwg/colorizer'
+"Plug 'tmux-plugins/vim-tmux'
+"Plug 'vim-pandoc/vim-pandoc'
+"Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'plasticboy/vim-markdown'
+"Plug 'pangloss/vim-javascript'
+
+"" Visual
+"Plug 'mhinz/vim-startify'
+"Plug 'itchyny/lightline.vim'
+"Plug 'mengelbrecht/lightline-bufferline'
+"Plug 'ryanoasis/vim-devicons'
+"Plug 'vim-scripts/CycleColor'
+"Plug 'lukas-reineke/indent-blankline.nvim'
+"Plug 'Yggdroot/indentLine'
+
+
+"" Colorschemes
+"Plug 'drewtempelmeyer/palenight.vim'
+"Plug 'lifepillar/vim-solarized8'
+"Plug 'lifepillar/vim-gruvbox8'
+"Plug 'shinchu/lightline-gruvbox.vim'
+"Plug 'romgrk/github-light.vim'
+"Plug 'romgrk/doom-one.vim'
+"Plug 'joshdick/onedark.vim'
+"Plug 'ghifarit53/tokyonight-vim'
+"Plug 'ayu-theme/ayu-vim'
+"Plug 'deviantfero/wpgtk.vim'
+"Plug 'Reewr/vim-monokai-phoenix'
+"Plug 'cultab/potato-colors'
+"Plug 'noahfrederick/vim-noctu'
+"Plug 'jsit/disco.vim'
+
+"" Tmux intergration
+"Plug 'benmills/vimux'
+""Plug 'christoomey/vim-tmux-navigator'
+
+"" Misc
+"Plug 'tpope/vim-sensible'
+""Plug '~/.fonts/scientifica/ligature_plugins'
+
+"call plug#end()
+""}}}
 
 " Plugin Settings {{{
 
