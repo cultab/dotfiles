@@ -60,11 +60,10 @@ picom -b --corner-radius 7 &
 # 15000 ms before msg disapears
     # -locker 'slock -m  "Locked at $(date +%T)"' \
 xautolock \
-    -locker 'slock -m  "$(cowsay $(fortune -s))"' \
-    -notify 300 \
-    -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
-    -time 30 &
-eval $(keyring --eval)
+-locker 'slock -m  "$(cowsay -f $(fd .cow ~/.cowsay/ | shuf -n 1) $(fortune -s))"' \
+-notify 300 \
+-notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
+-time 30 &
 
 #########
 # Audio #
@@ -81,7 +80,7 @@ pavucontrol &
 kdeconnect-app &
 blueman-manager &
 megasync &
-flatpak run com.discordapp.Discord &
+#flatpak run com.discordapp.Discord NEEDS DBUS?
 #nm-tray &
 #blueman-applet &
 
