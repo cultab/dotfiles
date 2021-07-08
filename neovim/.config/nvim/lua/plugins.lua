@@ -35,6 +35,8 @@ return require('packer').startup(function(use)
 	use 'norcalli/nvim-colorizer.lua'
 	use 'folke/todo-comments.nvim'
     use 'sheerun/vim-polyglot'
+	use 'vim-pandoc/vim-pandoc-syntax'
+	use 'plasticboy/vim-markdown'
 	--}}}
 
     -- text manipulation {{{

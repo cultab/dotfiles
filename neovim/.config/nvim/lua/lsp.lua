@@ -40,8 +40,8 @@ local lspconfig = require("lspconfig")
 local on_attach = function(client, bufnr)
     require("lsp_signature").on_attach()--{{{
     require("nvim-autopairs.completion.compe").setup({
-    map_cr = true, --  map <CR> on insert mode
-    map_complete = true -- it will auto insert `(` after select function or method item
+        map_cr = true, --  map <CR> on insert mode
+        map_complete = true -- it will auto insert `(` after select function or method item
     })
 
     local opts = { noremap=true, silent=false }
