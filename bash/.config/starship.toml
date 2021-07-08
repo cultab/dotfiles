@@ -8,7 +8,7 @@ ssh_only = true
 #symbol cache :) = "❯ "
 success_symbol = "[ε](bold green)"
 error_symbol = "[x](bold red)"
-use_symbol_for_status = true
+# use_symbol_for_status = true
 
 [battery]
 full_symbol = ""
@@ -55,7 +55,7 @@ disabled = true
 [erlang]
 disabled = true
 
-[gclould]
+[gcloud]
 disabled = true
 
 [git_branch]
@@ -64,8 +64,8 @@ symbol = " "
 [golang]
 symbol = " "
 
-[haskell]
-symbol = " "
+# [haskell]
+# symbol = " "
 
 [helm]
 disabled = true
