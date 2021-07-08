@@ -23,6 +23,8 @@ alias gap='git add --all --patch'
 alias gc='git commit'
 alias ga='git add'
 alias gca='git commit --amend'
+alias gds='git diff --staged'
+alias gdh='git diff HEAD'
 
 ######
 # ls #

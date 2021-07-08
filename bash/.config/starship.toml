@@ -35,11 +35,9 @@ symbol = " "
 [directory]
 read_only = " "
 
-[docker]
-symbol = " "
-
 [docker_context]
 disabled = true
+symbol = " "
 
 [dotnet]
 disabled = true
