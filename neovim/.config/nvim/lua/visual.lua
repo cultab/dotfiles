@@ -39,7 +39,9 @@ g.indent_blankline_enabled = true
 g.indent_blankline_char = '│' -- '┊'
 g.indent_blankline_filetype_exclude = {'help', 'terminal', 'dashboard'}
 g.indent_blankline_use_treesitter = true
--- HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
+g.indent_blankline_show_current_context = true
+g.indent_blankline_context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' }
+--  HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
 vim.wo.colorcolumn = "99999"
 
 o.number = true
