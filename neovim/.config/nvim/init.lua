@@ -4,18 +4,39 @@ local cmd = vim.cmd
 
 require('plugins')
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
     ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    highlight = {
-        enable = true,              -- false will disable the whole extension
-        -- disable = { "c", "rust" },  -- list of language that will be disabled
-  },
+    highlight = { enable = true  },
+    incremental_selection = { enable = true },
+    textobjects = {
+        enable = true,
+        lsp_interop = {
+            enable = true,
+            peek_definition_code = {
+                ["df"] = "@function.outer",
+                ["dF"] = "@class.outer",
+            },
+        },
+        select = {
+            enable = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ["al"] = "@loop.outer",
+                ["il"] = "@loop.inner",
+            }
+        }
+    },
+    indent = { enable = true }
 }
 
+require('nvim_comment').setup()
 require('nvim-autopairs').setup()
 require('surround').setup{}
+
 require('gitsigns').setup()
-require('todo-comments').setup()
 require('which-key').setup({
     plugins = {
         spelling = { enabled = true }

@@ -31,6 +31,7 @@ nnoremap <silent>    <A-c> :BufferClose<CR>
 " Magic buffer-picking mode
 nnoremap <silent> <leader>bb :BufferPick<CR>
 " nnoremap <silent> <leader>bd :BufferClose<CR>
+
 " mess with my window layout :^)
 " list
 "nnoremap <leader>bl :ls:<CR>
@@ -43,6 +44,13 @@ nnoremap <silent> <leader>bb :BufferPick<CR>
 "nnoremap <leader>bt :echoerr('⟨leader⟩bt is concidered harmful. Use <Ctrl-^> or <Ctrl-6> instead!')<CR>
 " delete current buffer
 nnoremap <leader>bd :bdelete<CR>
+
+" telescope
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " fzf
 " nnoremap <leader>ff :Files<CR>
@@ -72,7 +80,7 @@ noremap <leader>cb :e ~/.bashrc<CR>
 noremap <leader>ct :e ~/.tmux.conf<CR>
 noremap <leader>cs :e ~/repos/st/config.h<CR>
 noremap <leader>cd :e ~/repos/dwm/config.h<CR>
-noremap <leader>cv :e $MYVIMRC<CR>
+noremap <leader>cv :next $MYVIMRC ~/.config/nvim/lua/*.lua<CR>
 noremap <leader>cx :e ~/.config/xrdb/<CR>
 " reload vim config
 noremap <leader>cr :so $MYVIMRC<CR>

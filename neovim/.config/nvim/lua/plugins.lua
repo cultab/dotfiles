@@ -12,6 +12,7 @@ return require('packer').startup(function(use)
     use 'folke/lsp-colors.nvim'
     use 'nvim-lua/completion-nvim'
 	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+	use 'nvim-treesitter/nvim-treesitter-textobjects'
 	--}}}
 
     -- visual {{{
@@ -36,8 +37,8 @@ return require('packer').startup(function(use)
 
     -- text manipulation {{{
     use 'windwp/nvim-autopairs'
-	use 'blackCauldron7/surroud.nvim'
-	use '/b3nj5m1n/kommentary'
+	use 'blackCauldron7/surround.nvim'
+	use 'terrortylor/nvim-comment'
 	--}}}
 
 	-- colorschemes {{{
@@ -56,9 +57,15 @@ return require('packer').startup(function(use)
 	-- use 'ghifarit53/tokyonight-vim'
 	-- }}}
 
--- misc{{{
+-- misc {{{
 	use 'folke/which-key.nvim'
 	use 'benmills/vimux'
+	use "folke/lua-dev.nvim"
+	use {
+		'nvim-telescope/telescope.nvim',
+		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+	}
+
 	--}}}
 
 end)

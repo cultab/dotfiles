@@ -4,6 +4,7 @@ local g = vim.g
 o.termguicolors = true
 
 require("colorizer").setup()
+require('todo-comments').setup()
 
 function TestLongName()
     print("lel")
@@ -20,6 +21,7 @@ g.dashboard_custom_header = {
 [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
 }
 
+g.dashboard_default_executive = 'telescope'
 -- g.dashboard_preview_command = 'cat'
 -- g.dashboard_preview_pipeline = 'lolcat -h 0.5 -v -0.1'
 -- g.dashboard_preview_file = '~/.config/nvim/logo.cat'
