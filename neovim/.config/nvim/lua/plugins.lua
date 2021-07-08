@@ -6,11 +6,13 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use { 'wbthomason/packer.nvim', opt = true }
 
-    --lsp and treesitter {{{
+    -- lsp and treesitter {{{
 	use 'neovim/nvim-lspconfig'
     use 'kabouzeid/nvim-lspinstall'
     use 'folke/lsp-colors.nvim'
-    use 'nvim-lua/completion-nvim'
+    -- use 'nvim-lua/completion-nvim'
+	use  "ray-x/lsp_signature.nvim"
+	use '/hrsh7th/nvim-compe'
 	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 	use 'nvim-treesitter/nvim-treesitter-textobjects'
 	--}}}

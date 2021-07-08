@@ -3,6 +3,8 @@ local g = vim.g
 
 o.termguicolors = true
 
+vim.cmd [[highlight link CompeDocumentation Normal]]
+
 require("colorizer").setup()
 require('todo-comments').setup()
 
@@ -91,3 +93,10 @@ if not LOAD_lualine then
 end
 
 LOAD_lualine = true
+
+vim.cmd [[
+augroup YankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup end
+]]

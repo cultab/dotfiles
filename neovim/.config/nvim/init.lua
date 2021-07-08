@@ -4,8 +4,12 @@ local cmd = vim.cmd
 
 require('plugins')
 
+require('nvim_comment').setup()
+require('nvim-autopairs').setup()
+require('surround').setup{}
+
 require('nvim-treesitter.configs').setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages{{{
     highlight = { enable = true  },
     incremental_selection = { enable = true },
     textobjects = {
@@ -29,19 +33,34 @@ require('nvim-treesitter.configs').setup {
             }
         }
     },
-    indent = { enable = true }
+    indent = { enable = true } --}}}
 }
 
-require('nvim_comment').setup()
-require('nvim-autopairs').setup()
-require('surround').setup{}
+require('gitsigns').setup{
+    keymaps = {--{{{
+        -- Default keymap options
+        noremap = true,
+        buffer = true,
 
-require('gitsigns').setup()
-require('which-key').setup({
-    plugins = {
+        ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
+        ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
+
+        ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+        ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+        ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+        -- ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+        -- ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+        -- ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+        -- ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+        ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>'
+    }--}}}
+}
+
+require('which-key').setup{
+    plugins = {--{{{
         spelling = { enabled = true }
-    }
-})
+    }--}}}
+}
 
 require('lsp')
 require('mappings')
@@ -91,7 +110,7 @@ o.iminsert = 0  -- default to english
 g.c_syntax_for_h = true
 
 o.complete = '.,w,b,i,u,t,'
-o.completeopt = "menu,longest,noinsert,noselect"
+o.completeopt = "menuone,noselect,noinsert,longest"
 
 cmd [[
 augroup termBinds
