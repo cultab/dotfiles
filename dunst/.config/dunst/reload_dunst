@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 DB=$(xrdb -query)
 
@@ -25,11 +25,15 @@ frame_color = \"$red\"
 foreground = \"$red\"
 background = \"$background\"
 timeout = 8
+
+# vim: ft=cfg
 "
 
-# cp dunstrc $(date "+%Y-%m-%d-%H-%M-%S").dunstrc
-cp ./no_theme.dunstrc dunstrc
-echo "$theme" >> dunstrc
+CONF_PATH="$HOME/.config/dunst"
 
-# pkill dunst
-notify-send -u low 'Reloaded dunstrc!'
+# cp dunstrc $(date "+%Y-%m-%d-%H-%M-%S").dunstrc
+cp $CONF_PATH/no_theme.dunstrc $CONF_PATH/dunstrc
+echo "$theme" >> "$CONF_PATH"/dunstrc
+
+pkill --echo ^dunst
+notify-send -u low 'Changed theme!'

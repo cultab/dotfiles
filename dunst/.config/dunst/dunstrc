@@ -178,27 +178,6 @@ history = ctrl+grave
 # Context menu.
 context = ctrl+shift+period
 
-[urgency_low]
-# IMPORTANT: colors have to be defined in quotation marks.
-# Otherwise the "#" and following would be interpreted as a comment.
-frame_color = "#82b1ff"
-foreground = "#82b1ff"
-background = "#292d3d"
-timeout = 4
-
-[urgency_normal]
-frame_color = "#c3e88d"
-foreground = "#c3e88d"
-background = "#292d3d"
-timeout = 6
-
-[urgency_critical]
-frame_color = "#ff5470"
-foreground = "#ff5470"
-background = "#292d3d"
-timeout = 8
-
-
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
 # Messages can be matched by "appname", "summary", "body", "icon", "category",
@@ -213,42 +192,59 @@ timeout = 8
 #   script appname summary body icon urgency
 # where urgency can be "LOW", "NORMAL" or "CRITICAL".
 #
-# NOTE: if you don't want a notification to be displayed, set the format
-# to "".
-# NOTE: It might be helpful to run dunst -print in a terminal in order
-# to find fitting options for rules.
+#  NOTE: if you don't want a notification to be displayed, set the format to "".
+#  NOTE: It might be helpful to run dunst -print in a terminal in order to find fitting options for rules.
 
-#[espeak]
-#    summary = "*"
-#    script = dunst_espeak.sh
+# [espeak]
+#     summary = "*"
+#     script = dunst_espeak.sh
+# 
+# [script-test]
+#     summary = "*script*"
+#     script = dunst_test.sh
+# 
+# [ignore]
+#     # This notification will not be displayed
+#     summary = "foobar"
+#     format = ""
+# 
+# [signed_on]
+#     appname = Pidgin
+#     summary = "*signed on*"
+#     urgency = low
+# 
+# [signed_off]
+#     appname = Pidgin
+#     summary = *signed off*
+#     urgency = low
+# 
+# [says]
+#     appname = Pidgin
+#     summary = *says*
+#     urgency = critical
+# 
+# [twitter]
+#     appname = Pidgin
+#     summary = *twitter.com*
+#     urgency = normal
 
-#[script-test]
-#    summary = "*script*"
-#    script = dunst_test.sh
-
-#[ignore]
-#    # This notification will not be displayed
-#    summary = "foobar"
-#    format = ""
-
-#[signed_on]
-#    appname = Pidgin
-#    summary = "*signed on*"
-#    urgency = low
-#
-#[signed_off]
-#    appname = Pidgin
-#    summary = *signed off*
-#    urgency = low
-#
-#[says]
-#    appname = Pidgin
-#    summary = *says*
-#    urgency = critical
-#
-#[twitter]
-#    appname = Pidgin
-#    summary = *twitter.com*
-#    urgency = normal
-#
 # vim: ft=cfg
+
+[urgency_low]
+frame_color = "#7daea3"
+foreground = "#7daea3"
+background = "#32302f"
+timeout = 4
+
+[urgency_normal]
+frame_color = "#a9b665"
+foreground = "#a9b665"
+background = "#32302f"
+timeout = 6
+
+[urgency_critical]
+frame_color = "#ea6962"
+foreground = "#ea6962"
+background = "#32302f"
+timeout = 8
+
