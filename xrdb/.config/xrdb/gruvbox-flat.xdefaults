@@ -1,0 +1,33 @@
+/* gruvbox */
+
+#define base00 #1D2021
+#define base01 #ea6962
+#define base02 #a9b665
+#define base03 #d8a657
+#define base04 #7daea3
+#define base05 #d3869b
+#define base06 #89b482
+#define base07 #d4be98
+#define base08 #5a524c
+#define base09 base01
+#define base0A base02
+#define base0B #e78a4e
+#define base0C base04
+#define base0D base05
+#define base0E base06
+#define base0F base07
+#define basefg base07
+#define basebg #32302f
+#define basecc #45403d
+#define basesb base01
+
+! extended colors
+
+! *color16: #e78a4e
+! *color17: #c14a4a
+
+! selection_background #3c3836
+! selection_foreground #d4be98
+! url_color #a9b665
+! cursor #d4be98
+
