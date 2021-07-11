@@ -1,6 +1,6 @@
-local o = vim.o
-local g = vim.g
-local cmd = vim.cmd
+O = vim.o
+G = vim.g
+cmd = vim.cmd
 
 require('plugins')
 require('lsp')
@@ -65,51 +65,51 @@ require('which-key').setup{
     }--}}}
 }
 
-o.cindent = true
-o.wrap = false
-o.breakindent = true
-o.expandtab = true  -- no ta🅱️ s
-o.tabstop = 4
-o.softtabstop = 4
-o.shiftwidth = 4
-o.shiftround = true -- round indent to shiftwidth
+O.cindent = true
+O.wrap = false
+O.breakindent = true
+O.expandtab = true  -- no ta🅱️ s
+O.tabstop = 4
+O.softtabstop = 4
+O.shiftwidth = 4
+O.shiftround = true -- round indent to shiftwidth
 
 -- Search Settings
-o.inccommand = 'split' -- show substitutions live
-o.incsearch = true
-o.gdefault = true -- assume the 'g' in s/../../g
-o.ignorecase = true
-o.smartcase = true -- all lower search is case insensitive
+O.inccommand = 'split' -- show substitutions live
+O.incsearch = true
+O.gdefault = true -- assume the 'g' in s/../../g
+O.ignorecase = true
+O.smartcase = true -- all lower search is case insensitive
 
-o.spelllang= 'el,en'
+O.spelllang= 'el,en'
 
-o.shortmess = o.shortmess .. 'c'
+O.shortmess = O.shortmess .. 'c'
 
 -- Backup and swap
-o.backup = true
+O.backup = true
 vim.opt.backupdir:remove('.')
 vim.opt.undodir:remove('.')
-o.undofile = true
-o.swapfile = false
+O.undofile = true
+O.swapfile = false
 
 -- Misc Settings
 vim.opt.clipboard:prepend {"unnamedplus"}
 
-o.splitbelow = true
-o.splitright = true
-o.autochdir = true  -- automatically change directory
-o.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
-o.mouse='a'  -- enable mouse for a(ll) modes
-o.lazyredraw = true
-o.modeline = true
-o.keymap = 'greek_utf-8'
-o.iminsert = 0  -- default to english
+O.splitbelow = true
+O.splitright = true
+O.autochdir = true  -- automatically change directory
+O.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
+O.mouse='a'  -- enable mouse for a(ll) modes
+O.lazyredraw = true
+O.modeline = true
+O.keymap = 'greek_utf-8'
+O.iminsert = 0  -- default to english
 
  -- Assume .h files are c headers instead of cpp
-g.c_syntax_for_h = true
+G.c_syntax_for_h = true
 
-o.complete = '.,w,b,i,u,t,'
-o.completeopt = "menuone,noselect,noinsert,longest"
+O.complete = '.,w,b,i,u,t,'
+O.completeopt = "menuone,noselect,noinsert,longest"
 
 cmd [[
 augroup termBinds

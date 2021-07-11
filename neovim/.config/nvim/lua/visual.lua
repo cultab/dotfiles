@@ -1,58 +1,54 @@
-local o = vim.o
-local g = vim.g
+function TestLongName()
+    print("lel")
+end
 
-o.termguicolors = true
+O.termguicolors = true
 
-vim.cmd [[highlight link CompeDocumentation Normal]]
+cmd [[highlight link CompeDocumentation Normal]]
 
 require("colorizer").setup()
 require('todo-comments').setup()
 
-function TestLongName()
-    print("lel")
-end
 --{{{ lsp
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
 for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    local hl = "LspDiagnosticsSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
-local M = {}
-
-M.icons = {
-  Class = " ",
-  Color = " ",
-  Constant = " ",
-  Constructor = " ",
-  Enum = "了 ",
-  EnumMember = " ",
-  Field = " ",
-  File = " ",
-  Folder = " ",
-  Function = " ",
-  Interface = "ﰮ ",
-  Keyword = " ",
-  Method = "ƒ ",
-  Module = " ",
-  Property = " ",
-  Snippet = "﬌ ",
-  Struct = " ",
-  Text = " ",
-  Unit = " ",
-  Value = " ",
-  Variable = " ",
-}
+local icons = {--{{{
+    Class = " ",
+    Color = " ",
+    Constant = " ",
+    Constructor = " ",
+    Enum = "了 ",
+    EnumMember = " ",
+    Field = " ",
+    File = " ",
+    Folder = " ",
+    Function = " ",
+    Interface = "ﰮ ",
+    Keyword = " ",
+    Method = "ƒ ",
+    Module = " ",
+    Property = " ",
+    Snippet = "﬌ ",
+    Struct = " ",
+    Text = " ",
+    Unit = " ",
+    Value = " ",
+    Variable = " ",
+}--}}}
 
 local kinds = vim.lsp.protocol.CompletionItemKind
 for i, kind in ipairs(kinds) do
-    kinds[i] = M.icons[kind] or kind
+    kinds[i] = icons[kind] or kind
 end
 
-    --}}}
+--}}}
 
-g.dashboard_custom_header = {
+G.dashboard_custom_header = {
 [[                                                     ]],
 [[                                     _               ]],
 [[                                    |_|              ]],
@@ -63,7 +59,22 @@ g.dashboard_custom_header = {
 [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
 }
 
-g.dashboard_default_executive = 'telescope'
+G.dashboard_custom_header = {
+[[                                      __              ]],
+[[                                     |  \             ]],
+[[ _______   ______   ______  __     __ \▓▓______ ____  ]],
+[[|       \ /      \ /      \|  \   /  \  \      \    \ ]],
+[[| ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\ /  ▓▓ ▓▓ ▓▓▓▓▓▓\▓▓▓▓\]],
+[[| ▓▓  | ▓▓ ▓▓    ▓▓ ▓▓  | ▓▓ \▓▓\  ▓▓| ▓▓ ▓▓ | ▓▓ | ▓▓]],
+[[| ▓▓  | ▓▓ ▓▓▓▓▓▓▓▓ ▓▓__/ ▓▓  \▓▓ ▓▓ | ▓▓ ▓▓ | ▓▓ | ▓▓]],
+[[| ▓▓  | ▓▓\▓▓     \\▓▓    ▓▓   \▓▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓]],
+[[ \▓▓   \▓▓ \▓▓▓▓▓▓▓ \▓▓▓▓▓▓     \▓    \▓▓\▓▓  \▓▓  \▓▓]],
+[[                                                      ]],
+[[                                                      ]],
+[[                                                      ]],
+}
+
+G.dashboard_default_executive = 'telescope'
 -- g.dashboard_preview_command = 'cat'
 -- g.dashboard_preview_pipeline = 'lolcat -h 0.5 -v -0.1'
 -- g.dashboard_preview_file = '~/.config/nvim/logo.cat'
@@ -71,32 +82,32 @@ g.dashboard_default_executive = 'telescope'
 -- g.dashboard_preview_file_width = 56
 
  -- used as separator for windows
-o.fillchars = "vert:│"
-o.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  "
+O.fillchars = "vert:│"
+O.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  "
 -- for tab : ┊
-o.list = true
-g.indent_blankline_enabled = true
-g.indent_blankline_char = '│' -- '┊'
-g.indent_blankline_filetype_exclude = {'help', 'terminal', 'dashboard'}
-g.indent_blankline_use_treesitter = true
-g.indent_blankline_show_current_context = true
-g.indent_blankline_context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' }
+O.list = true
+G.indent_blankline_enabled = true
+G.indent_blankline_char = '│' -- '┊'
+G.indent_blankline_filetype_exclude = {'help', 'terminal', 'dashboard'}
+G.indent_blankline_use_treesitter = true
+G.indent_blankline_show_current_context = true
+G.indent_blankline_context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' }
 --  HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
 vim.wo.colorcolumn = "99999"
 
-o.number = true
-o.relativenumber = false
-o.signcolumn = 'yes:2'
-o.foldmethod = 'marker'
+O.number = true
+O.relativenumber = false
+O.signcolumn = 'auto:2-4'
+O.foldmethod = 'marker'
 
-o.scrolloff=3 -- keep lines above and below cursor
-o.sidescroll=6
-o.showmode = false
-o.showcmd = true
+O.scrolloff=3 -- keep lines above and below cursor
+O.sidescroll=6
+O.showmode = false
+O.showcmd = true
 
 -- o.colorcolumn = "80"
-o.background = "dark"
-o.cursorline = true -- highlight current line
+O.background = "dark"
+O.cursorline = true -- highlight current line
 
 -- Colorscheme Options
 --
@@ -105,27 +116,27 @@ local lualine_bold = true
 local italic_functions = true
 local hide_inactive_status = true
 
-g.palenight_terminal_italics = true
-g.solarized_extra_hi_groups = true
+G.palenight_terminal_italics = true
+G.solarized_extra_hi_groups = true
 -- g.lightline#colorscheme#github_light#faithful = 0
-g.ayucolor = "dark"
-g.tokyonight_style = "night"
+G.ayucolor = "dark"
+G.tokyonight_style = "night"
 
 -- Tokyonight {{{
-g.tokyonight_style = "night"
-g.tokyonight_italic_functions = italic_functions
-g.tokyonight_sidebars = sidebars
-g.tokyonight_lualine_bold = lualine_bold
-g.tokyonight_hide_inactive_statusline = hide_inactive_status
+G.tokyonight_style = "night"
+G.tokyonight_italic_functions = italic_functions
+G.tokyonight_sidebars = sidebars
+G.tokyonight_lualine_bold = lualine_bold
+G.tokyonight_hide_inactive_statusline = hide_inactive_status
 --}}}
 -- Gruvbox {{{
-g.gruvbox_italic_functions = italic_functions
-g.gruvbox_sidebars = sidebars
-g.gruvbox_lualine_bold = lualine_bold
-g.gruvbox_hide_inactive_statusline = hide_inactive_status
+G.gruvbox_italic_functions = italic_functions
+G.gruvbox_sidebars = sidebars
+G.gruvbox_lualine_bold = lualine_bold
+G.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme gruvbox-flat"
+cmd "colorscheme gruvbox-flat"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
@@ -136,7 +147,7 @@ end
 
 LOAD_lualine = true
 
-vim.cmd [[
+cmd [[
 augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()

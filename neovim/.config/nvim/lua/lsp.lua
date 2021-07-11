@@ -88,3 +88,8 @@ lspconfig.pyls.setup{
 
 lspconfig.clangd.setup{on_attach = on_attach}
 
+lspconfig.tsserver.setup{
+    on_attach = on_attach,
+    filetypes = { "javascript" },
+    root_dir = function() return vim.loop.cwd() end -- run lsp for javascript in any directory
+}
