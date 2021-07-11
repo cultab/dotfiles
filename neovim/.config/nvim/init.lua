@@ -36,7 +36,10 @@ require('nvim-treesitter.configs').setup {
             }
         }
     },
-    indent = { enable = true } --}}}
+    indent = {
+        enable = true,
+        disable = { 'python' }
+    } --}}}
 }
 
 require('gitsigns').setup{

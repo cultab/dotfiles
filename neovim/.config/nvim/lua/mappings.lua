@@ -149,6 +149,8 @@ noremap <leader>cs :e ~/repos/st/config.h<CR>
 noremap <leader>cd :e ~/repos/dwm/config.h<CR>
 noremap <leader>cv :next $MYVIMRC ~/.config/nvim/lua/*.lua<CR>
 noremap <leader>cx :e ~/.config/xrdb/<CR>
+noremap <leader>ct :n ~/.config/themr/*.yaml<CR>
+
 " reload vim config
 noremap <leader>cr :so $MYVIMRC<CR>
 

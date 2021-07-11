@@ -147,6 +147,15 @@ end
 
 LOAD_lualine = true
 
+function Reload_statusline(theme)
+    require("plenary.reload").reload_module("lualine", true)
+    require('lualine').setup{
+    options = { theme = theme }
+    }
+end
+
+Reload_statusline()
+
 cmd [[
 augroup YankHighlight
     autocmd!

@@ -36,8 +36,9 @@ require('compe').setup{
 }
 
 local lspconfig = require("lspconfig")
+local lspinstall_path = '/home/evan/.local/share/nvim/lspinstall'
 
-local on_attach = function(client, bufnr)
+local on_attach = function() -- client, bufnr
     require("lsp_signature").on_attach()--{{{
     require("nvim-autopairs.completion.compe").setup({
         map_cr = true, --  map <CR> on insert mode
@@ -74,7 +75,7 @@ require("lsp-colors").setup({
 
 local luadev = require("lua-dev").setup({
     lspconfig = {
-        cmd = { '/home/evan/.local/share/nvim/lspinstall/lua/sumneko-lua-language-server' },
+        cmd = { lspinstall_path .. '/lua/sumneko-lua-language-server' },
         on_attach = on_attach
     }
 })
@@ -82,14 +83,20 @@ local luadev = require("lua-dev").setup({
 lspconfig.sumneko_lua.setup(luadev)
 
 lspconfig.pyls.setup{
+    cmd = { 'pylsp' },
     on_attach = on_attach,
-    cmd = { 'pylsp' }
 }
 
 lspconfig.clangd.setup{on_attach = on_attach}
 
 lspconfig.tsserver.setup{
+    cmd = { lspinstall_path .. '/typescript/node_modules/.bin/typescript_language_server' },
     on_attach = on_attach,
     filetypes = { "javascript" },
     root_dir = function() return vim.loop.cwd() end -- run lsp for javascript in any directory
+}
+
+lspconfig.bashls.setup{
+     cmd = { '/home/evan/.local/share/nvim/lspinstall/bash/node_modules/.bin/bash-language-server' },
+     on_attach = on_attach
 }
