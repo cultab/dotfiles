@@ -38,5 +38,5 @@ CONF_PATH="$HOME/.config/dunst"
 cp $CONF_PATH/no_theme.dunstrc $CONF_PATH/dunstrc
 echo "$theme" >> "$CONF_PATH"/dunstrc
 
-pkill --echo ^dunst
+pkill ^dunst # --echo 
 notify-send -u low 'Changed theme!'
