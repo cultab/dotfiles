@@ -227,5 +227,3 @@ context = ctrl+shift+period
 #     appname = Pidgin
 #     summary = *twitter.com*
 #     urgency = normal
-
-# vim: ft=cfg

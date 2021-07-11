@@ -228,8 +228,6 @@ context = ctrl+shift+period
 #     summary = *twitter.com*
 #     urgency = normal
 
-# vim: ft=cfg
-
 [urgency_low]
 frame_color = "#7daea3"
 foreground = "#7daea3"
@@ -247,4 +245,6 @@ frame_color = "#ea6962"
 foreground = "#ea6962"
 background = "#32302f"
 timeout = 8
+
+# vim: ft=cfg
 
