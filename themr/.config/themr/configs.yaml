@@ -14,15 +14,17 @@ vim:
   post: '"'
   cmd: "all_nvim 'colo %'"
 
-lightline:
-  path: "~/.config/nvim/init.vim"
-  regex: '    \\   "colorscheme" : .*'
-  pre: '    \   "colorscheme" : "'
-  post: '",'
-  cmd: "all_nvim 'source $MYVIMRC'"
-
 lualine:
   path: "~/.config/nvim/lua/visual.lua"
   regex: '.*options = { theme = ".*" }'
   pre: '    options = { theme = "'
   post: '" }'
+  cmd: "all_nvim 'lua Reload_statusline(\"%\")'"
+
+# lightline:
+#   path: "~/.config/nvim/init.vim"
+#   regex: '    \\   "colorscheme" : .*'
+#   pre: '    \   "colorscheme" : "'
+#   post: '",'
+#   cmd: "all_nvim 'source $MYVIMRC'"
+
