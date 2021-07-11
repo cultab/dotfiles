@@ -3,6 +3,10 @@
 xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
 xdotool key Super_L+F5
 
+# update st
 for PID in $(pidof st); do
     kill -s USR1 "$PID"
 done
+
+# update dunstrc
+. ~/.config/dunst/reload_dunst

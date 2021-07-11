@@ -9,8 +9,8 @@ xresources:
 
 vim:
   path: "~/.config/nvim/lua/visual.lua"
-  regex: '^vim.cmd "colorscheme .*"'
-  pre: 'vim.cmd "colorscheme '
+  regex: '^cmd "colorscheme .*"'
+  pre: 'cmd "colorscheme '
   post: '"'
   cmd: "all_nvim 'colo %'"
 
