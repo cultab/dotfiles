@@ -82,9 +82,18 @@ local luadev = require("lua-dev").setup({
 
 lspconfig.sumneko_lua.setup(luadev)
 
-lspconfig.pyls.setup{
+lspconfig.pylsp.setup{
     cmd = { 'pylsp' },
     on_attach = on_attach,
+    settings = {
+        pylsp = {
+            plugins = {
+                pydocstyle = {
+                    enabled = true
+                }
+            }
+        }
+    }
 }
 
 lspconfig.clangd.setup{on_attach = on_attach}
@@ -99,4 +108,8 @@ lspconfig.tsserver.setup{
 lspconfig.bashls.setup{
      cmd = { '/home/evan/.local/share/nvim/lspinstall/bash/node_modules/.bin/bash-language-server' },
      on_attach = on_attach
+}
+
+require'lspconfig'.r_language_server.setup{
+    on_attach = on_attach
 }
