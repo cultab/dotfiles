@@ -1,8 +1,35 @@
-function TestLongName()
-    print("lel")
-end
+function _G.MyFoldText()--{{{
+    -- get vim variables needed
+    local start = vim.v.foldstart
+    local fend = vim.v.foldend
+    local line = vim.fn.getline(start)
+    local comment_string = vim.api.nvim_buf_get_option(0, 'commentstring')
+
+    -- extract before and after comment characters (if they exist)
+    local s_loc = string.find(comment_string, '%%s')
+    local before = string.remove(comment_string, s_loc, #comment_string + 1)
+    local after = string.remove(comment_string, 1, s_loc + 2)
+
+    --  TODO: escape more than '*' and '-', should escape all magic chars instead
+    before = string.gsub(before, '%*', '%%*')
+    after = string.gsub(after, '%*', '%%*')
+    before = string.gsub(before, '%-', '%%-')
+    after = string.gsub(after, '%-', '%%-')
+
+    -- remove fold markers
+    line = string.gsub(line, '}' .. '}}', '' ) -- HACK: split fold markers to trick vim to not see them
+    line = string.gsub(line, '{' .. '{{', '' )
+
+    -- remove comment string
+    line = string.gsub(line, before, '')
+    line = string.gsub(line, after, '')
+
+    print(before)
+    return line .. " ﬌ folded " .. fend - start .. " lines"
+end--}}}
 
 O.termguicolors = true
+O.foldtext = 'v:lua.MyFoldText()'
 
 cmd [[highlight link CompeDocumentation Normal]]
 
@@ -10,7 +37,7 @@ require("colorizer").setup()
 require('todo-comments').setup()
 
 --{{{ lsp
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
 for type, icon in pairs(signs) do
     local hl = "LspDiagnosticsSign" .. type
@@ -18,27 +45,27 @@ for type, icon in pairs(signs) do
 end
 
 local icons = {--{{{
-    Class = " ",
+    Class = " ",
     Color = " ",
     Constant = " ",
     Constructor = " ",
-    Enum = "了 ",
+    Enum = " ",
     EnumMember = " ",
     Field = " ",
     File = " ",
-    Folder = " ",
+    Folder = " ",
     Function = " ",
-    Interface = "ﰮ ",
+    Interface = " ",
     Keyword = " ",
     Method = "ƒ ",
-    Module = " ",
+    Module = " ",
     Property = " ",
     Snippet = "﬌ ",
     Struct = " ",
     Text = " ",
     Unit = " ",
     Value = " ",
-    Variable = " ",
+    Variable = " ",
 }--}}}
 
 local kinds = vim.lsp.protocol.CompletionItemKind
