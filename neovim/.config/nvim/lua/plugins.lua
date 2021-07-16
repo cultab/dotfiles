@@ -3,8 +3,8 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-	-- Packer can manage itself
-	use { 'wbthomason/packer.nvim', opt = true }
+    -- Packer can manage itself
+    use { 'wbthomason/packer.nvim', opt = true }
 
     -- lsp and treesitter {{{
 	use 'neovim/nvim-lspconfig'
@@ -45,13 +45,13 @@ return require('packer').startup(function(use)
 	use 'terrortylor/nvim-comment'
 	--}}}
 
-	-- colorschemes {{{
-	use 'lifepillar/vim-solarized8'
-	use 'lifepillar/vim-gruvbox8'
-	use 'eddyekofo94/gruvbox-flat.nvim'
-	use 'romgrk/github-light.vim'
-	use 'romgrk/doom-one.vim'
-	use 'joshdick/onedark.vim'
+    -- colorschemes {{{
+    use 'lifepillar/vim-solarized8'
+    use 'lifepillar/vim-gruvbox8'
+    use 'eddyekofo94/gruvbox-flat.nvim'
+    use 'romgrk/github-light.vim'
+    use 'romgrk/doom-one.vim'
+    use 'joshdick/onedark.vim'
     use 'folke/tokyonight.nvim'
 	use 'ayu-theme/ayu-vim'
 	use 'Reewr/vim-monokai-phoenix'
@@ -61,14 +61,14 @@ return require('packer').startup(function(use)
 	-- use 'ghifarit53/tokyonight-vim'
 	-- }}}
 
--- misc {{{
-	use 'folke/which-key.nvim'
-	use 'benmills/vimux'
-	use "folke/lua-dev.nvim"
-	use {
-		'nvim-telescope/telescope.nvim',
-		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-	}
+    -- misc {{{
+    use 'folke/which-key.nvim'
+    use 'benmills/vimux'
+    use "folke/lua-dev.nvim"
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    }
 
 	--}}}
 
