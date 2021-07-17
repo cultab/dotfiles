@@ -13,14 +13,18 @@ github_light:
 doom-one:
   vim: "doom-one"
   lightline: "one"
-  lualine: "one"
+  lualine: "onedark"
   xresources: "doom-one"
+
+one-dark:
+  default: "one-dark"
+  lualine: "auto"
+  vim: "onedark_nvim"
 
 palenight:
   default: "palenight"
 
 gruvbox:
-  vim: "gruvbox8"
   default: "gruvbox"
 
 gruvbox-flat:

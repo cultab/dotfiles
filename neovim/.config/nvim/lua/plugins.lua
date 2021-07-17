@@ -52,7 +52,15 @@ return require('packer').startup(function(use)
 
     -- colorschemes {{{
     use 'lifepillar/vim-solarized8'
-    use 'lifepillar/vim-gruvbox8'
+    -- use 'lifepillar/vim-gruvbox8'
+    use {
+        'npxbr/gruvbox.nvim',
+        requires = { 'rktjmp/lush.nvim' }
+    }
+    use {
+        'olimorris/onedark.nvim',
+        requires = { 'rktjmp/lush.nvim'}
+    }
     use 'eddyekofo94/gruvbox-flat.nvim'
     use 'romgrk/github-light.vim'
     use 'romgrk/doom-one.vim'

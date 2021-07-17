@@ -17,7 +17,7 @@ vim:
 lualine:
   path: "~/.config/nvim/lua/visual.lua"
   regex: '.*options = { theme = ".*" }'
-  pre: '    options = { theme = "'
+  pre: '        options = { theme = "'
   post: '" }'
   cmd: "all_nvim 'lua Reload_statusline(\"%\")'"
 
