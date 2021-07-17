@@ -11,8 +11,8 @@ require('nvim_comment').setup()
 require('nvim-autopairs').setup()
 require('surround').setup{}
 
-require('nvim-treesitter.configs').setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages{{{
+require('nvim-treesitter.configs').setup {--{{{
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     highlight = { enable = true  },
     incremental_selection = { enable = true },
     textobjects = {
@@ -39,11 +39,11 @@ require('nvim-treesitter.configs').setup {
     indent = {
         enable = true,
         disable = { 'python' }
-    } --}}}
-}
+    }
+}--}}}
 
-require('gitsigns').setup{
-    keymaps = {--{{{
+require('gitsigns').setup{--{{{
+    keymaps = {
         -- Default keymap options
         noremap = true,
         buffer = true,
@@ -59,15 +59,18 @@ require('gitsigns').setup{
         ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
         ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
         ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>'
-    }--}}}
-}
+    }
+}--}}}
 
-require('which-key').setup{
-    plugins = {--{{{
+require('which-key').setup{--{{{
+    plugins = {
         spelling = { enabled = true }
-    }--}}}
-}
+    }
+}--}}}
 
+require('nvim-ts-autotag').setup({
+  filetypes = { "html" , "xml" },
+})
 O.cindent = true
 O.wrap = false
 O.breakindent = true

@@ -73,6 +73,45 @@ for i, kind in ipairs(kinds) do
     kinds[i] = icons[kind] or kind
 end
 
+-- Capture real implementation of function that sets signs{{{
+-- NOTE: see https://www.reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a/
+local orig_set_signs = vim.lsp.diagnostic.set_signs
+local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
+
+    -- original func runs some checks, which I think is worth doing
+    -- but maybe overkill
+    if not diagnostics then
+        diagnostics = diagnostic_cache[bufnr][client_id]
+    end
+
+    -- early escape
+    if not diagnostics then
+        return
+    end
+
+    -- Work out max severity diagnostic per line
+    local max_severity_per_line = {}
+    for _,d in pairs(diagnostics) do
+        if max_severity_per_line[d.range.start.line] then
+            local current_d = max_severity_per_line[d.range.start.line]
+            if d.severity < current_d.severity then
+                max_severity_per_line[d.range.start.line] = d
+            end
+        else
+            max_severity_per_line[d.range.start.line] = d
+        end
+    end
+
+    -- map to list
+    local filtered_diagnostics = {}
+    for i,v in pairs(max_severity_per_line) do
+        table.insert(filtered_diagnostics, v)
+    end
+
+    -- call original function
+    orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
+end
+vim.lsp.diagnostic.set_signs = set_signs_limited--}}}
 --}}}
 
 G.dashboard_custom_header = {
@@ -163,12 +202,12 @@ G.gruvbox_lualine_bold = lualine_bold
 G.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-cmd "colorscheme gruvbox-flat"
+cmd "colorscheme tokyonight"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
     require('lualine').setup{
-    options = { theme = "gruvbox-flat" }
+        options = { theme = "tokyonight" }
     }
 end
 
@@ -177,11 +216,9 @@ LOAD_lualine = true
 function Reload_statusline(theme)
     require("plenary.reload").reload_module("lualine", true)
     require('lualine').setup{
-    options = { theme = theme }
+        options = { theme = theme }
     }
 end
-
-Reload_statusline()
 
 cmd [[
 augroup YankHighlight

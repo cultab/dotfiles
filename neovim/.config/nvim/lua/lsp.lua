@@ -73,16 +73,16 @@ require("lsp-colors").setup({
     Hint = "#10B981"
 })
 
-local luadev = require("lua-dev").setup({
+local luadev = require("lua-dev").setup{--{{{
     lspconfig = {
         cmd = { lspinstall_path .. '/lua/sumneko-lua-language-server' },
         on_attach = on_attach
     }
-})
+}--}}}
 
 lspconfig.sumneko_lua.setup(luadev)
 
-lspconfig.pylsp.setup{
+lspconfig.pylsp.setup{--{{{
     cmd = { 'pylsp' },
     on_attach = on_attach,
     settings = {
@@ -94,22 +94,70 @@ lspconfig.pylsp.setup{
             }
         }
     }
-}
+}--}}}
 
 lspconfig.clangd.setup{on_attach = on_attach}
 
-lspconfig.tsserver.setup{
-    cmd = { lspinstall_path .. '/typescript/node_modules/.bin/typescript_language_server' },
+lspconfig.tsserver.setup{--{{{
+    cmd = { lspinstall_path .. '/typescript/node_modules/.bin/typescript-language-server', '--stdio' },
     on_attach = on_attach,
     filetypes = { "javascript" },
     root_dir = function() return vim.loop.cwd() end -- run lsp for javascript in any directory
-}
+}--}}}
 
-lspconfig.bashls.setup{
-     cmd = { '/home/evan/.local/share/nvim/lspinstall/bash/node_modules/.bin/bash-language-server' },
-     on_attach = on_attach
-}
-
-require'lspconfig'.r_language_server.setup{
+lspconfig.r_language_server.setup{
     on_attach = on_attach
 }
+
+lspconfig.diagnosticls.setup{--{{{
+    cmd = { lspinstall_path .. '/diagnosticls/node_modules/.bin/diagnostic-languageserver', '--stdio' },
+    on_attach = on_attach,
+    filetypes = { "bash", "sh" },
+    init_options = {
+        filetypes = {
+            sh = "shellcheck",
+            bash = "shellcheck",
+        },
+        formatFiletypes = {
+        sh = "shfmt",
+        bash = "shfmt",
+        },
+        formatters = {
+            shfmt = {
+                command = "shfmt",
+                args = { "-i", "2", "-bn", "-ci", "-sr", },
+            }
+        },
+        linters = {
+            shellcheck = {
+                command = "shellcheck",
+                rootPatterns = {},
+                isStdout = true,
+                isStderr = false,
+                debounce = 100,
+                args = { "--format=gcc", "-"},
+                offsetLine = 0,
+                offsetColumn = 0,
+                sourceName = "shellcheck",
+                formatLines = 1,
+                formatPattern = {
+                    "^([^:]+):(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+                    {
+                        line = 2,
+                        column = 3,
+                        endline = 2,
+                        endColumn = 3,
+                        message = {5},
+                        security = 4
+                    }
+                },
+                securities  = {
+                    error  ="error",
+                    warning = "warning",
+                    note = "info"
+                },
+            }
+        }
+    }
+}--}}}
+
