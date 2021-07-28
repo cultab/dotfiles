@@ -1,7 +1,7 @@
 local map = vim.api.nvim_set_keymap
 
-require('compe').setup{
-    --{{{
+require('compe').setup{--{{{
+    
     enabled = true;
     autocomplete = true;
     debug = false;
@@ -32,8 +32,17 @@ require('compe').setup{
     vsnip = false;
     ultisnips = false;
     luasnip = false;
-  };--}}}
+};
+
 }
+_G.compe_parenthesis_fix = function()
+    if vim.fn.pumvisible() then
+        vim.cmd [[ call timer_start(0, { -> luaeval('require"compe"._close()') }) ]]
+    end
+    return t "("
+end
+vim.api.nvim_set_keymap("i", "(", "v:lua.compe_parenthesis_fix()", {expr = true})
+--}}}
 
 local lspconfig = require("lspconfig")
 local lspinstall_path = '/home/evan/.local/share/nvim/lspinstall'
