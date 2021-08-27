@@ -6,6 +6,6 @@
 [gui]
 	recentrepo = /home/evan/repos/dwm
 [pull]
-	rebase = false
+	rebase = true
 [init]
 	defaultBranch = master
