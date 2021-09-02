@@ -12,7 +12,7 @@ vim:
   regex: '^cmd "colorscheme .*"'
   pre: 'cmd "colorscheme '
   post: '"'
-  cmd: "all_nvim 'colo %'"
+  cmd: "all_nvim 'colorscheme %'"
 
 lualine:
   path: "~/.config/nvim/lua/visual.lua"
