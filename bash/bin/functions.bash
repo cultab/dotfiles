@@ -29,7 +29,7 @@ hist () {
     }
 
 mkcd () {
-    mkdir "$1" && cd "$1"
+    mkdir "$1" && cd "$1" || exit
 }
 
 project () {
@@ -37,7 +37,7 @@ project () {
     echo "Created project folder $1.."
     cp -r ~/Documents/template/* "./$1"
     echo "Copied template files.."
-    cd "$1"
+    cd "$1" || exit
     echo "cd'ed into $1"
     git init
     echo "Initialized git repo"
@@ -48,7 +48,17 @@ project () {
 }
 
 rmd_template () {
-    project
+    project "$@"
+}
+
+pse () {
+    procs=$(ps -aux)
+    header=$(echo "$procs" | head -1)
+    search=$(echo "$procs" | grep --color=always "$@")
+    # | grep -v 'grep'
+    if [ -n "$search" ]; then
+        printf '%s\n%s' "$header" "$search"
+    fi
 }
 
 enable_more_completions () {
