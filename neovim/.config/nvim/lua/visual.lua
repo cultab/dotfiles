@@ -25,7 +25,7 @@ function _G.MyFoldText()--{{{
     line = string.gsub(line, after, '')
 
     print(before)
-    return line .. " ﬌ folded " .. fend - start .. " lines"
+    return line .. " ﬌ " .. fend - start .. " lines"
 end--}}}
 
 O.termguicolors = true
@@ -33,10 +33,9 @@ O.foldtext = 'v:lua.MyFoldText()'
 
 cmd [[highlight link CompeDocumentation Normal]]
 
-require("colorizer").setup()
-require('todo-comments').setup()
-
 --{{{ lsp
+
+-- vim.g.coq_settings = { display = { pum = { source_context = {"",""} } } }
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
 for type, icon in pairs(signs) do
@@ -45,27 +44,27 @@ for type, icon in pairs(signs) do
 end
 
 local icons = {--{{{
-    Class = " ",
-    Color = " ",
-    Constant = " ",
-    Constructor = " ",
-    Enum = " ",
-    EnumMember = " ",
-    Field = " ",
-    File = " ",
-    Folder = " ",
-    Function = " ",
-    Interface = " ",
-    Keyword = " ",
-    Method = "ƒ ",
-    Module = " ",
-    Property = " ",
-    Snippet = "﬌ ",
-    Struct = " ",
-    Text = " ",
-    Unit = " ",
-    Value = " ",
-    Variable = " ",
+    Class       = " (Class)",
+    Color       = " (Color)",
+    Constant    = " (Constant)",
+    Constructor = " (Constructor)",
+    Enum        = " (Enum)",
+    EnumMember  = " (EnumMember)",
+    Field       = " (Field)",
+    File        = " (File)",
+    Folder      = " (Folder)",
+    Function    = " (Function)",
+    Interface   = " (Interface)",
+    Keyword     = " (Keyword)",
+    Method      = "ƒ (Method)",
+    Module      = " (Module)",
+    Property    = " (Property)",
+    Snippet     = "﬌ (Snippet)",
+    Struct      = " (Struct)",
+    Text        = " (Text)",
+    Unit        = " (Unit)",
+    Value       = " (Value)",
+    Variable    = " (Variable)",
 }--}}}
 
 local kinds = vim.lsp.protocol.CompletionItemKind
@@ -113,39 +112,6 @@ local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
 end
 vim.lsp.diagnostic.set_signs = set_signs_limited--}}}
 --}}}
-
-G.dashboard_custom_header = {
-[[                                                     ]],
-[[                                     _               ]],
-[[                                    |_|              ]],
-[[ ______   ______   ______  __   __   _   ___________ ]],
-[[|  __  | | ____ | |  __  | \ \ / /  | | |  __   __  |]],
-[[| |  | | | _____| | |  | |  \ v /   | | | |  | |  | |]],
-[[| |  | | | |____  | |__| |   \ /    | | | |  | |  | |]],
-[[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
-}
-
-G.dashboard_custom_header = {
-[[                                      __              ]],
-[[                                     |  \             ]],
-[[ _______   ______   ______  __     __ \▓▓______ ____  ]],
-[[|       \ /      \ /      \|  \   /  \  \      \    \ ]],
-[[| ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\ /  ▓▓ ▓▓ ▓▓▓▓▓▓\▓▓▓▓\]],
-[[| ▓▓  | ▓▓ ▓▓    ▓▓ ▓▓  | ▓▓ \▓▓\  ▓▓| ▓▓ ▓▓ | ▓▓ | ▓▓]],
-[[| ▓▓  | ▓▓ ▓▓▓▓▓▓▓▓ ▓▓__/ ▓▓  \▓▓ ▓▓ | ▓▓ ▓▓ | ▓▓ | ▓▓]],
-[[| ▓▓  | ▓▓\▓▓     \\▓▓    ▓▓   \▓▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓]],
-[[ \▓▓   \▓▓ \▓▓▓▓▓▓▓ \▓▓▓▓▓▓     \▓    \▓▓\▓▓  \▓▓  \▓▓]],
-[[                                                      ]],
-[[                                                      ]],
-[[                                                      ]],
-}
-
-G.dashboard_default_executive = 'telescope'
--- g.dashboard_preview_command = 'cat'
--- g.dashboard_preview_pipeline = 'lolcat -h 0.5 -v -0.1'
--- g.dashboard_preview_file = '~/.config/nvim/logo.cat'
--- g.dashboard_preview_file_height = 8
--- g.dashboard_preview_file_width = 56
 
  -- used as separator for windows
 O.fillchars = "vert:│"
@@ -202,12 +168,12 @@ G.gruvbox_lualine_bold = lualine_bold
 G.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-cmd "colorscheme tokyonight"
+cmd "colorscheme neon_latte"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
     require('lualine').setup{
-        options = { theme = "tokyonight" }
+        options = { theme = "catppuccino" }
     }
 end
 
