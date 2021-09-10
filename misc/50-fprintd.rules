@@ -1,0 +1,9 @@
+// Allow any user in the 'plugdev' group to read fingerprint data
+
+polkit.addRule(function(action, subject) {
+    if (action.id == "net.reactivated.fprint.device.verify" &&
+        subject.isInGroup("plugdev")) {
+        return polkit.Result.YES;
+    }
+});
+
