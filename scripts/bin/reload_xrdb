@@ -6,8 +6,8 @@ xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
 # update st
 pkill -USR1 -x st
 
-pkill polybar
-polybar -r mybar 2> /dev/null &
+pkill polybar # it's launched by bspwm again
 
 # update dunstrc
 . ~/.config/dunst/reload_dunst
+. ~/.config/bspwm/bspwmrc
