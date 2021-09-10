@@ -1,15 +1,18 @@
 [colors]
-background = ${xrdb:color8:#222f1c}
-foreground = ${xrdb:color15:#f0ffff}
-active = #85cbcb
-inactive = #5b8c8c
-highlight = ${xrdb:color2:#5AB3D5}
-error = ${xrdb:color9:#b9ffff}
+background = #00aaaaaa
+; background = ${xrdb:background:#222f1c}
+foreground = ${xrdb:foreground:#f0ffff}
+middleground = ${xrdb:background:#aaaaaa}
+border = ${xrdb:color8:#aaaaaa}
+active = ${xrdb:polybar.active:#FFFF00}
+inactive = ${xrdb:background}
+highlight = ${xrdb:color5:#ff00ff}
+error = ${xrdb:color1:#ff0000}
 
-[bar/wpgtk]
+[bar/mybar]
 monitor = ${env:MONITOR:LVDS1}
 width = 100%
-height = 24
+height = 36
 offset-y = 0%
 radius = 0.0
 fixed-center = true
@@ -20,81 +23,199 @@ foreground = ${colors.foreground}
 line-size = 0
 label-line-color = #f00
 
-border-size = 0
-border-color = #00000000
+border-size = 5
+; border-color = ${colors.border}
+; border-top-size = 5
+; border-bottom-size = 1
 
+padding = 0
 padding-left = 0
-padding-right = 0
+padding-right = 2
 
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = menlo:fontformat=truetype:size=8;1
-font-1 = FontAwesome:style=Regular:size=10;2
+font-0 = Victor:pixelsize=10:antialias=true:autohint=true;2
+; font-0 = Victor Mono Nerd Font:pixelsize=12:antialias=true:autohint=true;3
+font-1 = Victor Mono Nerd Font Mono:pixelsize=24:antialias=true:autohint=true;6
+font-2 = Victor Mono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;6
 
-modules-left = i3 xwindow
-modules-center = date
-modules-right =  volume wlan eth battery
+modules-left =  xwindow left-border
+modules-center = right-border bspwm left-border
+modules-right =  right-border volume xkeyboard wlan eth battery date left-border
 
-tray-position = none
-tray-padding = 10
-tray-background = ${colors.inactive}
+tray-position = left
+tray-padding = 0
+tray-background = ${colors.middleground}
+tray-detached = false
+tray-offset-x = 0
+tray-offset-y = 0
+tray-maxsize = 16
+tray-scale = 1
+
+wm-restack = bspwm
+wm-name = bspwm
 
 [module/xwindow]
 type = internal/xwindow
-format-background = ${colors.active}
+format-background = ${colors.middleground}
+format-foreground = ${colors.active}
 format-padding = 1
-label = %title:0:25: ...%
+label = %title:0:64: ...%
 
 [module/bspwm]
 type = internal/bspwm
+; 
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;﨧
+ws-icon-5 = VI;
+ws-icon-default = 
 
-label-focused = %index%
-label-focused-background = ${colors.active}
+label-focused = "%icon%"
+label-focused-background = ${colors.middleground}
+label-focused-foreground = ${colors.active}
 label-focused-padding = 1
+label-focused-font = 2
 
-label-occupied = %index%
+label-occupied = "%icon%"
+label-occupied-background = ${colors.middleground}
 label-occupied-padding = 1
+label-occupied-font = 2
 
-label-urgent = %index%!
-label-urgent-background = ${colors.active}
+label-urgent = "%icon%"
+label-urgent-background = ${colors.middleground}
 label-urgent-padding = 1
+label-urgent-font = 2
 
-label-empty = %index%
-label-empty-foreground = ${colors.foreground}
+label-empty = "%icon%"
+label-empty-background = ${colors.middleground}
 label-empty-padding = 1
+label-empty-font = 2
 
-[module/i3]
-type = internal/i3
-format = <label-mode><label-state>
-index-sort = true
-wrapping-scroll = false
-fuzzy-matching = true
+[module/xkeyboard]
+type = internal/xkeyboard
 
-; Only show workspaces on the same output as the bar
-pin-workspaces = true
+format = <label-indicator> <label-layout>
+format-spacing = 0
+; format-background = ${colors.active}
+; format-foreground = ${colors.middleground}
+format-background = ${colors.middleground}
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 9;
-ws-icon-3 = 10;
-ws-icon-default = 
+label-layout = %layout%
+label-layout-padding = 0
+; label-layout-background = ${colors.active}
+; label-layout-foreground = ${colors.middleground}
 
-label-mode-padding = 1
-label-mode-foreground = ${colors.foreground}
-label-mode-background = ${colors.highlight}
+label-indicator-on-capslock = 
+label-indicator-off-capslock = 
 
-label-focused-background = ${colors.active}
-label-focused-padding = 1
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
 
-label-unfocused-padding = 1
-label-unfocused-background = ${colors.inactive}
+ramp-signal-0 = ""
+ramp-signal-font = 2
+ramp-signal-foreground = ${xrdb:color6}
+format-connected-padding = 1
+format-connected = <ramp-signal> <label-connected>
+format-connected-background = ${colors.middleground}
+label-connected = %local_ip%
+; %essid:0:5:...%
 
-label-visible-background = ${colors.highlight}
-label-visible-padding = 1
+format-disconnected =
 
-label-urgent-background = ${colors.highlight}
-label-urgent-padding = 1
+; ramp-signal-0 = " "
+; ramp-signal-foreground = ${colors.middleground}
+
+[module/eth]
+type = internal/network
+interface = enp0s25
+interval = 3.0
+
+ramp-signal-0 = ""
+ramp-signal-font = 2
+ramp-signal-foreground = ${xrdb:color5}
+format-connected = <ramp-signal> <label-connected>
+format-connected-padding = 1
+format-connected-background = ${colors.middleground}
+label-connected = %local_ip%
+
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = "%d %b %Y, "
+time = %I:%M %p
+
+format-padding = 1
+format-background = ${colors.middleground}
+format-foreground = ${colors.foreground}
+
+label = %date%%time%
+
+[module/volume]
+type = internal/alsa
+
+format-volume = <ramp-volume> <label-volume>
+format-volume-padding = 1
+format-volume-background = ${colors.middleground}
+; label-volume-foreground = ${colors.middleground}
+ramp-volume-0 = ""
+ramp-volume-1 = ""
+ramp-volume-2 = ""
+; ramp-volume-foreground = ${colors.middleground}
+ramp-volume-foreground = ${xrdb:color4}
+ramp-volume-font = 2
+
+; format-muted-prefix = "  "
+format-muted-foreground = ${colors.error}
+format-muted-background = ${colors.middleground}
+label-muted = "婢"
+label-muted-font = 2
+format-muted-padding = 1
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 80
+; 
+format-charging = <animation-charging> <label-charging>
+format-charging-padding = 1
+format-charging-foreground = ${colors.middleground}
+; label-charging-foreground =
+
+format-discharging-padding = 1
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-foreground = ${xrdb:color2}
+
+format-full = <label-full> <ramp-capacity>
+format-full-padding = 1
+format-full-background = ${colors.middleground}
+; format-full-foreground =
+; label-full-foreground =
+
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+ramp-capacity-foreground = ${xrdb:color2}
+ramp-capacity-font = 2
+
+animation-charging-foreground = ${xrdb:color2}
+animation-charging-framerate = 500
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-4 = ""
+animation-charging-font = 2
 
 [module/mpd]
 type = internal/mpd
@@ -111,98 +232,32 @@ label-song-ellipsis = true
 format-playing-padding = 2
 format-playing-background = ${colors.highlight}
 
-[module/wlan]
-type = internal/network
-interface = wlp3s0
-interval = 3.0
+[module/border]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.middleground}
+content-font = 2
 
-format-connected-padding = 1
-format-connected = <ramp-signal> <label-connected>
-label-connected = %essid%
-format-connected-background = ${colors.active}
+[module/left-border]
+type = custom/text
+inherit = module/border
+content = ""
 
-format-disconnected =
+[module/right-border]
+type = custom/text
+inherit = module/border
+content = ""
 
-ramp-signal-0 = 
-ramp-signal-foreground = ${colors.foreground}
-
-[module/eth]
-type = internal/network
-interface = enp0s25
-interval = 3.0
-
-format-connected =  <label-connected>
-format-connected-padding = 1
-format-connected-background = ${colors.active}
-label-connected = %local_ip%
-
-
-[module/date]
-type = internal/date
-interval = 5
-
-date = "%d %b %Y, "
-time = %I:%M %p
-
-format-padding = 1
-format-background = ${colors.background}
-
-label = %date%%time%
-
-[module/volume]
-type = internal/alsa
-
-format-volume = <ramp-volume> <label-volume>
-format-volume-padding = 1
-format-volume-background = ${colors.active}
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-3 = 
-ramp-volume-foreground = ${colors.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${colors.background}
-format-muted-background = ${colors.error}
-label-muted = MUTED
-format-muted-padding = 1
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ADP1
-full-at = 100
-
-format-charging =   <animation-charging> <label-charging>
-format-charging-padding = 1
-format-discharging-padding = 1
-format-discharging = <ramp-capacity> <label-discharging>
-format-full = <label-full> <ramp-capacity>
-format-full-padding = 1
-format-full-background = ${colors.active}
-
-ramp-capacity-0 = 
-ramp-capacity-1 =  
-ramp-capacity-2 =  
-ramp-capacity-3 = 
-ramp-capacity-4 =  
-ramp-capacity-foreground = ${colors.foreground}
-
-animation-charging-foreground = ${colors.foreground}
-animation-charging-framerate = 500
-animation-charging-0 = 
-animation-charging-1 =  
-animation-charging-2 =  
-animation-charging-3 = 
-animation-charging-4 =  
-format-charging-background = ${colors.highlight}
-format-discharging-background = ${colors.active}
+[module/center-border]
+type = custom/text
+inherit = module/border
+content = ""
 
 [settings]
 screenchange-reload = true
 
 [global/wm]
-margin-top = 5
+margin-top = 1
 margin-bottom = 0
 
 ; vim:ft=dosini

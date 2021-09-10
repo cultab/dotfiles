@@ -3,6 +3,10 @@
 tokyonight:
   default: "tokyonight"
 
+tokyonight_storm:
+  default: "tokyonight"
+  xresources: "tokyonight_storm"
+
 potato:
   default: "potato"
 

@@ -1,12 +1,13 @@
 #!/bin/sh
 
 xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
-xdotool key Super_L+F5
+# xdotool key Super_L+F5
 
 # update st
-for PID in $(pidof st); do
-    kill -s USR1 "$PID"
-done
+pkill -USR1 -x st
+
+pkill polybar
+polybar -r mybar 2> /dev/null &
 
 # update dunstrc
 . ~/.config/dunst/reload_dunst

@@ -17,7 +17,7 @@
 #define basefg #c0caf5
 #define basebg #1a1b26
 #define basecc #a9b1d6
-#define basesb base04
+#define basesb base0B
 
 ! old colors
 !#define base00 #1a1b26 

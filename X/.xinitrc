@@ -22,6 +22,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 # X settings #
 ##############
 
+xsetroot -cursor_name left_ptr
 xhost +localhost # to allow acpi handler to xautolock -locknow
 #xset r rate 250 50;
 # setxkbmap -option
@@ -54,6 +55,7 @@ appimaged &
 #barrierc --daemon --no-tray --restart --enable-crypto 192.168.1.120 &
 barrier &
 udiskie --no-tray &
+# sxhkd &
 #compton -b &
 picom -b & #--corner-radius 7
 xautolock \
@@ -81,12 +83,13 @@ pavucontrol &
 kdeconnect-app &
 blueman-manager &
 megasync &
-#flatpak run com.discordapp.Discord NEEDS DBUS?
+(sleep 15s && flatpak run com.discordapp.Discord) &
 #nm-tray &
+nm-applet &
 #blueman-applet &
 
 # start WM/DE
-exec dbus-launch --exit-with-session dwm
+exec dbus-launch --exit-with-session bspwm
 
 #case "$1" in
 #dwm)
