@@ -1,0 +1,7 @@
+#!/bin/sh
+
+themr $(themr --list-themes |
+    sed 1d |
+    sed 's/\t//g' |
+    dmenu -c -l 15 -p Theme:
+)
