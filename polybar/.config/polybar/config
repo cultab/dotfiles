@@ -2,7 +2,9 @@
 background = #00aaaaaa
 ; background = ${xrdb:background:#222f1c}
 foreground = ${xrdb:foreground:#f0ffff}
-middleground = ${xrdb:background:#aaaaaa}
+; middleground = ${xrdb:middleground:#c01a1b26} ; transparent
+middleground = ${xrdb:background:#c01a1b26}
+; middleground = #0C150b26
 border = ${xrdb:color8:#aaaaaa}
 active = ${xrdb:polybar.active:#FFFF00}
 inactive = ${xrdb:background}
@@ -17,10 +19,13 @@ offset-y = 0%
 radius = 0.0
 fixed-center = true
 
+enable-ipc = true
+
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 0
+line-size = 4
+; lineheight = 10
 label-line-color = #f00
 
 border-size = 5
@@ -40,9 +45,9 @@ font-0 = Victor:pixelsize=10:antialias=true:autohint=true;2
 font-1 = Victor Mono Nerd Font Mono:pixelsize=24:antialias=true:autohint=true;6
 font-2 = Victor Mono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;6
 
-modules-left =  xwindow left-border
+modules-left =  right-border xwindow left-border
 modules-center = right-border bspwm left-border
-modules-right =  right-border volume xkeyboard wlan eth battery date left-border
+modules-right =  right-border volume xkeyboard wlan eth battery date-icon date left-border
 
 tray-position = left
 tray-padding = 0
@@ -61,7 +66,7 @@ type = internal/xwindow
 format-background = ${colors.middleground}
 format-foreground = ${colors.active}
 format-padding = 1
-label = %title:0:64: ...%
+label = %title:0:62:...%
 
 [module/bspwm]
 type = internal/bspwm
@@ -74,6 +79,7 @@ ws-icon-4 = V;﨧
 ws-icon-5 = VI;
 ws-icon-default = 
 
+label-focused-underline = ${colors.active}
 label-focused = "%icon%"
 label-focused-background = ${colors.middleground}
 label-focused-foreground = ${colors.active}
@@ -144,6 +150,11 @@ format-connected-padding = 1
 format-connected-background = ${colors.middleground}
 label-connected = %local_ip%
 
+[module/date-icon]
+type = custom/text
+content = 
+content-foreground = ${xrdb:color3}
+content-background = ${colors.middleground}
 
 [module/date]
 type = internal/date
@@ -183,18 +194,14 @@ format-muted-padding = 1
 type = internal/battery
 battery = BAT0
 adapter = ADP1
-full-at = 80
-; 
-format-charging = <animation-charging> <label-charging>
-format-charging-padding = 1
-format-charging-foreground = ${colors.middleground}
-; label-charging-foreground =
+full-at = 79
 
 format-discharging-padding = 1
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-foreground = ${xrdb:color2}
+format-discharging-background = ${colors.middleground}
 
-format-full = <label-full> <ramp-capacity>
+format-full = <ramp-capacity> <label-full>
 format-full-padding = 1
 format-full-background = ${colors.middleground}
 ; format-full-foreground =
@@ -208,6 +215,13 @@ ramp-capacity-4 = ""
 ramp-capacity-foreground = ${xrdb:color2}
 ramp-capacity-font = 2
 
+; 
+format-charging = <animation-charging> <label-charging>
+format-charging-padding = 1
+; format-charging-foreground = ${colors.middleground}
+format-charging-background = ${colors.middleground}
+; label-charging-foreground =
+;
 animation-charging-foreground = ${xrdb:color2}
 animation-charging-framerate = 500
 animation-charging-0 = ""

@@ -1,12 +1,22 @@
 #!/bin/sh
 
+xrandr --output VGA1 --mode 1920x1080 --right-of LVDS1
+# xrandr --output LVDS1 --mode 1600x900 
+~/.fehbg &
+
 pgrep -x sxhkd > /dev/null || sxhkd &
-polybar -r mybar &
+pgrep -x polybar > /dev/null || polybar_start &
 
-bspc monitor -d I II III IV V VI
+bspc wm --reorder-monitors VGA1 LVDS1 
+bspc monitor VGA1 --reset-desktops I II III
+bspc monitor LVDS1 --reset-desktops IV V VI 
 
-bspc config border_width         1
+bspc config border_width         4
 bspc config window_gap          4
+
+DB=$(xrdb -query)
+active=$(echo "$DB" | grep 'polybar.active' | cut -f 2 -d ':' | sed 's/\t//')
+bspc config focused_border_color "$active"
 
 bspc config split_ratio          0.50
 bspc config borderless_monocle   true

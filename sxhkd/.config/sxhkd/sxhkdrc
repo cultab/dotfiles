@@ -4,11 +4,18 @@
 
 # terminal emulator
 super + Return
-	st -t tmux -e tmux
+	st -t 'Simple terminal' -e tmux
+
+super + ctrl + Return
+	st -t 'Simple terminal'
 
 # program launcher
 super + @space
 	dmenu_run -c
+
+# change theme
+super + g
+	dmenu_themr
 
 # internet search
 super + q
@@ -17,6 +24,9 @@ super + q
 # screenshot
 Print
 	dmenu_scrot -c
+
+super + shift + g
+	st -e bg-choose
 
 XF86Audio{Mute,RaiseVolume,LowerVolume}
 	amixer -q set Master {toggle,5%+,5%-}
@@ -29,7 +39,7 @@ XF86MonBrightness{Up,Down}
 
 # make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd && notify-send reload sxhkd
+	pkill -USR1 -x sxhkd && notify-send -a bspwm 'sxhkd' 'Reloaded config'
 
 #
 # bspwm hotkeys
@@ -52,8 +62,8 @@ super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
-super + g
-	bspc node -s biggest.window
+# super + g
+# 	bspc node -s biggest.window
 
 super + w
 	bspc node -f pointed
@@ -78,12 +88,12 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+# super + {p,b,comma,period}
+# 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
+# super + {_,shift + }c
+# 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -132,8 +142,8 @@ super + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+# super + alt + shift + {h,j,k,l}
+# 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
 super + {Left,Down,Up,Right}
