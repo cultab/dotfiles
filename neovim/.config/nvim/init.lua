@@ -1,75 +1,81 @@
-O = vim.o
-G = vim.g
-cmd = vim.cmd
+vim.o = vim.o
+vim.g = vim.g
+vim.cmd = vim.cmd
+
+vim.cmd [[let g:python3_host_prog="~/.pyenv/versions/nvim/bin/python"]]
 
 require('plugins')
+require('visual')
+require("statusline")
 require('lsp')
 require('mappings')
-require('visual')
 
-O.cindent = true
-O.wrap = false
-O.breakindent = true
-O.expandtab = true  -- no ta🅱️ s
-O.tabstop = 4
-O.softtabstop = 4
-O.shiftwidth = 4
-O.shiftround = true -- round indent to shiftwidth
+vim.o.cindent = true
+vim.o.wrap = false
+vim.o.breakindent = true
+vim.o.expandtab = true  -- no tabs
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.shiftround = true -- round indent to shiftwidth
 
 -- Search Settings
-O.inccommand = 'split' -- show substitutions live
-O.incsearch = true
-O.gdefault = true -- assume the 'g' in s/../../g
-O.ignorecase = true
-O.smartcase = true -- all lower search is case insensitive
+vim.o.inccommand = 'split' -- show substitutions live
+vim.o.incsearch = true
+vim.o.gdefault = true -- assume the 'g' in s/../../g
+vim.o.ignorecase = true
+vim.o.smartcase = true -- all lower search is case insensitive
 
-O.spelllang= 'el,en'
+vim.o.spelllang= 'el,en'
 
-O.shortmess = O.shortmess .. 'c'
+vim.o.shortmess = vim.o.shortmess .. 'c'
 
 -- Backup and swap
-O.backup = true
+vim.o.backup = true
 vim.opt.backupdir:remove('.')
 vim.opt.undodir:remove('.')
-O.undofile = true
-O.swapfile = false
+vim.o.undofile = true
+vim.o.swapfile = false
 
 -- Misc Settings
 vim.opt.clipboard:prepend {"unnamedplus"}
+vim.opt.updatetime = 150
 
-O.splitbelow = true
-O.splitright = true
-O.autochdir = false  -- automatically change directory
-O.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
-O.mouse='a'  -- enable mouse for a(ll) modes
-O.lazyredraw = true
-O.modeline = true
-O.keymap = 'greek_utf-8'
-O.iminsert = 0  -- default to english
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.autochdir = true  -- automatically change directory
+vim.o.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
+vim.o.mouse='a'  -- enable mouse for a(ll) modes
+vim.o.lazyredraw = true
+vim.o.modeline = true
+vim.o.keymap = 'greek_utf-8'
+vim.o.iminsert = 0  -- default to english
 
  -- Assume .h files are c headers instead of cpp
-G.c_syntax_for_h = true
+vim.g.c_syntax_for_h = true
 
-O.complete = '.,w,b,i,u,t,'
-O.completeopt = "menuone,noselect" -- ,noinsert,longest"
+vim.o.complete = '.,w,b,i,u,t,'
+vim.o.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
 
-cmd [[
+function Open_config()
+    vim.cmd[[:next $MYVIMRC ~/.config/nvim/lua/*.lua]]
+    vim.cmd[[:cd ~/.config/nvim]]
+end
+
+vim.cmd [[
 augroup termBinds
     autocmd!
     autocmd TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
     autocmd FileType fzf tunmap <buffer> <Esc>
 augroup end
+]]
 
-augroup auto_formating
-    autocmd!
-    autocmd BufWritePre *.go,*.dart :call LanguageClient#textDocument_formatting_sync()
-  " autocmd BufWritePre *.py :call LanguageClient#textDocument_formatting_sync()
-augroup end
-
+vim.cmd [[
 augroup auto_sauce
     autocmd!
     autocmd BufWritePost init.lua nested source $MYVIMRC
-    autocmd BufWritePost plugins.lua :PackerCompile
+    " autocmd BufWritePost plugins.lua :PackerCompile
+    " autocmd BufWritePost plugins.lua source <afile> | PackerCompile
     autocmd BufWritePost plugins.lua nested source %
     autocmd BufWritePost lsp.lua nested source %
     autocmd BufWritePost mappings.lua nested source %

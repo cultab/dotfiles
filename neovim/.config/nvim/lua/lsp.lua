@@ -1,144 +1,220 @@
-local map = vim.api.nvim_set_keymap
--- local coq = require("coq")
+-- Setup nvim-cmp.{{{
+local luasnip = require("luasnip")
+local cmp = require("cmp")
 
-require('compe').setup{--{{{
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    resolve_timeout = 800;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
-    documentation = {
-        border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-        winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-        max_width = 120,
-        min_width = 60,
-        max_height = math.floor(vim.o.lines * 0.3),
-        min_height = 1,
-    };
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = false;
-    nvim_lsp = true;
-    nvim_lua = false;
-    vsnip = false;
-    ultisnips = false;
-    luasnip = false;
-    };
-}
-
-function _G.compe_confirm_space()
-    if vim.fn.pumvisible() then
-        require"compe"._confirm()
-    end
-    return " "
+local function has_words_before()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-vim.api.nvim_set_keymap("i", "<space>", "v:lua.compe_confirm_space()", {expr = true})
 
+cmp.setup({
+    snippet = {
+        -- REQUIRED - you must specify a snippet engine
+        expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+        end,
+    },
+    mapping = {
+        -- ['<Tab>'] = cmp.mapping.select_next_item({ cmp.SelectBehavior.Select }),
+        -- ['<S-Tab>'] = cmp.mapping.select_prev_item({ cmp.SelectBehavior.Select }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }
+        ),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }
+        ),
+        ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+        }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }, -- For luasnip users.
+        { name = 'spell' },
+        { name = 'path' },
+        { name = 'buffer' },
+        -- { name = 'vsnip' }, -- For vsnip users.
+        -- { name = 'ultisnips' }, -- For ultisnips users.
+        -- { name = 'snippy' }, -- For snippy users.
+    }, {
+    }),
+    formatting = {
+        format = require("lspkind").cmp_format({ with_text = false })
+    },
+    experimental = {
+        ghost_text = true
+    }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+            { name = 'path' }
+        }, {
+            { name = 'cmdline' }
+        })
+})
+
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 --}}}
 
-local autopairs = require('nvim-autopairs') --{{{
+local autopairs = require('nvim-autopairs')
 
 autopairs.setup{
     fast_wrap = {},
 }
 
-local parenthesis_rule = autopairs.get_rule("(")
-parenthesis_rule:with_pair(function()
-    if vim.fn.pumvisible() then
-        vim.cmd([[ call timer_start(0, { -> luaeval('require"compe"._confirm()') }) ]])
-    end
-    return true
-end)--}}}
+
+vim.cmd [[
+    augroup diagnostics_on_hold
+    autocmd!
+    autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+    augroup end
+]]
 
 local lspconfig = require("lspconfig")
 local lspinstall_path = '/home/evan/.local/share/nvim/lspinstall'
 
 local on_attach = function() -- client, bufnr{{{
-     require("lsp_signature").on_attach()
-     require("nvim-autopairs.completion.compe").setup({
-         map_cr = true, --  map <CR> on insert mode
-         map_complete = true -- it will auto insert `(` after select function or method item
+    require("lsp_signature").on_attach({
+         bind = true,
+         doc_lines = 0,
+         hint_enable = false,
+        --  handler_opts = {
+        --      border = "none"
+        -- }
     })
+    --  require("nvim-autopairs.completion.compe").setup({
+    --      map_cr = true, --  map <CR> on insert mode
+    --      map_complete = true -- it will auto insert `(` after select function or method item
+    -- })
+    local mappings = require("mappings")
+    mappings.lsp_mappings()
 
-    local opts = { noremap=true, silent=false }
-
-    map('n', 'gD',         '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    map('n', 'gd',         '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    map('n', 'U',          '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    map('n', '<C-k>',      '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    -- map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    -- map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    -- map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    map('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    -- map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    map('n', '<A-CR>', '<Cmd>lua require("jdtls").code_action()<CR>', opts)
-    map('v', '<A-CR>', '<Cmd>lua require("jdtls").code_action(true)<CR>', opts)
-    map('n', '<leader>r', '<Cmd>lua require("jdtls").code_action(false, "refactor")<CR>', opts)
-    map('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    map('n', '<leader>e',  '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    map('n', '[d',         '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    map('n', ']d',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    map('n', '<leader>q',  '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-    map("n", "<leader>f",  "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end --}}}
-
-require("lsp-colors").setup({--{{{
-    Error = "#db4b4b",
-    Warning = "#e0af68",
-    Information = "#0db9d7",
-    Hint = "#10B981"
-})--}}}
 
 local luadev = require("lua-dev").setup{--{{{
     lspconfig = {
         cmd = { lspinstall_path .. '/lua/sumneko-lua-language-server' },
-        on_attach = on_attach
+        on_attach = on_attach,
+        capabilities = capabilities
     }
-}--}}}
+}
 
-lspconfig.sumneko_lua.setup(luadev)
+-- lspconfig.sumneko_lua.setup(luadev)
+-- luadev = {
+--     cmd = { lspinstall_path .. '/lua/sumneko-lua-language-server' },
+--     on_attach = on_attach,
+--     capabilities = capabilities
+-- }
 
-lspconfig.pylsp.setup{--{{{
-    cmd = { 'pylsp' },
-    on_attach = on_attach,
-    settings = {
-        pylsp = {
-            plugins = {
-                pydocstyle = {
-                    enabled = true
-                }
-            }
+lspconfig.sumneko_lua.setup(luadev) --}}}
+
+function Find_python_venv()
+    -- return the path to a currently activated python venv
+    -- supports Conda, pyenv, pipenv
+    if vim.env.CONDA_PREFIX ~= nil then
+        return vim.env.CONDA_PREFIX
+    elseif vim.env.PYENV_VIRTUAL_ENV ~= nil then
+        return vim.env.PYENV_VIRTUAL_ENV
+    else
+        local pipe = io.popen("pipenv --venv 2> /dev/null")
+        local line = pipe:read()
+        pipe:close()
+        if line ~= nil and line:find("^/home/") ~= nil then
+            return line
+        else
+            return ""
+        end
+    end
+end
+
+local function get_pyls_plugins()
+    local pylsp_plugins = {}
+    local python_venv = Find_python_venv()
+
+    pylsp_plugins.pydocstyle = {
+            enabled = true
+    }
+
+    if python_venv ~= "" then
+        pylsp_plugins.jedi = {
+                environment = python_venv
         }
-    }
-}--}}}
+    end
+    return pylsp_plugins
+end
 
-lspconfig.clangd.setup{on_attach = on_attach}
+function Pylsp_setup()
+    lspconfig.pylsp.setup{
+        cmd = { 'pylsp_start' },
+        on_attach = on_attach,
+        settings = {
+            pylsp = {
+                plugins = get_pyls_plugins()
+            }
+        },
+        capabilities = capabilities
+    }
+    -- HACK: pretty sure this is an implementation detail :^)
+    require("lspconfig")["pylsp"].manager.try_add()
+end
+
+vim.cmd [[
+    augroup Pylsp
+        autocmd!
+        autocmd FileType python lua Pylsp_setup()
+    augroup end
+]]
+
+lspconfig.clangd.setup{--{{{
+    on_attach = on_attach,
+    capabilities = capabilities
+}--}}}
 
 lspconfig.tsserver.setup{--{{{
     cmd = { lspinstall_path .. '/typescript/node_modules/.bin/typescript-language-server', '--stdio' },
     on_attach = on_attach,
+    capabilities = capabilities,
     filetypes = { "javascript" },
     root_dir = function() return vim.loop.cwd() end -- run lsp for javascript in any directory
 }--}}}
 
-lspconfig.r_language_server.setup{
-    on_attach = on_attach
-}
+lspconfig.r_language_server.setup{--{{{
+    on_attach = on_attach,
+    capabilities = capabilities
+}--}}}
 
 lspconfig.diagnosticls.setup{--{{{
     cmd = { lspinstall_path .. '/diagnosticls/node_modules/.bin/diagnostic-languageserver', '--stdio' },
     on_attach = on_attach,
+    capabilities = capabilities,
     filetypes = { "bash", "sh" },
     init_options = {
         filetypes = {
@@ -192,7 +268,8 @@ function Jdtls_configure()--{{{
     require('jdtls').start_or_attach{
         cmd = { lspinstall_path .. '/java/jdtls.sh', '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')},
         root_dir = require('jdtls.setup').find_root({'gradle.build', 'pom.xml', '.git'}),
-        on_attach = on_attach
+        on_attach = on_attach,
+        capabilities = capabilities
     }
 
     vim.cmd [[
@@ -251,3 +328,13 @@ augroup end
 
 --}}}
 
+lspconfig.gopls.setup{
+    on_attach = on_attach,
+    capabilities = capabilities
+}
+
+-- lspconfig.r_language_server.setup{
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     cmd = { 'R', '--slave', '-e', 'languageserver::run()' }
+-- }

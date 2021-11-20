@@ -28,12 +28,20 @@ function _G.MyFoldText()--{{{
     return line .. " ﬌ " .. fend - start .. " lines"
 end--}}}
 
-O.termguicolors = true
-O.foldtext = 'v:lua.MyFoldText()'
+vim.o.termguicolors = true
+vim.o.foldtext = 'v:lua.MyFoldText()'
 
-cmd [[highlight link CompeDocumentation Normal]]
+vim.cmd [[highlight link CompeDocumentation Normal]]
 
 --{{{ lsp
+
+
+require("lsp-colors").setup({
+    Error = "#db4b4b",
+    Warning = "#e0af68",
+    Information = "#0db9d7",
+    Hint = "#10B981"
+})
 
 -- vim.g.coq_settings = { display = { pum = { source_context = {"",""} } } }
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
@@ -43,34 +51,34 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
-local icons = {--{{{
-    Class       = " (Class)",
-    Color       = " (Color)",
-    Constant    = " (Constant)",
-    Constructor = " (Constructor)",
-    Enum        = " (Enum)",
-    EnumMember  = " (EnumMember)",
-    Field       = " (Field)",
-    File        = " (File)",
-    Folder      = " (Folder)",
-    Function    = " (Function)",
-    Interface   = " (Interface)",
-    Keyword     = " (Keyword)",
-    Method      = "ƒ (Method)",
-    Module      = " (Module)",
-    Property    = " (Property)",
-    Snippet     = "﬌ (Snippet)",
-    Struct      = " (Struct)",
-    Text        = " (Text)",
-    Unit        = " (Unit)",
-    Value       = " (Value)",
-    Variable    = " (Variable)",
-}--}}}
+-- local icons = {--{{{
+--     Class       = " (Class)",
+--     Color       = " (Color)",
+--     Constant    = " (Constant)",
+--     Constructor = " (Constructor)",
+--     Enum        = " (Enum)",
+--     EnumMember  = " (EnumMember)",
+--     Field       = " (Field)",
+--     File        = " (File)",
+--     Folder      = " (Folder)",
+--     Function    = " (Function)",
+--     Interface   = " (Interface)",
+--     Keyword     = " (Keyword)",
+--     Method      = "ƒ (Method)",
+--     Module      = " (Module)",
+--     Property    = " (Property)",
+--     Snippet     = "﬌ (Snippet)",
+--     Struct      = " (Struct)",
+--     Text        = " (Text)",
+--     Unit        = " (Unit)",
+--     Value       = " (Value)",
+--     Variable    = " (Variable)",
+-- }--}}}
 
-local kinds = vim.lsp.protocol.CompletionItemKind
-for i, kind in ipairs(kinds) do
-    kinds[i] = icons[kind] or kind
-end
+-- local kinds = vim.lsp.protocol.CompletionItemKind
+-- for i, kind in ipairs(kinds) do
+--     kinds[i] = icons[kind] or kind
+-- end
 
 -- Capture real implementation of function that sets signs{{{
 -- NOTE: see https://www.reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a/
@@ -114,79 +122,70 @@ vim.lsp.diagnostic.set_signs = set_signs_limited--}}}
 --}}}
 
  -- used as separator for windows
-O.fillchars = "vert:│"
-O.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  "
--- for tab : ┊
-O.list = true
-G.indent_blankline_enabled = true
-G.indent_blankline_char = '│' -- '┊'
-G.indent_blankline_filetype_exclude = {'help', 'terminal', 'dashboard'}
-G.indent_blankline_use_treesitter = true
-G.indent_blankline_show_current_context = true
-G.indent_blankline_context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' }
+vim.o.fillchars = "vert:│"
 --  HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
+vim.o.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  "
+vim.o.list = true
+
+require("indent_blankline").setup {
+    -- enabled = true,
+    char = '┊', -- '│┊'
+    use_treesitter = true,
+    show_current_context = true,
+    show_first_indent_level = false,
+    show_trailing_blankline_indent = true,
+    filetype_exclude = {'help', 'terminal', 'dashboard'},
+    context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' },
+    space_char_blankline = " ",
+}
 vim.wo.colorcolumn = "99999"
 
-O.number = true
-O.relativenumber = false
-O.signcolumn = 'auto:2-4'
-O.foldmethod = 'marker'
+vim.o.number = true
+vim.o.relativenumber = false
+vim.o.signcolumn = 'auto:1-4'
+vim.o.foldmethod = 'marker'
 
-O.scrolloff=3 -- keep lines above and below cursor
-O.sidescroll=6
-O.showmode = false
-O.showcmd = true
+vim.o.scrolloff=3 -- keep lines above and below cursor
+vim.o.sidescroll=6
+vim.o.showmode = false
+vim.o.showcmd = true
 
 -- o.colorcolumn = "80"
-O.background = "dark"
-O.cursorline = true -- highlight current line
+vim.o.background = "dark"
+vim.o.cursorline = true -- highlight current line
 
 -- Colorscheme Options
 --
 local sidebars = { "qf", "vista_kind", "terminal", "packer" }
+local transparent = false
 local lualine_bold = true
 local italic_functions = true
 local hide_inactive_status = true
 
-G.palenight_terminal_italics = true
-G.solarized_extra_hi_groups = true
+vim.g.palenight_terminal_italics = true
+vim.g.solarized_extra_hi_groups = true
 -- g.lightline#colorscheme#github_light#faithful = 0
-G.ayucolor = "dark"
-G.tokyonight_style = "night"
+vim.g.ayucolor = "dark"
 
 -- Tokyonight {{{
-G.tokyonight_style = "night"
-G.tokyonight_italic_functions = italic_functions
-G.tokyonight_sidebars = sidebars
-G.tokyonight_lualine_bold = lualine_bold
-G.tokyonight_hide_inactive_statusline = hide_inactive_status
+vim.g.tokyonight_style = "storm"
+vim.g.tokyonight_transparent = transparent
+vim.g.tokyonight_italic_functions = italic_functions
+vim.g.tokyonight_sidebars = sidebars
+vim.g.tokyonight_lualine_bold = lualine_bold
+vim.g.tokyonight_hide_inactive_statusline = hide_inactive_status
 --}}}
 -- Gruvbox {{{
-G.gruvbox_italic_functions = italic_functions
-G.gruvbox_sidebars = sidebars
-G.gruvbox_lualine_bold = lualine_bold
-G.gruvbox_hide_inactive_statusline = hide_inactive_status
+vim.g.gruvbox_italic_functions = italic_functions
+vim.g.gruvbox_transparent = transparent
+vim.g.gruvbox_sidebars = sidebars
+vim.g.gruvbox_lualine_bold = lualine_bold
+vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-cmd "colorscheme neon_latte"
+vim.cmd "colorscheme onedark"
 
--- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
-if not LOAD_lualine then
-    require('lualine').setup{
-        options = { theme = "catppuccino" }
-    }
-end
-
-LOAD_lualine = true
-
-function Reload_statusline(theme)
-    require("plenary.reload").reload_module("lualine", true)
-    require('lualine').setup{
-        options = { theme = theme }
-    }
-end
-
-cmd [[
+vim.cmd [[
 augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()

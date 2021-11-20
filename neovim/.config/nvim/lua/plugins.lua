@@ -10,11 +10,7 @@ return require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'kabouzeid/nvim-lspinstall'
     use 'folke/lsp-colors.nvim'
-    -- use 'nvim-lua/completion-nvim'
-    use  'ray-x/lsp_signature.nvim'
-    use '/hrsh7th/nvim-compe'
-    -- use { 'ms-jpq/coq_nvim', branch = 'coq'}
-    -- use { 'ms-jpq/coq.artifacts', branch= 'artifacts'}
+    use 'ray-x/lsp_signature.nvim'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', branch = '0.5-compat',--{{{
         config = function()
             require('nvim-treesitter.configs').setup {
@@ -49,9 +45,24 @@ return require('packer').startup(function(use)
             }
         end
     }--}}}
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
+        requires = { 'nvim-treesitter/nvim-treesitter' }
+    }--}}}
     use 'neomake/neomake'
+    -- cmp-nvim
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
+
+    -- use { 'ms-jpq/coq_nvim', branch = 'coq'}
+    -- use { 'ms-jpq/coq.artifacts', branch= 'artifacts'}
+
     use 'mfussenegger/nvim-jdtls'
+    use "folke/lua-dev.nvim"
     use { "ahmedkhalf/project.nvim",--{{{
         config = function()
             require("project_nvim").setup {
@@ -63,20 +74,25 @@ return require('packer').startup(function(use)
             }
             require('telescope').load_extension('projects')
         end,
-        requires = {"nvim/telescope"}
+        requires = {"nvim-telescope/telescope.nvim"}
     }--}}}
-
     --}}}
 
     -- visual {{{
-    use 'lukas-reineke/indent-blankline.nvim'
-    use { 'hoob3rt/lualine.nvim',--{{{
+    use { 'kosayoda/nvim-lightbulb',
+        config = function ()
+            vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
+        end
+    }
+    use { 'lukas-reineke/indent-blankline.nvim' }
+    use { 'nvim-lualine/lualine.nvim',--{{{
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }--}}}
     use { 'glepnir/dashboard-nvim', --{{{
+        opt = false,
         config = function() 
-            G.dashboard_default_executive = 'telescope'
-            G.dashboard_custom_header = {
+            vim.g.dashboard_default_executive = 'telescope'
+            vim.g.dashboard_custom_header = {
             [[                                      __              ]],
             [[                                     |  \             ]],
             [[ _______   ______   ______  __     __ \▓▓______ ____  ]],
@@ -91,7 +107,7 @@ return require('packer').startup(function(use)
             [[                                                      ]],
             }
 
-            -- G.dashboard_custom_header = {
+            -- vim.g.dashboard_custom_header = {
             -- [[                                                     ]],
             -- [[                                     _               ]],
             -- [[                                    |_|              ]],
@@ -102,7 +118,7 @@ return require('packer').startup(function(use)
             -- [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
             -- }
 
-            G.dashboard_custom_section = {
+            vim.g.dashboard_custom_section = {
                 _1find_projects = {
                     description = { " Recently opened projects               SPC f p" },
                     command =  "Telescope projects"
@@ -125,7 +141,7 @@ return require('packer').startup(function(use)
                 },
                 _8edit_config = {
                     description = { " Edit init.lua                          SPC c v" },
-                    command =  ":echo('not implemented')"
+                    command =  ":lua Open_config()"
                 },
                 _9exit = {
                     description = { "x Exit                                         q" },
@@ -134,22 +150,21 @@ return require('packer').startup(function(use)
             }
 
             vim.cmd [[
-                nnoremap <silent> <Leader>fp :Telescope projects<CR>
-                nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
-                " nnoremap <silent> <Leader>ff :DashboardFindFile<CR>
-                nnoremap <silent> <Leader>tc :DashboardChangeColorscheme<CR>
-                nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
-                " nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
-                " nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
+                nnoremap <buffer> <silent> <Leader>fp :Telescope projects<CR>
+                nnoremap <buffer> <silent> <Leader>fh :DashboardFindHistory<CR>
+              " nnoremap <buffer> <silent> <Leader>ff :DashboardFindFile<CR>
+                nnoremap <buffer> <silent> <Leader>tc :DashboardChangeColorscheme<CR>
+                nnoremap <buffer> <silent> <Leader>cn :DashboardNewFile<CR>
+              " nnoremap <buffer> <silent> <Leader>fa :DashboardFindWord<CR>
+              " nnoremap <buffer> <silent> <Leader>fb :DashboardJumpMark<CR>
                 augroup exit
                     autocmd!
-                    autocmd User DashboardReady nnoremap q :q<CR>
+                    autocmd User DashboardReady nnoremap <buffer> q :q<CR>
                 augroup end
             ]]
 
         end
     }-- }}}
-    use 'ntk148v/vim-horizon'
     use { 'romgrk/barbar.nvim',--{{{
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }--}}}
@@ -177,25 +192,31 @@ return require('packer').startup(function(use)
             }
             end
     }--}}}
+    use { 'karb94/neoscroll.nvim',--{{{
+        config = function()
+	        require("neoscroll").setup()
+        end
+    }--}}}
 	use 'folke/zen-mode.nvim'
     use 'folke/twilight.nvim'
-    use { 'norcalli/nvim-colorizer.lua',
+    use { 'norcalli/nvim-colorizer.lua',--{{{
         config = function () require("colorizer").setup() end
-    }
+    }--}}}
     use { 'folke/todo-comments.nvim',--{{{
         config = function()
             require('nvim_comment').setup()
             require('todo-comments').setup()
         end
     }--}}}
-    use 'sheerun/vim-polyglot'
     use 'vim-pandoc/vim-pandoc-syntax'
     use 'plasticboy/vim-markdown'
     use 'liuchengxu/graphviz.vim'
+    use 'onsails/lspkind-nvim'
     --}}}
 
     -- text manipulation {{{
     use 'windwp/nvim-autopairs'
+    use { 'f3fora/cmp-spell' }
     use { 'blackCauldron7/surround.nvim', --{{{
         config = function()
         require('surround').setup{}
@@ -209,20 +230,27 @@ return require('packer').startup(function(use)
         })
     end
     }--}}}
+    use { 'xiyaowong/telescope-emoji.nvim',--{{{
+        config = function ()
+            require("telescope").load_extension("emoji")
+        end
+    }--}}}
     --}}}
 
     -- colorschemes {{{
     use 'lifepillar/vim-solarized8'
+    use 'ntk148v/vim-horizon'
     -- use 'lifepillar/vim-gruvbox8'
     use { 'npxbr/gruvbox.nvim',--{{{
         requires = { 'rktjmp/lush.nvim' }
     }--}}}
-    use { 'olimorris/onedark.nvim',--{{{
-        requires = { 'rktjmp/lush.nvim'}
+    use { 'olimorris/onedarkpro.nvim',--{{{
+        requires = { 'rktjmp/lush.nvim'},
+        branch = "main"
     }--}}}
-    use { '/Pocco81/Catppuccino.nvim',--{{{
+    use { 'catppuccin/nvim',--{{{
         config = function ()
-            cat = require("catppuccino")
+            local cat = require("catppuccin")
             cat.setup({
                 colorscheme = "neon_latte",
                 transparency = false,
@@ -230,13 +258,16 @@ return require('packer').startup(function(use)
                     telescope = true,
                     gitsigns = true,
                     which_key = true,
-                    indent_blankline = true,
+                    indent_blankline = {
+                        enabled = true,
+                        colored_indent_levels = true
+                    },
                     barbar = true,
                     markdown = true
                 }
             })
 
-            if vim.g.colors_name == "catppuccino" then
+            if vim.g.colors_name == "catppuccin" then
                 cat.load()
             end
         end
@@ -244,7 +275,7 @@ return require('packer').startup(function(use)
     use 'eddyekofo94/gruvbox-flat.nvim'
     use 'romgrk/github-light.vim'
     use 'romgrk/doom-one.vim'
-    use 'joshdick/onedark.vim'
+    use { 'joshdick/onedark.vim', branch = "main"}
     use 'folke/tokyonight.nvim'
     use 'ayu-theme/ayu-vim'
     use 'Reewr/vim-monokai-phoenix'
@@ -266,7 +297,6 @@ return require('packer').startup(function(use)
         end
     }--}}}
     use 'benmills/vimux'
-    use "folke/lua-dev.nvim"
     use { 'nvim-telescope/telescope.nvim',--{{{
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         config = function()
@@ -282,7 +312,6 @@ return require('packer').startup(function(use)
             }
         end
     }--}}}
-    use 'sindrets/diffview.nvim'
 
     --}}}
 

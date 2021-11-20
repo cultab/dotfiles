@@ -1,3 +1,5 @@
+local M = {}
+
 -- Use (s-)tab to:{{{
 --- move to prev/next item in completion menuone
 --- jump to prev/next snippet's placeholder
@@ -32,10 +34,36 @@ _G.s_tab_complete = function()
     end
 end--}}}
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+function M.lsp_mappings()
+    local map = vim.api.nvim_set_keymap
+    local opts = { noremap=true, silent=false }
+
+    map('n', 'gD',         '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    map('n', 'gd',         '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    map('n', 'U',          '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    map('n', '<C-k>',      '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    map('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    map('n', '<A-CR>',     '<Cmd>lua require("jdtls").code_action()<CR>', opts)
+    map('v', '<A-CR>',     '<Cmd>lua require("jdtls").code_action(true)<CR>', opts)
+    map('n', '<leader>r',  '<Cmd>lua require("jdtls").code_action(false, "refactor")<CR>', opts)
+    map('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    map('n', '<leader>e',  '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    map('n', '[d',         '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    map('n', ']d',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    map('n', '<leader>q',  '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    map("n", "<leader>f",  "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    -- map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    -- map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    -- map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    -- map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+end
 
 vim.cmd [[
     " telescope
@@ -50,6 +78,8 @@ vim.cmd [[
     nnoremap <leader>gs <cmd>Telescope git_status<cr>
     nnoremap <leader>gp <cmd>Telescope git_bcommits<cr>
     nnoremap <leader>gd :DiffviewOpen<CR>
+    "misc
+    nnoremap <leader>fe <cmd>Telescope emoji<CR>
 ]]
 
 -- vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true, silent = true})
@@ -65,26 +95,18 @@ vim.cmd [[
 -- vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
 -- vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
 
-
+-- from the good ol' init.vim
 vim.cmd [[
 " so much more convenient
 map <space> <leader>
-
-" nvim-compe
-inoremap <silent><expr> <C-Space> compe#complete()
-"inoremap <silent><expr> <CR>     compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
 
 " barbar
 " Move to previous/next
 nnoremap <silent>    <A-,> :BufferPrevious<CR>
 nnoremap <silent>    <A-.> :BufferNext<CR>
 " Re-order to previous/next
-nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
-nnoremap <silent>    <A->> :BufferMoveNext<CR>
+nnoremap <silent>    <A-[> :BufferMovePrevious<CR>
+nnoremap <silent>    <A-]> :BufferMoveNext<CR>
 " Goto buffer in position...
 nnoremap <silent>    <A-1> :BufferGoto 1<CR>
 nnoremap <silent>    <A-2> :BufferGoto 2<CR>
@@ -105,37 +127,6 @@ nnoremap <silent>    <A-c> :BufferClose<CR>
 "                          :BufferCloseBuffersRight<CR>
 " Magic buffer-picking mode
 nnoremap <silent> <leader>bb :BufferPick<CR>
-" nnoremap <silent> <leader>bd :BufferClose<CR>
-
-" mess with my window layout :^)
-" list
-"nnoremap <leader>bl :ls:<CR>
-" edit
-"nnoremap <leader>be :b<space>
-" command
-"nnoremap <leader>bb :ls<CR>:b
-" last used buffer
-"nnoremap <leader>bt :b#<CR>
-"nnoremap <leader>bt :echoerr('⟨leader⟩bt is concidered harmful. Use <Ctrl-^> or <Ctrl-6> instead!')<CR>
-" delete current buffer
-nnoremap <leader>bd :bdelete<CR>
-
-" fzf
-" nnoremap <leader>ff :Files<CR>
-" nnoremap <leader>fb :Buffers<CR>
-" nnoremap <leader>fl :Lines<CR>
-" nnoremap <leader>fa :Ag<CR>
-" nnoremap <leader>fh :Helptags<CR>
-" nnoremap <leader>fc :Colors<CR>
-" nnoremap <leader>ft :Tags<CR>
-
-" langclient
-" nnoremap <leader>sa   :call LanguageClient#textDocument_codeAction()<CR>
-" nnoremap <leader>sm	:call LanguageClient_contextMenu()<CR>
-" nnoremap <F5>         :call LanguageClient_contextMenu()<CR>
-" nnoremap <silent>Y    :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent>gd   :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent><F2> :call LanguageClient#textDocument_rename()<CR>
 
 
 " vimux run last command
@@ -144,32 +135,25 @@ map <leader>cl :VimuxRunLastCommand<CR>
 map <Leader>cc :VimuxPromptCommand<CR>
 
 " edit configs
-noremap <leader>cb :e ~/.bashrc<CR>
+noremap <leader>cb :e ~/.config/bspwm/bspwmrc<CR>
+noremap <leader>cp :e ~/.config/polybar/config<CR>
+noremap <leader>cs :e ~/.config/sxhkd/sxhkdrc<CR>
 noremap <leader>ct :e ~/.tmux.conf<CR>
-noremap <leader>cs :e ~/repos/st/config.h<CR>
 noremap <leader>cd :e ~/repos/dwm/config.h<CR>
-noremap <leader>cv :next $MYVIMRC ~/.config/nvim/lua/*.lua<CR>:cd ~/.config/nvim<CR>
+noremap <leader>cv :lua Open_config()<CR>
 noremap <leader>cx :e ~/.config/xrdb/<CR>
 noremap <leader>ct :n ~/.config/themr/*.yaml<CR>
-
-" reload vim config
-noremap <leader>cr :so $MYVIMRC<CR>
 
 " packer
 nnoremap <leader>cpi :PackerInstall<CR>
 nnoremap <leader>cpc :PackerClean<CR>
 nnoremap <leader>cpu :PackerUpdate<CR>
+nnoremap <leader>cps :PackerSync<CR>
 
 " text tabulirize
 noremap <leader>tt :Tabularize<space>/
 " text align
 noremap <leader>ta :EasyAlign<CR>
-
-" enter inserts seletion, C-CR otherwise text is literaly inserted
-"inoremap <expr> <C-CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" select with tab
-"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<C-g>u\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-g>u\<S-Tab>"
 
 " Search results centered please
 nnoremap <silent> n nzz
@@ -189,12 +173,6 @@ nnoremap <silent><ESC> :nohlsearch<CR>
 " easier navigation in normal / visual / operator pending mode
 noremap H ^
 noremap L $
-
-" nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
-" nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
-" nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
-" nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
-" nnoremap <silent> <C-w>o :TmuxNavigatePrevious<cr>
 
 " Change text without putting the text into register
 noremap c "_c
@@ -222,3 +200,5 @@ cabbr Wa wa
 cabbr WA wa
 
 ]]
+
+return M
