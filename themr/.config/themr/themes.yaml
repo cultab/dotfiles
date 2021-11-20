@@ -9,6 +9,7 @@ tokyonight_storm:
 
 potato:
   default: "potato"
+  lualine: "auto"
 
 github_light:
   default: "github-light"
@@ -20,10 +21,13 @@ doom-one:
   lualine: "onedark"
   xresources: "doom-one"
 
-one-dark:
-  default: "one-dark"
+onedarkpro:
+  default: "onedarkpro"
   lualine: "auto"
-  vim: "onedark_nvim"
+
+onedark:
+  default: "onedark"
+  lualine: "auto"
 
 palenight:
   default: "palenight"
@@ -36,4 +40,4 @@ gruvbox-flat:
 
 neon_latte:
   default: "neon_latte"
-  lualine: "catppuccino"
+  lualine: "catppuccin"

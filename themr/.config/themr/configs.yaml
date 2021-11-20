@@ -2,20 +2,20 @@
 
 xresources:
   path: "~/.config/xrdb/Xresources.xdefaults"
-  regex: '^#include ".*\.xdefaults"'
+  regex: '#include ".*\.xdefaults"'
   pre: '#include "./'
   post: '.xdefaults"'
   cmd: "reload_xrdb"
 
 vim:
   path: "~/.config/nvim/lua/visual.lua"
-  regex: '^cmd "colorscheme .*"'
+  regex: 'cmd "colorscheme .*"'
   pre: 'cmd "colorscheme '
   post: '"'
   cmd: "all_nvim 'colorscheme %'"
 
 lualine:
-  path: "~/.config/nvim/lua/visual.lua"
+  path: "~/.config/nvim/lua/statusline.lua"
   regex: '.*options = { theme = ".*" }'
   pre: '        options = { theme = "'
   post: '" }'

@@ -1,7 +1,11 @@
 #!/bin/sh
 
-themr $(themr --list-themes |
+choice=$(themr --list-themes |
     sed 1d |
     sed 's/\t//g' |
     dmenu -c -l 15 -p Theme:
 )
+
+if ! themr "$choise" ; then
+    notify-send 'Failed to set new theme:' "$choice" -a themr
+fi

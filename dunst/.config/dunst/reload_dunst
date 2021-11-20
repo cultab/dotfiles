@@ -35,7 +35,8 @@ timeout = 8
 CONF_PATH="$HOME/.config/dunst"
 
 # cp dunstrc $(date "+%Y-%m-%d-%H-%M-%S").dunstrc
-cp $CONF_PATH/no_theme.dunstrc $CONF_PATH/dunstrc
+# cp $CONF_PATH/no_theme.dunstrc $CONF_PATH/dunstrc
+head -n -1 "$CONF_PATH/no_theme.dunstrc" > $CONF_PATH/dunstrc
 echo "$theme" >> "$CONF_PATH"/dunstrc
 
 pkill ^dunst # --echo 

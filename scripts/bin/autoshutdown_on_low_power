@@ -11,14 +11,23 @@ do
     then
         if  [ "$percent" -le 10 ]
         then
-            notify-send -u critical -t 15000 -- 'Battery too low, shuting down in 5 minutes'
-            sudo shutdown -P +5 'System is going down due to low battery.'
+            if [ ! -f /tmp/autoshutdown_now ]; then
+                notify-send -u critical -t 15000 -- 'Battery too low, shuting down in 5 minutes'
+                sudo shutdown -P +5 'System is going down due to low battery.'
+                touch /tmp/autoshutdown_now
+            fi
         elif [ "$percent" -le 20 ]
         then
-            notify-send -u critical -t 15000 -- 'Low battery! Below 20%!'
+            if [ ! -f /tmp/autoshutdown_below_20 ]; then
+                notify-send -u critical -t 15000 -- 'Low battery! Below 20%!'
+                touch /tmp/autoshutdown_below_20
+            fi
         fi
 
         echo "$percent"
+    else
+        rm -f /tmp/autoshutdown_below_20
+        rm -f /tmp/autoshutdown_now
     fi
     sleep 1m
 done

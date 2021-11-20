@@ -1,13 +1,21 @@
 #!/bin/sh
 
 xrdb -load -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
+
+# get background with opacity
+DB=$(xrdb -query)
+background=$(echo "$DB" | grep '\*background:' | cut -f 2 -d ':' | sed 's/\t//' | sed 's/#//')
+echo "*middleground: #C0$background" | xrdb -merge 
+
 # xdotool key Super_L+F5
 
 # update st
 pkill -USR1 -x st
 
-pkill polybar # it's launched by bspwm again
+# update polybar
+polybar-msg cmd restart > /dev/null 2>&1
 
 # update dunstrc
 . ~/.config/dunst/reload_dunst
+# update bspwm rules
 . ~/.config/bspwm/bspwmrc

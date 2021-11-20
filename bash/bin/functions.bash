@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
 google () {
-    if [[ -z $* ]]; then
+    if [ -z $* ]; then
         echo "google: missing query"
         return
     fi
     query=$(echo "https://www.startpage.com/rvd/search?query=$*" | sed -e 's/+/%2B/g' -e 's/ /+/g')
     $BROWSER "$query" 2> /dev/null &
-    disown
+    # disown
 }
 
 search () {
     path="$1"
     shift
-    if [[ ! -d "$path" ]]; then
+    if [ ! -d "$path" ]; then
         echo "Usage: search <path> <pattern>"
         return
     fi
@@ -75,6 +75,33 @@ enable_more_completions () {
         eval "$(pipenv --completion)"
     fi
 
+}
+
+conda_enable () {
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/home/evan/.local/share/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/home/evan/.local/share/anaconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/evan/.local/share/anaconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/evan/.local/share/anaconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
+}
+
+pyenv_enable () {
+    # pyenv
+    eval "$(~/.pyenv/bin/pyenv init -)"
+}
+
+lel() {
+    echo hehe
+    espeak -v el χεχε & # disown
 }
 
 # nnnvim ()

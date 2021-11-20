@@ -1,3 +1,12 @@
+#                   _            _
+#                  | |          | |
+#                  | |          | |
+# ______   ______  | |  _    _  | |____   ______     ______
+#| ____ | |  __  | | | | |__| | |  __  | |  __  |   | _____|
+#| |__| | | |  | | | | |_____ | | |  | | | |  | |   | |
+#| _____| | |__| | | |  ____| | | |__| | | |__| |_  | |
+#|_|      |______| |_| |______| |______| |________| |_|
+
 [colors]
 background = #00aaaaaa
 ; background = ${xrdb:background:#222f1c}
@@ -45,7 +54,7 @@ font-0 = Victor:pixelsize=10:antialias=true:autohint=true;2
 font-1 = Victor Mono Nerd Font Mono:pixelsize=24:antialias=true:autohint=true;6
 font-2 = Victor Mono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;6
 
-modules-left =  right-border xwindow left-border
+modules-left =  space right-border xwindow left-border
 modules-center = right-border bspwm left-border
 modules-right =  right-border volume xkeyboard wlan eth battery date-icon date left-border
 
@@ -66,7 +75,7 @@ type = internal/xwindow
 format-background = ${colors.middleground}
 format-foreground = ${colors.active}
 format-padding = 1
-label = %title:0:62:...%
+label = %title:1:60:…%
 
 [module/bspwm]
 type = internal/bspwm
@@ -256,6 +265,11 @@ content-font = 2
 type = custom/text
 inherit = module/border
 content = ""
+
+[module/space]
+type = custom/text
+; inherit = module/border
+content = " "
 
 [module/right-border]
 type = custom/text
