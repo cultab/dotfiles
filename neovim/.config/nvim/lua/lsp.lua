@@ -94,7 +94,7 @@ autopairs.setup{
 vim.cmd [[
     augroup diagnostics_on_hold
     autocmd!
-    autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+    autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
     augroup end
 ]]
 
