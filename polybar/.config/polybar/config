@@ -54,8 +54,8 @@ font-0 = Victor:pixelsize=10:antialias=true:autohint=true;2
 font-1 = Victor Mono Nerd Font Mono:pixelsize=24:antialias=true:autohint=true;6
 font-2 = Victor Mono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;6
 
-modules-left =  space right-border xwindow left-border
-modules-center = right-border bspwm left-border
+modules-left =  space right-border bspwm left-border
+modules-center = right-border xwindow left-border
 modules-right =  right-border volume xkeyboard wlan eth battery date-icon date left-border
 
 tray-position = left
