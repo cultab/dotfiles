@@ -10,6 +10,20 @@ function _G.MyFoldText()--{{{
     local before = string.remove(comment_string, s_loc, #comment_string + 1)
     local after = string.remove(comment_string, 1, s_loc + 2)
 
+    -- create strings of spaces of the correct length to replace the comment strings
+    -- only do it for the comment string that's before the comment,
+    -- so the comment starts at the same column when folding
+    local before_space = ''
+    for _=1 , #before do
+        before_space = before_space .. ' '
+    end
+
+    -- for the other half incase I change my mind
+    local after_space = ''
+    -- for _=1, #after  do
+    --     after_space = after_space .. ' '
+    -- end
+
     --  TODO: escape more than '*' and '-', should escape all magic chars instead
     before = string.gsub(before, '%*', '%%*')
     after = string.gsub(after, '%*', '%%*')
@@ -17,14 +31,13 @@ function _G.MyFoldText()--{{{
     after = string.gsub(after, '%-', '%%-')
 
     -- remove fold markers
-    line = string.gsub(line, '}' .. '}}', '' ) -- HACK: split fold markers to trick vim to not see them
+    line = string.gsub(line, '}' .. '}}', '' ) -- HACK: split fold markers to trick vim to not see them, when editing this file
     line = string.gsub(line, '{' .. '{{', '' )
 
     -- remove comment string
-    line = string.gsub(line, before, '')
-    line = string.gsub(line, after, '')
+    line = string.gsub(line, before, before_space)
+    line = string.gsub(line, after, after_space)
 
-    print(before)
     return line .. " ﬌ " .. fend - start .. " lines"
 end--}}}
 
@@ -43,8 +56,7 @@ require("lsp-colors").setup({
     Hint = "#10B981"
 })
 
--- vim.g.coq_settings = { display = { pum = { source_context = {"",""} } } }
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
 for type, icon in pairs(signs) do
     local hl = "LspDiagnosticsSign" .. type
@@ -138,11 +150,12 @@ require("indent_blankline").setup {
     context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' },
     space_char_blankline = " ",
 }
+
 vim.wo.colorcolumn = "99999"
 
 vim.o.number = true
 vim.o.relativenumber = false
-vim.o.signcolumn = 'auto:1-4'
+vim.o.signcolumn = 'auto:2-4'
 vim.o.foldmethod = 'marker'
 
 vim.o.scrolloff=3 -- keep lines above and below cursor
@@ -183,7 +196,7 @@ vim.g.gruvbox_lualine_bold = lualine_bold
 vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme onedark"
+vim.cmd "colorscheme onedarkpro"
 
 vim.cmd [[
 augroup YankHighlight

@@ -39,7 +39,7 @@ vim.o.swapfile = false
 
 -- Misc Settings
 vim.opt.clipboard:prepend {"unnamedplus"}
-vim.opt.updatetime = 150
+vim.opt.updatetime = 50 -- ms
 
 vim.o.splitbelow = true
 vim.o.splitright = true

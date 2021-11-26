@@ -55,12 +55,46 @@ return require('packer').startup(function(use)
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
+    use 'f3fora/cmp-spell'
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
 
+    use { 'romgrk/nvim-treesitter-context',--{{{
+        config = function ()
+            require'treesitter-context'.setup{
+                enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+                throttle = true, -- Throttles plugin updates (may improve performance)
+                max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+                patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+                    -- For all filetypes
+                    -- Note that setting an entry here replaces all other patterns for this entry.
+                    -- By setting the 'default' entry below, you can control which nodes you want to
+                    -- appear in the context window.
+                    -- default = {
+                    --     'class',
+                    --     'function',
+                    --     'method',
+                    --     'for', -- These won't appear in the context
+                    --     'while',
+                    --     'if',
+                    --     'switch',
+                    --     'case',
+                    -- },
+                    -- Example for a specific filetype.
+                    -- If a pattern is missing, *open a PR* so everyone can benefit.
+                    --   rust = {
+                    --       'impl_item',
+                    --   },
+                },
+            }
+        end
+    }--}}}
     -- use { 'ms-jpq/coq_nvim', branch = 'coq'}
     -- use { 'ms-jpq/coq.artifacts', branch= 'artifacts'}
 
+    use { 'weilbith/nvim-code-action-menu',
+        cmd = 'CodeActionMenu',
+    }
     use 'mfussenegger/nvim-jdtls'
     use "folke/lua-dev.nvim"
     use { "ahmedkhalf/project.nvim",--{{{
@@ -79,72 +113,73 @@ return require('packer').startup(function(use)
     --}}}
 
     -- visual {{{
-    use { 'kosayoda/nvim-lightbulb',
+    use { 'kosayoda/nvim-lightbulb',--{{{
         config = function ()
+            vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LspDiagnosticsDefaultInformation", linehl="", numhl="" })
             vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
         end
-    }
+    }--}}}
     use { 'lukas-reineke/indent-blankline.nvim' }
     use { 'nvim-lualine/lualine.nvim',--{{{
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }--}}}
     use { 'glepnir/dashboard-nvim', --{{{
         opt = false,
-        config = function() 
+        config = function()
             vim.g.dashboard_default_executive = 'telescope'
-            vim.g.dashboard_custom_header = {
-            [[                                      __              ]],
-            [[                                     |  \             ]],
-            [[ _______   ______   ______  __     __ \▓▓______ ____  ]],
-            [[|       \ /      \ /      \|  \   /  \  \      \    \ ]],
-            [[| ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\ /  ▓▓ ▓▓ ▓▓▓▓▓▓\▓▓▓▓\]],
-            [[| ▓▓  | ▓▓ ▓▓    ▓▓ ▓▓  | ▓▓ \▓▓\  ▓▓| ▓▓ ▓▓ | ▓▓ | ▓▓]],
-            [[| ▓▓  | ▓▓ ▓▓▓▓▓▓▓▓ ▓▓__/ ▓▓  \▓▓ ▓▓ | ▓▓ ▓▓ | ▓▓ | ▓▓]],
-            [[| ▓▓  | ▓▓\▓▓     \\▓▓    ▓▓   \▓▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓]],
-            [[ \▓▓   \▓▓ \▓▓▓▓▓▓▓ \▓▓▓▓▓▓     \▓    \▓▓\▓▓  \▓▓  \▓▓]],
-            [[                                                      ]],
-            [[                                                      ]],
-            [[                                                      ]],
-            }
-
             -- vim.g.dashboard_custom_header = {
-            -- [[                                                     ]],
-            -- [[                                     _               ]],
-            -- [[                                    |_|              ]],
-            -- [[ ______   ______   ______  __   __   _   ___________ ]],
-            -- [[|  __  | | ____ | |  __  | \ \ / /  | | |  __   __  |]],
-            -- [[| |  | | | _____| | |  | |  \ v /   | | | |  | |  | |]],
-            -- [[| |  | | | |____  | |__| |   \ /    | | | |  | |  | |]],
-            -- [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
+            -- [[                                      __              ]],
+            -- [[                                     |  \             ]],
+            -- [[ _______   ______   ______  __     __ \▓▓______ ____  ]],
+            -- [[|       \ /      \ /      \|  \   /  \  \      \    \ ]],
+            -- [[| ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\ /  ▓▓ ▓▓ ▓▓▓▓▓▓\▓▓▓▓\]],
+            -- [[| ▓▓  | ▓▓ ▓▓    ▓▓ ▓▓  | ▓▓ \▓▓\  ▓▓| ▓▓ ▓▓ | ▓▓ | ▓▓]],
+            -- [[| ▓▓  | ▓▓ ▓▓▓▓▓▓▓▓ ▓▓__/ ▓▓  \▓▓ ▓▓ | ▓▓ ▓▓ | ▓▓ | ▓▓]],
+            -- [[| ▓▓  | ▓▓\▓▓     \\▓▓    ▓▓   \▓▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓]],
+            -- [[ \▓▓   \▓▓ \▓▓▓▓▓▓▓ \▓▓▓▓▓▓     \▓    \▓▓\▓▓  \▓▓  \▓▓]],
+            -- [[                                                      ]],
+            -- [[                                                      ]],
+            -- [[                                                      ]],
             -- }
+
+            vim.g.dashboard_custom_header = {
+            [[                                                     ]],
+            [[                                     _               ]],
+            [[                                    |_|              ]],
+            [[ ______   ______   ______  __   __   _   ___________ ]],
+            [[|  __  | | ____ | |  __  | \ \ / /  | | |  __   __  |]],
+            [[| |  | | | _____| | |  | |  \ v /   | | | |  | |  | |]],
+            [[| |  | | | |____  | |__| |   \ /    | | | |  | |  | |]],
+            [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
+            }
 
             vim.g.dashboard_custom_section = {
                 _1find_projects = {
-                    description = { " Recently opened projects               SPC f p" },
+                    description = { " Recently opened projects      SPC f p" },
                     command =  "Telescope projects"
                 },
-                _2new_file = {
-                    description = { " New file                               SPC c n" },
-                    command = ":DashboardNewFile"
-                },
-                _3find_history = {
-                    description = { "ﭯ Recently opened files                  SPC f h" },
+                _2find_history = {
+                    description = { "ﭯ Recently opened files         SPC f h" },
                     command =  ":DashboardFindHistory"
                 },
+                _3new_file = {
+                    description = { " New file                      SPC c n" },
+                    command = ":DashboardNewFile"
+                },
                 _4find_file = {
-                    description = { " Find file                              SPC f f" },
+                    description = { " Find file                     SPC f f" },
                     command =  ":DashboardFindFile"
                 },
                 _5change_colorscheme = {
-                    description = { " Change colorscheme                     SPC t c" },
+                    description = { " Change Colorscheme            SPC t c" },
                     command = ":DashboardChangeColorscheme"
                 },
                 _8edit_config = {
-                    description = { " Edit init.lua                          SPC c v" },
+                    description = { " Settings                      SPC c v" },
                     command =  ":lua Open_config()"
                 },
                 _9exit = {
-                    description = { "x Exit                                         q" },
+                    description = { "x Exit                                q" },
                     command = ":q"
                 },
             }
@@ -215,8 +250,9 @@ return require('packer').startup(function(use)
     --}}}
 
     -- text manipulation {{{
+    use 'godlygeek/tabular'
     use 'windwp/nvim-autopairs'
-    use { 'f3fora/cmp-spell' }
+    use 'junegunn/vim-easy-align'
     use { 'blackCauldron7/surround.nvim', --{{{
         config = function()
         require('surround').setup{}
@@ -277,7 +313,7 @@ return require('packer').startup(function(use)
     use 'romgrk/doom-one.vim'
     use { 'joshdick/onedark.vim', branch = "main"}
     use 'folke/tokyonight.nvim'
-    use 'ayu-theme/ayu-vim'
+    use 'Shatur/neovim-ayu'
     use 'Reewr/vim-monokai-phoenix'
     use 'cultab/potato-colors'
     use 'noahfrederick/vim-noctu'
@@ -297,6 +333,7 @@ return require('packer').startup(function(use)
         end
     }--}}}
     use 'benmills/vimux'
+    use 'dstein64/vim-startuptime'
     use { 'nvim-telescope/telescope.nvim',--{{{
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         config = function()

@@ -75,8 +75,9 @@ IncludeBlocks:   Regroup
 #    Priority:        1
 #IncludeIsMainRegex: '(Test)?$'
 #IndentCaseLabels: false
-#IndentPPDirectives: None
-#IndentWidth:     4
+IndentPPDirectives: BeforeHash
+IndentWidth:     4
+# NOT SUPPORTED YET ? IndentPragmas: true
 #IndentWrappedFunctionNames: false
 #JavaScriptQuotes: Leave
 #JavaScriptWrapImports: true
@@ -121,7 +122,7 @@ PointerAlignment: Right
 #StatementMacros:
 #  - Q_UNUSED
 #  - QT_REQUIRE_VERSION
-TabWidth:        8
+TabWidth:        4
 UseTab:          Never
 #...
 #

@@ -92,7 +92,7 @@ nm-applet &
 #blueman-applet &
 
 # start WM/DE
-exec dbus-launch --exit-with-session 2bwm
+exec dbus-launch --exit-with-session bspwm
 
 #case "$1" in
 #dwm)

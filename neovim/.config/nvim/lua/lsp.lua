@@ -64,10 +64,18 @@ cmp.setup({
     }, {
     }),
     formatting = {
-        format = require("lspkind").cmp_format({ with_text = false })
+        format = require("lspkind").cmp_format({ with_text = false, menu = {
+            nvim_lsp = "[LSP]",
+            luasnip = "[Snippet]",
+            buffer = "[Buffer]",
+            spell = "[Spell]",
+            path = "[Path]",
+            Buffer = "[Buffer]",
+        }})
     },
     experimental = {
-        ghost_text = true
+        ghost_text = true,
+        native_menu = true
     }
 })
 
@@ -136,20 +144,26 @@ local luadev = require("lua-dev").setup{--{{{
 
 lspconfig.sumneko_lua.setup(luadev) --}}}
 
+PYTHON_THING = "empty"
+
 function Find_python_venv()
     -- return the path to a currently activated python venv
     -- supports Conda, pyenv, pipenv
     if vim.env.CONDA_PREFIX ~= nil then
+        PYTHON_THING = "conda"
         return vim.env.CONDA_PREFIX
     elseif vim.env.PYENV_VIRTUAL_ENV ~= nil then
+        PYTHON_THING = "pyenv"
         return vim.env.PYENV_VIRTUAL_ENV
     else
         local pipe = io.popen("pipenv --venv 2> /dev/null")
         local line = pipe:read()
         pipe:close()
         if line ~= nil and line:find("^/home/") ~= nil then
+            PYTHON_THING = "pipenv"
             return line
         else
+            PYTHON_THING = "none"
             return ""
         end
     end
@@ -192,6 +206,14 @@ vim.cmd [[
         autocmd FileType python lua Pylsp_setup()
     augroup end
 ]]
+
+-- lspconfig.pyright.setup{
+--     cmd = { lspinstall_path .. '/python/node_modules/.bin/pyright-langserver', '--stdio' },
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- }
+
+-- vim.lsp.set_log_level("debug")
 
 lspconfig.clangd.setup{--{{{
     on_attach = on_attach,
@@ -338,3 +360,9 @@ lspconfig.gopls.setup{
 --     capabilities = capabilities,
 --     cmd = { 'R', '--slave', '-e', 'languageserver::run()' }
 -- }
+
+lspconfig.bashls.setup{--{{{
+    cmd = { lspinstall_path .. '/bash/node_modules/.bin/bash-language-server', 'start' },
+    on_attach = on_attach,
+    capabilities = capabilities
+}--}}}
