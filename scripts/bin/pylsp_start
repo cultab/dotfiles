@@ -1,0 +1,7 @@
+#!/bin/sh
+
+eval "$(~/.pyenv/bin/pyenv init -)"
+pyenv deactivate
+pyenv activate nvim
+pylsp
+
