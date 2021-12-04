@@ -55,9 +55,10 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
+        { name = 'tmux'},
         { name = 'spell' },
-        { name = 'path' },
         { name = 'buffer' },
+        { name = 'path' },
         -- { name = 'vsnip' }, -- For vsnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
         -- { name = 'snippy' }, -- For snippy users.
@@ -67,10 +68,10 @@ cmp.setup({
         format = require("lspkind").cmp_format({ with_text = false, menu = {
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
-            buffer = "[Buffer]",
             spell = "[Spell]",
             path = "[Path]",
-            Buffer = "[Buffer]",
+            buffer = "[Buffer]",
+            tmux = "[tmux]"
         }})
     },
     experimental = {

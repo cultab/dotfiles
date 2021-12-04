@@ -6,8 +6,9 @@ ssh_only = true
 
 [character]
 #symbol cache :) = "❯ "
-success_symbol = "[ε](bold green)"
+success_symbol = "[ε](blue)"
 error_symbol = "[x](bold red)"
+vicmd_symbol = "[ε](green)"
 # use_symbol_for_status = true
 
 [battery]

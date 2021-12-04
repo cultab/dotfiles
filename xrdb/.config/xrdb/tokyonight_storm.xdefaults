@@ -17,5 +17,5 @@
 #define basefg #a9b1d6
 #define basebg #24283b
 #define basecc #a9b1d6
-#define basesb base0B
+#define basesb base0D
 !#define basesb #ff007c

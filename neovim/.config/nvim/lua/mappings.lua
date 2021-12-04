@@ -10,7 +10,10 @@ function M.lsp_mappings()
     map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     map('n', '<C-k>',      '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     map('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    -- map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    map('n', '<leader>rn', '<cmd>lua require("renamer").rename()<CR>', opts)
+    map('i', '<leader>rn', '<cmd>lua require("renamer").rename()<CR>', opts)
+    map('v', '<F2>',       'lua require("renamer").rename()<CR>', opts)
     -- map('n', '<A-CR>',     '<Cmd>lua require("jdtls").code_action()<CR>', opts)
     -- map('v', '<A-CR>',     '<Cmd>lua require("jdtls").code_action(true)<CR>', opts)
     map('n', '<A-CR>',     '<Cmd>CodeActionMenu<CR>', opts)
@@ -21,11 +24,19 @@ function M.lsp_mappings()
     map('n', ']d',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     map('n', '<leader>q',  '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
     map("n", "<leader>fo", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    map("v", "<leader>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     -- map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     -- map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
     -- map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
     -- map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 end
+
+vim.cmd [[
+    nnoremap <M-h> <cmd>lua require("tmux").move_left()<cr>,
+    nnoremap <M-j> <cmd>lua require("tmux").move_bottom()<cr>,
+    nnoremap <M-k> <cmd>lua require("tmux").move_top()<cr>,
+    nnoremap <M-l> <cmd>lua require("tmux").move_right()<cr>,
+]]
 
 vim.cmd [[
     " telescope
