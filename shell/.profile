@@ -45,10 +45,13 @@ PATH="$FLOOM_HOME/bin/:$PATH"
 PATH="$FLOOM_HOME/conf/:$PATH"
 PATH="$KAFKA_HOME/bin/:$PATH"
 
-export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/evan/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/evan/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
 
 export PYENVROOT="$HOME/.pyenv"
 PATH="$PYENVROOT/bin:$PATH"
+
+# CUDA
+PATH="/usr/local/cuda-11.5/bin:$PATH"
 
 export PATH
 
