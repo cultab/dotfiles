@@ -8,8 +8,6 @@ neovim/.config/nvim/undo
 neovim/.config/nvim/spell
 neovim/.config/nvim/plugin
 
-bash/bin/vpm
-bash/bin/vsv
 bash/bin/remove-vivaldi-snapshot.sh
 bash/bin/vivaldi-snapshot
 
@@ -20,3 +18,5 @@ xfce/.config/xfce4/desktop
 kakoune/.config/kak/plugins
 
 ssh/.ssh/*
+
+dunst/.config/dunst/dunstrc

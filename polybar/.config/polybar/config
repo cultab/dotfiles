@@ -21,7 +21,7 @@ highlight = ${xrdb:color5:#ff00ff}
 error = ${xrdb:color1:#ff0000}
 
 [bar/mybar]
-monitor = ${env:MONITOR:LVDS1}
+monitor = ${env:MONITOR:HDMI-0}
 width = 100%
 height = 36
 offset-y = 0%
@@ -129,7 +129,7 @@ label-indicator-off-capslock = 
 
 [module/wlan]
 type = internal/network
-interface = wlp3s0
+interface = ${env:WIRELESS_INTERFACE}
 interval = 3.0
 
 ramp-signal-0 = ""
@@ -148,7 +148,7 @@ format-disconnected =
 
 [module/eth]
 type = internal/network
-interface = enp0s25
+interface = ${env:WIRED_INTERFACE}
 interval = 3.0
 
 ramp-signal-0 = ""
