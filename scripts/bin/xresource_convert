@@ -1,0 +1,78 @@
+#!/bin/sh
+
+if [ "$#" -lt 1 ]; then
+    echo "Usage: xresource_convert <filename>"
+fi
+
+if [ ! -f "$1" ]; then
+    echo "$1 is not a valid file"
+fi
+
+while IFS= read -r line
+do
+    name=$(echo "$line" | cut -f1 -d ':')
+    color=$(echo "$line" | cut -f2 -d '#')
+    case "$name" in
+        *color0)
+            echo "#define base00 #$color"
+            ;;
+        *color1)
+            echo "#define base01 #$color"
+            ;;
+        *color2)
+            echo "#define base02 #$color"
+            ;;
+        *color3)
+            echo "#define base03 #$color"
+            ;;
+        *color4)
+            echo "#define base04 #$color"
+            ;;
+        *color5)
+            echo "#define base05 #$color"
+            ;;
+        *color6)
+            echo "#define base06 #$color"
+            ;;
+        *color7)
+            echo "#define base07 #$color"
+            ;;
+        *color8)
+            echo "#define base08 #$color"
+            ;;
+        *color9)
+            echo "#define base09 #$color"
+            ;;
+        *color10)
+            echo "#define base0A #$color"
+            ;;
+        *color11)
+            echo "#define base0B #$color"
+            ;;
+        *color12)
+            echo "#define base0C #$color"
+            ;;
+        *color13)
+            echo "#define base0D #$color"
+            ;;
+        *color14)
+            echo "#define base0E #$color"
+            ;;
+        *color15)
+            echo "#define base0F #$color"
+            ;;
+        *foreground)
+            echo "#define basefg #$color"
+            ;;
+        *background)
+            echo "#define basebg #$color"
+            ;;
+        *)
+            # printf "ignore line with name %s \n%s\n" "$name" "$line"
+            true
+            ;;
+    esac
+done < "$1"
+
+echo "#define basecc base0F"
+echo "#define basesb base0A"

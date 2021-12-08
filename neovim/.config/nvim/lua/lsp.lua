@@ -108,7 +108,7 @@ vim.cmd [[
 ]]
 
 local lspconfig = require("lspconfig")
-local lspinstall_path = '/home/evan/.local/share/nvim/lspinstall'
+local lspinstall_path = vim.fn["stdpath"]("data") .. "/lsp_servers"
 
 local on_attach = function() -- client, bufnr{{{
     require("lsp_signature").on_attach({
@@ -130,7 +130,7 @@ end --}}}
 
 local luadev = require("lua-dev").setup{--{{{
     lspconfig = {
-        cmd = { lspinstall_path .. '/lua/sumneko-lua-language-server' },
+        cmd = { lspinstall_path .. '/sumneko_lua/extension/server/bin/Linux/lua-language-server' },
         on_attach = on_attach,
         capabilities = capabilities
     }

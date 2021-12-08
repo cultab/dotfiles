@@ -38,6 +38,9 @@ gruvbox:
 gruvbox-flat:
   default: "gruvbox-flat"
 
-neon_latte:
-  default: "neon_latte"
-  lualine: "catppuccin"
+# neon_latte:
+#   default: "neon_latte"
+#   lualine: "catppuccin"
+
+catppuccin:
+  default: "catppuccin"

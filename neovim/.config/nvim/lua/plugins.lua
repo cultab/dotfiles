@@ -8,7 +8,7 @@ return require('packer').startup(function(use)
 
     -- lsp and treesitter {{{
     use 'neovim/nvim-lspconfig'
-    use 'kabouzeid/nvim-lspinstall'
+    use 'williamboman/nvim-lsp-installer'
     use 'folke/lsp-colors.nvim'
     use 'ray-x/lsp_signature.nvim'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', branch = '0.5-compat',--{{{
@@ -332,7 +332,7 @@ return require('packer').startup(function(use)
         config = function ()
             local cat = require("catppuccin")
             cat.setup({
-                colorscheme = "neon_latte",
+                -- colorscheme = "neon_latte",
                 transparency = false,
                 integrations = {
                     telescope = true,
@@ -346,10 +346,6 @@ return require('packer').startup(function(use)
                     markdown = true
                 }
             })
-
-            if vim.g.colors_name == "catppuccin" then
-                cat.load()
-            end
         end
     }--}}}
     use 'eddyekofo94/gruvbox-flat.nvim'

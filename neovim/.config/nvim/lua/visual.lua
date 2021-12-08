@@ -146,7 +146,7 @@ require("indent_blankline").setup {
     show_current_context = true,
     show_first_indent_level = false,
     show_trailing_blankline_indent = true,
-    filetype_exclude = {'help', 'terminal', 'dashboard'},
+    filetype_exclude = {'help', 'terminal', 'dashboard', 'lspinstaller'},
     context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' },
     space_char_blankline = " ",
 }
@@ -196,7 +196,7 @@ vim.g.gruvbox_lualine_bold = lualine_bold
 vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme onedarkpro"
+vim.cmd "colorscheme tokyonight"
 
 vim.cmd [[
 augroup YankHighlight

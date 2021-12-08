@@ -54,6 +54,7 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
 eval "$(starship init zsh)"
+eval $(thefuck --alias)
 
 source ~/bin/exports
 source ~/bin/aliases

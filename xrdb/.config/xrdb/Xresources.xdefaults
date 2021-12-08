@@ -1,4 +1,4 @@
-#include "./onedarkpro.xdefaults"
+#include "./tokyonight_storm.xdefaults"
 
 /* *font:  Iosevka :size=12 */
 /* *font:  FuraCode Nerd Font:size=12:style=Retina,Regular */

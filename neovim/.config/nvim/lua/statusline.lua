@@ -35,7 +35,7 @@ function Reload_statusline(theme)
     }
 end
 
-local theme_name = "auto"
+local theme_name = "tokyonight"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
