@@ -11,7 +11,7 @@ function Reload_statusline(theme)
             lualine_b = { 'filename', 'branch' },
             lualine_c = { 'fileformat' },
             lualine_x = { {'diagnostics',
-                sources = {'nvim_lsp'},
+                sources = {'nvim_diagnostic'},
                 symbols = {
                     error = ' ',
                     warn = ' ',

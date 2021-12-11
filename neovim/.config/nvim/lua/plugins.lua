@@ -11,7 +11,7 @@ return require('packer').startup(function(use)
     use 'williamboman/nvim-lsp-installer'
     use 'folke/lsp-colors.nvim'
     use 'ray-x/lsp_signature.nvim'
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', branch = '0.5-compat',--{{{
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',--{{{
         config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -56,9 +56,7 @@ return require('packer').startup(function(use)
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'f3fora/cmp-spell'
-    use { 'andersevenrud/compe-tmux',
-        branch = 'cmp'
-    }
+    use { 'andersevenrud/compe-tmux' }
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
 
