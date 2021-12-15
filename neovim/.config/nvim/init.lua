@@ -22,8 +22,8 @@ vim.o.gdefault = true -- assume the 'g' in s/../../g
 vim.o.ignorecase = true
 vim.o.smartcase = true -- all lower search is case insensitive
 
-vim.o.spelllang= 'el,en'
-
+-- don't give |ins-completion-menu| messages. For example,
+-- "-- XXX completion (YYY)", "match 1 of 2", "The only match",
 vim.o.shortmess = vim.o.shortmess .. 'c'
 
 -- Backup and swap
@@ -44,6 +44,7 @@ vim.o.hidden = true  -- Required for operations modifying multiple buffers like 
 vim.o.mouse='a'  -- enable mouse for a(ll) modes
 vim.o.lazyredraw = true
 vim.o.modeline = true
+vim.o.spelllang= 'el,en'
 vim.o.keymap = 'greek_utf-8'
 vim.o.iminsert = 0  -- default to english
 
