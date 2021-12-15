@@ -55,9 +55,9 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
-        { name = 'tmux'},
+        { name = 'tmux', keyword_length = 3 },
         { name = 'spell' },
-        { name = 'buffer' },
+        { name = 'buffer', keyword_length = 2 },
         { name = 'path' },
         -- { name = 'vsnip' }, -- For vsnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
@@ -93,32 +93,16 @@ cmp.setup.cmdline(':', {
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 --}}}
 
-local autopairs = require('nvim-autopairs')
-
-autopairs.setup{
-    fast_wrap = {},
-}
-
-
-vim.cmd [[
-    augroup diagnostics_on_hold
-    autocmd!
-    autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
-    augroup end
-]]
-
-local lspconfig = require("lspconfig")
-local lspinstall_path = vim.fn["stdpath"]("data") .. "/lsp_servers"
-
-local on_attach = function() -- client, bufnr{{{
-    require("lsp_signature").on_attach({
-         bind = true,
-         doc_lines = 0,
-         hint_enable = false,
-        --  handler_opts = {
-        --      border = "none"
-        -- }
-    })
+-- on_attach() {{{
+local on_attach = function()
+    -- require("lsp_signature").on_attach({
+    --      bind = true,
+    --      doc_lines = 0,
+    --      hint_enable = false,
+    --     --  handler_opts = {
+    --     --      border = "none"
+    --     -- }
+    -- })
     --  require("nvim-autopairs.completion.compe").setup({
     --      map_cr = true, --  map <CR> on insert mode
     --      map_complete = true -- it will auto insert `(` after select function or method item
@@ -128,23 +112,114 @@ local on_attach = function() -- client, bufnr{{{
 
 end --}}}
 
-local luadev = require("lua-dev").setup{--{{{
-    lspconfig = {
-        cmd = { lspinstall_path .. '/sumneko_lua/extension/server/bin/Linux/lua-language-server' },
-        on_attach = on_attach,
-        capabilities = capabilities
-    }
+--{{{ lsp_installer
+local lsp_installer = require "nvim-lsp-installer"
+
+-- Include the servers you want to have installed by default below
+local servers = {
+    "bashls",
+    "tsserver",
+    -- "diagnosticls"
 }
 
--- lspconfig.sumneko_lua.setup(luadev)
--- luadev = {
---     cmd = { lspinstall_path .. '/lua/sumneko-lua-language-server' },
---     on_attach = on_attach,
---     capabilities = capabilities
--- }
+for _, name in pairs(servers) do
+    local server_is_found, server = lsp_installer.get_server(name)
+    if server_is_found then
+        if not server:is_installed() then
+            print("Installing " .. name)
+            server:install()
+        end
+    end
+end
 
-lspconfig.sumneko_lua.setup(luadev) --}}}
 
+lsp_installer.on_server_ready(function(server)
+    -- Specify the default options which we'll use to setup all servers
+    local default_opts = {
+        on_attach = on_attach,
+    }
+
+    -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
+    local server_opts = {
+        ["diagnosticls"] = function()
+            default_opts.settings = {--{{{
+                filetypes = { "bash", "sh" },
+                init_options = {
+                    filetypes = {
+                        sh = "shellcheck",
+                        bash = "shellcheck",
+                    },
+                    formatFiletypes = {
+                        sh = "shfmt",
+                        bash = "shfmt",
+                    },
+                    formatters = {
+                        shfmt = {
+                            command = "shfmt",
+                            args = { "-i", "2", "-bn", "-ci", "-sr", },
+                        }
+                    },
+                    linters = {
+                        shellcheck = {
+                            command = "shellcheck",
+                            rootPatterns = {},
+                            isStdout = true,
+                            isStderr = false,
+                            debounce = 100,
+                            args = { "--format=gcc", "-"},
+                            offsetLine = 0,
+                            offsetColumn = 0,
+                            sourceName = "shellcheck",
+                            formatLines = 1,
+                            formatPattern = {
+                                "^([^:]+):(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+                                {
+                                    line = 2,
+                                    column = 3,
+                                    endline = 2,
+                                    endColumn = 3,
+                                    message = {5},
+                                    security = 4
+                                }
+                            },
+                            securities  = {
+                                error  ="error",
+                                warning = "warning",
+                                note = "info"
+                            },
+                        }
+                    }
+                }
+            }--}}}
+        end,
+        ["sumneko_lua"] = function()
+            default_opts.settings = require("lua-dev").setup().settings
+        end,
+    }
+
+    -- Use the server's custom settings, if they exist, otherwise default to the default options
+    local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
+    server:setup(server_options)
+end)
+--}}}
+
+local autopairs = require('nvim-autopairs')
+
+autopairs.setup{
+    fast_wrap = {},
+}
+
+-- vim.cmd [[
+--     augroup diagnostics_on_hold
+--     autocmd!
+--     autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+--     augroup end
+-- ]]
+
+local lspconfig = require("lspconfig")
+local lspinstall_path = vim.fn["stdpath"]("data") .. "/lsp_servers"
+
+-- pylsp settings {{{
 PYTHON_THING = "empty"
 
 function Find_python_venv()
@@ -206,85 +281,23 @@ vim.cmd [[
         autocmd!
         autocmd FileType python lua Pylsp_setup()
     augroup end
-]]
+]]--}}}
 
--- lspconfig.pyright.setup{
---     cmd = { lspinstall_path .. '/python/node_modules/.bin/pyright-langserver', '--stdio' },
---     on_attach = on_attach,
---     capabilities = capabilities,
--- }
-
--- vim.lsp.set_log_level("debug")
-
-lspconfig.clangd.setup{--{{{
-    on_attach = on_attach,
-    capabilities = capabilities
-}--}}}
-
-lspconfig.tsserver.setup{--{{{
-    cmd = { lspinstall_path .. '/typescript/node_modules/.bin/typescript-language-server', '--stdio' },
+-- No config needed {{{
+lspconfig.clangd.setup{
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { "javascript" },
-    root_dir = function() return vim.loop.cwd() end -- run lsp for javascript in any directory
-}--}}}
+    filetypes = { "c", "cpp", "cuda" }
+}
 
-lspconfig.r_language_server.setup{--{{{
+lspconfig.r_language_server.setup{
     on_attach = on_attach,
     capabilities = capabilities
-}--}}}
+}
 
-lspconfig.diagnosticls.setup{--{{{
-    cmd = { lspinstall_path .. '/diagnosticls/node_modules/.bin/diagnostic-languageserver', '--stdio' },
+lspconfig.gopls.setup{
     on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "bash", "sh" },
-    init_options = {
-        filetypes = {
-            sh = "shellcheck",
-            bash = "shellcheck",
-        },
-        formatFiletypes = {
-        sh = "shfmt",
-        bash = "shfmt",
-        },
-        formatters = {
-            shfmt = {
-                command = "shfmt",
-                args = { "-i", "2", "-bn", "-ci", "-sr", },
-            }
-        },
-        linters = {
-            shellcheck = {
-                command = "shellcheck",
-                rootPatterns = {},
-                isStdout = true,
-                isStderr = false,
-                debounce = 100,
-                args = { "--format=gcc", "-"},
-                offsetLine = 0,
-                offsetColumn = 0,
-                sourceName = "shellcheck",
-                formatLines = 1,
-                formatPattern = {
-                    "^([^:]+):(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-                    {
-                        line = 2,
-                        column = 3,
-                        endline = 2,
-                        endColumn = 3,
-                        message = {5},
-                        security = 4
-                    }
-                },
-                securities  = {
-                    error  ="error",
-                    warning = "warning",
-                    note = "info"
-                },
-            }
-        }
-    }
+    capabilities = capabilities
 }--}}}
 
 function Jdtls_configure()--{{{
@@ -344,26 +357,5 @@ augroup lsp
 augroup end
 ]]
 
--- lspconfig.jdtls.setup{
---     cmd = { lspinstall_path .. '/java/jdtls.sh' },
---     on_attach = on_attach,
--- }
-
 --}}}
 
-lspconfig.gopls.setup{
-    on_attach = on_attach,
-    capabilities = capabilities
-}
-
--- lspconfig.r_language_server.setup{
---     on_attach = on_attach,
---     capabilities = capabilities,
---     cmd = { 'R', '--slave', '-e', 'languageserver::run()' }
--- }
-
-lspconfig.bashls.setup{--{{{
-    cmd = { lspinstall_path .. '/bash/node_modules/.bin/bash-language-server', 'start' },
-    on_attach = on_attach,
-    capabilities = capabilities
-}--}}}

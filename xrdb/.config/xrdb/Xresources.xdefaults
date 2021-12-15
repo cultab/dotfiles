@@ -1,4 +1,4 @@
-#include "./tokyonight_storm.xdefaults"
+#include "./gruvbox-flat.xdefaults"
 
 /* *font:  Iosevka :size=12 */
 /* *font:  FuraCode Nerd Font:size=12:style=Retina,Regular */
@@ -40,6 +40,13 @@ dwm.selbgcolor:      basesb
 dwm.selfgcolor:      basebg
 
 polybar.active: basesb
+! extra colors for polybar, if defined, use them instead
+#ifdef basepb
+polybar.background: basepb
+#endif
+#ifdef basepf
+polybar.foreground: basepf
+#endif
 
 !dmenu.font: Victor:size=13
 !dmenu.background: basebg

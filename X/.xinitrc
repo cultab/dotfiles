@@ -55,12 +55,12 @@ appimaged &
 poweralertd &
 #barrierc --daemon --no-tray --restart --enable-crypto 192.168.1.120 &
 # sxhkd &
-xautolock \
--locker 'slock -m  "$(cowsay -f $(fd .cow ~/.cowsay/ | shuf -n 1) $(fortune -s))"' \
--notify 300 \
--notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
--time 30 \
--detectsleep &
+# xautolock \
+# -locker 'slock -m  "$(cowsay $(fortune -s))"' \
+# -notify 300 \
+# -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
+# -time 30 \
+# -detectsleep &
 #     300 -> notify 5 mins before lock
 #     30 -> lock in 30 mins 
 #     15000 ms before msg disapears

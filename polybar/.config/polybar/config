@@ -10,9 +10,9 @@
 [colors]
 background = #00aaaaaa
 ; background = ${xrdb:background:#222f1c}
-foreground = ${xrdb:foreground:#f0ffff}
+foreground = ${xrdb:polybar.foreground:#f0ffff}
 ; middleground = ${xrdb:middleground:#c01a1b26} ; transparent
-middleground = ${xrdb:background:#c01a1b26}
+middleground = ${xrdb:polybar.background:#c01a1b26}
 ; middleground = #0C150b26
 border = ${xrdb:color8:#aaaaaa}
 active = ${xrdb:polybar.active:#FFFF00}
@@ -53,6 +53,7 @@ font-0 = Victor:pixelsize=10:antialias=true:autohint=true;2
 ; font-0 = Victor Mono Nerd Font:pixelsize=12:antialias=true:autohint=true;3
 font-1 = Victor Mono Nerd Font Mono:pixelsize=24:antialias=true:autohint=true;6
 font-2 = Victor Mono Nerd Font Mono:pixelsize=14:antialias=true:autohint=true;6
+font-3 = Victor:pixelsize=14:antialias=true:autohint=true:style=bold;4
 
 modules-left =  space right-border bspwm left-border
 modules-center = right-border xwindow left-border
@@ -75,7 +76,9 @@ type = internal/xwindow
 format-background = ${colors.middleground}
 format-foreground = ${colors.active}
 format-padding = 1
-label = %title:1:60:…%
+; label = %title:1:60:…%
+label = %title:1:128:…%
+label-font = 4 
 
 [module/bspwm]
 type = internal/bspwm

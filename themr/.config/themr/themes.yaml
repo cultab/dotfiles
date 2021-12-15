@@ -35,6 +35,10 @@ palenight:
 gruvbox:
   default: "gruvbox"
 
+everforest:
+  default: "everforest"
+  lualine: "auto"
+
 gruvbox-flat:
   default: "gruvbox-flat"
 

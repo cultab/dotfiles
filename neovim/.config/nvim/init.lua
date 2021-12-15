@@ -1,7 +1,3 @@
-vim.o = vim.o
-vim.g = vim.g
-vim.cmd = vim.cmd
-
 vim.cmd [[let g:python3_host_prog="~/.pyenv/versions/nvim/bin/python"]]
 
 require('plugins')

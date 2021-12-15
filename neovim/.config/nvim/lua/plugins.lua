@@ -48,7 +48,7 @@ return require('packer').startup(function(use)
     use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
         requires = { 'nvim-treesitter/nvim-treesitter' }
     }--}}}
-    use 'neomake/neomake'
+    -- use 'neomake/neomake'
     -- cmp-nvim
     use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lsp'
@@ -59,6 +59,21 @@ return require('packer').startup(function(use)
     use { 'andersevenrud/compe-tmux' }
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
+
+    use { 'jose-elias-alvarez/null-ls.nvim',
+        config = function ()
+            local null_ls = require("null-ls")
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.code_actions.proselint,
+                    null_ls.builtins.code_actions.gitsigns,
+                    null_ls.builtins.diagnostics.shellcheck,
+                    null_ls.builtins.formatting.codespell,
+                    null_ls.builtins.formatting.styler,
+                    null_ls.builtins.formatting.shfmt,
+                }
+            })
+        end}
 
     use { 'romgrk/nvim-treesitter-context',--{{{
         config = function ()
@@ -251,47 +266,48 @@ return require('packer').startup(function(use)
     --}}}
 
     -- text manipulation {{{
-    use { 'filipdutescu/renamer.nvim',
-        config = function ()
-            local mappings_utils = require('renamer.mappings.utils')
-            require('renamer').setup {
-                -- The popup title, shown if `border` is true
-                title = 'Rename',
-                -- The padding around the popup content
-                padding = {
-                    top = 0,
-                    left = 0,
-                    bottom = 0,
-                    right = 0,
-                },
-                -- Whether or not to shown a border around the popup
-                border = true,
-                -- The characters which make up the border
-                border_chars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-                -- Whether or not to highlight the current word references through LSP
-                show_refs = true,
-                -- Whether or not to add resulting changes to the quickfix list
-                with_qf_list = true,
-                -- Whether or not to enter the new name through the UI or Neovim's `input`
-                -- prompt
-                with_popup = true,
-                -- The keymaps available while in the `renamer` buffer. The example below
-                -- overrides the default values, but you can add others as well.
-                mappings = {
-                    -- ['<c-i>'] = mappings_utils.set_cursor_to_start,
-                    -- ['<c-a>'] = mappings_utils.set_cursor_to_end,
-                    -- ['<c-e>'] = mappings_utils.set_cursor_to_word_end,
-                    -- ['<c-b>'] = mappings_utils.set_cursor_to_word_start,
-                    -- ['<c-c>'] = mappings_utils.clear_line,
-                    -- ['<c-u>'] = mappings_utils.undo,
-                    -- ['<c-r>'] = mappings_utils.redo,
-                },
-                -- Custom handler to be run after successfully renaming the word. Receives
-                -- the LSP 'textDocument/rename' raw response as its parameter.
-                handler = nil,
-            }
-        end
-    }
+    -- use { 'filipdutescu/renamer.nvim',--{{{
+    --     requires = { "nvim-lua/plenary.nvim"},
+    --     config = function ()
+    --         local mappings_utils = require('renamer.mappings.utils')
+    --         require('renamer').setup {
+    --             -- The popup title, shown if `border` is true
+    --             title = 'Rename',
+    --             -- The padding around the popup content
+    --             padding = {
+    --                 top = 0,
+    --                 left = 0,
+    --                 bottom = 0,
+    --                 right = 0,
+    --             },
+    --             -- Whether or not to shown a border around the popup
+    --             border = true,
+    --             -- The characters which make up the border
+    --             border_chars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    --             -- Whether or not to highlight the current word references through LSP
+    --             show_refs = true,
+    --             -- Whether or not to add resulting changes to the quickfix list
+    --             with_qf_list = true,
+    --             -- Whether or not to enter the new name through the UI or Neovim's `input`
+    --             -- prompt
+    --             with_popup = true,
+    --             -- The keymaps available while in the `renamer` buffer. The example below
+    --             -- overrides the default values, but you can add others as well.
+    --             mappings = {
+    --                 ['<c-i>'] = mappings_utils.set_cursor_to_start,
+    --                 ['<c-a>'] = mappings_utils.set_cursor_to_end,
+    --                 ['<c-e>'] = mappings_utils.set_cursor_to_word_end,
+    --                 ['<c-b>'] = mappings_utils.set_cursor_to_word_start,
+    --                 ['<c-c>'] = mappings_utils.clear_line,
+    --                 ['<c-u>'] = mappings_utils.undo,
+    --                 ['<c-r>'] = mappings_utils.redo,
+    --             },
+    --             -- Custom handler to be run after successfully renaming the word. Receives
+    --             -- the LSP 'textDocument/rename' raw response as its parameter.
+    --             handler = nil,
+    --         }
+    --     end
+    -- }--}}}
     use 'godlygeek/tabular'
     use 'windwp/nvim-autopairs'
     use 'junegunn/vim-easy-align'
@@ -318,6 +334,12 @@ return require('packer').startup(function(use)
     -- colorschemes {{{
     use 'lifepillar/vim-solarized8'
     use 'ntk148v/vim-horizon'
+    use { 'sainnhe/everforest',
+        config = function ()
+            if vim.g.colors_name == "everforest" then
+                vim.o.background = "light"
+            end
+        end}
     -- use 'lifepillar/vim-gruvbox8'
     use { 'npxbr/gruvbox.nvim',--{{{
         requires = { 'rktjmp/lush.nvim' }

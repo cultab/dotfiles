@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # If not running interactively, don't do anything more
-if [[ $- != *i* ]]; then 
-    return
+if [[ $- != *i* ]]; then
+	return
 fi
 
 # if remote x11
@@ -20,23 +20,23 @@ eval "$(starship init bash)"
 
 # source sensible bash
 if [ -f ~/.local/bash/sensible.bash ]; then
-    source ~/.local/bash/sensible.bash
+	source ~/.local/bash/sensible.bash
 fi
 
 # Use bash-completion, if available
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-    source /usr/share/bash-completion/bash_completion
+	source /usr/share/bash-completion/bash_completion
 fi
 
 # fzf
 if [ -d /usr/share/doc/fzf/ ]; then
-    if [ -d /usr/share/doc/fzf/examples/ ]; then
-        source /usr/share/doc/fzf/examples/completion.bash
-        source /usr/share/doc/fzf/examples/key-bindings.bash
-    else
-        source /usr/share/doc/fzf/completion.bash
-        source /usr/share/doc/fzf/key-bindings.bash
-    fi
+	if [ -d /usr/share/doc/fzf/examples/ ]; then
+		source /usr/share/doc/fzf/examples/completion.bash
+		source /usr/share/doc/fzf/examples/key-bindings.bash
+	else
+		source /usr/share/doc/fzf/completion.bash
+		source /usr/share/doc/fzf/key-bindings.bash
+	fi
 fi
 
 # shellcheck source=./bin/aliases
@@ -55,6 +55,4 @@ source ~/bin/exports
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
-
 alias luamake=/home/evan/repos/lua-language-server/3rd/luamake/luamake
-

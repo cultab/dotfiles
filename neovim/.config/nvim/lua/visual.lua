@@ -46,8 +46,42 @@ vim.o.foldtext = 'v:lua.MyFoldText()'
 
 vim.cmd [[highlight link CompeDocumentation Normal]]
 
---{{{ lsp
 
+-- Create a custom namespace. This will aggregate signs from all other
+-- namespaces and only show the one with the highest severity on a
+-- given line
+local ns = vim.api.nvim_create_namespace("my_namespace")
+
+-- Get a reference to the original signs handler
+local orig_signs_handler = vim.diagnostic.handlers.signs
+
+-- Override the built-in signs handler
+vim.diagnostic.handlers.signs = {
+    show = function(_, bufnr, _, opts)
+        -- Get all diagnostics from the whole buffer rather than just the
+        -- diagnostics passed to the handler
+        local diagnostics = vim.diagnostic.get(bufnr)
+
+        -- Find the "worst" diagnostic per line
+        local max_severity_per_line = {}
+        for _, d in pairs(diagnostics) do
+            local m = max_severity_per_line[d.lnum]
+            if not m or d.severity < m.severity then
+            max_severity_per_line[d.lnum] = d
+            end
+        end
+
+        -- Pass the filtered diagnostics (with our custom namespace) to
+        -- the original handler
+        local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
+        orig_signs_handler.show(ns, bufnr, filtered_diagnostics, opts)
+    end,
+    hide = function(_, bufnr)
+        orig_signs_handler.hide(ns, bufnr)
+    end,
+}
+
+--{{{ lsp
 
 require("lsp-colors").setup({
     Error = "#db4b4b",
@@ -56,10 +90,10 @@ require("lsp-colors").setup({
     Hint = "#10B981"
 })
 
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
 for type, icon in pairs(signs) do
-    local hl = "LspDiagnosticsSign" .. type
+    local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
@@ -92,45 +126,6 @@ end
 --     kinds[i] = icons[kind] or kind
 -- end
 
--- Capture real implementation of function that sets signs{{{
--- NOTE: see https://www.reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a/
-local orig_set_signs = vim.lsp.diagnostic.set_signs
-local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
-
-    -- original func runs some checks, which I think is worth doing
-    -- but maybe overkill
-    if not diagnostics then
-        diagnostics = diagnostic_cache[bufnr][client_id]
-    end
-
-    -- early escape
-    if not diagnostics then
-        return
-    end
-
-    -- Work out max severity diagnostic per line
-    local max_severity_per_line = {}
-    for _,d in pairs(diagnostics) do
-        if max_severity_per_line[d.range.start.line] then
-            local current_d = max_severity_per_line[d.range.start.line]
-            if d.severity < current_d.severity then
-                max_severity_per_line[d.range.start.line] = d
-            end
-        else
-            max_severity_per_line[d.range.start.line] = d
-        end
-    end
-
-    -- map to list
-    local filtered_diagnostics = {}
-    for i,v in pairs(max_severity_per_line) do
-        table.insert(filtered_diagnostics, v)
-    end
-
-    -- call original function
-    orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
-end
-vim.lsp.diagnostic.set_signs = set_signs_limited--}}}
 --}}}
 
  -- used as separator for windows
@@ -196,7 +191,7 @@ vim.g.gruvbox_lualine_bold = lualine_bold
 vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme tokyonight"
+vim.cmd "colorscheme gruvbox-flat"
 
 vim.cmd [[
 augroup YankHighlight

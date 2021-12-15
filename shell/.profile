@@ -20,6 +20,7 @@ fi
 PATH="./:$PATH"
 
 PATH="$HOME/.local/share/applications/:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 
 PATH="$HOME/go/bin/:$PATH"
 

@@ -35,7 +35,7 @@ function Reload_statusline(theme)
     }
 end
 
-local theme_name = "tokyonight"
+local theme_name = "gruvbox-flat"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
