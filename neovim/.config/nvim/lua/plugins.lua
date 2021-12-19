@@ -136,6 +136,7 @@ return require('packer').startup(function(use)
         end
     }--}}}
     use { 'lukas-reineke/indent-blankline.nvim' }
+    use {'stevearc/dressing.nvim'}
     use { 'nvim-lualine/lualine.nvim',--{{{
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }--}}}
