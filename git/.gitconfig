@@ -1,11 +1,49 @@
 [user]
 	email = rroarck@gmail.com
 	name = cultab
+
 [core]
 	autocrlf = input
+    pager = delta
+
 [gui]
 	recentrepo = /home/evan/repos/dwm
+
 [pull]
 	rebase = true
+
 [init]
 	defaultBranch = master
+
+[diff]
+    colorMoved = plain
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive --diff-so-fancy
+
+[delta]
+    features = decorations
+    side-by-side = false
+    syntax-theme = base-16
+    features = interactive decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = yellow box
+    commit-style = raw
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+    line-numbers = false
+    line-numbers-left-format = "{nm:>4} ┊"
+    line-numbers-right-format = "{np:>4}│"
+    line-numbers-left-style = blue
+    line-numbers-right-style = blue
+    whitespace-error-style = 22 reverse
+
+
