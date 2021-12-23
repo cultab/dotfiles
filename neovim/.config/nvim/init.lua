@@ -73,7 +73,7 @@ augroup auto_sauce
     autocmd BufWritePost init.lua nested source $MYVIMRC
     " autocmd BufWritePost plugins.lua :PackerCompile
     " autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-    autocmd BufWritePost plugins.lua nested source %
+    " autocmd BufWritePost plugins.lua nested source %
     autocmd BufWritePost lsp.lua nested source %
     autocmd BufWritePost mappings.lua nested source %
     autocmd BufWritePost visual.lua nested source %

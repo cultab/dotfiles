@@ -95,18 +95,19 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 -- on_attach() {{{
 local on_attach = function()
-    -- require("lsp_signature").on_attach({
-    --      bind = true,
-    --      doc_lines = 0,
-    --      hint_enable = false,
-    --     --  handler_opts = {
-    --     --      border = "none"
-    --     -- }
-    -- })
-    --  require("nvim-autopairs.completion.compe").setup({
-    --      map_cr = true, --  map <CR> on insert mode
-    --      map_complete = true -- it will auto insert `(` after select function or method item
-    -- })
+    require("lsp_signature").on_attach({
+         bind = true,
+         doc_lines = 0,
+         hint_enable = true,
+         hint_prefix = " ",
+         handler_opts = {
+             border = "shadow"
+        }
+    })
+    local autopairs = require("nvim-autopairs.completion.cmp")
+    -- local cmp = require("cmp")
+    cmp.event:on("confirm_done", autopairs.on_confirm_done( {map_char = { tex = '' } }))
+
     local mappings = require("mappings")
     mappings.lsp_mappings()
 
