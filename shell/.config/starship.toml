@@ -122,6 +122,9 @@ disabled = true
 [python]
 symbol = " "
 
+[rlang]
+symbol = " "
+
 [ruby]
 symbol = " "
 disabled = true

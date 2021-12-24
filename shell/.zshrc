@@ -5,7 +5,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
-HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|bg *|bg|fg *|fg|history *|history|clear)'
+HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
 setopt nomatch
 bindkey -e
 
@@ -33,8 +33,7 @@ bindkey " " magic-space
 
 # bindkey -M vicmd 'k' history-beginning-search-backward
 # bindkey -M vicmd 'j' history-beginning-search-forward
-# disable -r time       # disable shell reserved word
-# alias time='time -p ' # -p for POSIX output
+# disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
 export TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S'
 
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
