@@ -21,6 +21,7 @@ alias gradle='gradle --console rich'
 #######
 
 alias gs='git status'
+alias gcl='git clone'
 alias ga='git add'
 alias gaa='git add --all'
 alias gap='git add --patch'
@@ -60,9 +61,5 @@ alias term_test='dd if=/dev/urandom | base64 | lolcat'
 
 #alias mpiall="mpirun --use-hwthread-cpus"
 #alias mpirf="mpirun --oversubscribe"
-#alias ls="lsd --group-dirs=first"
-#alias ll="lsd --group-dirs=first --long"
-#alias la="lsd --group-dirs=first --long --almost-all"
-#alias lt="lsd --group-dirs=first --tree"
 
 alias sued='sudoedit'

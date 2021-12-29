@@ -16,6 +16,7 @@ LS_COLORS=$(dircolors)
 
 zstyle :compinstall filename '/home/evan/.zshrc'
 zstyle ':completion:*' group-name ''
+# zstyle ':autocomplete:*' groups 'always'
 zstyle ':completion:*' format '%F{blue}[%d]%f'
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
 zstyle ':completion:*' menu select
