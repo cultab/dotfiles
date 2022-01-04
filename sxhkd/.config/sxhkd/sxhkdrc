@@ -29,13 +29,14 @@ super + shift + g
 	st -e bg-choose
 
 XF86Audio{Mute,RaiseVolume,LowerVolume}
-	amixer -q set Master {toggle,5%+,5%-}
+    amixer -q set Master {toggle,5%+,5%-}; \
+    amixer -q set Speaker unmute
 
 XF86AudioMicMute
 	amixer set Capture toggle
 
 XF86MonBrightness{Up,Down}
-	xbacklight {-inc,-dec} 10 
+	xbacklight {-inc,-dec} 10
 
 # make sxhkd reload its configuration files:
 super + Escape
