@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# overwrite
+BROWSER=surf
+
 URL='https://startpage.com/sp/search?query='
 QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
 if [ -n "$QUERY" ]; then
