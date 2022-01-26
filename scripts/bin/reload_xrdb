@@ -16,6 +16,6 @@ pkill -USR1 -x st
 polybar-msg cmd restart > /dev/null 2>&1
 
 # update dunstrc
-. ~/.config/dunst/reload_dunst
+~/.config/dunst/reload_dunst
 # update bspwm rules
-. ~/.config/bspwm/bspwmrc
+~/.config/bspwm/bspwmrc

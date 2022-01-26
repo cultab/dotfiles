@@ -11,12 +11,14 @@ pgrep -x polybar > /dev/null || polybar_start &
 # bspc monitor VGA1 --reset-desktops I II III
 
 # HACK: use first result as default monitor
-MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
+# MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
 
-bspc monitor $MONITOR --reset-desktops I II III IV V VI
+bspc wm --reorder-monitors HDMI1 LVDS1
+bspc monitor HDMI1 --reset-desktops I II III IV V VI
+bspc monitor LVDS1 --reset-desktops I II III IV V VI
 
 bspc config border_width 4
-bspc config window_gap   4
+bspc config window_gap   0
 
 DB=$(xrdb -query)
 active=$(echo "$DB" | grep 'polybar.active' | cut -f 2 -d ':' | sed 's/\t//')
@@ -26,7 +28,6 @@ bspc config split_ratio          0.50
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
@@ -34,6 +35,6 @@ bspc rule -a Screenkey manage=off
 bspc rule -a MEGAsync state=floating
 bspc rule -a discord desktop='^5'
 bspc rule -a kdeconnect.app desktop='^6' state=floating
-bspc rule -a barrier desktop='^6' state=floating
+bspc rule -a Barrier desktop='^6' state=floating
 bspc rule -a Pavucontrol desktop='^6' state=floating
 bspc rule -a Blueman-manager desktop='^6' state=floating

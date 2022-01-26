@@ -12,14 +12,18 @@ export XDG_RUNTIME_DIR=/run/user/$(id -u)
 COWPATH="$COWPATH:$HOME/.cowsay"
 
 # add stuff to $PATH
-if [ -d ~/bin ]
-then
+if [ -d ~/bin ]; then
     PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d ~/Appimages ]; then
+    PATH="$HOME/Appimages:$PATH"
 fi
 
 PATH="./:$PATH"
 
 PATH="$HOME/.local/share/applications/:$PATH"
+
 PATH="$HOME/.local/bin:$PATH"
 
 PATH="$HOME/go/bin/:$PATH"
