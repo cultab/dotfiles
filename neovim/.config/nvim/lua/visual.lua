@@ -191,7 +191,7 @@ vim.g.gruvbox_lualine_bold = lualine_bold
 vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme gruvbox-flat"
+vim.cmd "colorscheme tokyonight"
 
 vim.cmd [[
 augroup YankHighlight

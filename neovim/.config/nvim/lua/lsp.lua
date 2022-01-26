@@ -56,7 +56,7 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
         { name = 'tmux', keyword_length = 3 },
-        { name = 'spell' },
+        -- { name = 'spell' },
         { name = 'buffer', keyword_length = 2 },
         { name = 'path' },
         -- { name = 'vsnip' }, -- For vsnip users.
@@ -68,7 +68,7 @@ cmp.setup({
         format = require("lspkind").cmp_format({ with_text = false, menu = {
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
-            spell = "[Spell]",
+            -- spell = "[Spell]",
             path = "[Path]",
             buffer = "[Buffer]",
             tmux = "[tmux]"
@@ -120,7 +120,7 @@ local lsp_installer = require "nvim-lsp-installer"
 local servers = {
     "bashls",
     "tsserver",
-    -- "diagnosticls"
+    "sumneko_lua"
 }
 
 for _, name in pairs(servers) do
@@ -284,22 +284,31 @@ vim.cmd [[
     augroup end
 ]]--}}}
 
--- No config needed {{{
-lspconfig.clangd.setup{
+lspconfig.gopls.setup{
     on_attach = on_attach,
     capabilities = capabilities,
+    -- settings = {
+    --     gopls = {
+    --         semanticTokens = true,
+    --         staticcheck = true
+    --     }
+    -- }
+}
+
+local clangd_caps = vim.tbl_deep_extend("force", capabilities, { offsetEncoding = "utf-16" })
+
+lspconfig.clangd.setup{
+    on_attach = on_attach,
+    capabilities = clangd_caps,
     filetypes = { "c", "cpp", "cuda" }
 }
 
+-- No config needed {{{
 lspconfig.r_language_server.setup{
     on_attach = on_attach,
     capabilities = capabilities
 }
-
-lspconfig.gopls.setup{
-    on_attach = on_attach,
-    capabilities = capabilities
-}--}}}
+--}}}
 
 function Jdtls_configure()--{{{
     require('jdtls').start_or_attach{
@@ -360,3 +369,31 @@ augroup end
 
 --}}}
 
+
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        -- disabled{{{
+        -- null_ls.builtins.code_actions.proselint,
+        -- null_ls.builtins.diagnostics.vale.with({
+        --     -- filetypes = {},
+        --     -- filetypes = { "markdown", "tex", "text" },
+        --     extra_args = { "--config=" .. vim.fn.expand("~/.config/doc/vale/.vale.ini")}
+        --     -- args = { "--config=/home/evan/.config/doc/vale/.vale.ini", "--no-exit", "--output=JSON", "$FILENAME" }
+        -- }),}}}
+        -- R
+        null_ls.builtins.formatting.styler,
+        -- shell
+        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.diagnostics.shellcheck,
+        -- null_ls.builtins.formatting.shellharden, rust is borked
+        -- python
+        -- null_ls.builtins.diagnostics.pylint,
+        -- c++
+        null_ls.builtins.diagnostics.cppcheck,
+        -- generic
+        null_ls.builtins.formatting.trim_whitespace,
+        -- null_ls.builtins.formatting.codespell,
+    },
+    on_attach = on_attach
+})

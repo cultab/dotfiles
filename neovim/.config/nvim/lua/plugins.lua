@@ -60,20 +60,7 @@ return require('packer').startup(function(use)
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
 
-    use { 'jose-elias-alvarez/null-ls.nvim',
-        config = function ()
-            local null_ls = require("null-ls")
-            null_ls.setup({
-                sources = {
-                    null_ls.builtins.code_actions.proselint,
-                    -- null_ls.builtins.code_actions.gitsigns,
-                    null_ls.builtins.diagnostics.shellcheck,
-                    null_ls.builtins.formatting.codespell,
-                    null_ls.builtins.formatting.styler,
-                    null_ls.builtins.formatting.shfmt,
-                }
-            })
-        end}
+    use { 'jose-elias-alvarez/null-ls.nvim' }
 
     use { 'romgrk/nvim-treesitter-context',--{{{
         config = function ()
@@ -395,18 +382,20 @@ return require('packer').startup(function(use)
     }--}}}
     use 'benmills/vimux'
     use 'dstein64/vim-startuptime'
-    use { 'aserowy/tmux.nvim',
+    use { 'aserowy/tmux.nvim',--{{{
         config = function ()
             require("tmux").setup{
                 navigation = { cycle_navigation = false }
             }
-        end}
+        end}--}}}
     use { 'nvim-telescope/telescope.nvim',--{{{
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         config = function()
             local actions = require('telescope.actions')
             require('telescope').setup{
                 defaults = {
+                    -- file_sorter = require'telescope.sorters'.get_fzy_sorter,
+                    -- generic_sorter = require'telescope.sorters'.get_fzy_sorter,
                     mappings = {
                         i = {
                             ["<esc>"] = actions.close

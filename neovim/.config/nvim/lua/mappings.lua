@@ -1,30 +1,31 @@
 local M = {}
 
-function M.lsp_mappings()
-    local map = vim.api.nvim_set_keymap
-    local opts = { noremap=true, silent=false }
+local function map(mode, key, action, opts)
+    if opts == nil then
+        opts = {}
+    end
 
-    map('n', 'gD',         '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    map('n', 'gd',         '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    map('n', 'U',          '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    map('n', '<C-k>',      '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    map('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    -- map('n', '<A-CR>',     '<Cmd>CodeActionMenu<CR>', opts)
-    map('n', '<A-CR>',     '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    -- map('n', '<leader>r',  '<Cmd>lua require("jdtls").code_action(false, "refactor")<CR>', opts)
-    map('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    map('n', '<leader>e',  '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false })<CR>', opts)
-    map('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    map('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    map('n', '<leader>q',  '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    map("n", "<leader>fo", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    map("v", "<leader>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-    -- map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    -- map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    -- map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    -- map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    local default_opts = { noremap=true, silent=false }
+    opts = vim.tbl_deep_extend("force", default_opts, opts)
+
+    vim.api.nvim_set_keymap(mode, key, action, opts)
+end
+
+function M.lsp_mappings()
+    map('n', 'gD',         '<Cmd>lua vim.lsp.buf.declaration()<CR>')
+    map('n', 'gd',         '<Cmd>lua vim.lsp.buf.definition()<CR>')
+    map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
+    map('n', 'U',          '<Cmd>lua vim.lsp.buf.hover()<CR>')
+    map('n', '<C-k>',      '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+    map('n', '<leader>q',  '<cmd>lua vim.diagnostic.setloclist()<CR>') map("n", "<leader>=",  "<cmd>lua vim.lsp.buf.formatting()<CR>")
+    map("v", "<leader>=",  "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
+    map('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+    map('n', '<leader>r',  '<cmd>lua vim.lsp.buf.rename()<CR>')
+    map('n', '<leader>R',  '<cmd>lua vim.lsp.buf.references()<CR>')
+    map('n', '<leader>e',  '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false })<CR>')
+    map('n', '<A-CR>',     '<Cmd>lua vim.lsp.buf.code_action()<CR>')
+    map('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+    map('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>')
 end
 
 vim.cmd [[
@@ -39,36 +40,24 @@ vim.cmd [[
     " Find files using Telescope command-line sugar.
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-    nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     " git
-    nnoremap <leader>gc <cmd>Telescope git_commits<cr>
-    nnoremap <leader>gb <cmd>Telescope git_branches<cr>
-    nnoremap <leader>gs <cmd>Telescope git_status<cr>
-    nnoremap <leader>gp <cmd>Telescope git_bcommits<cr>
-    nnoremap <leader>gd :DiffviewOpen<CR>
+    "nnoremap <leader>gc <cmd>Telescope git_commits<cr>
+    "nnoremap <leader>gb <cmd>Telescope git_branches<cr>
+    "nnoremap <leader>gs <cmd>Telescope git_status<cr>
+    "nnoremap <leader>gp <cmd>Telescope git_bcommits<cr>
+    "nnoremap <leader>gd :DiffviewOpen<CR>
     "misc
     nnoremap <leader>fe <cmd>Telescope emoji<CR>
 ]]
-
--- vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
 
 -- from the good ol' init.vim
 vim.cmd [[
 " so much more convenient
 map <space> <leader>
 
+vnoremap jk <esc>
+inoremap jk <esc>
 " barbar
 " Move to previous/next
 nnoremap <silent>    <A-,> :BufferPrevious<CR>
@@ -77,15 +66,15 @@ nnoremap <silent>    <A-.> :BufferNext<CR>
 nnoremap <silent>    <A-[> :BufferMovePrevious<CR>
 nnoremap <silent>    <A-]> :BufferMoveNext<CR>
 " Goto buffer in position...
-nnoremap <silent>    <A-1> :BufferGoto 1<CR>
-nnoremap <silent>    <A-2> :BufferGoto 2<CR>
-nnoremap <silent>    <A-3> :BufferGoto 3<CR>
-nnoremap <silent>    <A-4> :BufferGoto 4<CR>
-nnoremap <silent>    <A-5> :BufferGoto 5<CR>
-nnoremap <silent>    <A-6> :BufferGoto 6<CR>
-nnoremap <silent>    <A-7> :BufferGoto 7<CR>
-nnoremap <silent>    <A-8> :BufferGoto 8<CR>
-nnoremap <silent>    <A-9> :BufferLast<CR>
+" nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+" nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+" nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+" nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+" nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+" nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+" nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+" nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+" nnoremap <silent>    <A-9> :BufferLast<CR>
 " Close buffer
 nnoremap <silent>    <A-c> :BufferClose<CR>
 " Wipeout buffer
@@ -112,12 +101,6 @@ noremap <leader>cd :e ~/repos/dwm/config.h<CR>
 noremap <leader>cv :lua Open_config()<CR>
 noremap <leader>cx :e ~/.config/xrdb/<CR>
 noremap <leader>ct :n ~/.config/themr/*.yaml<CR>
-
-" packer
-nnoremap <leader>cpi :PackerInstall<CR>
-nnoremap <leader>cpc :PackerClean<CR>
-nnoremap <leader>cpu :PackerUpdate<CR>
-nnoremap <leader>cps :PackerSync<CR>
 
 " text tabulirize
 noremap <leader>tt :Tabularize<space>/
@@ -167,7 +150,6 @@ cabbr Wq wq
 cabbr WQ wq
 cabbr Wa wa
 cabbr WA wa
-
 ]]
 
 return M
