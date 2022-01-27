@@ -7,7 +7,7 @@ xresources:
   post: '.xdefaults"'
   cmd: "reload_xrdb"
 
-vim:
+nvim:
   path: "~/.config/nvim/lua/visual.lua"
   regex: 'cmd "colorscheme .*"'
   pre: 'cmd "colorscheme '

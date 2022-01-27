@@ -150,7 +150,7 @@ vim.wo.colorcolumn = "99999"
 
 vim.o.number = true
 vim.o.relativenumber = false
-vim.o.signcolumn = 'auto:2-4'
+vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'marker'
 
 vim.o.scrolloff=3 -- keep lines above and below cursor
@@ -191,7 +191,7 @@ vim.g.gruvbox_lualine_bold = lualine_bold
 vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme tokyonight"
+vim.cmd "colorscheme onedark"
 
 vim.cmd [[
 augroup YankHighlight

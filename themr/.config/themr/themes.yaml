@@ -16,7 +16,7 @@ github_light:
   xresources: "github_light"
 
 doom-one:
-  vim: "doom-one"
+  nvim: "doom-one"
   lightline: "one"
   lualine: "onedark"
   xresources: "doom-one"
@@ -48,3 +48,8 @@ gruvbox-flat:
 
 catppuccin:
   default: "catppuccin"
+
+wpg:
+  default: "wpg"
+  nvim: "onedark"
+  lualine: "auto"

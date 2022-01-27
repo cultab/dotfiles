@@ -1,4 +1,4 @@
-#include "./gruvbox-flat.xdefaults"
+#include "./onedark.xdefaults"
 
 /* *font:  Iosevka :size=12 */
 /* *font:  FuraCode Nerd Font:size=12:style=Retina,Regular */

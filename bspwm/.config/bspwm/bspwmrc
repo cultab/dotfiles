@@ -7,15 +7,13 @@
 pgrep -x sxhkd > /dev/null || sxhkd &
 pgrep -x polybar > /dev/null || polybar_start &
 
-# bspc wm --reorder-monitors VGA1 LVDS1
-# bspc monitor VGA1 --reset-desktops I II III
-
 # HACK: use first result as default monitor
-# MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
+MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
 
-bspc wm --reorder-monitors HDMI1 LVDS1
-bspc monitor HDMI1 --reset-desktops I II III IV V VI
-bspc monitor LVDS1 --reset-desktops I II III IV V VI
+bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
+# bspc wm --reorder-monitors HDMI1 LVDS1
+# bspc monitor HDMI1 --reset-desktops I II III IV V VI
+# bspc monitor LVDS1 --reset-desktops I II III IV V VI
 
 bspc config border_width 4
 bspc config window_gap   0

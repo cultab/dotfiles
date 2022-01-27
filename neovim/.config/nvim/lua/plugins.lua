@@ -243,7 +243,6 @@ return require('packer').startup(function(use)
     }--}}}
     use { 'folke/todo-comments.nvim',--{{{
         config = function()
-            require('nvim_comment').setup()
             require('todo-comments').setup()
         end
     }--}}}
@@ -304,7 +303,19 @@ return require('packer').startup(function(use)
         require('surround').setup{}
             end
     }--}}}
-    use 'terrortylor/nvim-comment'
+    use { 'numToStr/Comment.nvim',
+        config = function ()
+            require("Comment").setup()
+            local ft = require("Comment.ft")
+
+            -- use // for single line and /* */ for blocks
+            -- in languages that use both comment styles
+            local langs = { 'c', 'cpp', 'cuda', 'javascript', 'typescript' }
+
+            for _, lang in ipairs(langs) do
+                ft.set(lang, {'//%s', '/*%s*/'}).set('conf', '#%s')
+            end
+        end}
     use { 'windwp/nvim-ts-autotag',--{{{
         config = function ()
         require('nvim-ts-autotag').setup({
@@ -367,6 +378,8 @@ return require('packer').startup(function(use)
     use 'noahfrederick/vim-noctu'
     use 'jsit/disco.vim'
     use 'lourenci/github-colors'
+    use 'deviantfero/wpgtk.vim'
+    use 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
     -- use 'ghifarit53/tokyonight-vim'
     -- }}}
 
