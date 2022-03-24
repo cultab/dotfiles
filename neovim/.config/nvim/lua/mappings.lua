@@ -56,8 +56,6 @@ vim.cmd [[
 " so much more convenient
 map <space> <leader>
 
-vnoremap jk <esc>
-inoremap jk <esc>
 " barbar
 " Move to previous/next
 nnoremap <silent>    <A-,> :BufferPrevious<CR>

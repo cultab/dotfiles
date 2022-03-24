@@ -43,6 +43,7 @@ end--}}}
 
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
+-- vim.o.laststatus = 3
 
 vim.cmd [[highlight link CompeDocumentation Normal]]
 
@@ -191,7 +192,7 @@ vim.g.gruvbox_lualine_bold = lualine_bold
 vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 --}}}
 
-vim.cmd "colorscheme onedark"
+vim.cmd "colorscheme tokyonight"
 
 vim.cmd [[
 augroup YankHighlight

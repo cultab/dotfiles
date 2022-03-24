@@ -14,9 +14,14 @@
 #define base0D #df69ba
 #define base0E #35a77c
 #define base0F #829181
-#define basefg #5c6a72
-#define basebg #f8f0dc
 #define basecc #a9b1d6
 #define basesb base06
 #define basepb #323c41
 #define basepf #eaf2eb
+
+! dark mode
+#define basefg #eaf2eb
+#define basebg #323c41
+! light mode
+!#define basefg #5c6a72
+!#define basebg #f8f0dc

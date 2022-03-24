@@ -336,7 +336,9 @@ return require('packer').startup(function(use)
     use { 'sainnhe/everforest',
         config = function ()
             if vim.g.colors_name == "everforest" then
-                vim.o.background = "light"
+                -- vim.o.background = "light"
+                local noop = true
+                return  noop
             end
         end}
     -- use 'lifepillar/vim-gruvbox8'
