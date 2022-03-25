@@ -10,6 +10,7 @@ HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
 HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
 setopt nomatch
+setopt extendedglob
 bindkey -e
 
 LS_COLORS=$(dircolors)
