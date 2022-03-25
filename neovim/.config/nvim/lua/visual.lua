@@ -6,9 +6,11 @@ function _G.MyFoldText()--{{{
     local comment_string = vim.api.nvim_buf_get_option(0, 'commentstring')
 
     -- extract before and after comment characters (if they exist)
-    local s_loc = string.find(comment_string, '%%s')
-    local before = string.remove(comment_string, s_loc, #comment_string + 1)
-    local after = string.remove(comment_string, 1, s_loc + 2)
+    s_loc = string.find(comment_string, '%%s')
+    -- from start to %s - 1
+    before = string.sub(comment_string, 1, s_loc - 1)
+    -- from %s + len(%s) = 2 to end
+    after = string.sub(comment_string, s_loc + 2, #comment_string)
 
     -- create strings of spaces of the correct length to replace the comment strings
     -- only do it for the comment string that's before the comment,
@@ -38,11 +40,13 @@ function _G.MyFoldText()--{{{
     line = string.gsub(line, before, before_space)
     line = string.gsub(line, after, after_space)
 
-    return line .. " ﬌ " .. fend - start .. " lines"
+    -- return line .. " ﬌ " .. fend - start .. " lines"
+    return line
 end--}}}
 
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
+-- vim.o.foldtext = MyFoldText()
 -- vim.o.laststatus = 3
 
 vim.cmd [[highlight link CompeDocumentation Normal]]

@@ -1,6 +1,8 @@
 
 -- packer is optional
-vim.cmd [[packadd packer.nvim]]
+vim.cmd[[
+packadd packer.nvim
+]]
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
@@ -298,11 +300,12 @@ return require('packer').startup(function(use)
     use 'godlygeek/tabular'
     use 'windwp/nvim-autopairs'
     use 'junegunn/vim-easy-align'
-    use { 'blackCauldron7/surround.nvim', --{{{
-        config = function()
-        require('surround').setup{}
-            end
-    }--}}}
+    -- use { 'blackCauldron7/surround.nvim', --{{{
+    --     config = function()
+    --     require('surround').setup{}
+    --         end
+    -- }--}}}
+    use { 'machakann/vim-sandwich' }
     use { 'numToStr/Comment.nvim',
         config = function ()
             require("Comment").setup()

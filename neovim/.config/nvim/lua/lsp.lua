@@ -74,9 +74,11 @@ cmp.setup({
             tmux = "[tmux]"
         }})
     },
+    view = {
+        entries = 'native'
+    },
     experimental = {
         ghost_text = true,
-        native_menu = true
     }
 })
 
@@ -134,73 +136,75 @@ for _, name in pairs(servers) do
 end
 
 
+-- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
+local server_opts = {
+    ["sumneko_lua"] = function(opts)
+        opts.settings = require("lua-dev").setup().settings
+    end,
+    ["diagnosticls"] = function(opts)--{{{
+        opts.settings = {
+            filetypes = { "bash", "sh" },
+            init_options = {
+                filetypes = {
+                    sh = "shellcheck",
+                    bash = "shellcheck",
+                },
+                formatFiletypes = {
+                    sh = "shfmt",
+                    bash = "shfmt",
+                },
+                formatters = {
+                    shfmt = {
+                        command = "shfmt",
+                        args = { "-i", "2", "-bn", "-ci", "-sr", },
+                    }
+                },
+                linters = {
+                    shellcheck = {
+                        command = "shellcheck",
+                        rootPatterns = {},
+                        isStdout = true,
+                        isStderr = false,
+                        debounce = 100,
+                        args = { "--format=gcc", "-"},
+                        offsetLine = 0,
+                        offsetColumn = 0,
+                        sourceName = "shellcheck",
+                        formatLines = 1,
+                        formatPattern = {
+                            "^([^:]+):(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+                            {
+                                line = 2,
+                                column = 3,
+                                endline = 2,
+                                endColumn = 3,
+                                message = {5},
+                                security = 4
+                            }
+                        },
+                        securities  = {
+                            error  ="error",
+                            warning = "warning",
+                            note = "info"
+                        },
+                    }
+                }
+            }
+        }
+    end,--}}}
+}
+
 lsp_installer.on_server_ready(function(server)
     -- Specify the default options which we'll use to setup all servers
-    local default_opts = {
+    local opts = {
         on_attach = on_attach,
     }
 
-    -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
-    local server_opts = {
-        ["diagnosticls"] = function()
-            default_opts.settings = {--{{{
-                filetypes = { "bash", "sh" },
-                init_options = {
-                    filetypes = {
-                        sh = "shellcheck",
-                        bash = "shellcheck",
-                    },
-                    formatFiletypes = {
-                        sh = "shfmt",
-                        bash = "shfmt",
-                    },
-                    formatters = {
-                        shfmt = {
-                            command = "shfmt",
-                            args = { "-i", "2", "-bn", "-ci", "-sr", },
-                        }
-                    },
-                    linters = {
-                        shellcheck = {
-                            command = "shellcheck",
-                            rootPatterns = {},
-                            isStdout = true,
-                            isStderr = false,
-                            debounce = 100,
-                            args = { "--format=gcc", "-"},
-                            offsetLine = 0,
-                            offsetColumn = 0,
-                            sourceName = "shellcheck",
-                            formatLines = 1,
-                            formatPattern = {
-                                "^([^:]+):(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-                                {
-                                    line = 2,
-                                    column = 3,
-                                    endline = 2,
-                                    endColumn = 3,
-                                    message = {5},
-                                    security = 4
-                                }
-                            },
-                            securities  = {
-                                error  ="error",
-                                warning = "warning",
-                                note = "info"
-                            },
-                        }
-                    }
-                }
-            }--}}}
-        end,
-        ["sumneko_lua"] = function()
-            default_opts.settings = require("lua-dev").setup().settings
-        end,
-    }
+    if server_opts[server.name] then
+        server_opts[server.name](opts)
+    end
 
-    -- Use the server's custom settings, if they exist, otherwise default to the default options
-    local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
-    server:setup(server_options)
+    server:setup(opts)
 end)
 --}}}
 
@@ -216,6 +220,7 @@ autopairs.setup{
 --     autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 --     augroup end
 -- ]]
+
 
 local lspconfig = require("lspconfig")
 local lspinstall_path = vim.fn["stdpath"]("data") .. "/lsp_servers"

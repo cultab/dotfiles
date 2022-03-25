@@ -1,4 +1,4 @@
-vim.cmd [[let g:python3_host_prog="~/.pyenv/versions/nvim/bin/python"]]
+vim.cmd[[let g:python3_host_prog="~/.pyenv/versions/nvim/bin/python"]]
 
 require('plugins')
 require('visual')
