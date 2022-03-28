@@ -24,7 +24,7 @@
 [delta]
     features = decorations
     side-by-side = false
-    syntax-theme = base-16
+    syntax-theme = base16
     features = interactive decorations
 
 [delta "interactive"]
