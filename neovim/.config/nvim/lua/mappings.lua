@@ -28,6 +28,34 @@ function M.lsp_mappings()
     map('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>')
 end
 
+
+-- " vimux run last command
+-- map <leader>cl :VimuxRunLastCommand<CR>
+-- " Prompt for a command to run map
+-- map <Leader>cc :VimuxPromptCommand<CR>
+
+
+LastCommand = nil
+
+function RunCommand(command)
+    if command then
+        LastCommand = command
+        vim.cmd(":1TermExec cmd='" .. command .. "'")
+    end
+end
+
+function RunLastCommand()
+    vim.cmd(":1TermExec cmd='" .. LastCommand .. "'")
+end
+
+vim.cmd [[
+    nnoremap <silent> <leader>cc :lua vim.ui.input({ prompt = "cmd: ", completion = 'shellcmd' }, RunCommand)<CR>
+    nnoremap <silent> <leader>cl :lua RunLastCommand()<CR>
+    nnoremap <silent> <leader>ct :ToggleTerm<CR>
+    nnoremap <silent> <leader><space> :ToggleTermToggleAll<CR>
+]]
+
+
 vim.cmd [[
     nnoremap <M-h> <cmd>lua require("tmux").move_left()<cr>,
     nnoremap <M-j> <cmd>lua require("tmux").move_bottom()<cr>,
@@ -83,12 +111,6 @@ nnoremap <silent>    <A-c> :BufferClose<CR>
 "                          :BufferCloseBuffersRight<CR>
 " Magic buffer-picking mode
 nnoremap <silent> <leader>bb :BufferPick<CR>
-
-
-" vimux run last command
-map <leader>cl :VimuxRunLastCommand<CR>
-" Prompt for a command to run map
-map <Leader>cc :VimuxPromptCommand<CR>
 
 " edit configs
 noremap <leader>cb :e ~/.config/bspwm/bspwmrc<CR>

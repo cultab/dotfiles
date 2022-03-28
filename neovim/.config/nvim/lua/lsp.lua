@@ -75,12 +75,12 @@ cmp.setup({
         }})
     },
     view = {
-        entries = 'native'
+        experimental = {
+            ghost_text = true,
+        }
     },
-    experimental = {
-        ghost_text = true,
-    }
 })
+
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {

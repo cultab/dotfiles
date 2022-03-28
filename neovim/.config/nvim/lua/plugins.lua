@@ -1,8 +1,6 @@
 
 -- packer is optional
-vim.cmd[[
-packadd packer.nvim
-]]
+vim.cmd[[ packadd packer.nvim ]]
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
@@ -252,51 +250,16 @@ return require('packer').startup(function(use)
     use 'plasticboy/vim-markdown'
     use 'liuchengxu/graphviz.vim'
     use 'onsails/lspkind-nvim'
+    use { 'rcarriga/nvim-notify', config = function()
+        -- replace nvim's vim.notify with nvim-notify
+        local notify = require("notify")
+        -- notify.setup({ max_width = 35 })
+        vim.notify = notify
+        -- vim.notify("Loaded nvim-notify!")
+    end }
     --}}}
 
     -- text manipulation {{{
-    -- use { 'filipdutescu/renamer.nvim',--{{{
-    --     requires = { "nvim-lua/plenary.nvim"},
-    --     config = function ()
-    --         local mappings_utils = require('renamer.mappings.utils')
-    --         require('renamer').setup {
-    --             -- The popup title, shown if `border` is true
-    --             title = 'Rename',
-    --             -- The padding around the popup content
-    --             padding = {
-    --                 top = 0,
-    --                 left = 0,
-    --                 bottom = 0,
-    --                 right = 0,
-    --             },
-    --             -- Whether or not to shown a border around the popup
-    --             border = true,
-    --             -- The characters which make up the border
-    --             border_chars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    --             -- Whether or not to highlight the current word references through LSP
-    --             show_refs = true,
-    --             -- Whether or not to add resulting changes to the quickfix list
-    --             with_qf_list = true,
-    --             -- Whether or not to enter the new name through the UI or Neovim's `input`
-    --             -- prompt
-    --             with_popup = true,
-    --             -- The keymaps available while in the `renamer` buffer. The example below
-    --             -- overrides the default values, but you can add others as well.
-    --             mappings = {
-    --                 ['<c-i>'] = mappings_utils.set_cursor_to_start,
-    --                 ['<c-a>'] = mappings_utils.set_cursor_to_end,
-    --                 ['<c-e>'] = mappings_utils.set_cursor_to_word_end,
-    --                 ['<c-b>'] = mappings_utils.set_cursor_to_word_start,
-    --                 ['<c-c>'] = mappings_utils.clear_line,
-    --                 ['<c-u>'] = mappings_utils.undo,
-    --                 ['<c-r>'] = mappings_utils.redo,
-    --             },
-    --             -- Custom handler to be run after successfully renaming the word. Receives
-    --             -- the LSP 'textDocument/rename' raw response as its parameter.
-    --             handler = nil,
-    --         }
-    --     end
-    -- }--}}}
     use 'godlygeek/tabular'
     use 'windwp/nvim-autopairs'
     use 'junegunn/vim-easy-align'
@@ -336,14 +299,14 @@ return require('packer').startup(function(use)
     -- colorschemes {{{
     use 'lifepillar/vim-solarized8'
     use 'ntk148v/vim-horizon'
-    use { 'sainnhe/everforest',
+    use { 'sainnhe/everforest',--{{{
         config = function ()
             if vim.g.colors_name == "everforest" then
                 -- vim.o.background = "light"
                 local noop = true
                 return  noop
             end
-        end}
+        end}--}}}
     -- use 'lifepillar/vim-gruvbox8'
     use { 'npxbr/gruvbox.nvim',--{{{
         requires = { 'rktjmp/lush.nvim' }
@@ -385,6 +348,8 @@ return require('packer').startup(function(use)
     use 'lourenci/github-colors'
     use 'deviantfero/wpgtk.vim'
     use 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+    use 'Mofiqul/vscode.nvim'
+    use 'LunarVim/darkplus.nvim'
     -- use 'ghifarit53/tokyonight-vim'
     -- }}}
 
@@ -398,6 +363,12 @@ return require('packer').startup(function(use)
         }
         end
     }--}}}
+    use { 'akinsho/toggleterm.nvim' , config = function ()
+        require("toggleterm").setup{
+            direction = "float",
+            start_in_insert = false
+        }
+    end}
     use 'benmills/vimux'
     use 'dstein64/vim-startuptime'
     use { 'aserowy/tmux.nvim',--{{{

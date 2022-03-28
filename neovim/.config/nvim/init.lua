@@ -1,4 +1,4 @@
-vim.cmd[[let g:python3_host_prog="~/.pyenv/versions/nvim/bin/python"]]
+vim.cmd[[ let g:python3_host_prog="~/.pyenv/versions/nvim/bin/python" ]]
 
 require('plugins')
 require('visual')
@@ -63,6 +63,7 @@ vim.cmd [[
 augroup termBinds
     autocmd!
     autocmd TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+    autocmd TermOpen * nnoremap <buffer> <Esc> :ToggleTermToggleAll<CR>
     autocmd FileType fzf tunmap <buffer> <Esc>
 augroup end
 ]]
