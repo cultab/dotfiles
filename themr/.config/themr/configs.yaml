@@ -8,14 +8,14 @@ xresources:
   cmd: "reload_xrdb"
 
 nvim:
-  path: "~/.config/nvim/lua/visual.lua"
+  path: "~/.config/nvim/lua/user/visual.lua"
   regex: 'cmd "colorscheme .*"'
   pre: 'cmd "colorscheme '
   post: '"'
   cmd: "all_nvim 'colorscheme %'"
 
 lualine:
-  path: "~/.config/nvim/lua/statusline.lua"
+  path: "~/.config/nvim/lua/user/statusline.lua"
   regex: '.*local theme_name = ".*"'
   pre: 'local theme_name = "'
   post: '"'

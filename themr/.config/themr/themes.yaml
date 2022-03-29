@@ -53,3 +53,6 @@ wpg:
   default: "wpg"
   nvim: "onedark"
   lualine: "auto"
+
+darkplus:
+  default: "darkplus"
