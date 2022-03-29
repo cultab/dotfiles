@@ -1,101 +1,9 @@
--- Setup nvim-cmp.{{{
-local luasnip = require("luasnip")
-local cmp = require("cmp")
+local cmp = require "user.cmp"
 
-local function has_words_before()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+local capabilities = cmp.capabilities
 
-cmp.setup({
-    snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-        end,
-    },
-    mapping = {
-        -- ['<Tab>'] = cmp.mapping.select_next_item({ cmp.SelectBehavior.Select }),
-        -- ['<S-Tab>'] = cmp.mapping.select_prev_item({ cmp.SelectBehavior.Select }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, { "i", "s" }
-        ),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }
-        ),
-        ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-        ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-        }),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' }, -- For luasnip users.
-        { name = 'tmux', keyword_length = 3 },
-        -- { name = 'spell' },
-        { name = 'buffer', keyword_length = 2 },
-        { name = 'path' },
-        -- { name = 'vsnip' }, -- For vsnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
-    }, {
-    }),
-    formatting = {
-        format = require("lspkind").cmp_format({ with_text = false, menu = {
-            nvim_lsp = "[LSP]",
-            luasnip = "[Snippet]",
-            -- spell = "[Spell]",
-            path = "[Path]",
-            buffer = "[Buffer]",
-            tmux = "[tmux]"
-        }})
-    },
-    view = {
-        experimental = {
-            ghost_text = true,
-        }
-    },
-})
+local lsp_installer = require "nvim-lsp-installer"
 
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-            { name = 'path' }
-        }, {
-            { name = 'cmdline' }
-        })
-})
-
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
---}}}
-
--- on_attach() {{{
 local on_attach = function()
     require("lsp_signature").on_attach({
          bind = true,
@@ -106,40 +14,22 @@ local on_attach = function()
              border = "shadow"
         }
     })
-    local autopairs = require("nvim-autopairs.completion.cmp")
-    -- local cmp = require("cmp")
-    cmp.event:on("confirm_done", autopairs.on_confirm_done( {map_char = { tex = '' } }))
+    local autopairs = require "nvim-autopairs.completion.cmp"
+    require("cmp").event:on("confirm_done", autopairs.on_confirm_done( {map_char = { tex = '' } }))
 
-    local mappings = require("mappings")
-    mappings.lsp_mappings()
-
-end --}}}
-
---{{{ lsp_installer
-local lsp_installer = require "nvim-lsp-installer"
-
--- Include the servers you want to have installed by default below
-local servers = {
-    "bashls",
-    "tsserver",
-    "sumneko_lua"
-}
-
-for _, name in pairs(servers) do
-    local server_is_found, server = lsp_installer.get_server(name)
-    if server_is_found then
-        if not server:is_installed() then
-            print("Installing " .. name)
-            server:install()
-        end
-    end
+    local mappings = require "user.mappings"
+    mappings.set_lsp_mappings()
 end
-
 
 -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
 local server_opts = {
     ["sumneko_lua"] = function(opts)
-        opts.settings = require("lua-dev").setup().settings
+        local lua_dev = require "lua-dev"
+        opts.settings = lua_dev.setup().settings
+        -- opts.root_dir = function ()
+        --     print(vim.fn.getcwd())
+        --     return vim.fn.getcwd()
+        -- end
     end,
     ["diagnosticls"] = function(opts)--{{{
         opts.settings = {
@@ -208,7 +98,32 @@ lsp_installer.on_server_ready(function(server)
 end)
 --}}}
 
-local autopairs = require('nvim-autopairs')
+-- Include the servers you want to have installed by default below
+local servers = {
+    "bashls",
+    "tsserver",
+    "sumneko_lua@v2.5.6"
+}
+
+for _, identifier in pairs(servers) do
+    -- support auto-installing pinned versions
+    local name, version = require("nvim-lsp-installer.servers").parse_server_identifier(identifier)
+
+    local server_is_found, server = lsp_installer.get_server(name)
+    if server_is_found then
+        if not server:is_installed() then
+            if version then
+                vim.notify("Installing " .. name .. "@v" .. version)
+                server:install(version)
+            else
+                vim.notify("Installing " .. name  .. " latest version")
+                server:install()
+            end
+        end
+    end
+end
+
+local autopairs = require 'nvim-autopairs'
 
 autopairs.setup{
     fast_wrap = {},
@@ -226,26 +141,21 @@ local lspconfig = require("lspconfig")
 local lspinstall_path = vim.fn["stdpath"]("data") .. "/lsp_servers"
 
 -- pylsp settings {{{
-PYTHON_THING = "empty"
 
 function Find_python_venv()
     -- return the path to a currently activated python venv
     -- supports Conda, pyenv, pipenv
     if vim.env.CONDA_PREFIX ~= nil then
-        PYTHON_THING = "conda"
         return vim.env.CONDA_PREFIX
     elseif vim.env.PYENV_VIRTUAL_ENV ~= nil then
-        PYTHON_THING = "pyenv"
         return vim.env.PYENV_VIRTUAL_ENV
     else
         local pipe = io.popen("pipenv --venv 2> /dev/null")
         local line = pipe:read()
         pipe:close()
         if line ~= nil and line:find("^/home/") ~= nil then
-            PYTHON_THING = "pipenv"
             return line
         else
-            PYTHON_THING = "none"
             return ""
         end
     end

@@ -2,6 +2,19 @@
 -- packer is optional
 vim.cmd[[ packadd packer.nvim ]]
 
+local ok, packer = pcall(require, "packer")
+if not ok then
+    return
+end
+
+packer.init {
+    display = {
+        open_fn = function ()
+            return require("packer.util").float { border = "rounded" }
+        end
+    }
+}
+
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use { 'wbthomason/packer.nvim', opt = true }
@@ -103,17 +116,18 @@ return require('packer').startup(function(use)
     use { "ahmedkhalf/project.nvim",--{{{
         config = function()
             require("project_nvim").setup {
-
-            detection_methods = { "lsp" },
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
+                detection_methods = { "lsp" },
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+                silent_chdir = false,
+                ignore_lsp = { "sumneko_lua" }
             }
             require('telescope').load_extension('projects')
         end,
         requires = {"nvim-telescope/telescope.nvim"}
     }--}}}
-    --}}}
+    -- }}}
 
     -- visual {{{
     use { 'kosayoda/nvim-lightbulb',--{{{
@@ -183,7 +197,7 @@ return require('packer').startup(function(use)
                     command =  ":lua Open_config()"
                 },
                 _9exit = {
-                    description = { "x Exit                                q" },
+                    description = { "x Exit Neovim                         q" },
                     command = ":q"
                 },
             }
@@ -263,11 +277,6 @@ return require('packer').startup(function(use)
     use 'godlygeek/tabular'
     use 'windwp/nvim-autopairs'
     use 'junegunn/vim-easy-align'
-    -- use { 'blackCauldron7/surround.nvim', --{{{
-    --     config = function()
-    --     require('surround').setup{}
-    --         end
-    -- }--}}}
     use { 'machakann/vim-sandwich' }
     use { 'numToStr/Comment.nvim',
         config = function ()
@@ -377,6 +386,7 @@ return require('packer').startup(function(use)
                 navigation = { cycle_navigation = false }
             }
         end}--}}}
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-telescope/telescope.nvim',--{{{
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         config = function()
@@ -392,6 +402,7 @@ return require('packer').startup(function(use)
                     },
                 }
             }
+            require('telescope').load_extension('fzf')
         end
     }--}}}
 
