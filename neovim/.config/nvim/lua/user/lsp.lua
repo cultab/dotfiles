@@ -17,8 +17,7 @@ local on_attach = function()
     local autopairs = require "nvim-autopairs.completion.cmp"
     require("cmp").event:on("confirm_done", autopairs.on_confirm_done( {map_char = { tex = '' } }))
 
-    local mappings = require "user.mappings"
-    mappings.set_lsp_mappings()
+    require "user.mappings".set_lsp_mappings()
 end
 
 -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration

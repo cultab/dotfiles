@@ -26,36 +26,7 @@ return require('packer').startup(function(use)
     use 'ray-x/lsp_signature.nvim'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',--{{{
         config = function()
-            require('nvim-treesitter.configs').setup {
-                ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-                highlight = { enable = true  },
-                incremental_selection = { enable = true },
-                textobjects = {
-                    enable = true,
-                    lsp_interop = {
-                        enable = true,
-                        -- peek_definition_code = {
-                        --     ["df"] = "@function.outer",
-                        --     ["dc"] = "@class.outer",
-                        -- },
-                    },
-                    select = {
-                        enable = true,
-                        keymaps = {
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = "@class.inner",
-                            ["al"] = "@loop.outer",
-                            ["il"] = "@loop.inner",
-                        }
-                    }
-                },
-                indent = {
-                    enable = true,
-                    disable = { 'python', 'java' }
-                },
-            }
+            require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
         end
     }--}}}
     use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
@@ -77,32 +48,7 @@ return require('packer').startup(function(use)
 
     use { 'romgrk/nvim-treesitter-context',--{{{
         config = function ()
-            require'treesitter-context'.setup{
-                enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-                throttle = true, -- Throttles plugin updates (may improve performance)
-                max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-                patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-                    -- For all filetypes
-                    -- Note that setting an entry here replaces all other patterns for this entry.
-                    -- By setting the 'default' entry below, you can control which nodes you want to
-                    -- appear in the context window.
-                    -- default = {
-                    --     'class',
-                    --     'function',
-                    --     'method',
-                    --     'for', -- These won't appear in the context
-                    --     'while',
-                    --     'if',
-                    --     'switch',
-                    --     'case',
-                    -- },
-                    -- Example for a specific filetype.
-                    -- If a pattern is missing, *open a PR* so everyone can benefit.
-                    --   rust = {
-                    --       'impl_item',
-                    --   },
-                },
-            }
+            require'treesitter-context'.setup(require("user.treesitter").context)
         end
     }--}}}
     -- use { 'ms-jpq/coq_nvim', branch = 'coq'}
@@ -144,78 +90,7 @@ return require('packer').startup(function(use)
     use { 'glepnir/dashboard-nvim', --{{{
         opt = false,
         config = function()
-            vim.g.dashboard_default_executive = 'telescope'
-            -- vim.g.dashboard_custom_header = {
-            -- [[                                      __              ]],
-            -- [[                                     |  \             ]],
-            -- [[ _______   ______   ______  __     __ \▓▓______ ____  ]],
-            -- [[|       \ /      \ /      \|  \   /  \  \      \    \ ]],
-            -- [[| ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\ /  ▓▓ ▓▓ ▓▓▓▓▓▓\▓▓▓▓\]],
-            -- [[| ▓▓  | ▓▓ ▓▓    ▓▓ ▓▓  | ▓▓ \▓▓\  ▓▓| ▓▓ ▓▓ | ▓▓ | ▓▓]],
-            -- [[| ▓▓  | ▓▓ ▓▓▓▓▓▓▓▓ ▓▓__/ ▓▓  \▓▓ ▓▓ | ▓▓ ▓▓ | ▓▓ | ▓▓]],
-            -- [[| ▓▓  | ▓▓\▓▓     \\▓▓    ▓▓   \▓▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓]],
-            -- [[ \▓▓   \▓▓ \▓▓▓▓▓▓▓ \▓▓▓▓▓▓     \▓    \▓▓\▓▓  \▓▓  \▓▓]],
-            -- [[                                                      ]],
-            -- [[                                                      ]],
-            -- [[                                                      ]],
-            -- }
-
-            vim.g.dashboard_custom_header = {
-            [[                                                     ]],
-            [[                                     _               ]],
-            [[                                    |_|              ]],
-            [[ ______   ______   ______  __   __   _   ___________ ]],
-            [[|  __  | | ____ | |  __  | \ \ / /  | | |  __   __  |]],
-            [[| |  | | | _____| | |  | |  \ v /   | | | |  | |  | |]],
-            [[| |  | | | |____  | |__| |   \ /    | | | |  | |  | |]],
-            [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
-            }
-
-            vim.g.dashboard_custom_section = {
-                _1find_projects = {
-                    description = { " Recently opened projects      SPC f p" },
-                    command =  "Telescope projects"
-                },
-                _2find_history = {
-                    description = { "ﭯ Recently opened files         SPC f h" },
-                    command =  ":DashboardFindHistory"
-                },
-                _3new_file = {
-                    description = { " New file                      SPC c n" },
-                    command = ":DashboardNewFile"
-                },
-                _4find_file = {
-                    description = { " Find file                     SPC f f" },
-                    command =  ":DashboardFindFile"
-                },
-                _5change_colorscheme = {
-                    description = { " Change Colorscheme            SPC t c" },
-                    command = ":DashboardChangeColorscheme"
-                },
-                _8edit_config = {
-                    description = { " Settings                      SPC c v" },
-                    command =  ":lua Open_config()"
-                },
-                _9exit = {
-                    description = { "x Exit Neovim                         q" },
-                    command = ":q"
-                },
-            }
-
-            vim.cmd [[
-                nnoremap <buffer> <silent> <Leader>fp :Telescope projects<CR>
-                nnoremap <buffer> <silent> <Leader>fh :DashboardFindHistory<CR>
-              " nnoremap <buffer> <silent> <Leader>ff :DashboardFindFile<CR>
-                nnoremap <buffer> <silent> <Leader>tc :DashboardChangeColorscheme<CR>
-                nnoremap <buffer> <silent> <Leader>cn :DashboardNewFile<CR>
-              " nnoremap <buffer> <silent> <Leader>fa :DashboardFindWord<CR>
-              " nnoremap <buffer> <silent> <Leader>fb :DashboardJumpMark<CR>
-                augroup exit
-                    autocmd!
-                    autocmd User DashboardReady nnoremap <buffer> q :q<CR>
-                augroup end
-            ]]
-
+            require "user.welcome"
         end
     }-- }}}
     use { 'romgrk/barbar.nvim',--{{{
@@ -230,17 +105,17 @@ return require('packer').startup(function(use)
                     noremap = true,
                     buffer = true,
 
-                    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
-                    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
+                    -- ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
+                    -- ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
 
-                    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+                    -- ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
                     ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-                    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-                    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+                    -- ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+                    -- ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
                     ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-                    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-                    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-                    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>'
+                    -- ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+                    -- ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+                    -- ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>'
                 }
             }
             end
@@ -264,13 +139,13 @@ return require('packer').startup(function(use)
     use 'plasticboy/vim-markdown'
     use 'liuchengxu/graphviz.vim'
     use 'onsails/lspkind-nvim'
-    use { 'rcarriga/nvim-notify', config = function()
+    use { 'rcarriga/nvim-notify', config = function()--{{{
         -- replace nvim's vim.notify with nvim-notify
         local notify = require("notify")
         -- notify.setup({ max_width = 35 })
         vim.notify = notify
         -- vim.notify("Loaded nvim-notify!")
-    end }
+    end }--}}}
     --}}}
 
     -- text manipulation {{{
@@ -281,7 +156,7 @@ return require('packer').startup(function(use)
     use { 'numToStr/Comment.nvim',
         config = function ()
             require("Comment").setup()
-            local ft = require("Comment.ft")
+            local ft = require "Comment.ft"
 
             -- use // for single line and /* */ for blocks
             -- in languages that use both comment styles
@@ -300,7 +175,7 @@ return require('packer').startup(function(use)
     }--}}}
     use { 'xiyaowong/telescope-emoji.nvim',--{{{
         config = function ()
-            require("telescope").load_extension("emoji")
+            require "user.telescope"
         end
     }--}}}
     --}}}
@@ -375,7 +250,7 @@ return require('packer').startup(function(use)
     use { 'akinsho/toggleterm.nvim' , config = function ()
         require("toggleterm").setup{
             direction = "float",
-            start_in_insert = false
+            start_in_insert = true
         }
     end}
     use 'benmills/vimux'
@@ -390,19 +265,7 @@ return require('packer').startup(function(use)
     use { 'nvim-telescope/telescope.nvim',--{{{
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         config = function()
-            local actions = require('telescope.actions')
-            require('telescope').setup{
-                defaults = {
-                    -- file_sorter = require'telescope.sorters'.get_fzy_sorter,
-                    -- generic_sorter = require'telescope.sorters'.get_fzy_sorter,
-                    mappings = {
-                        i = {
-                            ["<esc>"] = actions.close
-                        },
-                    },
-                }
-            }
-            require('telescope').load_extension('fzf')
+            require "user.telescope"
         end
     }--}}}
 

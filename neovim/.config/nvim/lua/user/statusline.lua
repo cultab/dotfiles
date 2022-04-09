@@ -130,7 +130,7 @@ function Reload_statusline(theme)
     end
 end
 
-local theme_name = "darkplus"
+local theme_name = "auto"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
