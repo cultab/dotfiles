@@ -1,6 +1,20 @@
 
--- packer is optional
-vim.cmd[[ packadd packer.nvim ]]
+local fn = vim.fn
+
+local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+    print("Cloning to: " .. install_path .. "...")
+    PACKER_BOOTSTRAP = fn.system {
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+    }
+    print "Installing packer, close and reopen Neovim..."
+    vim.cmd[[ packadd packer.nvim ]]
+end
 
 local ok, packer = pcall(require, "packer")
 if not ok then
