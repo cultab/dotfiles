@@ -1,3 +1,8 @@
+" Visual
+set number
+colo desert
+" colo koehler
+
 " Indent Settings
 filetype plugin indent on
 set smarttab
@@ -12,7 +17,6 @@ set shiftwidth=4
 set shiftround " round indent to shiftwidth
 
 " Search Settings
-set inccommand=split " show substitutions live
 set incsearch
 set gdefault  " assume the 'g' in s/../../g
 set ignorecase
@@ -22,16 +26,7 @@ set spelllang=el,en
 
 set shortmess+=c
 
-" Backup and swap
-set backup
-set backupdir=~/.config/nvim/backup " don't leave a mess
-set backupskip=/tmp/*
-set undodir=~/.config/nvim/undo
-set undofile
-set noswapfile
-
 " Misc Settings
-set clipboard+=unnamedplus
 set splitbelow
 set splitright
 set autochdir  " automatically change directory
@@ -40,9 +35,6 @@ set mouse=a  " enable mouse for a(ll) modes
 set autoread " auto-update if changes are detected, that's a big IF btw
 set lazyredraw
 set modeline
-"set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,ΣW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
-set keymap=greek_utf-8
-set iminsert=0  " default to english
 
 let g:c_syntax_for_h = 1   " Assume .h files are c headers instead of cpp
 
@@ -58,11 +50,8 @@ nnoremap <silent> # #zz
 " cut line
 nnoremap S i<CR><ESC>k$
 
-" split prefix, C-w is taken by tmux
-" nnoremap <C-a> <C-w>
-
-" This unsets the last search pattern register by hitting ESC
-nnoremap <silent><ESC> :nohlsearch<CR>
+" This unsets the last search pattern register by hitting <space>
+nnoremap <silent><leader> :nohlsearch<CR>
 
 " easier navigation in normal / visual / operator pending mode
 noremap H ^
