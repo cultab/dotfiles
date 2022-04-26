@@ -47,7 +47,7 @@ end--}}}
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
 -- vim.o.foldtext = MyFoldText
--- vim.o.laststatus = 3
+vim.o.laststatus = 3
 
 -- Utility functions shared between progress reports for LSP and DAP{{{
 
@@ -297,7 +297,7 @@ vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 1
 --}}}
 
-vim.cmd "colorscheme onedarkpro"
+vim.cmd "colorscheme ayu-mirage"
 
 vim.cmd [[
 augroup YankHighlight

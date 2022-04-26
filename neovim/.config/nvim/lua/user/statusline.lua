@@ -68,6 +68,7 @@ function Reload_statusline(theme)
                 component_separators = '⏽',
                 section_separators = { left = '', right = '' },
                 disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+                globalstatus = true,
             },
             sections = {
                 -- left sections
@@ -108,6 +109,7 @@ function Reload_statusline(theme)
             section_separators = { left = "", right = "" },
             disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
             always_divide_middle = true,
+            globalstatus = true,
         },
         sections = {
             lualine_a = { branch, diagnostics },
