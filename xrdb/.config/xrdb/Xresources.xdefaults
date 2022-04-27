@@ -8,6 +8,7 @@
 /* st.font: Victor Mono Nerd Font:size=10 */
 *.font:  Iosevka Nerd Font:size=11
 st.font: Iosevka Nerd Font Mono:size=12
+! st.font: CozetteVector:pixelsize=18
 /* st.font:  Terminus :size=13 */
 /* st.font:  scientifica :size=13 */
 *opacity: 1.00

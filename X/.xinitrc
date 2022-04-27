@@ -23,7 +23,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 ##############
 
 xsetroot -cursor_name left_ptr
-xhost +localhost # to allow acpi handler to xautolock -locknow
+xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 #xset r rate 250 50;
 # setxkbmap -option
 # setxkbmap \
@@ -50,9 +50,11 @@ xhost +localhost # to allow acpi handler to xautolock -locknow
 # Daemons #
 ###########
 
+barrier &
 ~/bin/autoshutdown_on_low_power &
 appimaged &
-(sleep 5m && poweralertd) &
+# poweralertd 2> ~/log &
+# (sleep 5m && poweralertd) &
 #barrierc --daemon --no-tray --restart --enable-crypto 192.168.1.120 &
 # sxhkd &
 xautolock \
@@ -78,12 +80,11 @@ pavucontrol &
 # Autostart #
 #############
 
-barrier &
 udiskie --tray &
 # picon is picom-jonaburg
 picom --experimental-backend -b &
 keepassxc &
-(sleep 5m && flatpak run com.discordapp.Discord) &
+# (sleep 5m && flatpak run com.discordapp.Discord) &
 kdeconnect-app &
 blueman-manager &
 megasync &
@@ -92,7 +93,7 @@ nm-applet &
 #blueman-applet &
 
 # start WM/DE
-exec dbus-launch --exit-with-session bspwm
+exec dbus-launch --exit-with-session startwm bspwm
 
 #case "$1" in
 #dwm)

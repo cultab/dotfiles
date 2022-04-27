@@ -1,7 +1,7 @@
 local M = {}
 
 M.configs = {
-    ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "all", -- one of "all"  or a list of languages
     highlight = { enable = true  },
     incremental_selection = { enable = true },
     textobjects = {

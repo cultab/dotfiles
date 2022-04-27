@@ -132,7 +132,7 @@ function Reload_statusline(theme)
     end
 end
 
-local theme_name = "auto"
+local theme_name = "tokyonight"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LOAD_lualine then
@@ -140,3 +140,8 @@ if not LOAD_lualine then
 end
 LOAD_lualine = true
 
+vim.cmd [[
+augroup AutoReload
+    autocmd ColorScheme * lua Reload_statusline()
+augroup end
+]]

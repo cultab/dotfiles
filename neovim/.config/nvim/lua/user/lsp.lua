@@ -14,8 +14,6 @@ local on_attach = function()
              border = "shadow"
         }
     })
-    local autopairs = require "nvim-autopairs.completion.cmp"
-    require("cmp").event:on("confirm_done", autopairs.on_confirm_done( {map_char = { tex = '' } }))
 
     require "user.mappings".set_lsp_mappings()
 end

@@ -21,7 +21,8 @@ _G.map = setmetatable({ mappings = {} }, {
     -- enable syntax like:  map "<leader>a"  { vim.lsp.buf.rename , "some desc" }
     -- if mode is missing, assume normal mode
     -- if mapping is missing, name the group
-    __call = function (self, key)
+    __call = function(self, key)
+        -- @param mapping_args list
         local closure = function (mapping_args)
             self.mappings[key] = mapping_args
         end
@@ -30,52 +31,44 @@ _G.map = setmetatable({ mappings = {} }, {
     __index = {
         register = function (self)
             for key, mapping_args in pairs(self.mappings) do
+                -- @type string|function|nil
                 local mapping = mapping_args[1]
+                -- @type string|nil
                 local description = mapping_args[2]
+                -- @type string|nil
                 local mode = mapping_args[3]
 
                 if mode == nil then
                     mode = "n"
                 end
 
+                -- print("key: " .. key .. " to " .. vim.inspect(mapping) .. " in " .. mode)
                 if mapping ~= nil then
-                    if #mode == 1 then
-                        wk.register({
-                            [key] = { mapping, description }
-                        }, { mode = mode })
-                    elseif #mode == 0 then
-                        wk.register({
-                            [key] = { mapping, description }
-                        }, { mode = "n" })
-                    else
-                        for i = 1, #mode do
-                            wk.register({
-                                [key] = { mapping, description }
-                            }, { mode = mode:sub(i, i) })
-                        end
+                    for i = 1, #mode do
+                        wk.register(
+                            { [key] = { mapping, description } },
+                            { mode = mode:sub(i, i) }
+                        )
                     end
                 else
-                    if #mode == 1 then
-                        wk.register({
-                            [key] = { name = description }
-                        }, { mode = mode })
-                    elseif #mode == 0 then
-                        wk.register({
-                            [key] = { name = description }
-                        }, { mode = "n" })
-                    else
-                        for i = 1, #mode do
-                            wk.register({
-                                [key] = { name = description }
-                            }, { mode = mode:sub(i, i) })
-                        end
+                    for i = 1, #mode do
+                        wk.register(
+                            { [key] = { name = description } } ,
+                            { mode = mode:sub(i, i) }
+                        )
                     end
                 end
             end
+            -- print(vim.inspect(self.mappings))
         end
     }
 })
 
 
+                        -- if type(mapping) == "function" then
+                        --     vim.api.nvim_set_keymap(mode:sub(i, i), key, '', { callback = mapping, desc = description })
+                        -- else
+                        --     vim.api.nvim_set_keymap(mode:sub(i, i), key, mapping, { desc = description })
+                        -- end
 
 return M

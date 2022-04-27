@@ -1,14 +1,33 @@
 local M = {}
 
+LastCommand = nil
+
+function InputCommand()
+    vim.ui.input({ prompt = "cmd: ", completion = 'shellcmd' }, function (command)
+        if command then
+            LastCommand = command
+            vim.cmd(":1TermExec cmd='" .. command .. "'")
+        end
+    end)
+end
+
+function RunLastCommand()
+    if LastCommand then
+        vim.cmd(":1TermExec cmd='" .. LastCommand .. "'")
+    else
+        vim.notify("No command to repeat", nil, { title = "mappings.lua" })
+    end
+end
+
 -- load my mapping DSL
 require "user.map"
 
-map "<leader><space>" { require"toggleterm".ToggleTermToggleAll, "Toggle terminal" }
+map "<leader><space>" { "<cmd>ToggleTerm 2<CR>", "Toggle terminal" }
 
-map "<leader>c" { "Run command / Open config" }
+map "<leader>c" { nil, "Run command / Open config" }
     map "<leader>cl" { RunLastCommand, "Re-run last command" }
     map "<leader>cc" { InputCommand, "Run command" }
-    map "<leader>cb" { "<cmd>e ~/.config/bspwm/bspwmrc<CR>", }
+    map "<leader>cb" { "<cmd>e ~/.config/bspwm/bspwmrc<CR>", "bspwm" }
     map "<leader>cp" { "<cmd>e ~/.config/polybar/config<CR>", "polybar" }
     map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "simple x keybind daemon" }
     map "<leader>cd" { "<cmd>e ~/repos/dwm/config.h<CR>", "dwm" }
@@ -25,7 +44,7 @@ map "<leader>t" { nil, "Text operations" }
 map "<leader>b"  { "<cmd>BufferPick<CR>",         "Pick buffer" }
 map "<leader>f"  { require"telescope.builtin".find_files, "Find files"  }
 map "<leader>g"  { require"telescope.builtin".live_grep,  "Live grep"   }
-map "<leader>ht" { require"telescope.builtin".help_tags,  "Search help tags" }
+map "<leader>h" { require"telescope.builtin".help_tags,  "Search help tags" }
 
 map "<leader>G" { nil, "Git" }
     map "<leader>Gc" { require"telescope.builtin.git".git_branches,  "Commits"  }
@@ -52,30 +71,11 @@ function M.set_lsp_mappings()
     map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
     map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
     map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
-    map '<leader>e' { vim.diagnostic.open_float(nil, { focusable = false }), "Show line diagnostics [LSP]" }
+    map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
     map '<A-CR>'    { vim.lsp.buf.code_action, "Code Action [LSP]" }
     map '['         { vim.diagnostic.goto_prev, "Previous diagnostic [LSP]" }
     map ']'         { vim.diagnostic.goto_next, "Next diagnostic [LSP]" }
     map:register()
-end
-
-LastCommand = nil
-
-function InputCommand()
-    vim.ui.input({ prompt = "cmd: ", completion = 'shellcmd' }, function (command)
-        if command then
-            LastCommand = command
-            vim.cmd(":1TermExec cmd='" .. command .. "'")
-        end
-    end)
-end
-
-function RunLastCommand()
-    if LastCommand then
-        vim.cmd(":1TermExec cmd='" .. LastCommand .. "'")
-    else
-        vim.notify("No command to repeat", nil, { title = "mappings.lua" })
-    end
 end
 
 vim.cmd [[

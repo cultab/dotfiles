@@ -54,7 +54,11 @@ return require('packer').startup(function(use)
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'f3fora/cmp-spell'
-    use { 'andersevenrud/compe-tmux' }
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'jc-doyle/cmp-pandoc-references'
+    use 'kdheepak/cmp-latex-symbols'
+    use 'andersevenrud/cmp-tmux'
+    use 'tamago324/cmp-zsh'
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
 

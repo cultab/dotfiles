@@ -45,34 +45,36 @@ cmp.setup({
         ),
         ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
         ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-        ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-        }),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        -- ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        -- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        -- ['<C-e>'] = cmp.mapping({
+        -- i = cmp.mapping.abort(),
+        -- c = cmp.mapping.close(),
+        -- }),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
     },
     sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' }, -- first because it only completes under vim.*
         { name = 'luasnip' }, -- For luasnip users.
-        { name = 'tmux', keyword_length = 3 },
-        -- { name = 'spell' },
-        { name = 'buffer', keyword_length = 2 },
+        { name = 'nvim_lsp' },
+        { name = 'pandoc_references' },
+        { name = "latex_symbols" },
+        { name = 'buffer', keyword_length = 2, max_item_count = 5 }, -- keep spam to a mininum
+        { name = 'tmux', keyword_length = 2, max_item_count = 5 },
         { name = 'path' },
-        -- { name = 'vsnip' }, -- For vsnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
-    }, {
+        { name = 'zsh' },
     }),
     formatting = {
         format = require("lspkind").cmp_format({ with_text = false, menu = {
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
-            -- spell = "[Spell]",
+            pandoc_references = "[Pandoc]",
             path = "[Path]",
             buffer = "[Buffer]",
-            tmux = "[tmux]"
+            tmux = "[tmux]",
+            nvim_lua = "[nvim]",
+            latex_symbols = "[LaTeX]",
+            zsh = "[zsh]"
         }})
     },
     view = {
@@ -82,17 +84,31 @@ cmp.setup({
     },
 })
 
+require'cmp_zsh'.setup {
+  zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+  filetypes = { "deoledit", "zsh", "bash", "fish", "sh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
+}
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-            { name = 'path' }
-        }, {
-            { name = 'cmdline' }
-        })
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    })
+})
+
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+        sources = { { name = 'buffer' } }
 })
 
 -- Setup lspconfig.
 M.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+
+local autopairs = require "nvim-autopairs.completion.cmp"
+cmp.event:on("confirm_done",autopairs.on_confirm_done( { map_char = { tex = '' } }))
 
 return M

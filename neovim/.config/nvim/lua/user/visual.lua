@@ -44,9 +44,17 @@ function _G.MyFoldText()--{{{
     return line
 end--}}}
 
+if vim.g.nvui then
+  -- Configure through vim commands
+  vim.cmd [[
+    NvuiCmdFontFamily FuraCode Nerd Font
+    NvuiCmdFontSize 25.0
+    NvuiScrollAnimationDuration 0.2
+  ]]
+end
+
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
--- vim.o.foldtext = MyFoldText
 vim.o.laststatus = 3
 
 -- Utility functions shared between progress reports for LSP and DAP{{{
@@ -255,12 +263,12 @@ vim.o.relativenumber = false
 vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'marker'
 
-vim.o.scrolloff=3 -- keep lines above and below cursor
-vim.o.sidescroll=6
+vim.o.scrolloff = 3 -- keep lines above and below cursor
+vim.o.sidescroll = 6
 vim.o.showmode = false
 vim.o.showcmd = true
 
--- o.colorcolumn = "80"
+vim.o.colorcolumn = "80"
 vim.o.background = "dark"
 vim.o.cursorline = true -- highlight current line
 

@@ -56,3 +56,7 @@ wpg:
 
 darkplus:
   default: "darkplus"
+
+vscode:
+  default: "darkplus"
+  nvim: "vscode"

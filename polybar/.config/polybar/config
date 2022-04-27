@@ -152,8 +152,9 @@ interval = 3.0
 
 label-connected = %local_ip%
 
-; ramp-signal-0 = " "
-ramp-signal-0 = ""
+; ramp-signal-0 = ""
+; ramp-signal-0 = ""
+ramp-signal-0 = "直"
 ramp-signal-font = 2
 
 format-connected-padding = 1
@@ -184,7 +185,7 @@ format-disconnected =
 
 [module/date-icon]
 type = custom/text
-content = "%{T1} %{T2}%{T1} "
+content = "%{T1} %{T2}%{T1}"
 content-foreground = ${colors.middleground}
 content-background = ${colors.cyan}
 
@@ -213,9 +214,11 @@ label-volume = " %percentage:3%%"
 ; label-volume-background = ${colors.blue}
 ; label-volume-foreground = ${colors.middleground}
 ;
-ramp-volume-0 = ""
-ramp-volume-1 = ""
-ramp-volume-2 = ""
+; ramp-volume-0 = ""
+; ramp-volume-1 = ""
+; ramp-volume-2 = ""
+ramp-volume-0 = ""
+ramp-volume-1 = ""
 ; ramp-volume-foreground = ${colors.middleground}
 ; ramp-volume-background = ${colors.blue}
 ramp-volume-font = 2
@@ -224,7 +227,8 @@ ramp-volume-font = 2
 ; format-muted = <ramp-volume> <label-volume>
 format-muted-foreground = ${colors.background}
 format-muted-background = ${colors.red}
-label-muted = "婢%{T-} %percentage%%"
+; label-muted = "婢%{T-} %percentage%%"
+label-muted = "%{T-} %percentage%%"
 label-muted-font = 2
 format-muted-padding = 1
 

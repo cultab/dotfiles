@@ -15,20 +15,24 @@ bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
 # bspc monitor HDMI1 --reset-desktops I II III IV V VI
 # bspc monitor LVDS1 --reset-desktops I II III IV V VI
 
-bspc config border_width 4
-bspc config window_gap   0
 
 DB=$(xrdb -query)
 active=$(echo "$DB" | grep 'polybar.active' | cut -f 2 -d ':' | sed 's/\t//')
 bspc config focused_border_color "$active"
 
+bspc config border_width 4
+bspc config window_gap   4
 bspc config split_ratio          0.50
+
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
+bspc config single_monocle       true
 
-bspc rule -a Chromium desktop='^2'
-bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
+bspc config focus_follows_pointer true
+
+bspc rule -a Zathura state=tiled
+bspc rule -a Surf state=tiled
+bspc rule -a Vivaldi-stable desktop='^1'
 bspc rule -a Screenkey manage=off
 bspc rule -a MEGAsync state=floating
 bspc rule -a discord desktop='^5'
@@ -36,3 +40,6 @@ bspc rule -a kdeconnect.app desktop='^6' state=floating
 bspc rule -a Barrier desktop='^6' state=floating
 bspc rule -a Pavucontrol desktop='^6' state=floating
 bspc rule -a Blueman-manager desktop='^6' state=floating
+
+# bspc rule -a mplayer2 state=floating
+# bspc rule -a Kupfer.py focus=on

@@ -8,7 +8,7 @@ vim.o.shiftwidth = 4
 vim.o.shiftround = true -- round indent to shiftwidth
 
 -- Search Settings
-vim.o.inccommand = 'split' -- show substitutions live
+vim.o.inccommand = 'nosplit' -- show substitutions live, now without splitting!
 vim.o.incsearch = true
 vim.o.gdefault = true -- assume the 'g' in s/../../g
 vim.o.ignorecase = true

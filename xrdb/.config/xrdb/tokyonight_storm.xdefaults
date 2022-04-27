@@ -2,7 +2,7 @@
 #define base01 #F7768E
 #define base02 #9ECE6A
 #define base03 #E0AF68
-#define base04 #7AA2F7
+#define base04 #3d59a1
 #define base05 #9a7ecc
 #define base06 #4abaaf
 #define base07 #acb0d0
@@ -10,7 +10,7 @@
 #define base09 #db4b4b
 #define base0A #9ece6a
 #define base0B #ff9e64
-#define base0C #3d59a1
+#define base0C #7AA2F7
 #define base0D #9a7ecc
 #define base0E #1abc9c
 #define base0F #b6badb

@@ -7,7 +7,7 @@ super + Return
 	st -t 'Simple terminal' -e tmux
 
 super + ctrl + Return
-	st -t 'Simple terminal'
+	st -t 'Simple terminal' -e scroll
 
 # program launcher
 super + @space

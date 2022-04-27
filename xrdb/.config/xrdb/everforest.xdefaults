@@ -1,4 +1,4 @@
-#define base00 #323d43
+#define base00 #12252d
 #define base01 #e67e80
 #define base02 #a7c080
 #define base03 #dbbc7f
@@ -6,7 +6,8 @@
 #define base05 #d699b6
 #define base06 #83c092
 #define base07 #7a8478
-#define base08 #2f383e
+!#define base08 #2f383e "correct color"
+#define base08 #5c6a72
 #define base09 #f85552
 #define base0A #8da101
 #define base0B #f57d26
