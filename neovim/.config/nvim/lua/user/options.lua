@@ -46,9 +46,9 @@ vim.g.c_syntax_for_h = true
 vim.o.complete = '.,w,b,i,u,t,'
 vim.o.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
 
-function Open_config()
+function OpenConfig()
     vim.cmd [[:cd ~/.config/nvim]]
-    vim.cmd[[:next $MYVIMRC ~/.config/nvim/init.lua]]
+    vim.cmd[[:e $MYVIMRC]]
     -- vim.cmd[[:next $MYVIMRC ~/.config/nvim/lua/user/*.lua]]
 end
 

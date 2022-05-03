@@ -142,9 +142,16 @@ return require('packer').startup(function(use)
             }
             end
     }--}}}
-    use { 'karb94/neoscroll.nvim',--{{{
+    -- use { 'karb94/neoscroll.nvim',--{{{
+    --     config = function()
+	   --      require("neoscroll").setup()
+    --     end
+    -- }--}}}
+    use { 'declancm/cinnamon.nvim',--{{{
         config = function()
-	        require("neoscroll").setup()
+            require('cinnamon').setup({
+                extra_keymaps = true
+            })
         end
     }--}}}
 	use 'folke/zen-mode.nvim'
@@ -269,6 +276,7 @@ return require('packer').startup(function(use)
         }
         end
     }--}}}
+    use 'equalsraf/neovim-gui-shim'
     use { 'akinsho/toggleterm.nvim' , config = function ()
         require("toggleterm").setup{
             direction = "float",

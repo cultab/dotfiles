@@ -22,7 +22,7 @@ end
 -- load my mapping DSL
 require "user.map"
 
-map "<leader><space>" { "<cmd>ToggleTerm 2<CR>", "Toggle terminal" }
+map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
 map "<leader>c" { nil, "Run command / Open config" }
     map "<leader>cl" { RunLastCommand, "Re-run last command" }
@@ -31,7 +31,7 @@ map "<leader>c" { nil, "Run command / Open config" }
     map "<leader>cp" { "<cmd>e ~/.config/polybar/config<CR>", "polybar" }
     map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "simple x keybind daemon" }
     map "<leader>cd" { "<cmd>e ~/repos/dwm/config.h<CR>", "dwm" }
-    map "<leader>cv" { "<cmd>lua Open_config()<CR>", "neovim" }
+    map "<leader>cv" { OpenConfig, "neovim" }
     map "<leader>cx" { "<cmd>e ~/.config/xrdb/<CR>", "xresources" }
     map "<leader>ct" { "<cmd>n ~/.config/themr/*.yaml<CR>", "themr" }
     map "<leader>cz" { "<cmd>n ~/.zshrc<CR>", "zshrc" }

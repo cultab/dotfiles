@@ -18,6 +18,31 @@ local on_attach = function()
     require "user.mappings".set_lsp_mappings()
 end
 
+-- Include the servers you want to have installed by default below
+local servers = {
+    "bashls",
+    "tsserver",
+    "sumneko_lua@v2.5.6"
+}
+
+for _, identifier in pairs(servers) do
+    -- support auto-installing pinned versions
+    local name, version = require("nvim-lsp-installer.servers").parse_server_identifier(identifier)
+
+    local server_is_found, server = lsp_installer.get_server(name)
+    if server_is_found then
+        if not server:is_installed() then
+            if version then
+                vim.notify("Installing " .. name .. "@v" .. version)
+                server:install(version)
+            else
+                vim.notify("Installing " .. name  .. " latest version")
+                server:install()
+            end
+        end
+    end
+end
+
 -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
 local server_opts = {
     ["sumneko_lua"] = function(opts)
@@ -91,34 +116,13 @@ lsp_installer.on_server_ready(function(server)
         server_opts[server.name](opts)
     end
 
+    if server.name == "jdtls" then
+        return
+    end
+
     server:setup(opts)
 end)
 --}}}
-
--- Include the servers you want to have installed by default below
-local servers = {
-    "bashls",
-    "tsserver",
-    "sumneko_lua@v2.5.6"
-}
-
-for _, identifier in pairs(servers) do
-    -- support auto-installing pinned versions
-    local name, version = require("nvim-lsp-installer.servers").parse_server_identifier(identifier)
-
-    local server_is_found, server = lsp_installer.get_server(name)
-    if server_is_found then
-        if not server:is_installed() then
-            if version then
-                vim.notify("Installing " .. name .. "@v" .. version)
-                server:install(version)
-            else
-                vim.notify("Installing " .. name  .. " latest version")
-                server:install()
-            end
-        end
-    end
-end
 
 local autopairs = require 'nvim-autopairs'
 
@@ -223,8 +227,10 @@ lspconfig.r_language_server.setup{
 --}}}
 
 function Jdtls_configure()--{{{
+    vim.notify_once("jdtls is disabled")
+
     require('jdtls').start_or_attach{
-        cmd = { lspinstall_path .. '/java/jdtls.sh', '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')},
+        cmd = { lspinstall_path .. '/jdtls/bin/jdtls', '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')},
         root_dir = require('jdtls.setup').find_root({'gradle.build', 'pom.xml', '.git'}),
         on_attach = on_attach,
         capabilities = capabilities
@@ -272,12 +278,12 @@ function Jdtls_configure()--{{{
     end
 end
 
-vim.cmd [[
-augroup lsp
-    au!
-    au FileType java lua _G.Jdtls_configure()
-augroup end
-]]
+-- vim.cmd [[
+-- augroup lsp
+--     au!
+--     au FileType java lua _G.Jdtls_configure()
+-- augroup end
+-- ]]
 
 --}}}
 
