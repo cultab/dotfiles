@@ -33,48 +33,14 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use { 'wbthomason/packer.nvim', opt = true }
 
-    -- lsp and treesitter {{{
+    -- lsp {{{
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'folke/lsp-colors.nvim'
     use 'ray-x/lsp_signature.nvim'
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',--{{{
-        config = function()
-            require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
-        end
-    }--}}}
-    use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
-        requires = { 'nvim-treesitter/nvim-treesitter' }
-    }--}}}
-    -- use 'neomake/neomake'
-    -- cmp-nvim
-    use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'f3fora/cmp-spell'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'jc-doyle/cmp-pandoc-references'
-    use 'kdheepak/cmp-latex-symbols'
-    use 'andersevenrud/cmp-tmux'
-    use 'tamago324/cmp-zsh'
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-
-    use { 'jose-elias-alvarez/null-ls.nvim' }
-
-    use { 'romgrk/nvim-treesitter-context',--{{{
-        config = function ()
-            require'treesitter-context'.setup(require("user.treesitter").context)
-        end
-    }--}}}
-    -- use { 'ms-jpq/coq_nvim', branch = 'coq'}
-    -- use { 'ms-jpq/coq.artifacts', branch= 'artifacts'}
-
-    use { 'weilbith/nvim-code-action-menu',
+    use { 'weilbith/nvim-code-action-menu',--{{{
         cmd = 'CodeActionMenu',
-    }
+    }--}}}
     use 'mfussenegger/nvim-jdtls'
     use "folke/lua-dev.nvim"
     use { "ahmedkhalf/project.nvim",--{{{
@@ -91,7 +57,45 @@ return require('packer').startup(function(use)
         end,
         requires = {"nvim-telescope/telescope.nvim"}
     }--}}}
+    --- }}}
+
+    -- cmp-nvim {{{
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'f3fora/cmp-spell'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'jc-doyle/cmp-pandoc-references'
+    use 'kdheepak/cmp-latex-symbols'
+    use 'andersevenrud/cmp-tmux'
+    use 'tamago324/cmp-zsh'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
     -- }}}
+
+    use { 'jose-elias-alvarez/null-ls.nvim' }
+
+    -- treesitter{{{
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',--{{{
+        config = function()
+            require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
+        end
+    }--}}}
+    use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
+        requires = { 'nvim-treesitter/nvim-treesitter' }
+    }--}}}
+    use { 'romgrk/nvim-treesitter-context',--{{{
+        config = function ()
+            require'treesitter-context'.setup(require("user.treesitter").context)
+        end
+    }--}}}
+    -- }}}
+
+    -- use { 'ms-jpq/coq_nvim', branch = 'coq'}
+    -- use { 'ms-jpq/coq.artifacts', branch= 'artifacts'}
+
 
     -- visual {{{
     use { 'kosayoda/nvim-lightbulb',--{{{
@@ -127,10 +131,10 @@ return require('packer').startup(function(use)
                     -- ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
 
                     -- ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-                    ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+                    -- ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
                     -- ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
                     -- ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-                    ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+                    -- ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
                     -- ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
                     -- ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
                     -- ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>'

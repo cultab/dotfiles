@@ -1,5 +1,4 @@
 
-
 autoload -Uz compinit
 compinit
 autoload -Uz edit-command-line;
@@ -67,7 +66,7 @@ source ~/bin/exports
 source ~/bin/aliases
 source ~/bin/functions.sh
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-zmodload zsh/zpty
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+zmodload zsh/zpty
