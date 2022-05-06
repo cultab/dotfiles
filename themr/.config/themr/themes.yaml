@@ -60,3 +60,6 @@ darkplus:
 vscode:
   default: "darkplus"
   nvim: "vscode"
+
+ayu-mirage:
+  default: "ayu-mirage"

@@ -19,7 +19,7 @@ lualine:
   regex: '.*local theme_name = ".*"'
   pre: 'local theme_name = "'
   post: '"'
-  cmd: "all_nvim 'lua Reload_statusline(\"%\")'"
+  cmd: "all_nvim 'lua ReloadStatusline(\"%\")'"
 
 # lightline:
 #   path: "~/.config/nvim/init.vim"

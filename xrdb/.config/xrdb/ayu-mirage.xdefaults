@@ -1,0 +1,25 @@
+#define base00 #1d2021
+#define base01 #F28779
+#define base02 #BAE67E
+#define base03 #FFD580
+#define base04 #73D0FF
+#define base05 #D4BFFF
+#define base06 #95E6CB
+#define base07 #FFE6B3
+#define base08 #626A73
+#define base09 #F07178
+#define base0A #C2D94C
+#define base0B #FFB454
+#define base0C #59C2FF
+#define base0D #A37ACC
+#define base0E #4CBF99
+#define base0F #D1E4F4
+
+#define basefg #CBCCC6
+#define basebg #1F2430
+#define basecc #707A8C
+#define basesb #6994BF
+
+! colors.vcs_added = '#91B362'
+! colors.vcs_modified = '#6994BF'
+! colors.vcs_removed = '#D96C75'
