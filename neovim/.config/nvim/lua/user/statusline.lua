@@ -23,6 +23,6 @@ end
 
 vim.cmd [[
 augroup AutoReload
-    autocmd ColorScheme * lua Reload_statusline()
+    autocmd ColorScheme * lua ReloadStatusline()
 augroup end
 ]]
