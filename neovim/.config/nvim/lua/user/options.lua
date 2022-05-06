@@ -64,19 +64,18 @@ augroup end
 vim.cmd [[
 augroup auto_sauce
     autocmd!
-    autocmd BufWritePost init.lua nested source $MYVIMRC
-    " autocmd BufWritePost plugins.lua nested source % | PackerCompile | lua vim.notify("Packer Compiled Successfully!")
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-    autocmd BufWritePost options.lua nested source %
-    autocmd BufWritePost lsp.lua nested source %
-    autocmd BufWritePost mappings.lua nested source %
-    autocmd BufWritePost visual.lua nested source %
+    autocmd User         PackerCompileDone lua vim.notify("Packer Compiled Successfully!")
+    autocmd BufWritePost */nvim/init.lua nested source $MYVIMRC
+    autocmd BufWritePost */nvim/lua/user/plugins.lua nested source <afile> | PackerCompile
+    autocmd BufWritePost */nvim/lua/user/options.lua nested source <afile>
+    autocmd BufWritePost */nvim/lua/user/lsp.lua nested source <afile>
+    autocmd BufWritePost */nvim/lua/user/mappings.lua nested source <afile>
+    autocmd BufWritePost */nvim/lua/user/visual.lua nested source <afile>
     " autocmd BufWritePost plugins.lua :PackerCompile
     " autocmd BufWritePost plugins.lua nested source %
 
-    autocmd BufWritePost *.tmux,*.tmux.conf silent !tmux source-file ~/.tmux.conf
+    autocmd BufWritePost .tmux.conf silent !tmux display-message 'Sourced .tmux.conf\!' ';' source-file ~/.tmux.conf
     autocmd BufWritePost *.xdefaults silent !reload_xrdb
-    autocmd BufWritePost ~/.bashrc silent !source ~/.bashrc "seems like it does nothing lol
     autocmd BufWritePost *.tex,*.latex silent !xelatex %
 augroup end
 ]]

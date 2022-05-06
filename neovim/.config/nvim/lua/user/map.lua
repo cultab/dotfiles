@@ -1,5 +1,9 @@
 local M = {}
 
+local function P(a)
+    print(vim.inspect(a))
+end
+
 local wk = require "which-key"
 
 -- Map a key to a lua function or vimscript snippet also add a description.
@@ -17,49 +21,58 @@ local wk = require "which-key"
 -- ```lua
 -- map '<leader>=' { vim.lsp.buf.range_formatting, "Format range", 'v' }
 -- ```
-_G.map = setmetatable({ mappings = {} }, {
+-- TODO: other modes? "s", "o", "x", "l", "c", "t"
+local function prototype() return {
+    mappings = {
+        n = {},
+        v = {},
+        i = {},
+    }
+} end
+
+_G.map = setmetatable(prototype(), {
     -- enable syntax like:  map "<leader>a"  { vim.lsp.buf.rename , "some desc" }
     -- if mode is missing, assume normal mode
     -- if mapping is missing, name the group
     __call = function(self, key)
         -- @param mapping_args list
         local closure = function (mapping_args)
-            self.mappings[key] = mapping_args
+            local mode = ""
+            -- default to normal mode
+            if mapping_args[3] then
+                mode = mapping_args[3]
+            else
+                mode = "n"
+            end
+            self.mappings[mode][key] = mapping_args
         end
         return closure
     end,
     __index = {
         register = function (self)
-            for key, mapping_args in pairs(self.mappings) do
-                -- @type string|function|nil
-                local mapping = mapping_args[1]
-                -- @type string|nil
-                local description = mapping_args[2]
-                -- @type string|nil
-                local mode = mapping_args[3]
+            -- P(self)
+            for mode, mappings in pairs(self.mappings) do
+                for key, mapping_args in pairs(mappings) do
+                    -- @type string|function|nil
+                    local mapping = mapping_args[1]
+                    -- @type string
+                    local description = mapping_args[2]
 
-                if mode == nil then
-                    mode = "n"
-                end
-
-                -- print("key: " .. key .. " to " .. vim.inspect(mapping) .. " in " .. mode)
-                if mapping ~= nil then
-                    for i = 1, #mode do
+                    if mapping ~= nil then
                         wk.register(
                             { [key] = { mapping, description } },
-                            { mode = mode:sub(i, i) }
+                            { mode = mode }
                         )
-                    end
-                else
-                    for i = 1, #mode do
+                    else
                         wk.register(
                             { [key] = { name = description } } ,
-                            { mode = mode:sub(i, i) }
+                            { mode = mode }
                         )
                     end
                 end
             end
-            -- print(vim.inspect(self.mappings))
+            -- empty out registered mappings
+            self.mappings = prototype().mappings
         end
     }
 })

@@ -1,3 +1,6 @@
+vim.g.python3_host_prog = "~/.pyenv/versions/nvim/bin/python"
+
+
 local cmp = require "user.cmp"
 
 local capabilities = cmp.capabilities

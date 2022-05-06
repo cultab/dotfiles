@@ -104,8 +104,8 @@ return require('packer').startup(function(use)
             vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
         end
     }--}}}
-    use { 'lukas-reineke/indent-blankline.nvim' }
-    use {'stevearc/dressing.nvim'}
+    use 'lukas-reineke/indent-blankline.nvim' 
+    use 'stevearc/dressing.nvim'
     use { 'nvim-lualine/lualine.nvim',--{{{
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }--}}}
@@ -168,21 +168,23 @@ return require('packer').startup(function(use)
     use 'plasticboy/vim-markdown'
     use 'liuchengxu/graphviz.vim'
     use 'onsails/lspkind-nvim'
-    use { 'rcarriga/nvim-notify', config = function()--{{{
+    use { 'rcarriga/nvim-notify',--{{{
+        config = function()
         -- replace nvim's vim.notify with nvim-notify
         local notify = require("notify")
         -- notify.setup({ max_width = 35 })
         vim.notify = notify
         -- vim.notify("Loaded nvim-notify!")
-    end }--}}}
+    end
+    }--}}}
     --}}}
 
     -- text manipulation {{{
     use 'godlygeek/tabular'
     use 'windwp/nvim-autopairs'
     use 'junegunn/vim-easy-align'
-    use { 'machakann/vim-sandwich' }
-    use { 'numToStr/Comment.nvim',
+    use 'machakann/vim-sandwich'
+    use { 'numToStr/Comment.nvim',--{{{
         config = function ()
             require("Comment").setup()
             local ft = require "Comment.ft"
@@ -194,7 +196,7 @@ return require('packer').startup(function(use)
             for _, lang in ipairs(langs) do
                 ft.set(lang, {'//%s', '/*%s*/'}).set('conf', '#%s')
             end
-        end}
+        end}--}}}
     use { 'windwp/nvim-ts-autotag',--{{{
         config = function ()
         require('nvim-ts-autotag').setup({
