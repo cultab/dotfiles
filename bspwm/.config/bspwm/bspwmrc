@@ -36,10 +36,10 @@ bspc rule -a Vivaldi-stable desktop='^1'
 bspc rule -a Screenkey manage=off
 bspc rule -a MEGAsync state=floating
 bspc rule -a discord desktop='^5'
+bspc rule -a Barrier state=floating #desktop='^6' 
 bspc rule -a kdeconnect.app desktop='^6' state=floating
-bspc rule -a Barrier desktop='^6' state=floating
-bspc rule -a Pavucontrol desktop='^6' state=floating
-bspc rule -a Blueman-manager desktop='^6' state=floating
+bspc rule -a Pavucontrol state=floating
+bspc rule -a Blueman-manager state=floating
 
 # bspc rule -a mplayer2 state=floating
 # bspc rule -a Kupfer.py focus=on

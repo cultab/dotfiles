@@ -46,17 +46,16 @@ xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 [ -f ~/.config/xrdb/Xresources.xdefaults ] && \
     xrdb -merge -I"$HOME/.config/xrdb" ~/.config/xrdb/Xresources.xdefaults
 
-###########
-# Daemons #
-###########
+################
+# User Daemons #
+################
 
 barrier &
+# picon is picom-jonaburg
+picom --experimental-backend -b &
 ~/bin/autoshutdown_on_low_power &
 appimaged &
-# poweralertd 2> ~/log &
-# (sleep 5m && poweralertd) &
-#barrierc --daemon --no-tray --restart --enable-crypto 192.168.1.120 &
-# sxhkd &
+pulseaudio --start &
 xautolock \
 -locker 'slock -m  "$(cowsay $(fortune -s))"' \
 -notify 300 \
@@ -68,41 +67,20 @@ xautolock \
     # 15000 ms before msg disapears
 # -locker 'slock -m  "Locked at $(date +%T)"' \
 
-#########
-# Audio #
-#########
-
-pulseaudio --start &
 # start-pulseaudio-x11 --start &
-pavucontrol &
+# pavucontrol &
 
 #############
-# Autostart #
+# Traystart #
 #############
 
+blueman-tray &
 udiskie --tray &
-# picon is picom-jonaburg
-picom --experimental-backend -b &
 keepassxc &
-# (sleep 5m && flatpak run com.discordapp.Discord) &
-kdeconnect-app &
-blueman-manager &
+# kdeconnect-app &
 megasync &
-#nm-tray &
 nm-applet &
-#blueman-applet &
+#nm-tray &
 
-# start WM/DE
+# start WM/DE                          \/ and extras
 exec dbus-launch --exit-with-session startwm bspwm
-
-#case "$1" in
-#dwm)
-#    exec dwm
-#    ;;
-#xfce)
-#    exec startxfce4
-#    ;;
-#*)
-#    exec dwm
-#    ;;
-#esac
