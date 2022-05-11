@@ -37,14 +37,17 @@ _G.map = setmetatable(prototype(), {
     __call = function(self, key)
         -- @param mapping_args list
         local closure = function (mapping_args)
-            local mode = ""
             -- default to normal mode
+            local modes = "n"
+            -- if another set of modes is given, overwrite "n"
             if mapping_args[3] then
-                mode = mapping_args[3]
-            else
-                mode = "n"
+                modes = mapping_args[3]
             end
-            self.mappings[mode][key] = mapping_args
+
+            -- set the mapping for each mode
+            for i = 1, #modes do
+                self.mappings[modes:sub(i, i)][key] = mapping_args
+            end
         end
         return closure
     end,

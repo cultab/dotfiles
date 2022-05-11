@@ -28,17 +28,17 @@ map "<leader>c" { nil, "Run command / Open config" }
     map "<leader>cl" { RunLastCommand, "Re-run last command" }
     map "<leader>cc" { InputCommand, "Run command" }
     map "<leader>cb" { "<cmd>e ~/.config/bspwm/bspwmrc<CR>", "bspwm" }
-    map "<leader>cp" { "<cmd>e ~/.config/polybar/config<CR>", "polybar" }
-    map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "simple x keybind daemon" }
-    map "<leader>cd" { "<cmd>e ~/repos/dwm/config.h<CR>", "dwm" }
+    map "<leader>cp" { "<cmd>e ~/.config/polybar/config.ini<CR>", "Polybar" }
+    map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "Simple x keybind daemon" }
+    map "<leader>cd" { "<cmd>e ~/.config/dunst/no_theme.dunstrc<CR>", "Dunst" }
     map "<leader>cv" { OpenConfig, "neovim" }
     map "<leader>cx" { "<cmd>e ~/.config/xrdb/<CR>", "xresources" }
     map "<leader>ct" { "<cmd>n ~/.config/themr/*.yaml<CR>", "themr" }
     map "<leader>cz" { "<cmd>n ~/.zshrc<CR>", "zshrc" }
 
-map "<leader>t" { nil, "Text operations" }
-    map "<leader>tt" { "<cmd>Tabularize<space>/", "Tabularize" }
-    map "<leader>ta" { "<cmd>EasyAlign<CR>", "Agign"      }
+map "<leader>t" { nil, "Text operations" , 'nv'}
+    map "<leader>tt" { ":Tabularize<space>/", "Tabularize", 'v' }
+    map "<leader>ta" { "<cmd>EasyAlign<CR>",  "Easy Align", 'v' }
     map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Search for emoji" }
 
 map "<leader>b"  { "<cmd>BufferPick<CR>",         "Pick buffer" }

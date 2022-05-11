@@ -156,8 +156,14 @@ return require('packer').startup(function(use)
     }--}}}
 	use 'folke/zen-mode.nvim'
     use 'folke/twilight.nvim'
-    use { 'norcalli/nvim-colorizer.lua',--{{{
-        config = function () require("colorizer").setup() end
+    -- use { 'norcalli/nvim-colorizer.lua',--{{{
+    --     config = function () require("colorizer").setup() end
+    -- }--}}}
+    use { 'RRethy/vim-hexokinase',--{{{
+        run = "make hexokinase",
+        config = function ()
+            vim.cmd [[ let g:Hexokinase_highlighters = ['backgroundfull'] ]]
+        end
     }--}}}
     use { 'folke/todo-comments.nvim',--{{{
         config = function()
@@ -168,6 +174,27 @@ return require('packer').startup(function(use)
     use 'plasticboy/vim-markdown'
     use 'liuchengxu/graphviz.vim'
     use 'onsails/lspkind-nvim'
+    use { 'xiyaowong/nvim-transparent',--{{{
+        config = function ()
+            require("transparent").setup({
+                enable = false, -- boolean: enable transparent
+                -- extra_groups = { -- table/string: additional groups that should be cleared
+                --     -- In particular, when you set it to 'all', that means all available groups
+                --
+                --     -- example of akinsho/nvim-bufferline.lua
+                --     "BufferLineTabClose",
+                --     "BufferlineBufferSelected",
+                --     "BufferLineFill",
+                --     "BufferLineBackground",
+                --     "BufferLineSeparator",
+                --     "BufferLineIndicatorSelected",
+                -- },
+                extra_groups = 'all',
+                exclude = {}, -- table: groups you don't want to clear
+                })
+            
+        end
+    }--}}}
     use { 'rcarriga/nvim-notify',--{{{
         config = function()
         -- replace nvim's vim.notify with nvim-notify

@@ -31,7 +31,7 @@ vim.opt.updatetime = 50 -- ms
 
 vim.o.splitbelow = true
 vim.o.splitright = true
-vim.o.autochdir = true  -- automatically change directory
+vim.o.autochdir = false -- automatically change directory
 vim.o.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
 vim.o.mouse='a'  -- enable mouse for a(ll) modes
 vim.o.lazyredraw = true
@@ -62,12 +62,19 @@ augroup end
 ]]
 
 vim.cmd [[
-augroup auto_sauce
+augroup autoFileTypes
+    autocmd!
+    autocmd BufEnter */srcpkgs/*/template :setfiletype sh
+augroup end
+]]
+
+vim.cmd [[
+augroup autoSauce
     autocmd!
     autocmd User         PackerCompileDone lua vim.notify("Packer Compiled Successfully!")
     autocmd BufWritePost */nvim/init.lua nested source $MYVIMRC
-    autocmd BufWritePost */nvim/lua/user/plugins.lua PackerCompile
-    autocmd BufWritePost */nvim/lua/user/*.lua nested source <afile>
+    autocmd BufWritePost */nvim/lua/user/*.lua nested source <afile> | lua vim.notify("Sourced!")
+    autocmd BufWritePost */nvim/lua/user/plugins.lua nested PackerCompile
     " autocmd BufWritePost plugins.lua :PackerCompile
     " autocmd BufWritePost plugins.lua nested source %
 

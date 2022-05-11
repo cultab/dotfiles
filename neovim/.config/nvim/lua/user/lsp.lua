@@ -316,5 +316,9 @@ null_ls.setup({
         null_ls.builtins.formatting.trim_whitespace,
         -- null_ls.builtins.formatting.codespell,
     },
-    on_attach = on_attach
+    on_attach = on_attach,
+    should_attach = function(bufnr)
+        -- disable on void package templates
+        return not vim.api.nvim_buf_get_name(bufnr):match(".*/srcpkgs/.*/template$")
+    end,
 })
