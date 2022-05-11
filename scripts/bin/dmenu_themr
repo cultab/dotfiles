@@ -6,6 +6,11 @@ choice=$(themr --list-themes |
     dmenu -c -l 15 -p Theme:
 )
 
-if ! themr "$choise" ; then
-    notify-send 'Failed to set new theme:' "$choice" -a themr
+if [ -z "$choice" ]; then
+    notify-send 'Canceled!' -a themr --urgency low
+    exit
+fi
+
+if ! themr "$choice" ; then
+    notify-send 'Failed to set new theme!' "theme: $choice" -a themr --urgency critical
 fi
