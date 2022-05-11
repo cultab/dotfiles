@@ -4,6 +4,8 @@ compinit
 autoload -Uz edit-command-line;
 zle -N edit-command-line
 
+zmodload zsh/zpty
+
 HISTFILE=~/.histfile
 HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
@@ -28,15 +30,15 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 # "ss" [UP ARROW] -> "ssh -p22 some.domain.xyz"
 # incremental search
-bindkey "\e[A" history-beginning-search-backward
-bindkey "\e[B" history-beginning-search-forward
-bindkey "^P" history-beginning-search-backward
-bindkey "^N" history-beginning-search-forward
-bindkey "^[[Z" reverse-menu-complete
-bindkey "^X" edit-command-line
+bindkey "\e[A"  history-beginning-search-backward
+bindkey "\e[B"  history-beginning-search-forward
+bindkey "^P"    history-beginning-search-backward
+bindkey "^N"    history-beginning-search-forward
+bindkey "^[[Z"  reverse-menu-complete
+bindkey "^X"    edit-command-line
 # delete now works
-bindkey    "^[[3~"          delete-char
-bindkey " " magic-space
+bindkey "^[[3~" delete-char
+bindkey " "     magic-space
 
 
 # bindkey -M vicmd 'k' history-beginning-search-backward
@@ -50,7 +52,7 @@ setopt INC_APPEND_HISTORY        # Write to the history file immediately, not wh
 setopt SHARE_HISTORY             # Share history between all sessions.
 # setopt HIST_EXPIRE_DUPS_FIRST  # Expire duplicate entries first when trimming history.
 setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
-# setopt HIST_IGNORE_ALL_DUPS    # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 # setopt HIST_FIND_NO_DUPS       # Do not display a line previously found.
 setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 # setopt HIST_SAVE_NO_DUPS       # Don't write duplicate entries in the history file.
@@ -66,7 +68,22 @@ source ~/bin/exports
 source ~/bin/aliases
 source ~/bin/functions.sh
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-zmodload zsh/zpty
+if [[ ! -f "$HOME/.local/share/miniplug.zsh" ]]; then
+    curl \
+    -sL --create-dirs \
+    https://git.sr.ht/~yerinalexey/miniplug/blob/master/miniplug.zsh \
+    -o $HOME/.local/share/miniplug.zsh
+fi
+
+# Add to zshrc:
+source "$HOME/.local/share/miniplug.zsh"
+
+miniplug plugin 'zsh-users/zsh-syntax-highlighting'
+miniplug plugin 'zsh-users/zsh-autosuggestions'
+miniplug plugin 'se-jaeger/zsh-activate-py-environment'
+miniplug plugin 'zpm-zsh/colorize'
+
+
+miniplug load
+
