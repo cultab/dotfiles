@@ -1,0 +1,13 @@
+#!/bin/sh
+
+poweralertd &
+flatpak run com.discordapp.Discord &
+
+xrandr --output HDMI1 --mode 1920x1080 --right-of LVDS1
+xrandr --output LVDS1 --mode 1600x900 
+~/.fehbg &
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+pgrep -x polybar > /dev/null || polybar-start &
+
+exec "$@"

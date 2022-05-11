@@ -1,0 +1,2 @@
+#!/bin/sh
+polybar-msg -p "$(pgrep -f 'polybar --reload tray')" cmd toggle

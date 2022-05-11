@@ -1,12 +1,5 @@
 #!/bin/sh
 
-xrandr --output HDMI1 --mode 1920x1080 --right-of LVDS1
-xrandr --output LVDS1 --mode 1600x900 
-~/.fehbg &
-
-pgrep -x sxhkd > /dev/null || sxhkd &
-pgrep -x polybar > /dev/null || polybar_start &
-
 # HACK: use first result as default monitor
 MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
 
@@ -40,6 +33,3 @@ bspc rule -a Barrier state=floating #desktop='^6'
 bspc rule -a kdeconnect.app desktop='^6' state=floating
 bspc rule -a Pavucontrol state=floating
 bspc rule -a Blueman-manager state=floating
-
-# bspc rule -a mplayer2 state=floating
-# bspc rule -a Kupfer.py focus=on
