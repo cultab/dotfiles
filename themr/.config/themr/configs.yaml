@@ -16,8 +16,8 @@ nvim:
 
 lualine:
   path: "~/.config/nvim/lua/user/statusline.lua"
-  regex: '.*local theme_name = ".*"'
-  pre: 'local theme_name = "'
+  regex: '.*local theme = ".*"'
+  pre: 'local theme = "'
   post: '"'
   cmd: "all_nvim 'lua ReloadStatusline(\"%\")'"
 
