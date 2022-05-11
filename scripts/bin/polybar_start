@@ -21,3 +21,8 @@ if type "xrandr"; then
 else
     polybar --reload mybar &
 fi
+
+polybar --reload traybar -c ~/.config/polybar/traybar.ini &
+pid=$!
+sleep 5
+polybar-msg -p $pid cmd hide

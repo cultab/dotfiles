@@ -12,10 +12,13 @@ echo "*middleground: #C0$background" | xrdb -merge
 # update st
 pkill -USR1 -x st
 
-# update polybar
-polybar-msg cmd restart > /dev/null 2>&1
-
 # update dunstrc
 ~/.config/dunst/reload_dunst
 # update bspwm rules
 ~/.config/bspwm/bspwmrc
+
+# update polybar
+polybar-msg cmd restart > /dev/null 2>&1
+sleep 5
+polybar-msg -p $(pgrep -f 'polybar --reload tray') cmd hide
+
