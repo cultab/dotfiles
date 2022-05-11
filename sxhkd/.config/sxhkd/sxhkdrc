@@ -9,6 +9,9 @@ super + Return
 super + ctrl + Return
 	st -t 'Simple terminal' -e scroll
 
+super + shift + {w, d}
+    {vivaldi-stable,pcmanfm}
+
 # program launcher
 super + @space
 	dmenu_run -c
@@ -66,8 +69,8 @@ super + y
 # super + g
 # 	bspc node -s biggest.window
 
-super + w
-	bspc node -f pointed
+# super + w
+# 	bspc node -f pointed
 #
 # state/flags
 #
