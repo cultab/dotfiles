@@ -4,7 +4,8 @@ DB=$(xrdb -query)
 
 red=$(echo "$DB" | grep 'color1:' | cut -f 2 -d ':' | sed 's/\t//')
 green=$(echo "$DB" | grep 'color2:' | cut -f 2 -d ':' | sed 's/\t//')
-blue=$(echo "$DB" | grep 'color4:' | cut -f 2 -d ':' | sed 's/\t//')
+# blue=$(echo "$DB" | grep 'color4:' | cut -f 2 -d ':' | sed 's/\t//')
+blue=$(echo "$DB" | grep 'dwm.selbordercolor:' | cut -f 2 -d ':' | sed 's/\t//')
 background=$(echo "$DB" | grep '\*background:' | cut -f 2 -d ':' | sed 's/\t//')
 # TODO:
 # font=$(echo "$DB" | grep '^\*font:' | cut -f 2 -d ':' | sed 's/\t//')
