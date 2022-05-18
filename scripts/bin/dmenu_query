@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # overwrite
-BROWSER=surf
+# BROWSER=surf
 
 # URL='https://startpage.com/sp/search?query='
 URL='https://www.google.com/search?q='
 QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
 if [ -n "$QUERY" ]; then
-  $BROWSER "${URL}${QUERY}" 2> /dev/null
+  surf -e "$(tabbed -d)" "${URL}${QUERY} -e" 2> /dev/null
 fi

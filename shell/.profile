@@ -1,15 +1,48 @@
 #!/bin/sh
 
+# XDG
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export XDG_DATA_HOME="$HOME"/.local/share
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/home/evan/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/home/evan/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-/home/evan/.local/share}"
+
+if [ -f "/home/evan/.local/share/antidot/env.sh" ]; then source "/home/evan/.local/share/antidot/env.sh"; fi
+if [ -f "/home/evan/.local/share/antidot/alias.sh" ]; then source "/home/evan/.local/share/antidot/alias.sh"; fi
+# don't pollute my $HOME plz
+
+export HISTFILE="${XDG_CACHE_HOME}/bash/history"
+export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
+export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
+export npm_config_cache="${XDG_CACHE_HOME}/npm"
+export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+export WINEPREFIX="$XDG_DATA_HOME"/wine
+export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export ATOM_HOME="$XDG_DATA_HOME"/atom
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export GOPATH="$XDG_DATA_HOME"/go
+export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export ICEAUTHORITY="$XDG_CACHE_HOME"/ICEauthority
+export MYPY_CACHE_DIR="$XDG_CACHE_HOME"/mypy
+export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
+export USERXSESSION="$XDG_CACHE_HOME"/X11/xsession
+
 # keychain
-eval $(keychain --eval)
+eval $(keychain --eval --dir "$XDG_RUNTIME_DIR/keychain")
 
 # export PROFILE_SOURCED=1
 export _JAVA_AWT_WM_NONREPARENTING=1
-# for pipewire, so that elogind is not needed
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
 # cowfile path for cowsay
-COWPATH="$COWPATH:$HOME/.cowsay"
+export COWPATH="$COWPATH:$HOME/.local/share/cowsay"
 
 # add stuff to $PATH
 if [ -d ~/bin ]; then
@@ -26,15 +59,15 @@ PATH="$HOME/.local/share/applications/:$PATH"
 
 PATH="$HOME/.local/bin:$PATH"
 
-PATH="$HOME/go/bin/:$PATH"
+PATH="$GOPATH/bin/:$PATH"
 
-PATH="$HOME/.cargo/bin/:$PATH"
+PATH="$CARGO_HOME/bin/:$PATH"
 
 PATH="/opt/flutter/bin/:$PATH"
 
 PATH="/opt/megasync/usr/bin/:$PATH"
 
-# haxe
+# opt tools
 PATH="/opt/haxe_20210701100239_1385eda/:$PATH"
 PATH="/opt/neko-2.3.0-linux64/:$PATH"
 
@@ -50,10 +83,7 @@ PATH="$FLOOM_HOME/bin/:$PATH"
 PATH="$FLOOM_HOME/conf/:$PATH"
 PATH="$KAFKA_HOME/bin/:$PATH"
 
-export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/evan/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
-
-export PYENVROOT="$HOME/.pyenv"
-PATH="$PYENVROOT/bin:$PATH"
+PATH="$PYENV_ROOT/bin:$PATH"
 
 # CUDA
 PATH="/usr/local/cuda-11.5/bin:$PATH"
@@ -61,3 +91,4 @@ PATH="/usr/local/cuda-11.5/bin:$PATH"
 export PATH
 
 export XBPS_DISTDIR="$HOME/repos/void-packages"
+

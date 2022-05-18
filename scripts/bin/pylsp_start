@@ -1,7 +1,11 @@
 #!/bin/sh
 
-eval "$(~/.pyenv/bin/pyenv init -)"
+eval "$(~/.local/share/pyenv/bin/pyenv init -)"
+echo evaled
 pyenv deactivate
+echo deactivated
 pyenv activate nvim
+echo activated
 pylsp
+echo pylsp\'ed
 

@@ -96,7 +96,7 @@ conda_enable () {
 
 pyenv_enable () {
     # pyenv
-    eval "$(~/.pyenv/bin/pyenv init -)"
+    eval "$(~/.local/share/pyenv/bin/pyenv init -)"
 }
 
 lel() {

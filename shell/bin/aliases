@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 alias startx='startx -- -ardelay 250 -arinterval 25'
 
@@ -16,6 +16,11 @@ alias q='exit'
 alias unmountusb='udiskie-umount -d -a'
 alias gradle='gradle --console rich'
 alias up="up --no-colors"
+
+# don't pollute my $HOME :)
+alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+alias gdb="gdb -n -x $XDG_CONFIG_HOME/gdb/init"
+alias pidgin="pidgin --config=$XDG_DATA_HOME/purple"
 
 #######
 # git #

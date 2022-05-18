@@ -1,12 +1,12 @@
 
 autoload -Uz compinit
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+compinit
 autoload -Uz edit-command-line;
 zle -N edit-command-line
 
 zmodload zsh/zpty
 
-HISTFILE=~/.histfile
+export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
 HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
