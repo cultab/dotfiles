@@ -86,7 +86,7 @@ PATH="$KAFKA_HOME/bin/:$PATH"
 PATH="$PYENV_ROOT/bin:$PATH"
 
 # CUDA
-PATH="/usr/local/cuda-11.5/bin:$PATH"
+PATH="/usr/local/cuda/bin:$PATH"
 
 export PATH
 
