@@ -31,7 +31,7 @@ vim.opt.updatetime = 50 -- ms
 
 vim.o.splitbelow = true
 vim.o.splitright = true
-vim.o.autochdir = false -- automatically change directory
+vim.o.autochdir = true -- automatically change directory
 vim.o.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
 vim.o.mouse='a'  -- enable mouse for a(ll) modes
 vim.o.lazyredraw = true
@@ -80,6 +80,7 @@ augroup autoSauce
 
     autocmd BufWritePost .tmux.conf silent !tmux display-message 'Sourced .tmux.conf\!' ';' source-file ~/.tmux.conf
     autocmd BufWritePost *.xdefaults silent !reload_xrdb
+    autocmd BufWritePost bspwmrc silent !~/.config/bspwm/bspwmrc 
     autocmd BufWritePost *.tex,*.latex silent !xelatex %
 augroup end
 ]]

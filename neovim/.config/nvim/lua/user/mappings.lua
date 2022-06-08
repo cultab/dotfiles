@@ -28,7 +28,7 @@ map "<leader>c" { nil, "Run command / Open config" }
     map "<leader>cl" { RunLastCommand, "Re-run last command" }
     map "<leader>cc" { InputCommand, "Run command" }
     map "<leader>cb" { "<cmd>e ~/.config/bspwm/bspwmrc<CR>", "bspwm" }
-    map "<leader>cp" { "<cmd>e ~/.config/polybar/config.ini<CR>", "Polybar" }
+    map "<leader>cp" { "<cmd>e ~/.config/polybar/config.ini|cd ~/.config/polybar/<CR>", "Polybar" }
     map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "Simple x keybind daemon" }
     map "<leader>cd" { "<cmd>e ~/.config/dunst/no_theme.dunstrc<CR>", "Dunst" }
     map "<leader>cv" { OpenConfig, "neovim" }

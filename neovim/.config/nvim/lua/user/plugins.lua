@@ -43,20 +43,20 @@ return require('packer').startup(function(use)
     }--}}}
     use 'mfussenegger/nvim-jdtls'
     use "folke/lua-dev.nvim"
-    use { "ahmedkhalf/project.nvim",--{{{
-        config = function()
-            require("project_nvim").setup {
-                detection_methods = { "lsp" },
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-                silent_chdir = false,
-                ignore_lsp = { "sumneko_lua" }
-            }
-            require('telescope').load_extension('projects')
-        end,
-        requires = {"nvim-telescope/telescope.nvim"}
-    }--}}}
+    -- use { "ahmedkhalf/project.nvim",--{{{
+    --     config = function()
+    --         require("project_nvim").setup {
+    --             detection_methods = { "lsp" },
+    --             -- your configuration comes here
+    --             -- or leave it empty to use the default settings
+    --             -- refer to the configuration section below
+    --             silent_chdir = false,
+    --             ignore_lsp = { "sumneko_lua" }
+    --         }
+    --         require('telescope').load_extension('projects')
+    --     end,
+    --     requires = {"nvim-telescope/telescope.nvim"}
+    -- }--}}}
     --- }}}
 
     -- cmp-nvim {{{
@@ -104,7 +104,7 @@ return require('packer').startup(function(use)
             vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
         end
     }--}}}
-    use 'lukas-reineke/indent-blankline.nvim' 
+    use 'lukas-reineke/indent-blankline.nvim'
     use 'stevearc/dressing.nvim'
     use { 'nvim-lualine/lualine.nvim',--{{{
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
@@ -192,7 +192,7 @@ return require('packer').startup(function(use)
                 extra_groups = 'all',
                 exclude = {}, -- table: groups you don't want to clear
                 })
-            
+
         end
     }--}}}
     use { 'rcarriga/nvim-notify',--{{{
@@ -306,12 +306,12 @@ return require('packer').startup(function(use)
         end
     }--}}}
     use 'equalsraf/neovim-gui-shim'
-    use { 'akinsho/toggleterm.nvim' , config = function ()
+    use { 'akinsho/toggleterm.nvim' , config = function ()--{{{
         require("toggleterm").setup{
             direction = "float",
             start_in_insert = true
         }
-    end}
+    end}--}}}
     use 'benmills/vimux'
     use 'dstein64/vim-startuptime'
     use { 'aserowy/tmux.nvim',--{{{
@@ -327,6 +327,43 @@ return require('packer').startup(function(use)
             require "user.telescope"
         end
     }--}}}
+    use { 'nvim-neorg/neorg',
+        config = function ()
+            require('neorg').setup {
+                load = {
+                    ["core.defaults"] = {},
+                    ["core.norg.concealer"] = {},
+                    ["core.norg.esupports.metagen"] = {
+                        config = {
+                            type = "auto",
+                        }
+                    },
+                    ["core.norg.completion"] = {
+                        config = {
+                            engine = "nvim-cmp"
+                        },
+                    },
+                    ["core.keybinds"] = {
+                        config = {
+                            default_keybinds = true,
+                            norg_leader = "<Leader>o"
+                        }
+                    },
+                    -- ["core.norg.dirman"] = {
+                    --     config = {
+                    --         workspaces = {
+                    --             default = "~/.neorg"
+                    --         }
+                    --     }
+                    -- },
+                    -- ["core.integrations.telescope"] = {},
+                    ["core.export"] = {}
+
+                }
+            }
+        end,
+        requires = "nvim-lua/plenary.nvim"
+    }
 
     --}}}
 

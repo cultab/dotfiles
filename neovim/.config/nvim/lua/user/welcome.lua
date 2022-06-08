@@ -51,7 +51,7 @@ vim.g.dashboard_custom_section = {
     },
     _4find_file = {
         description = { " Find file                     SPC f f" },
-        command =  ":DashboardFindFile"
+        command =  ":Telescope find_files"
     },
     _5change_colorscheme = {
         description = { " Change Colorscheme            SPC t c" },

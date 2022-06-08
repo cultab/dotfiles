@@ -56,6 +56,7 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lua' }, -- first because it only completes under vim.*
         { name = 'luasnip' }, -- For luasnip users.
+        { name = 'neorg' },
         { name = 'nvim_lsp' },
         { name = 'pandoc_references' },
         { name = "latex_symbols" },
@@ -74,7 +75,8 @@ cmp.setup({
             tmux = "[tmux]",
             nvim_lua = "[nvim]",
             latex_symbols = "[LaTeX]",
-            zsh = "[zsh]"
+            zsh = "[zsh]",
+            neorg = "[neorg]",
         }})
     },
     view = {
