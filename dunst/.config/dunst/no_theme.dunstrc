@@ -58,7 +58,7 @@ ignore_newline = no
 stack_duplicates = yes
 hide_duplicates_count = yes
 
-width = 300
+width = 500
 height = 150
 
 offset = 10x80

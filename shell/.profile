@@ -10,8 +10,13 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/home/evan/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/home/evan/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-/home/evan/.local/share}"
 
-if [ -f "/home/evan/.local/share/antidot/env.sh" ]; then source "/home/evan/.local/share/antidot/env.sh"; fi
-if [ -f "/home/evan/.local/share/antidot/alias.sh" ]; then source "/home/evan/.local/share/antidot/alias.sh"; fi
+if [ -f "/home/evan/.local/share/antidot/env.sh" ]; then
+    source "/home/evan/.local/share/antidot/env.sh";
+fi
+
+if [ -f "/home/evan/.local/share/antidot/alias.sh" ]; then
+    source "/home/evan/.local/share/antidot/alias.sh";
+fi
 # don't pollute my $HOME plz
 
 export HISTFILE="${XDG_CACHE_HOME}/bash/history"
@@ -34,9 +39,11 @@ export ICEAUTHORITY="$XDG_CACHE_HOME"/ICEauthority
 export MYPY_CACHE_DIR="$XDG_CACHE_HOME"/mypy
 export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
 export USERXSESSION="$XDG_CACHE_HOME"/X11/xsession
+export IPFS_PATH="$XDG_DATA_HOME"/ipfs/
 
 # keychain
-eval $(keychain --eval --dir "$XDG_RUNTIME_DIR/keychain")
+mkdir -p /run/user/$(id -u)/keychain
+eval $(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")
 
 # export PROFILE_SOURCED=1
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -50,8 +57,7 @@ if [ -d ~/bin ]; then
 fi
 
 if [ -d ~/Appimages ]; then
-    PATH="$HOME/Appimages:$PATH"
-fi
+    PATH="$HOME/Appimages:$PATH" fi
 
 PATH="./:$PATH"
 
@@ -91,4 +97,3 @@ PATH="/usr/local/cuda/bin:$PATH"
 export PATH
 
 export XBPS_DISTDIR="$HOME/repos/void-packages"
-

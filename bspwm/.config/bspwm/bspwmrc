@@ -8,6 +8,8 @@ bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
 # bspc monitor HDMI1 --reset-desktops I II III IV V VI
 # bspc monitor LVDS1 --reset-desktops I II III IV V VI
 
+# ignore DISCORD
+bspc config ignore_ewmh_focus true
 
 DB=$(xrdb -query)
 active=$(echo "$DB" | grep 'polybar.active' | cut -f 2 -d ':' | sed 's/\t//')
@@ -24,12 +26,25 @@ bspc config single_monocle       true
 bspc config focus_follows_pointer true
 
 bspc rule -a Zathura state=tiled
-bspc rule -a Surf state=tiled
+bspc rule -a Surf    state=tiled
+
 bspc rule -a Vivaldi-stable desktop='^1'
-bspc rule -a Screenkey manage=off
-bspc rule -a MEGAsync state=floating
-bspc rule -a discord desktop='^5'
-bspc rule -a Barrier state=floating #desktop='^6' 
+bspc rule -a discord        desktop='^5'
 bspc rule -a kdeconnect.app desktop='^6' state=floating
-bspc rule -a Pavucontrol state=floating
-bspc rule -a Blueman-manager state=floating
+
+bspc rule -a MEGAsync            state=floating
+bspc rule -a Barrier             state=floating #desktop='^6' 
+bspc rule -a Pavucontrol         state=floating
+bspc rule -a Blueman-manager     state=floating
+bspc rule -a KeePassXC:keepassxc state=floating
+
+bspc rule -a activate-linux           layer=above
+bspc rule --add "Polybar tray window" layer=above border=on # does it work?
+# bspc rule --add "Polybar" layer=above border=off # does it work?
+# raise window again..
+xdo raise -N Polybar
+xdo raise -a "Polybar tray window"
+
+bspc rule -a Screenkey manage=off
+
+notify-send "Reloaded bspwmrc!"

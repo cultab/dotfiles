@@ -14,11 +14,12 @@ pkill -USR1 -x st
 
 # update dunstrc
 ~/.config/dunst/reload_dunst
+# update zathurarc
+~/.config/zathura/reload_zathura
 # update bspwm rules
 ~/.config/bspwm/bspwmrc
 
 # update polybar
 polybar-msg cmd restart > /dev/null 2>&1
-sleep 5
-polybar-msg -p $(pgrep -f 'polybar --reload tray') cmd hide
+sh -c "sleep 5; polybar-msg -p $(pgrep -f 'polybar --reload tray') cmd hide" &
 

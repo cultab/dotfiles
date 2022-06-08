@@ -83,7 +83,11 @@ miniplug plugin 'zsh-users/zsh-syntax-highlighting'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
 miniplug plugin 'se-jaeger/zsh-activate-py-environment'
 miniplug plugin 'zpm-zsh/colorize'
-
-
+miniplug plugin 'spwhitt/nix-zsh-completions'
 miniplug load
 
+# HACK: maybe ask about adding this in  nix.plugin.zsh
+fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
+autoload -U compinit && compinit
+
+prompt_nix_shell_setup "$@"

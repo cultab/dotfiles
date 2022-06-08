@@ -3,14 +3,15 @@
 /* *font:  Iosevka :size=12 */
 /* *font:  FuraCode Nerd Font:size=12:style=Retina,Regular */
 /* *font:  Iosevka Custom:size=12:style=Regular */
-
 /* *font:   Victor Mono Nerd Font:size=11 */
 /* st.font: Victor Mono Nerd Font:size=10 */
-*.font:  Iosevka Nerd Font:size=11
-st.font: Iosevka Nerd Font Mono:size=12
 ! st.font: CozetteVector:pixelsize=18
 /* st.font:  Terminus :size=13 */
-/* st.font:  scientifica :size=13 */
+! st.font:  scientifica :size=13
+
+*.font:  Iosevka Nerd Font:size=11
+st.font: Iosevka Nerd Font Mono:size=12
+
 *opacity: 1.00
 
 *color0:  base00

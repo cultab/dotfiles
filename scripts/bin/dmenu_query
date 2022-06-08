@@ -1,12 +1,15 @@
 #!/bin/sh
 
-# overwrite
-# BROWSER=surf
-
 # URL='https://startpage.com/sp/search?query='
-URL='https://www.google.com/search?q='
+SEARCH_URL='https://www.google.com/search?q='
 QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
 
+# if query does not contain dot, assume it's not a url
+# but a search term
+if ! echo "$QUERY" | grep '\.'; then
+    QUERY="$SEARCH_URL$QUERY"
+fi
+
 if [ -n "$QUERY" ]; then
-  surf -e "$(tabbed -d)" "${URL}${QUERY}" 2> /dev/null
+  surf -e "$(tabbed -d -c -s surf -e)" "${QUERY}" 2> /dev/null
 fi
