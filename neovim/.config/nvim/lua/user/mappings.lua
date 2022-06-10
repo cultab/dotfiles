@@ -19,6 +19,13 @@ function RunLastCommand()
     end
 end
 
+function RunCurrentFile()
+    -- local command = vim.fn.expand('%:p')
+    local command = vim.api.nvim_buf_get_name(0)
+    vim.cmd(":1TermExec cmd='" .. command .. "'")
+    LastCommand = command
+end
+
 -- load my mapping DSL
 require "user.map"
 
@@ -27,6 +34,7 @@ map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 map "<leader>c" { nil, "Run command / Open config" }
     map "<leader>cl" { RunLastCommand, "Re-run last command" }
     map "<leader>cc" { InputCommand, "Run command" }
+    map "<leader>cr" { RunCurrentFile, "Run current file" }
     map "<leader>cb" { "<cmd>e ~/.config/bspwm/bspwmrc<CR>", "bspwm" }
     map "<leader>cp" { "<cmd>e ~/.config/polybar/config.ini|cd ~/.config/polybar/<CR>", "Polybar" }
     map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "Simple x keybind daemon" }
