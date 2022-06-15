@@ -13,8 +13,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
         install_path,
     }
     print "Installing packer, close and reopen Neovim..."
-    vim.cmd[[ packadd packer.nvim ]]
 end
+
+vim.cmd[[ packadd packer.nvim ]]
 
 local ok, packer = pcall(require, "packer")
 if not ok then
@@ -171,7 +172,6 @@ return require('packer').startup(function(use)
         end
     }--}}}
     use 'vim-pandoc/vim-pandoc-syntax'
-    use 'plasticboy/vim-markdown'
     use 'liuchengxu/graphviz.vim'
     use 'onsails/lspkind-nvim'
     use { 'xiyaowong/nvim-transparent',--{{{
