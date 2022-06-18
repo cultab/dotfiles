@@ -222,12 +222,10 @@ lspconfig.clangd.setup{
     filetypes = { "c", "cpp", "cuda" }
 }
 
--- No config needed {{{
 lspconfig.r_language_server.setup{
     on_attach = on_attach,
     capabilities = capabilities
 }
---}}}
 
 function Jdtls_configure()--{{{
     vim.notify_once("jdtls is disabled")

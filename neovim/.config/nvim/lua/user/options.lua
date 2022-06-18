@@ -62,6 +62,20 @@ augroup end
 ]]
 
 vim.cmd [[
+augroup TwoSpaces
+    autocmd!
+    autocmd FileType yaml,norg setlocal ts=2 sts=2 sw=2 expandtab
+augroup end
+]]
+
+vim.cmd [[
+augroup autoSpellcheck
+    autocmd!
+    autocmd FileType norg,rmd,text setlocal spell
+augroup end
+]]
+
+vim.cmd [[
 augroup autoFileTypes
     autocmd!
     autocmd BufEnter */srcpkgs/*/template :setfiletype sh
@@ -80,7 +94,7 @@ augroup autoSauce
 
     autocmd BufWritePost .tmux.conf silent !tmux display-message 'Sourced .tmux.conf\!' ';' source-file ~/.tmux.conf
     autocmd BufWritePost *.xdefaults silent !reload_xrdb
-    autocmd BufWritePost bspwmrc silent !~/.config/bspwm/bspwmrc 
+    autocmd BufWritePost bspwmrc silent !~/.config/bspwm/bspwmrc
     autocmd BufWritePost *.tex,*.latex silent !xelatex %
 augroup end
 ]]

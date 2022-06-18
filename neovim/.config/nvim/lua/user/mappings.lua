@@ -20,8 +20,14 @@ function RunLastCommand()
 end
 
 function RunCurrentFile()
-    -- local command = vim.fn.expand('%:p')
     local command = vim.api.nvim_buf_get_name(0)
+    local filename = vim.fn.expand('%:t')
+
+    -- special case for report.rmd is to run `$ make render`
+    if filename == "report.rmd" then
+        command = "make render"
+    end
+
     vim.cmd(":1TermExec cmd='" .. command .. "'")
     LastCommand = command
 end

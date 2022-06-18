@@ -37,10 +37,10 @@ vim.g.dashboard_custom_header = {
 }
 
 vim.g.dashboard_custom_section = {
-    _1find_projects = {
-        description = { " Recently opened projects      SPC f p" },
-        command =  "Telescope projects"
-    },
+    -- _1find_projects = {
+    --     description = { " Recently opened projects      SPC f p" },
+    --     command =  "Telescope projects"
+    -- },
     _2find_history = {
         description = { "ﭯ Recently opened files         SPC f h" },
         command =  ":DashboardFindHistory"
