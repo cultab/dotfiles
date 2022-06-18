@@ -1,16 +1,25 @@
 local M = {}
 
+-- local sep = {
+--     left = '',
+--     right = ''
+-- }
+local sep = {
+    left = '',
+    right = ''
+}
+
 local config = {
     options = {
         theme = theme,
         component_separators = '⏽',
-        section_separators = { left = '', right = '' },
+        section_separators = sep , -- { left = '', right = '' },
         disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
         globalstatus = true,
     },
     sections = {
         -- left sections
-        lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 }, },
+        lualine_a = { { 'mode', separator = { left = sep.right }, right_padding = 2 }, },
         lualine_b = { 'filename' },
         lualine_c = { 'branch' },
         -- right sections
@@ -25,7 +34,7 @@ local config = {
             } }
         },
         lualine_y = { 'fileformat', 'filetype', 'progress' },
-        lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
+        lualine_z = { { 'location', separator = { right = sep.left }, left_padding = 2 } },
     },
     inactive_sections = {
         lualine_a = { 'filename' },
