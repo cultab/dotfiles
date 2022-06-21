@@ -13,15 +13,22 @@ bspc config ignore_ewmh_focus true
 
 DB=$(xrdb -query)
 active=$(echo "$DB" | grep 'polybar.active' | cut -f 2 -d ':' | sed 's/\t//')
+background=$(echo "$DB" | grep '\*foreground' | cut -f 2 -d ':' | sed 's/\t//')
+
 bspc config focused_border_color "$active"
+bspc config presel_feedback_color "$active"
+bspc config presel_feedback true
+
+bspc config split_ratio          0.50
 
 bspc config border_width 4
 bspc config window_gap   4
-bspc config split_ratio          0.50
-
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config single_monocle       true
+
+# bspc config automatic_scheme spiral
+bspc config automatic_scheme alternate
 
 bspc config focus_follows_pointer true
 
@@ -47,4 +54,4 @@ xdo raise -a "Polybar tray window"
 
 bspc rule -a Screenkey manage=off
 
-notify-send "Reloaded bspwmrc!"
+notify-send -a bspwm "Reloaded" "bspwm config"
