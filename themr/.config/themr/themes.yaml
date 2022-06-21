@@ -63,3 +63,10 @@ vscode:
 
 ayu-mirage:
   default: "ayu-mirage"
+
+moonfly:
+  default: "moonfly"
+
+saga:
+  default: "darkplus"
+  xresources: "saga"
