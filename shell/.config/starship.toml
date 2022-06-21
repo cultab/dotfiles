@@ -3,12 +3,13 @@ show_always = false
 
 [hostname]
 ssh_only = true
+ssh_symbol = ""
 
 [character]
 #symbol cache :) = "❯ "
 success_symbol = "[ε](bold green)"
-error_symbol = "[ω](bold red)"
-vicmd_symbol = "[ε](blue)"
+error_symbol = "[φ](bold red)"
+vicmd_symbol = "[ε](bold blue)"
 # use_symbol_for_status = true
 
 [battery]
@@ -28,6 +29,9 @@ symbol = " "
 disabled = true
 
 [crystal]
+disabled = true
+
+[c]
 disabled = true
 
 [dart]
@@ -123,7 +127,8 @@ disabled = true
 symbol = " "
 
 [rlang]
-symbol = " "
+symbol = "Rﱨ "
+disabled = true
 
 [ruby]
 symbol = " "
@@ -131,7 +136,7 @@ disabled = true
 
 [rust]
 symbol = " "
-disabled = true
+disabled = false
 
 [singularity]
 disabled = true
@@ -151,5 +156,5 @@ disabled = true
 disabled = true
 
 [zig]
-disabled = true
+disabled = false
 

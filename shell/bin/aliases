@@ -2,6 +2,11 @@
 
 alias startx='startx -- -ardelay 250 -arinterval 25'
 
+# if neovim is installed alias it
+if command -v nvim > /dev/null 2>&1; then
+    alias vim="nvim"
+fi
+
 alias todo='vim $HOME/.todo.txt/todo.txt'
 alias notes='vim $HOME/notes.norg'
 alias wtf='netbsd-wtf -o'

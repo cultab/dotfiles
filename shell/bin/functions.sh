@@ -104,6 +104,13 @@ lel() {
     espeak -v el χεχε & # disown
 }
 
+ssh_display() {
+    if [ "$SSH_CLIENT" ] ; then
+        export DISPLAY="$(echo $SSH_CLIENT|cut -f1 -d\ ):0.0"
+        echo "Found ssh client, using DISPLAY=$DISPLAY."
+    fi
+}
+
 # nnnvim ()
 # {
 #     tmux split-window -h -p 85 nvim --listen /tmp/nnnvim;

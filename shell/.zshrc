@@ -62,7 +62,7 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
 eval "$(starship init zsh)"
-eval $(thefuck --alias)
+# eval $(thefuck --alias) # slow
 
 source ~/bin/exports
 source ~/bin/aliases
@@ -91,3 +91,4 @@ fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
 
 prompt_nix_shell_setup "$@"
+
