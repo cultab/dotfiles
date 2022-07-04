@@ -1,4 +1,4 @@
-#include "./ayu-mirage.xdefaults"
+#include "./selected_theme.xdefaults"
 
 /* *font:  Iosevka :size=12 */
 /* *font:  FuraCode Nerd Font:size=12:style=Retina,Regular */
@@ -35,12 +35,8 @@ st.font: Iosevka Nerd Font Mono:size=12
 *background:   basebg
 *cursorColor:  basecc
 
-dwm.normbordercolor: basebg
-dwm.normbgcolor:     basebg
-dwm.normfgcolor:     basefg
-dwm.selbordercolor:  basesb
-dwm.selbgcolor:      basesb
-dwm.selfgcolor:      basebg
+*active: basesb
+*selection: basesb
 
 polybar.active: basesb
 ! extra colors for polybar, if defined, use them instead
@@ -56,6 +52,13 @@ polybar.foreground: basepf
 !dmenu.foreground: basefg
 dmenu.selbackground: basesb
 dmenu.selforeground: basebg
+
+dwm.normbordercolor: basebg
+dwm.normbgcolor:     basebg
+dwm.normfgcolor:     basefg
+dwm.selbordercolor:  basesb
+dwm.selbgcolor:      basesb
+dwm.selfgcolor:      basebg
 
 Xft.autohint: 0
 Xft.antialias: 1

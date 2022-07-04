@@ -1,7 +1,7 @@
 # Config definitions.
 
 xresources:
-  path: "~/.config/xrdb/Xresources.xdefaults"
+  path: "~/.config/xrdb/selected_theme.xdefaults"
   regex: '#include ".*\.xdefaults"'
   pre: '#include "./'
   post: '.xdefaults"'

@@ -8,6 +8,8 @@ neovim/.config/nvim/undo
 neovim/.config/nvim/spell
 neovim/.config/nvim/plugin
 
+X/xrdb/.config/xrdb/selected_theme.xdefaults
+
 bash/bin/remove-vivaldi-snapshot.sh
 bash/bin/vivaldi-snapshot
 
