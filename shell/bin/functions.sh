@@ -47,10 +47,6 @@ project () {
     echo "Commited initial files to project repo"
 }
 
-rmd_template () {
-    project "$@"
-}
-
 pse () {
     procs=$(ps -aux)
     header=$(echo "$procs" | head -1)
@@ -101,13 +97,22 @@ pyenv_enable () {
 
 lel() {
     echo hehe
-    espeak -v el χεχε & # disown
+    espeak -v el χεχε
 }
 
 ssh_display() {
     if [ "$SSH_CLIENT" ] ; then
         export DISPLAY="$(echo $SSH_CLIENT|cut -f1 -d\ ):0.0"
         echo "Found ssh client, using DISPLAY=$DISPLAY."
+    fi
+}
+
+vimw() {
+    prog=$(which "$*")
+    if [ $? = 0 ]; then
+        vim "$prog"
+    else
+        echo "$prog"
     fi
 }
 

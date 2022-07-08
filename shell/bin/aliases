@@ -7,13 +7,17 @@ if command -v nvim > /dev/null 2>&1; then
     alias vim="nvim"
 fi
 
+# shortcuts
 alias todo='vim $HOME/.todo.txt/todo.txt'
 alias notes='vim $HOME/notes.norg'
 alias wtf='netbsd-wtf -o'
 alias coomit='git commit'
-alias vimdiff='vim -d'
 alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
 alias psg='ps aux | grep'
+alias open='xdg-open'
+alias vimdiff='vim -d'
+
+# add extra options
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
@@ -21,6 +25,7 @@ alias q='exit'
 alias unmountusb='udiskie-umount -d -a'
 alias gradle='gradle --console rich'
 alias up="up --no-colors"
+alias void-docs="void-docs -m"
 
 # don't pollute my $HOME :)
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
