@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # for socket in $(nvr --serverlist); do
-    # nvr --nostart --servername "$socket" "-c $*"
+#     nvr --nostart --servername "$socket" "-c $*"
+# done
 for socket in /tmp/nvim*/0; do
     vim --remote-send ":$*<CR>" --server "$socket"
 done
