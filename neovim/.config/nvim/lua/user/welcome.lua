@@ -53,10 +53,10 @@ vim.g.dashboard_custom_section = {
         description = { " Find file                     SPC f f" },
         command =  ":Telescope find_files"
     },
-    _5change_colorscheme = {
-        description = { " Change Colorscheme            SPC t c" },
-        command = ":DashboardChangeColorscheme"
-    },
+    -- _5change_colorscheme = {
+    --     description = { " Change Colorscheme            SPC t c" },
+    --     command = ":DashboardChangeColorscheme"
+    -- },
     _8edit_config = {
         description = { " Settings                      SPC c v" },
         command =  ":lua OpenConfig()"
@@ -67,23 +67,9 @@ vim.g.dashboard_custom_section = {
     },
 }
 
-function WelcomeMappings()
-    vim.cmd [[
-        nnoremap <buffer> <silent> <Leader>fp :Telescope projects<CR>
-        nnoremap <buffer> <silent> <Leader>fh :DashboardFindHistory<CR>
-        nnoremap <buffer> <silent> <Leader>tc :DashboardChangeColorscheme<CR>
-        nnoremap <buffer> <silent> <Leader>cn :DashboardNewFile<CR>
-        nnoremap <buffer> q :q<CR>
-        " nnoremap <buffer> <silent> <Leader>ff :DashboardFindFile<CR>
-        " nnoremap <buffer> <silent> <Leader>fa :DashboardFindWord<CR>
-        " nnoremap <buffer> <silent> <Leader>fb :DashboardJumpMark<CR>
-    ]]
-end
-
-
 vim.cmd[[
     augroup UserDashboard
         autocmd!
-        autocmd User DashboardReady lua WelcomeMappings()
+        autocmd User DashboardReady lua require("user.mappings").set_welcome_mappings()
     augroup end
 ]]

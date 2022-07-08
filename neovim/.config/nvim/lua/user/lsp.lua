@@ -214,6 +214,12 @@ lspconfig.gopls.setup{
     -- }
 }
 
+lspconfig.texlab.setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "plaintex", "tex", "rmd" },
+}
+
 local clangd_caps = vim.tbl_deep_extend("force", capabilities, { offsetEncoding = "utf-16" })
 
 lspconfig.clangd.setup{

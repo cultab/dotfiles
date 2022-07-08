@@ -1,50 +1,73 @@
-vim.o.cindent = true
-vim.o.wrap = false
-vim.o.breakindent = true
-vim.o.expandtab = true  -- no tabs
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-vim.o.shiftround = true -- round indent to shiftwidth
+local opt = vim.opt
+local o   = vim.o
+
+-- tabsize
+opt.expandtab = true  -- no tabs
+opt.tabstop = 4      -- tab size is 4
+opt.softtabstop = 4  -- expanded size is 4
+opt.shiftwidth = 4   -- indent size is 4
+opt.shiftround = true -- round indent to shiftwidth
+
+-- wrap
+opt.wrap = true
+opt.breakindent = true
+opt.showbreak = string.rep(" ", 3) -- make it so that long lines wrap smartly, ~TJDevries
+opt.linebreak = true
+opt.breakindent = true
+
+-- indent
+opt.cindent = true
+opt.autoindent = true
 
 -- Search Settings
-vim.o.inccommand = 'nosplit' -- show substitutions live, now without splitting!
-vim.o.incsearch = true
-vim.o.gdefault = true -- assume the 'g' in s/../../g
-vim.o.ignorecase = true
-vim.o.smartcase = true -- all lower search is case insensitive
+opt.inccommand = 'nosplit' -- show substitutions live, now without splitting!
+opt.incsearch = true
+opt.gdefault = true -- assume the 'g' in s/../../g
+opt.ignorecase = true
+opt.smartcase = true -- all lower search is case insensitive
 
 -- don't give |ins-completion-menu| messages. For example,
 -- "-- XXX completion (YYY)", "match 1 of 2", "The only match",
-vim.o.shortmess = vim.o.shortmess .. 'c'
+o.shortmess = o.shortmess .. 'c'
 
 -- Backup and swap
-vim.o.backup = true
-vim.opt.backupdir:remove('.')
-vim.opt.undodir:remove('.')
-vim.o.undofile = true
-vim.o.swapfile = false
+opt.backup = true
+opt.backupdir:remove('.')
+opt.undodir:remove('.')
+opt.undofile = true
+opt.swapfile = false
 
 -- Misc Settings
-vim.opt.clipboard:prepend {"unnamedplus"}
-vim.opt.updatetime = 50 -- ms
+opt.clipboard:prepend {"unnamedplus"}
+opt.updatetime = 50 -- ms
 
-vim.o.splitbelow = true
-vim.o.splitright = true
-vim.o.autochdir = true -- automatically change directory
-vim.o.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
-vim.o.mouse='a'  -- enable mouse for a(ll) modes
-vim.o.lazyredraw = true
-vim.o.modeline = true
-vim.o.spelllang= 'el,en'
-vim.o.keymap = 'greek_utf-8'
-vim.o.iminsert = 0  -- default to english
+opt.splitbelow = true
+opt.splitright = true
+
+opt.autochdir = true -- automatically change directory
+opt.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
+opt.mouse='a'  -- enable mouse for a(ll) modes
+opt.lazyredraw = true
+opt.modeline = true
+
+opt.spelllang= 'el,en'
+opt.keymap = 'greek_utf-8'
+opt.iminsert = 0  -- default to english
 
  -- Assume .h files are c headers instead of cpp
 vim.g.c_syntax_for_h = true
 
-vim.o.complete = '.,w,b,i,u,t,'
-vim.o.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
+opt.complete = '.,w,b,i,u,t,'
+opt.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
+opt.formatoptions = opt.formatoptions
+    - "a"
+    - "t"
+    + "q"
+    - "o"
+    + "r"
+    + "n"
+    + "j"
+    - "2"
 
 function OpenConfig()
     vim.cmd [[:cd ~/.config/nvim]]

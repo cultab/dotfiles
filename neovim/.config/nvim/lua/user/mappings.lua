@@ -73,29 +73,40 @@ map "<leader>G" { nil, "Git" }
 
 map:register()
 
-LSP_MAPS_SET = false
-
 function M.set_lsp_mappings()
-    -- if not LSP_MAPS_SET then
-        map 'gD'        { vim.lsp.buf.declaration, "Goto declaration [LSP]" }
-        map 'gd'        { vim.lsp.buf.definition, "Goto definition [LSP]" }
-        map 'gi'        { vim.lsp.buf.implementation, "Goto implementation [LSP]" }
-        map 'U'         { vim.lsp.buf.hover, "Hover documentation [LSP]" }
-        map '<C-k>'     { vim.lsp.buf.signature_help, "Open signature help [LSP]" }
-        map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
-        map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
-        map '<leader>q' { "<cmd>vim.diagnostic.setloclist<CR>", "Open loclist [LSP]" }
-        map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
-        map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
-        map '<leader>=' { vim.lsp.buf.formatting, "Format buffer [LSP]" }
-        map '<leader>=' { vim.lsp.buf.range_formatting, "Format range [LSP]", 'v' }
-        map '<A-CR>'    { vim.lsp.buf.code_action, "Code Action [LSP]" }
-        map '['         { vim.diagnostic.goto_prev, "Previous diagnostic [LSP]" }
-        map ']'         { vim.diagnostic.goto_next, "Next diagnostic [LSP]" }
-        map:register()
+    map 'gD'        { vim.lsp.buf.declaration, "Goto declaration [LSP]" }
+    map 'gd'        { vim.lsp.buf.definition, "Goto definition [LSP]" }
+    map 'gi'        { vim.lsp.buf.implementation, "Goto implementation [LSP]" }
+    map 'K'         { vim.lsp.buf.hover, "Hover documentation [LSP]" }
+    map '<C-k>'     { vim.lsp.buf.signature_help, "Open signature help [LSP]" }
+    map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
+    map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
+    map '<leader>q' { "<cmd>vim.diagnostic.setloclist<CR>", "Open loclist [LSP]" }
+    map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
+    map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
+    map '<leader>=' { vim.lsp.buf.formatting, "Format buffer [LSP]" }
+    map '<leader>=' { vim.lsp.buf.range_formatting, "Format range [LSP]", 'v' }
+    map '<A-CR>'    { vim.lsp.buf.code_action, "Code Action [LSP]" }
+    map '['         { vim.diagnostic.goto_prev, "Previous diagnostic [LSP]" }
+    map ']'         { vim.diagnostic.goto_next, "Next diagnostic [LSP]" }
+    map:register()
+end
 
-        -- LSP_MAPS_SET = true
-    -- end
+
+function M.set_welcome_mappings()
+    map '<leader>F' {"<cmd>DashboardFindHistory<CR>", "File History"}
+    map '<leader>C' {"<cmd>DashboardChangeColorscheme<CR>", "Change Colorscheme"}
+    map '<leader>n' {"<cmd>DashboardNewFile<CR>", "New File"}
+    vim.cmd [[
+        nnoremap <buffer> q :q<CR>
+        " nnoremap <buffer> <silent> <Leader>fp :Telescope projects<CR>
+        " nnoremap <buffer> <silent> <Leader>fh :DashboardFindHistory<CR>
+        " nnoremap <buffer> <silent> <Leader>tc :DashboardChangeColorscheme<CR>
+        " nnoremap <buffer> <silent> <Leader>cn :DashboardNewFile<CR>
+        " nnoremap <buffer> <silent> <Leader>ff :DashboardFindFile<CR>
+        " nnoremap <buffer> <silent> <Leader>fa :DashboardFindWord<CR>
+        " nnoremap <buffer> <silent> <Leader>fb :DashboardJumpMark<CR>
+    ]]
 end
 
 vim.cmd [[

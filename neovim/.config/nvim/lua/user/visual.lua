@@ -53,6 +53,7 @@ if vim.g.nvui then
   ]]
 end
 
+vim.opt.pumblend = 20 -- pseudo transparency for popup windows
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
 vim.o.laststatus = 3
@@ -305,7 +306,7 @@ vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 1
 --}}}
 
-vim.cmd "colorscheme tokyonight"
+vim.cmd "colorscheme gruvbox-flat"
 
 vim.cmd [[
 augroup YankHighlight

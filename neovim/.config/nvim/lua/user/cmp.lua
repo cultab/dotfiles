@@ -45,7 +45,8 @@ cmp.setup({
         ),
         ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
         ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        -- ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-n>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         -- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
         -- ['<C-e>'] = cmp.mapping({
         -- i = cmp.mapping.abort(),
@@ -56,6 +57,7 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lua' }, -- first because it only completes under vim.*
         { name = 'luasnip' }, -- For luasnip users.
+        { name = 'conventionalcommits' },
         { name = 'neorg' },
         { name = 'nvim_lsp' },
         { name = 'pandoc_references' },
@@ -77,6 +79,7 @@ cmp.setup({
             latex_symbols = "[LaTeX]",
             zsh = "[zsh]",
             neorg = "[neorg]",
+            conventionalcommits = "[git]",
         }})
     },
     view = {

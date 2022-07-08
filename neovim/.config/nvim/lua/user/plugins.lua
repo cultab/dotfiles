@@ -76,6 +76,7 @@ return require('packer').startup(function(use)
         use 'tamago324/cmp-zsh'
         use 'L3MON4D3/LuaSnip'
         use 'saadparwaiz1/cmp_luasnip'
+        use 'cultab/cmp-conventionalcommits' -- my fork with less features :^)
     -- }}}
 
     -- treesitter{{{
