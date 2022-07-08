@@ -1,18 +1,18 @@
 # Theme definitions.
 
 tokyonight:
-  default: "tokyonight"
+  colorscheme: "tokyonight"
 
 tokyonight_storm:
-  default: "tokyonight"
+  colorscheme: "tokyonight"
   xresources: "tokyonight_storm"
 
 potato:
-  default: "potato"
+  colorscheme: "potato"
   lualine: "auto"
 
 github_light:
-  default: "github-light"
+  colorscheme: "github-light"
   xresources: "github_light"
 
 doom-one:
@@ -22,51 +22,57 @@ doom-one:
   xresources: "doom-one"
 
 onedarkpro:
-  default: "onedarkpro"
+  colorscheme: "onedarkpro"
   lualine: "auto"
 
 onedark:
-  default: "onedark"
+  colorscheme: "onedark"
   lualine: "auto"
 
 palenight:
-  default: "palenight"
+  colorscheme: "palenight"
 
 gruvbox:
-  default: "gruvbox"
+  colorscheme: "gruvbox"
 
 everforest:
-  default: "everforest"
+  colorscheme: "everforest"
   lualine: "auto"
 
 gruvbox-flat:
-  default: "gruvbox-flat"
+  colorscheme: "gruvbox-flat"
 
 # neon_latte:
-#   default: "neon_latte"
+#   colorscheme: "neon_latte"
 #   lualine: "catppuccin"
 
 catppuccin:
-  default: "catppuccin"
+  colorscheme: "catppuccin"
 
 wpg:
-  default: "wpg"
+  colorscheme: "wpg"
   nvim: "onedark"
   lualine: "auto"
 
 darkplus:
-  default: "darkplus"
+  colorscheme: "darkplus"
 
 vscode:
-  default: "darkplus"
+  colorscheme: "darkplus"
   nvim: "vscode"
 
 ayu-mirage:
-  default: "ayu-mirage"
+  colorscheme: "ayu-mirage"
 
 moonfly:
-  default: "moonfly"
+  colorscheme: "moonfly"
 
 saga:
-  default: "darkplus"
+  colorscheme: "darkplus"
   xresources: "saga"
+
+# blue:
+#   colors: "blueness_five"
+#   fontsize: 11
+#   xresources: "something-very-specific-and-blue"
+

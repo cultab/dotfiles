@@ -1,0 +1,38 @@
+@document.meta
+  title: notes
+  description: 
+  authors: evan
+  categories: 
+  created: 2022-07-04
+  version: 0.0.11
+@end
+
+* Testing:
+  Try launching ./themr with custom $XDG_CONFIG_HOME
+  so we can do tests on specific config files :D
+
+* New configuration structure ideas:
+  - Every theme is explicit about it's configs 
+    Pros:
+    - Simple
+    Cons:
+    - User has to type more
+
+  - Configs and Themes have types:
+    If they match then we apply the theme to the config (using the default if it exists)
+    Implement by either:
+      ~ Using a type key
+        Cons: Verbose
+      ~ Include configs/themes in a parent type key
+        Con: config structure has an extra indent
+      ~ Configs have type key
+        Themes have type as key instead of default
+        if type is missing, assume it's a one off config
+        and use it's name as the type
+
+
+  - Configs can opt out of being used automatically with themes' default key
+    Can be implemented by having a `default: false` key in configs
+    Con: hacky
+  
+
