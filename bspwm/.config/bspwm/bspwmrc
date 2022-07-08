@@ -48,9 +48,6 @@ bspc rule -a KeePassXC:keepassxc state=floating
 bspc rule -a activate-linux           layer=above
 bspc rule --add "Polybar tray window" layer=above border=on # does it work?
 # bspc rule --add "Polybar" layer=above border=off # does it work?
-# raise window again..
-xdo raise -N Polybar
-xdo raise -a "Polybar tray window"
 
 bspc rule -a Screenkey manage=off
 
