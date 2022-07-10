@@ -7,10 +7,10 @@ choice=$(themr --list-themes |
 )
 
 if [ -z "$choice" ]; then
-    notify-send 'Canceled!' -a themr --urgency low
+    notify-send  -a dmenu_themr 'Canceled' 'no theme chosen'  --urgency low
     exit
 fi
 
 if ! themr "$choice" ; then
-    notify-send 'Failed to set new theme!' "theme: $choice" -a themr --urgency critical
+    notify-send 'Failed to set theme!' "theme: '$choice'" -a themr --urgency critical
 fi

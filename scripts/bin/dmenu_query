@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# URL='https://startpage.com/sp/search?query='
-SEARCH_URL='https://www.google.com/search?q='
+SEARCH_URL='https://startpage.com/sp/search?query='
+# SEARCH_URL='https://www.google.com/search?q='
 QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
 
 # if query does not contain dot, assume it's not a url
