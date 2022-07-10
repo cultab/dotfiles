@@ -1,5 +1,5 @@
 #!/bin/sh
-polybar-msg -p "$(pgrep -f 'polybar --reload tray')" cmd toggle
+polybar-msg -p "$(pgrep -f 'polybar --reload traybar')" cmd toggle
 # raise window again..
 xdo raise -a polybar-traybar_LVDS1
 xdo raise -a "Polybar tray window"
