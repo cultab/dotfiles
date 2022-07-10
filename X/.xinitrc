@@ -49,7 +49,7 @@ xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 activate-linux "Activate Linux" "Edit /etc/settings.d to activate" &
 barrier &
 # picom --experimental-backend -b & # picom-jonaburg
-picom -b &                         # picom is picom-pijulious
+picom --experimental-backend -b &  # picom is picom-pijulious
 ~/bin/autoshutdown_on_low_power &
 appimaged &
 pipewire & # pulseaudio --start &
