@@ -25,10 +25,12 @@ lualine:
   cmd: "all_nvim 'lua ReloadStatusline(\"%\")'"
 
 polybar:
+  type: polybar
   path: "~/.config/polybar/config.ini"
-  regex: '^include-file = .*\.ini'
+  regex: 'include-file = .*\.ini'
   pre: 'include-file = ./'
   post: '.ini'
+  cmd: "bspc config top_padding 0"
 
 # lightline:
 #   path: "~/.config/nvim/init.vim"
