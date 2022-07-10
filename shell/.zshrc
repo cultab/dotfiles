@@ -1,4 +1,3 @@
-
 autoload -Uz compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 autoload -Uz edit-command-line;
@@ -91,4 +90,3 @@ fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
 
 prompt_nix_shell_setup "$@"
-

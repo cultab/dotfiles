@@ -26,6 +26,7 @@ alias unmountusb='udiskie-umount -d -a'
 alias gradle='gradle --console rich'
 alias up="up --no-colors"
 alias void-docs="void-docs -m"
+alias info="info --vi-keys"
 
 # don't pollute my $HOME :)
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
