@@ -1,4 +1,4 @@
-My dotfiles, use at your own risk.
+my dotfiles, use at your own risk~
 
 # usage
 
