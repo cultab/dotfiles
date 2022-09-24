@@ -8,8 +8,8 @@ ssh_symbol = ""
 [character]
 #symbol cache :) = "❯ "
 success_symbol = "[ε](bold green)"
-error_symbol = "[φ](bold red)"
-vicmd_symbol = "[ε](bold blue)"
+error_symbol = "[α](bold red)"
+vicmd_symbol = "[v](bold blue)"
 # use_symbol_for_status = true
 
 [battery]

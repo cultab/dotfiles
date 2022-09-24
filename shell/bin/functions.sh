@@ -107,6 +107,13 @@ ssh_display() {
     fi
 }
 
+ssh_unset_display() {
+    if [ "$SSH_CLIENT" ] ; then
+        echo "Found ssh client, unsetting $$DISPLAY."
+        unset DISPLAY
+    fi
+}
+
 vimw() {
     prog=$(which "$*")
     if [ $? = 0 ]; then
