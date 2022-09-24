@@ -55,6 +55,9 @@ map "<leader>t" { nil, "Text operations" , 'nv'}
     map "<leader>ta" { "<cmd>EasyAlign<CR>",  "Easy Align", 'v' }
     map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Search for emoji" }
 
+
+
+map "<leader>l" { require"lsp_lines".toggle, "Toggle lsp virtual text"}
 map "<leader>b"  { "<cmd>BufferPick<CR>",         "Pick buffer" }
 map "<leader>f"  { require"telescope.builtin".find_files, "Find files"  }
 map "<leader>g"  { require"telescope.builtin".live_grep,  "Live grep"   }

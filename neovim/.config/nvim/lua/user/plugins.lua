@@ -88,20 +88,20 @@ return require('packer').startup(function(use)
         use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
             requires = { 'nvim-treesitter/nvim-treesitter' }
         }--}}}
-        use { 'romgrk/nvim-treesitter-context',--{{{
-            config = function ()
-                require'treesitter-context'.setup(require("user.treesitter").context)
-            end
-        }--}}}
+        -- use { 'romgrk/nvim-treesitter-context',--{{{
+        --     config = function ()
+        --         require'treesitter-context'.setup(require("user.treesitter").context)
+        --     end
+        -- }--}}}
     -- }}}
 
     -- visual {{{
         -- major ui elements
         use { 'romgrk/barbar.nvim',--{{{
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+            requires = { 'kyazdani42/nvim-web-devicons', opt = false }
         }--}}}
         use { 'nvim-lualine/lualine.nvim',--{{{
-            requires = {'kyazdani42/nvim-web-devicons', opt = true}
+            requires = {'kyazdani42/nvim-web-devicons', opt = false}
         }--}}}
         use { 'rcarriga/nvim-notify',--{{{
             config = function()
@@ -114,7 +114,7 @@ return require('packer').startup(function(use)
         }--}}}
 
         -- context
-        use 'haringsrob/nvim_context_vt'
+        -- use 'haringsrob/nvim_context_vt'
         use 'lukas-reineke/indent-blankline.nvim'
         use { 'kosayoda/nvim-lightbulb',--{{{
             config = function ()
@@ -126,6 +126,13 @@ return require('packer').startup(function(use)
         -- general changes
         use 'stevearc/dressing.nvim'
         use 'onsails/lspkind-nvim'
+        use { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',--{{{
+            config = function()
+                -- Disable virtual_text since it's redundant due to lsp_lines.
+                vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+                require("lsp_lines").setup()
+            end,
+        }--}}}
 
         use { 'glepnir/dashboard-nvim', --{{{
             opt = false,
@@ -169,7 +176,7 @@ return require('packer').startup(function(use)
                     --     "BufferLineSeparator",
                     --     "BufferLineIndicatorSelected",
                     -- },
-                    extra_groups = 'all',
+                    -- extra_groups = 'all',
                     exclude = {}, -- table: groups you don't want to clear
                     })
 
@@ -298,6 +305,32 @@ return require('packer').startup(function(use)
         use { 'rhysd/committia.vim' }--}}}
 
     -- misc {{{
+        use { 'abecodes/tabout.nvim' ,--{{{
+            config = function ()
+                require('tabout').setup {
+                    tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+                    backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+                    act_as_tab = true, -- shift content if tab out is not possible
+                    act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+                    default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+                    default_shift_tab = '<C-d>', -- reverse shift default action,
+                    enable_backwards = true, -- well ...
+                    completion = true, -- if the tabkey is used in a completion pum
+                    tabouts = {
+                        {open = "'", close = "'"},
+                        {open = '"', close = '"'},
+                        {open = '`', close = '`'},
+                        {open = '(', close = ')'},
+                        {open = '[', close = ']'},
+                        {open = '{', close = '}'}
+                    },
+                    ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+                    exclude = {} -- tabout will ignore these filetypes
+                }
+            end,
+                wants = {'nvim-treesitter'}, -- or require if not used so far
+                after = {'nvim-cmp'} -- if a completion plugin is using tabs load it before
+        }--}}}
         use { 'folke/which-key.nvim',--{{{
         config = function ()
             require('which-key').setup{

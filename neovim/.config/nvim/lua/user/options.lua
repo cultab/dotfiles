@@ -118,8 +118,8 @@ augroup autoSauce
     autocmd BufWritePost .tmux.conf silent !tmux display-message 'Sourced .tmux.conf\!' ';' source-file ~/.tmux.conf
     autocmd BufWritePost *.xdefaults silent !reload_xrdb
     autocmd BufWritePost bspwmrc silent !~/.config/bspwm/bspwmrc
-    autocmd BufWritePost *.tex,*.latex silent !xelatex %
+    " autocmd BufWritePost *.tex,*.latex silent !xelatex %
 augroup end
 ]]
 
-
+--
