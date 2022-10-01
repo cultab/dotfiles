@@ -4,7 +4,7 @@ alias startx='startx -- -ardelay 250 -arinterval 25'
 
 # if neovim is installed alias it
 if command -v nvim > /dev/null 2>&1; then
-    alias vim="nvim"
+    alias vim='nvim --listen /tmp/nvim-$RANDOM'
 fi
 
 # shortcuts

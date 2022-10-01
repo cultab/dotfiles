@@ -12,31 +12,31 @@
 *.font:  Iosevka Nerd Font:size=11
 st.font: Iosevka Nerd Font Mono:size=12
 
-*opacity: 1.00
+*.opacity: 1.0
 
-*color0:  base00
-*color1:  base01
-*color2:  base02
-*color3:  base03
-*color4:  base04
-*color5:  base05
-*color6:  base06
-*color7:  base07
-*color8:  base08
-*color9:  base09
-*color10: base0A
-*color11: base0B
-*color12: base0C
-*color13: base0D
-*color14: base0E
-*color15: base0F
+*.color0:  base00
+*.color1:  base01
+*.color2:  base02
+*.color3:  base03
+*.color4:  base04
+*.color5:  base05
+*.color6:  base06
+*.color7:  base07
+*.color8:  base08
+*.color9:  base09
+*.color10: base0A
+*.color11: base0B
+*.color12: base0C
+*.color13: base0D
+*.color14: base0E
+*.color15: base0F
 
-*foreground:   basefg
-*background:   basebg
-*cursorColor:  basecc
+*.foreground:   basefg
+*.background:   basebg
+*.cursorColor:  basecc
 
-*active: basesb
-*selection: basesb
+*.active: basesb
+*.selection: basesb
 
 polybar.active: basesb
 ! extra colors for polybar, if defined, use them instead
@@ -53,12 +53,12 @@ polybar.foreground: basepf
 dmenu.selbackground: basesb
 dmenu.selforeground: basebg
 
-dwm.normbordercolor: basebg
-dwm.normbgcolor:     basebg
-dwm.normfgcolor:     basefg
-dwm.selbordercolor:  basesb
-dwm.selbgcolor:      basesb
-dwm.selfgcolor:      basebg
+*.normbordercolor: basebg
+*.normbgcolor:     basebg
+*.normfgcolor:     basefg
+*.selbordercolor:  basesb
+*.selbgcolor:      basesb
+*.selfgcolor:      basebg
 
 Xft.autohint: 0
 Xft.antialias: 1

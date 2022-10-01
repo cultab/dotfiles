@@ -1,11 +1,13 @@
 # Theme definitions.
 
-tokyonight:
+tokyonight-night:
   colorscheme: "tokyonight"
+  nvim: "tokyonight-night"
 
-tokyonight_storm:
+tokyonight-storm:
   colorscheme: "tokyonight"
   xresources: "tokyonight_storm"
+  nvim: "tokyonight-storm"
 
 potato:
   colorscheme: "potato"

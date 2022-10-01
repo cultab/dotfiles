@@ -3,6 +3,6 @@
 # for socket in $(nvr --serverlist); do
 #     nvr --nostart --servername "$socket" "-c $*"
 # done
-for socket in /tmp/nvim*/0; do
+for socket in /tmp/nvim-*; do
     vim --remote-send ":$*<CR>" --server "$socket"
 done
