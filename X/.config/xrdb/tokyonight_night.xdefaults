@@ -1,6 +1,6 @@
-#define basebg #24283b
+#define basebg #1a1b26
 #define basefg #c0caf5
-#define base00 #1d202f
+#define base00 #15161e
 #define base01 #f7768e
 #define base02 #9ece6a
 #define base03 #e0af68
