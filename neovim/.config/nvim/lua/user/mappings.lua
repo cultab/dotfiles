@@ -64,34 +64,34 @@ map "<leader>g"  { require"telescope.builtin".live_grep,  "Live grep"   }
 map "<leader>h" { require"telescope.builtin".help_tags,  "Search help tags" }
 
 map "<leader>G" { nil, "Git" }
-    map "<leader>Gc" { require"telescope.builtin.git".git_branches,  "Commits"  }
-    map "<leader>Gb" { require"telescope.builtin.git".git_branches, "Branches" }
-    map "<leader>Gs" { require"telescope.builtin.git".git_status,   "Status"   }
-    map "<leader>Gp" { require"telescope.builtin.git".git_bcommits, "Commits in buffer" }
-    map "<leader>GS" { require"gitsigns".stage_hunk, "Stage hunk" }
-    map "<leader>Gr" { require"gitsigns".reset_hunk , "Reset hunk" }
-    map "<leader>GR" { require"gitsigns".reset_buffer , "Reset buffer" }
-    map "<leader>Gp" { require"gitsigns".preview_hunk , "Preview hunk" }
-    map "<leader>GB" { require"gitsigns".blame_line , "Blame line" }
+    map "<leader>Gc" { require"telescope.builtin".git_branches, "Commits"  }
+    map "<leader>Gb" { require"telescope.builtin".git_branches, "Branches" }
+    map "<leader>Gs" { require"telescope.builtin".git_status,   "Status"   }
+    map "<leader>Gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
+    map "<leader>GS" { require"gitsigns".stage_hunk,            "Stage hunk" }
+    map "<leader>Gr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
+    map "<leader>GR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
+    map "<leader>Gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
+    map "<leader>GB" { require"gitsigns".blame_line ,           "Blame line" }
 
 map:register()
 
 function M.set_lsp_mappings()
-    map 'gD'        { vim.lsp.buf.declaration, "Goto declaration [LSP]" }
-    map 'gd'        { vim.lsp.buf.definition, "Goto definition [LSP]" }
-    map 'gi'        { vim.lsp.buf.implementation, "Goto implementation [LSP]" }
-    map 'K'         { vim.lsp.buf.hover, "Hover documentation [LSP]" }
-    map '<C-k>'     { vim.lsp.buf.signature_help, "Open signature help [LSP]" }
-    map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
+    map 'gD'        { vim.lsp.buf.declaration,        " Goto declaration [LSP]"     }
+    map 'gd'        { vim.lsp.buf.definition,         " Goto definition [LSP]"      }
+    map 'gi'        { vim.lsp.buf.implementation,     " Goto implementation [LSP]"  }
+    map 'K'         { vim.lsp.buf.hover,              " Hover documentation [LSP]"  }
+    map '<C-k>'     { vim.lsp.buf.signature_help,     " Open signature help [LSP]"  }
+    map '<leader>D' { vim.lsp.buf.type_definition,    " Show type definition [LSP]" }
+    map '<leader>R' { vim.lsp.buf.references,         " Show references [LSP]"     }
+    map '<leader>r' { vim.lsp.buf.rename,             " Rename symbol [LSP]"       }
+    map '<leader>=' { vim.lsp.buf.formatting,         " Format buffer [LSP]"       }
+    map '<leader>=' { vim.lsp.buf.range_formatting,   " Format range [LSP]" , 'v'  }
+    map '<A-CR>'    { vim.lsp.buf.code_action,        " Code Action [LSP]"         }
+    map '['         { vim.diagnostic.goto_prev,       " Previous diagnostic [LSP]" }
+    map ']'         { vim.diagnostic.goto_next,       " Next diagnostic [LSP]"     }
     map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
-    map '<leader>q' { "<cmd>vim.diagnostic.setloclist<CR>", "Open loclist [LSP]" }
-    map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
-    map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
-    map '<leader>=' { vim.lsp.buf.formatting, "Format buffer [LSP]" }
-    map '<leader>=' { vim.lsp.buf.range_formatting, "Format range [LSP]", 'v' }
-    map '<A-CR>'    { vim.lsp.buf.code_action, "Code Action [LSP]" }
-    map '['         { vim.diagnostic.goto_prev, "Previous diagnostic [LSP]" }
-    map ']'         { vim.diagnostic.goto_next, "Next diagnostic [LSP]" }
+    -- map '<leader>q' { require"telescope.builtin".loclist, " Open loclist [LSP] " }
     map:register()
 end
 

@@ -134,12 +134,7 @@ return require('packer').startup(function(use)
             end,
         }--}}}
 
-        use { 'glepnir/dashboard-nvim', --{{{
-            opt = false,
-            config = function()
-                require "user.welcome"
-            end
-        }-- }}}
+        use { 'glepnir/dashboard-nvim' }
 
         -- colorising
         -- use { 'norcalli/nvim-colorizer.lua',--{{{
@@ -211,11 +206,15 @@ return require('packer').startup(function(use)
             })
         end
         }--}}}
-        use { 'xiyaowong/telescope-emoji.nvim',--{{{
-            config = function ()
-                require "user.telescope"
+        use { 'xiyaowong/telescope-emoji.nvim' }
+        use { 'smjonas/live-command.nvim',-- {{{
+            config = function()
+                require("live-command").setup {
+                    commands = { Norm = { cmd = "norm" }, },
+                    debug = true
+                }
             end
-        }--}}}
+        }-- }}}
     --}}}
 
     -- colorschemes {{{
@@ -354,16 +353,19 @@ return require('packer').startup(function(use)
         use { 'aserowy/tmux.nvim',--{{{
             config = function ()
                 require("tmux").setup{
-                    navigation = { cycle_navigation = false }
+                    navigation = {
+                        cycle_navigation = false,
+                        enable_default_keybindings = false,
+                    },
+                    resize = {
+                        enable_default_keybindings = false,
+                    }
                 }
             end
         }--}}}
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         use { 'nvim-telescope/telescope.nvim',--{{{
-            requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
-            config = function()
-                require "user.telescope"
-            end
+            requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
         }--}}}
         use { 'nvim-neorg/neorg',--{{{
             config = function ()

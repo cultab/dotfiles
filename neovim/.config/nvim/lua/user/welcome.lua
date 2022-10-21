@@ -1,4 +1,6 @@
+local db = require('dashboard')
 vim.g.dashboard_default_executive = 'telescope'
+
 -- vim.g.dashboard_custom_header = {
 -- [[                                      __              ]],
 -- [[                                     |  \             ]],
@@ -25,7 +27,7 @@ vim.g.dashboard_default_executive = 'telescope'
 -- [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
 -- }
 
-vim.g.dashboard_custom_header = {
+db.custom_header = {
 [[                                        _                     ]],
 [[                  _                    | |                    ]],
 [[                 |_|                   | |                    ]],
@@ -34,6 +36,39 @@ vim.g.dashboard_custom_header = {
 [[| |  | |  \ v /  | | | |  | |  | |     | | | |  | | | |  | |  ]],
 [[| |  | |   \ /   | | | |  | |  | |  _  | | | |__| | | |__| |_ ]],
 [[|_|  |_|    v    |_| |_|  |_|  |_| |_| |_| |______| |________|]],
+}
+
+db.custom_center = {
+    {
+        icon = "ﭯ ",
+        desc = "Recently opened files             ",
+        shortcut = "      ",
+        action =  "DashboardFindHistory"
+    },
+    {
+        icon = " ",
+        desc = "New file                         ",
+        shortcut = "       ",
+        action = "DashboardNewFile"
+    },
+    {
+        icon = " ",
+        desc = "Find file                        ",
+        shortcut = "SPC f  " ,
+        action =  "Telescope find_files"
+    },
+    {
+        icon = " ",
+        desc = "Settings                         ",
+        shortcut = "SPC c v",
+        action =  "lua OpenConfig()"
+    },
+    {
+        icon = "x ",
+        desc = "Exit Neovim                      ",
+        shortcut = "q      ",
+        action = "q"
+    }
 }
 
 vim.g.dashboard_custom_section = {
@@ -66,6 +101,29 @@ vim.g.dashboard_custom_section = {
         command = ":q"
     },
 }
+
+local hlgroups = {
+    "DashboardHeader",
+    "DashboardCenter",
+    "DashboardShortCut",
+    "DashboardFooter"
+}
+
+local linkgroups = {
+    "Function",
+    "String",
+    "Number",
+    "Operator"
+}
+
+-- vim.api.nvim_set_hl()
+
+for i, group in ipairs(hlgroups) do
+    if vim.fn.hlexists(group) == 0 then
+         -- vim.highlight.link(group,linkgroups[i])
+        vim.api.nvim_set_hl(0, group, { link = linkgroups[i] })
+    end
+end
 
 vim.cmd[[
     augroup UserDashboard

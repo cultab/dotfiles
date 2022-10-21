@@ -13,3 +13,7 @@ require 'user.visual'
 require "user.statusline"
 require 'user.lsp'
 require 'user.mappings'
+
+require 'user.treesitter'
+require 'user.welcome'
+require 'user.telescope'

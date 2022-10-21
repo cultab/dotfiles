@@ -53,6 +53,7 @@ if vim.g.nvui then
   ]]
 end
 
+-- vim.g.ts_highlight_lua = true
 vim.opt.pumblend = 20 -- pseudo transparency for popup windows
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
@@ -287,7 +288,6 @@ vim.g.solarized_extra_hi_groups = true
 vim.g.ayucolor = "dark"
 
 -- Tokyonight {{{
-vim.g.tokyonight_style = "storm"
 vim.g.tokyonight_transparent = transparent
 vim.g.tokyonight_italic_functions = italic_functions
 vim.g.tokyonight_sidebars = sidebars
