@@ -1,3 +1,4 @@
+
 autoload -Uz compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 autoload -Uz edit-command-line;
@@ -5,7 +6,7 @@ zle -N edit-command-line
 
 zmodload zsh/zpty
 
-HISTFILE=~/.histfile
+export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
 HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
@@ -61,7 +62,7 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
 eval "$(starship init zsh)"
-# eval $(thefuck --alias) # slow
+# eval $(thefuck --alias)
 
 source ~/bin/exports
 source ~/bin/aliases
@@ -78,15 +79,17 @@ fi
 # Add to zshrc:
 source "$HOME/.local/share/miniplug.zsh"
 
-miniplug plugin 'zsh-users/zsh-syntax-highlighting'
+# miniplug plugin 'zsh-users/zsh-syntax-highlighting'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
 miniplug plugin 'se-jaeger/zsh-activate-py-environment'
 miniplug plugin 'zpm-zsh/colorize'
 miniplug plugin 'spwhitt/nix-zsh-completions'
+miniplug plugin 'zdharma-continuum/fast-syntax-highlighting'
 miniplug load
 
 # HACK: maybe ask about adding this in  nix.plugin.zsh
 fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
-
 prompt_nix_shell_setup "$@"
+
+

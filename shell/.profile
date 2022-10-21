@@ -19,27 +19,27 @@ if [ -f "/home/evan/.local/share/antidot/alias.sh" ]; then
 fi
 # don't pollute my $HOME plz
 
-export HISTFILE="${XDG_CACHE_HOME}/bash/history"
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
 export npm_config_cache="${XDG_CACHE_HOME}/npm"
-export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-export WINEPREFIX="$XDG_DATA_HOME"/wine
-export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
-export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export WINEPREFIX="$XDG_DATA_HOME/wine"
+export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
-export ATOM_HOME="$XDG_DATA_HOME"/atom
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
-export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-export GOPATH="$XDG_DATA_HOME"/go
-export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-export ICEAUTHORITY="$XDG_CACHE_HOME"/ICEauthority
-export MYPY_CACHE_DIR="$XDG_CACHE_HOME"/mypy
-export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
-export USERXSESSION="$XDG_CACHE_HOME"/X11/xsession
-export IPFS_PATH="$XDG_DATA_HOME"/ipfs/
+export ATOM_HOME="$XDG_DATA_HOME/atom"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GOPATH="$XDG_DATA_HOME/go"
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
+export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
+export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
+export IPFS_PATH="$XDG_DATA_HOME/ipfs/"
 
 # keychain
 mkdir -p /run/user/$(id -u)/keychain
