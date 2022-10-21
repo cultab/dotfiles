@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# start rtsp-simple-server
+docker run --rm -it --network=host aler9/rtsp-simple-server
+# grab screen and send it to rtsp server
+ffmpeg -f x11grab -y -framerate 30 -s 1600x900 -i :0.0 -f rtsp rtsp://localhost:8554/mystream
