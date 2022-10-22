@@ -61,7 +61,7 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
-eval "$(starship init zsh)"
+source ~/.config/zsh/transient_starship_prompt
 # eval $(thefuck --alias)
 
 source ~/bin/exports
@@ -91,5 +91,3 @@ miniplug load
 fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
 prompt_nix_shell_setup "$@"
-
-
