@@ -44,7 +44,6 @@ cmp.setup({
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
     },
     sources = cmp.config.sources({
-        { name = 'nvim_lua' }, -- first because it only completes under vim.*
         { name = 'luasnip' }, -- For luasnip users.
         { name = 'conventionalcommits' },
         { name = 'neorg' },
@@ -86,11 +85,12 @@ require'cmp_zsh'.setup {
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline', keyword_pattern=[=[[^[:blank:]\!]*]=] }
-    })
+    sources = cmp.config.sources( {
+            { name = 'path' }
+        }, {
+            { name = 'cmdline', keyword_pattern=[=[[^[:blank:]\!]*]=] }
+        }
+    )
 })
 
 cmp.setup.cmdline('/', {
@@ -99,7 +99,7 @@ cmp.setup.cmdline('/', {
 })
 
 -- Setup lspconfig.
-M.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+M.capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 
 local autopairs = require "nvim-autopairs.completion.cmp"
