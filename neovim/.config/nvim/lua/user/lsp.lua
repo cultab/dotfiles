@@ -48,14 +48,14 @@ end
 
 -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
 local server_opts = {
-    ["sumneko_lua"] = function(opts)
-        local lua_dev = require "lua-dev"
-        opts.settings = lua_dev.setup().settings
-        -- opts.root_dir = function ()
-        --     print(vim.fn.getcwd())
-        --     return vim.fn.getcwd()
-        -- end
-    end,
+    -- ["sumneko_lua"] = function(opts)
+    --     local neodev = require "neodev"
+    --     opts.settings = neodev.setup().settings
+    --     -- opts.root_dir = function ()
+    --     --     print(vim.fn.getcwd())
+    --     --     return vim.fn.getcwd()
+    --     -- end
+    -- end,
     ["diagnosticls"] = function(opts)--{{{
         opts.settings = {
             filetypes = { "bash", "sh" },

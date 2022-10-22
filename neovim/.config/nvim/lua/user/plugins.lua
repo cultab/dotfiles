@@ -43,24 +43,12 @@ return require('packer').startup(function(use)
         cmd = 'CodeActionMenu',
     }--}}}
     use 'mfussenegger/nvim-jdtls'
-    use "folke/lua-dev.nvim"
+    use { "folke/neodev.nvim",
+        config = function ()
+            require"neodev".setup()
+        end}
     use { 'jose-elias-alvarez/null-ls.nvim' }
 
-    -- use { "ahmedkhalf/project.nvim",--{{{
-    --     config = function()
-    --         require("project_nvim").setup {
-    --             detection_methods = { "lsp" },
-    --             -- your configuration comes here
-    --             -- or leave it empty to use the default settings
-    --             -- refer to the configuration section below
-    --             silent_chdir = false,
-    --             ignore_lsp = { "sumneko_lua" }
-    --         }
-    --         require('telescope').load_extension('projects')
-    --     end,
-    --     requires = {"nvim-telescope/telescope.nvim"}
-    -- }--}}}
-    --- }}}
 
     -- cmp-nvim {{{
         use 'hrsh7th/nvim-cmp'
@@ -69,7 +57,6 @@ return require('packer').startup(function(use)
         use 'hrsh7th/cmp-path'
         use 'hrsh7th/cmp-cmdline'
         use 'f3fora/cmp-spell'
-        use 'hrsh7th/cmp-nvim-lua'
         use 'jc-doyle/cmp-pandoc-references'
         use 'kdheepak/cmp-latex-symbols'
         use 'andersevenrud/cmp-tmux'
@@ -137,13 +124,11 @@ return require('packer').startup(function(use)
         use { 'glepnir/dashboard-nvim' }
 
         -- colorising
-        -- use { 'norcalli/nvim-colorizer.lua',--{{{
-        --     config = function () require("colorizer").setup() end
-        -- }--}}}
         use { 'RRethy/vim-hexokinase',--{{{
             run = "make hexokinase",
             config = function ()
-                vim.cmd [[ let g:Hexokinase_highlighters = ['backgroundfull'] ]]
+                -- vim.cmd [[ let g:Hexokinase_highlighters = ['backgroundfull'] ]]
+                vim.g["Hexokinase_highlighters"] = { "backgroundfull" }
             end
         }--}}}
         use { 'folke/todo-comments.nvim',--{{{
@@ -154,23 +139,11 @@ return require('packer').startup(function(use)
 
         -- extra
         use 'vim-pandoc/vim-pandoc-syntax'
-        use 'liuchengxu/graphviz.vim'
 
         use { 'xiyaowong/nvim-transparent',--{{{
             config = function ()
                 require("transparent").setup({
                     enable = false, -- boolean: enable transparent
-                    -- extra_groups = { -- table/string: additional groups that should be cleared
-                    --     -- In particular, when you set it to 'all', that means all available groups
-                    --
-                    --     -- example of akinsho/nvim-bufferline.lua
-                    --     "BufferLineTabClose",
-                    --     "BufferlineBufferSelected",
-                    --     "BufferLineFill",
-                    --     "BufferLineBackground",
-                    --     "BufferLineSeparator",
-                    --     "BufferLineIndicatorSelected",
-                    -- },
                     -- extra_groups = 'all',
                     exclude = {}, -- table: groups you don't want to clear
                     })
@@ -211,7 +184,6 @@ return require('packer').startup(function(use)
             config = function()
                 require("live-command").setup {
                     commands = { Norm = { cmd = "norm" }, },
-                    debug = true
                 }
             end
         }-- }}}
@@ -279,57 +251,13 @@ return require('packer').startup(function(use)
         use { 'lewis6991/gitsigns.nvim',--{{{
             requires = { 'nvim-lua/plenary.nvim' },
             config = function ()
-                require('gitsigns').setup{
-                    keymaps = {
-                        -- Default keymap options
-                        noremap = true,
-                        buffer = true,
-
-                        -- ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
-                        -- ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
-
-                        -- ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-                        -- ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-                        -- ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-                        -- ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-                        -- ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-                        -- ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-                        -- ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-                        -- ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>'
-                    }
-                }
+                    require('gitsigns').setup()
                 end
         }--}}}
         use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
         use { 'rhysd/committia.vim' }--}}}
 
     -- misc {{{
-        use { 'abecodes/tabout.nvim' ,--{{{
-            config = function ()
-                require('tabout').setup {
-                    tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
-                    backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
-                    act_as_tab = true, -- shift content if tab out is not possible
-                    act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-                    default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-                    default_shift_tab = '<C-d>', -- reverse shift default action,
-                    enable_backwards = true, -- well ...
-                    completion = true, -- if the tabkey is used in a completion pum
-                    tabouts = {
-                        {open = "'", close = "'"},
-                        {open = '"', close = '"'},
-                        {open = '`', close = '`'},
-                        {open = '(', close = ')'},
-                        {open = '[', close = ']'},
-                        {open = '{', close = '}'}
-                    },
-                    ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-                    exclude = {} -- tabout will ignore these filetypes
-                }
-            end,
-                wants = {'nvim-treesitter'}, -- or require if not used so far
-                after = {'nvim-cmp'} -- if a completion plugin is using tabs load it before
-        }--}}}
         use { 'folke/which-key.nvim',--{{{
         config = function ()
             require('which-key').setup{
@@ -367,55 +295,19 @@ return require('packer').startup(function(use)
         use { 'nvim-telescope/telescope.nvim',--{{{
             requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
         }--}}}
-        use { 'nvim-neorg/neorg',--{{{
-            config = function ()
-                require('neorg').setup {
-                    load = {
-                        ["core.defaults"] = {},
-                        ["core.norg.concealer"] = {},
-                        ["core.norg.esupports.metagen"] = {
-                            config = {
-                                type = "auto",
-                            }
-                        },
-                        ["core.norg.completion"] = {
-                            config = {
-                                engine = "nvim-cmp"
-                            },
-                        },
-                        ["core.keybinds"] = {
-                            config = {
-                                default_keybinds = true,
-                                norg_leader = "<Leader>o"
-                            }
-                        },
-                        -- ["core.norg.dirman"] = {
-                        --     config = {
-                        --         workspaces = {
-                        --             default = "~/.neorg"
-                        --         }
-                        --     }
-                        -- },
-                        -- ["core.integrations.telescope"] = {},
-                        ["core.export"] = {}
-
-                    }
-                }
-            end,
-            requires = "nvim-lua/plenary.nvim"
-        }--}}}
+        use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim" }
         use { 'declancm/cinnamon.nvim',--{{{
             config = function()
                 require('cinnamon').setup({
-                    extra_keymaps = true
+                    extra_keymaps = true,
+                    centered = true,
+                    hide_cursor = true,
+                    default_delay = 5,
+                    max_length = 500,
                 })
             end
-        }--}}}
-        -- disabled { 'karb94/neoscroll.nvim',--{{{
-        --     config = function()
-        --      require("neoscroll").setup()
-        --     end
-        -- }--}}}
+        }
+        --}}}
 
     --}}}
 
