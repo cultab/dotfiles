@@ -6,6 +6,15 @@ end
 
 local wk = require "which-key"
 
+-- TODO: other modes? "s", "o", "x", "l", "c", "t"
+local function prototype() return {
+    mappings = {
+        n = {},
+        v = {},
+        i = {},
+    }
+} end
+
 -- Map a key to a lua function or vimscript snippet also add a description.
 --
 -- map keycode:string { lua function | vimscript:string , description:string }
@@ -17,19 +26,11 @@ local wk = require "which-key"
 --
 -- An optional third argument determines the mode the key is bound in.
 --
--- Example, let's map <leader>= to vim.lsp.buf.range_formatting in visual mode:
+-- Example:
+-- mapping `<leader>=` to `vim.lsp.buf.range_format` in visual mode:
 -- ```lua
 -- map '<leader>=' { vim.lsp.buf.range_formatting, "Format range", 'v' }
 -- ```
--- TODO: other modes? "s", "o", "x", "l", "c", "t"
-local function prototype() return {
-    mappings = {
-        n = {},
-        v = {},
-        i = {},
-    }
-} end
-
 _G.map = setmetatable(prototype(), {
     -- enable syntax like:  map "<leader>a"  { vim.lsp.buf.rename , "some desc" }
     -- if mode is missing, assume normal mode
@@ -58,17 +59,21 @@ _G.map = setmetatable(prototype(), {
                 for key, mapping_args in pairs(mappings) do
                     -- @type string|function|nil
                     local mapping = mapping_args[1]
-                    -- @type string
+                    -- @type string|nil
                     local description = mapping_args[2]
 
-                    if mapping ~= nil then
+                    if description == nil then
+                        description = ""
+                    end
+
+                    if mapping ~= nil then -- real keymap
                         wk.register(
                             { [key] = { mapping, description } },
                             { mode = mode }
                         )
-                    else
+                    else                   -- keymap group name
                         wk.register(
-                            { [key] = { name = description } } ,
+                            { [key] = { name = description } },
                             { mode = mode }
                         )
                     end
@@ -79,12 +84,5 @@ _G.map = setmetatable(prototype(), {
         end
     }
 })
-
-
-                        -- if type(mapping) == "function" then
-                        --     vim.api.nvim_set_keymap(mode:sub(i, i), key, '', { callback = mapping, desc = description })
-                        -- else
-                        --     vim.api.nvim_set_keymap(mode:sub(i, i), key, mapping, { desc = description })
-                        -- end
 
 return M

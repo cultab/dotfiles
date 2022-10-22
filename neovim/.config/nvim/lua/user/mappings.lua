@@ -37,30 +37,22 @@ require "user.map"
 
 map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
-map "<leader>c" { nil, "Run command / Open config" }
+map "<leader>c" { nil, "Run command" }
     map "<leader>cl" { RunLastCommand, "Re-run last command" }
-    map "<leader>cc" { InputCommand, "Run command" }
+    map "<leader>cc" { InputCommand,   "Run command" }
     map "<leader>cr" { RunCurrentFile, "Run current file" }
-    map "<leader>cb" { "<cmd>e ~/.config/bspwm/bspwmrc<CR>", "bspwm" }
-    map "<leader>cp" { "<cmd>e ~/.config/polybar/config.ini|cd ~/.config/polybar/<CR>", "Polybar" }
-    map "<leader>cs" { "<cmd>e ~/.config/sxhkd/sxhkdrc<CR>", "Simple x keybind daemon" }
-    map "<leader>cd" { "<cmd>e ~/.config/dunst/no_theme.dunstrc<CR>", "Dunst" }
-    map "<leader>cv" { OpenConfig, "neovim" }
-    map "<leader>cx" { "<cmd>e ~/.config/xrdb/<CR>", "xresources" }
-    map "<leader>ct" { "<cmd>n ~/.config/themr/*.yaml<CR>", "themr" }
-    map "<leader>cz" { "<cmd>n ~/.zshrc<CR>", "zshrc" }
+
+map "<leader>o" { require'user.configs'.config_picker, "Open config picker" }
 
 map "<leader>t" { nil, "Text operations" , 'nv'}
-    map "<leader>tt" { ":Tabularize<space>/", "Tabularize", 'v' }
-    map "<leader>ta" { "<cmd>EasyAlign<CR>",  "Easy Align", 'v' }
-    map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Search for emoji" }
+    map "<leader>tt" { ":Tabularize<space>/",       "Tabularize", 'v' }
+    map "<leader>ta" { "<cmd>EasyAlign<CR>",        "Easy Align", 'v' }
+    map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Emoji Picker" }
 
-
-
-map "<leader>l" { require"lsp_lines".toggle, "Toggle lsp virtual text"}
-map "<leader>b"  { "<cmd>BufferPick<CR>",         "Pick buffer" }
-map "<leader>f"  { require"telescope.builtin".find_files, "Find files"  }
-map "<leader>g"  { require"telescope.builtin".live_grep,  "Live grep"   }
+map "<leader>l" { require"lsp_lines".toggle,             "Toggle lsp virtual text"}
+map "<leader>b" { "<cmd>BufferPick<CR>",                 "Pick buffer" }
+map "<leader>f" { require"telescope.builtin".find_files, "Find files"  }
+map "<leader>g" { require"telescope.builtin".live_grep,  "Live grep"   }
 map "<leader>h" { require"telescope.builtin".help_tags,  "Search help tags" }
 
 map "<leader>G" { nil, "Git" }
@@ -74,50 +66,36 @@ map "<leader>G" { nil, "Git" }
     map "<leader>Gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
     map "<leader>GB" { require"gitsigns".blame_line ,           "Blame line" }
 
+map "<M-h>" { require"tmux".move_left   }
+map "<M-j>" { require"tmux".move_bottom }
+map "<M-k>" { require"tmux".move_top    }
+map "<M-l>" { require"tmux".move_right  }
+
 map:register()
 
 function M.set_lsp_mappings()
-    map 'gD'        { vim.lsp.buf.declaration,        " Goto declaration [LSP]"     }
-    map 'gd'        { vim.lsp.buf.definition,         " Goto definition [LSP]"      }
-    map 'gi'        { vim.lsp.buf.implementation,     " Goto implementation [LSP]"  }
-    map 'K'         { vim.lsp.buf.hover,              " Hover documentation [LSP]"  }
-    map '<C-k>'     { vim.lsp.buf.signature_help,     " Open signature help [LSP]"  }
-    map '<leader>D' { vim.lsp.buf.type_definition,    " Show type definition [LSP]" }
-    map '<leader>R' { vim.lsp.buf.references,         " Show references [LSP]"     }
-    map '<leader>r' { vim.lsp.buf.rename,             " Rename symbol [LSP]"       }
-    map '<leader>=' { vim.lsp.buf.formatting,         " Format buffer [LSP]"       }
-    map '<leader>=' { vim.lsp.buf.range_formatting,   " Format range [LSP]" , 'v'  }
-    map '<A-CR>'    { vim.lsp.buf.code_action,        " Code Action [LSP]"         }
-    map '['         { vim.diagnostic.goto_prev,       " Previous diagnostic [LSP]" }
-    map ']'         { vim.diagnostic.goto_next,       " Next diagnostic [LSP]"     }
-    map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
+    -- map 'gD'        { vim.lsp.buf.declaration,      "Goto declaration [LSP]"     }
+    -- map 'gd'        { vim.lsp.buf.definition,       "Goto definition [LSP]"      }
+    -- map 'gi'        { vim.lsp.buf.implementation,   "Goto implementation [LSP]"  }
+    -- map 'K'         { vim.lsp.buf.hover,            "Hover documentation [LSP]"  }
+    -- map '<C-k>'     { vim.lsp.buf.signature_help,   "Open signature help [LSP]"  }
+    -- map '<leader>D' { vim.lsp.buf.type_definition,  "Show type definition [LSP]" }
+    -- map '<leader>R' { vim.lsp.buf.references,       "Show references [LSP]"      }
+    -- map '<leader>r' { vim.lsp.buf.rename,           "Rename symbol [LSP]"        }
+    -- map '<A-CR>'    { vim.lsp.buf.code_action,      "Code Action [LSP]"          }
+    -- map '['         { vim.diagnostic.goto_prev,     "Previous diagnostic [LSP]"  }
+    -- map ']'         { vim.diagnostic.goto_next,     "Next diagnostic [LSP]"      }
+    -- map '<leader>=' { function() vim.lsp.buf.format {async = true} end,                     "Format buffer [LSP]"         }
+    -- map '<leader>=' { function() vim.lsp.buf.range_format {async = true} end,               "Format range [LSP]" ,    'v' }
+    -- map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
     -- map '<leader>q' { require"telescope.builtin".loclist, " Open loclist [LSP] " }
     map:register()
 end
 
-
-function M.set_welcome_mappings()
-    map '<leader>F' {"<cmd>DashboardFindHistory<CR>", "File History"}
-    map '<leader>C' {"<cmd>DashboardChangeColorscheme<CR>", "Change Colorscheme"}
-    map '<leader>n' {"<cmd>DashboardNewFile<CR>", "New File"}
-    vim.cmd [[
+function M.set_welcome_mappings() vim.cmd[[
         nnoremap <buffer> q :q<CR>
-        " nnoremap <buffer> <silent> <Leader>fp :Telescope projects<CR>
-        " nnoremap <buffer> <silent> <Leader>fh :DashboardFindHistory<CR>
-        " nnoremap <buffer> <silent> <Leader>tc :DashboardChangeColorscheme<CR>
-        " nnoremap <buffer> <silent> <Leader>cn :DashboardNewFile<CR>
-        " nnoremap <buffer> <silent> <Leader>ff :DashboardFindFile<CR>
-        " nnoremap <buffer> <silent> <Leader>fa :DashboardFindWord<CR>
-        " nnoremap <buffer> <silent> <Leader>fb :DashboardJumpMark<CR>
-    ]]
-end
+]] end
 
-vim.cmd [[
-    nnoremap <M-h> <cmd>lua require("tmux").move_left()<cr>,
-    nnoremap <M-j> <cmd>lua require("tmux").move_bottom()<cr>,
-    nnoremap <M-k> <cmd>lua require("tmux").move_top()<cr>,
-    nnoremap <M-l> <cmd>lua require("tmux").move_right()<cr>,
-]]
 
 
 vim.cmd[[
