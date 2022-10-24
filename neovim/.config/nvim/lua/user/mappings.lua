@@ -65,6 +65,7 @@ map "<leader>G" { nil, "Git" }
     map "<leader>GR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
     map "<leader>Gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
     map "<leader>GB" { require"gitsigns".blame_line ,           "Blame line" }
+    map "<leader>GG" { require"neogit".open,                    "Open Neogit" }
 
 map "<M-h>" { require"tmux".move_left   }
 map "<M-j>" { require"tmux".move_bottom }
@@ -74,21 +75,21 @@ map "<M-l>" { require"tmux".move_right  }
 map:register()
 
 function M.set_lsp_mappings()
-    -- map 'gD'        { vim.lsp.buf.declaration,      "Goto declaration [LSP]"     }
-    -- map 'gd'        { vim.lsp.buf.definition,       "Goto definition [LSP]"      }
-    -- map 'gi'        { vim.lsp.buf.implementation,   "Goto implementation [LSP]"  }
-    -- map 'K'         { vim.lsp.buf.hover,            "Hover documentation [LSP]"  }
-    -- map '<C-k>'     { vim.lsp.buf.signature_help,   "Open signature help [LSP]"  }
-    -- map '<leader>D' { vim.lsp.buf.type_definition,  "Show type definition [LSP]" }
-    -- map '<leader>R' { vim.lsp.buf.references,       "Show references [LSP]"      }
-    -- map '<leader>r' { vim.lsp.buf.rename,           "Rename symbol [LSP]"        }
-    -- map '<A-CR>'    { vim.lsp.buf.code_action,      "Code Action [LSP]"          }
-    -- map '['         { vim.diagnostic.goto_prev,     "Previous diagnostic [LSP]"  }
-    -- map ']'         { vim.diagnostic.goto_next,     "Next diagnostic [LSP]"      }
-    -- map '<leader>=' { function() vim.lsp.buf.format {async = true} end,                     "Format buffer [LSP]"         }
-    -- map '<leader>=' { function() vim.lsp.buf.range_format {async = true} end,               "Format range [LSP]" ,    'v' }
-    -- map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
-    -- map '<leader>q' { require"telescope.builtin".loclist, " Open loclist [LSP] " }
+    map 'gD'        { vim.lsp.buf.declaration,      "Goto declaration [LSP]"     }
+    map 'gd'        { vim.lsp.buf.definition,       "Goto definition [LSP]"      }
+    map 'gi'        { vim.lsp.buf.implementation,   "Goto implementation [LSP]"  }
+    map 'K'         { vim.lsp.buf.hover,            "Hover documentation [LSP]"  }
+    map '<C-k>'     { vim.lsp.buf.signature_help,   "Open signature help [LSP]"  }
+    map '<leader>D' { vim.lsp.buf.type_definition,  "Show type definition [LSP]" }
+    map '<leader>R' { vim.lsp.buf.references,       "Show references [LSP]"      }
+    map '<leader>r' { vim.lsp.buf.rename,           "Rename symbol [LSP]"        }
+    map '<A-CR>'    { vim.lsp.buf.code_action,      "Code Action [LSP]"          }
+    map '['         { vim.diagnostic.goto_prev,     "Previous diagnostic [LSP]"  }
+    map ']'         { vim.diagnostic.goto_next,     "Next diagnostic [LSP]"      }
+    map '<leader>=' { function() vim.lsp.buf.format {async = true} end,                     "Format buffer [LSP]"         }
+    map '<leader>=' { function() vim.lsp.buf.range_format {async = true} end,               "Format range [LSP]" ,    'v' }
+    map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
+    map '<leader>q' { require"telescope.builtin".loclist, " Open loclist [LSP] " }
     map:register()
 end
 

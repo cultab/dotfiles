@@ -1,8 +1,8 @@
 -- HACK: see https://github.com/nvim-treesitter/nvim-treesitter/issues/3538
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = { "*.lua" },
-    command = "TSBufToggle highlight",
-})
+-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+--     pattern = { "*.lua" },
+--     command = "TSBufEnable highlight",
+-- })
 
 local M = {}
 M.configs = {

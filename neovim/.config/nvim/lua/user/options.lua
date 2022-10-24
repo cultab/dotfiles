@@ -45,7 +45,7 @@ opt.splitbelow = true
 opt.splitright = true
 -- opt.splitkeep = "screen" --  NOTE: wait for 0.9.0
 
-opt.autochdir = true -- automatically change directory
+opt.autochdir = false -- automatically change directory
 opt.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
 opt.mouse='a'  -- enable mouse for a(ll) modes
 opt.lazyredraw = true

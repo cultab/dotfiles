@@ -11,10 +11,14 @@ require 'user.plugins'
 require 'user.options'
 require 'user.visual'
 require "user.statusline"
-require 'user.lsp'
 require 'user.mappings'
 
 require 'user.treesitter'
 require 'user.welcome'
 require 'user.telescope'
 require 'user.neorg'
+require 'user.mason'
+require 'user.lsp'
+require 'user.null-lsp'
+
+vim.g.committia_open_only_vim_starting = 0

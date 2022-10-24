@@ -35,20 +35,18 @@ return require('packer').startup(function(use)
     use { 'wbthomason/packer.nvim', opt = true }
 
     -- lsp {{{
+    use  'williamboman/mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
-    use 'williamboman/nvim-lsp-installer'
     use 'folke/lsp-colors.nvim'
     use 'ray-x/lsp_signature.nvim'
     use { 'weilbith/nvim-code-action-menu',--{{{
         cmd = 'CodeActionMenu',
     }--}}}
     use 'mfussenegger/nvim-jdtls'
-    use { "folke/neodev.nvim",
-        config = function ()
-            require"neodev".setup()
-        end}
-    use { 'jose-elias-alvarez/null-ls.nvim' }
-
+    use  "folke/neodev.nvim"
+    use 'jose-elias-alvarez/null-ls.nvim'
+    -- }}}
 
     -- cmp-nvim {{{
         use 'hrsh7th/nvim-cmp'
@@ -254,8 +252,14 @@ return require('packer').startup(function(use)
                     require('gitsigns').setup()
                 end
         }--}}}
-        use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-        use { 'rhysd/committia.vim' }--}}}
+        use { 'TimUntersberger/neogit',-- {{{
+            requires = {
+                'nvim-lua/plenary.nvim',
+                'sindrets/diffview.nvim'
+            }
+        }-- }}}
+        use { 'rhysd/committia.vim' }
+    --}}}
 
     -- misc {{{
         use { 'folke/which-key.nvim',--{{{
@@ -309,6 +313,5 @@ return require('packer').startup(function(use)
         }
         --}}}
 
-    --}}}
 
 end)
