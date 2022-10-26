@@ -7,11 +7,11 @@ require'nvim-autopairs'.setup{ fast_wrap = {} }
 require"neodev".setup { lspconfig = false }
 
 require'mason-lspconfig'.setup{
-    ensure_installed = {
-        "bashls",
-        "tsserver",
-        "sumneko_lua"
-    }
+    -- ensure_installed = {
+    --     "bashls",
+    --     "tsserver",
+    --     "sumneko_lua"
+    -- }
 }
 
 local capabilities = cmp.capabilities
@@ -37,12 +37,12 @@ local servers = {
     tsserver = {},
     sumneko_lua = { before_init=require'neodev.lsp'.before_init },
     gopls = {
-        -- settings = {{{{
-        --     gopls = {
-        --         semanticTokens = true,
-        --         staticcheck = true
-        --     }
-        -- }}}}
+    -- settings = {{{{
+    --     gopls = {
+    --         semanticTokens = true,
+    --         staticcheck = true
+    --     }
+    -- }}}}
     },
     texlab = { filetypes = { "plaintex", "tex", "rmd" }, },
     clangd = {
@@ -58,8 +58,8 @@ for server, extra in pairs(servers) do
         capabilities = capabilities,
     }
 
-    settings = vim.tbl_extend("force", settings, extra)
-    lspconfig[server].setup{ settings }
+    settings = vim.tbl_deep_extend("force", settings, extra)
+    lspconfig[server].setup(settings)
 end
 
 -- Jdtls configuration --{{{

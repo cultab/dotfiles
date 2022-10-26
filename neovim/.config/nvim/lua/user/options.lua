@@ -70,12 +70,6 @@ opt.formatoptions = opt.formatoptions
     + "j"
     - "2"
 
-function OpenConfig()
-    vim.cmd [[:cd ~/.config/nvim]]
-    vim.cmd[[:e $MYVIMRC]]
-    -- vim.cmd[[:next $MYVIMRC ~/.config/nvim/lua/user/*.lua]]
-end
-
 vim.cmd [[
 augroup termBinds
     autocmd!

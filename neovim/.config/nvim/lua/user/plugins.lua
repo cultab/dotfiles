@@ -261,6 +261,10 @@ return require('packer').startup(function(use)
         use { 'rhysd/committia.vim' }
     --}}}
 
+    -- languages / filetypes{{{
+    use 'kovetskiy/sxhkd-vim'
+-- }}}
+
     -- misc {{{
         use { 'folke/which-key.nvim',--{{{
         config = function ()
@@ -271,6 +275,12 @@ return require('packer').startup(function(use)
             }
             end
         }--}}}
+        use { 'samjwill/nvim-unception', -- {{{
+            config = function()
+                vim.g.unception_open_buffer_in_new_tab = true
+                vim.g.unception_enable_flavor_text = false
+            end
+        }-- }}}
         use 'equalsraf/neovim-gui-shim'
         use { 'akinsho/toggleterm.nvim',--{{{
             config = function ()

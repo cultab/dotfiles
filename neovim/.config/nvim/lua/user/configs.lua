@@ -6,7 +6,6 @@ local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 
-
 -- our picker function: colors
 M.config_picker = function(opts)
   opts = opts or {}
@@ -18,7 +17,7 @@ M.config_picker = function(opts)
                 { "bspwm", "~/.config/bspwm/bspwmrc" },
                 { "Dunst", "~/.config/dunst/no_theme.dunstrc" },
                 { "Polybar", "~/.config/polybar/config.ini" },
-                { "neovim", "~/.config/nvim/init.lua" },
+                { "neovim", "~/.config/nvim/init.lua", true },
                 { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc" },
                 { "xresources", "~/.config/xrdb/Xresources.xdefaults" },
                 { "Zoomer_Shell", "~/.config/zsh/.zshrc" },
@@ -29,7 +28,8 @@ M.config_picker = function(opts)
                     value = entry[1],
                     display = entry[1],
                     ordinal = entry[1],
-                    path = vim.fn.expand(entry[2])
+                    path = vim.fn.expand(entry[2]),
+                    cd = entry[3]
                 }
             end
         },
@@ -39,6 +39,9 @@ M.config_picker = function(opts)
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
+                if selection.cd then
+                    vim.cmd('cd ' .. vim.fs.dirname(selection.path))
+                end
                 vim.cmd('e ' .. selection.path)
             end)
             return true

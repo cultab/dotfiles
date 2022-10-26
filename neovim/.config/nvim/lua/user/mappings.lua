@@ -1,46 +1,14 @@
 local M = {}
 
-LastCommand = nil
-
-function InputCommand()
-    vim.ui.input({ prompt = "cmd: ", completion = 'shellcmd' }, function (command)
-        if command then
-            LastCommand = command
-            vim.cmd(":1TermExec cmd='" .. command .. "'")
-        end
-    end)
-end
-
-function RunLastCommand()
-    if LastCommand then
-        vim.cmd(":1TermExec cmd='" .. LastCommand .. "'")
-    else
-        vim.notify("No command to repeat", nil, { title = "mappings.lua" })
-    end
-end
-
-function RunCurrentFile()
-    local command = vim.api.nvim_buf_get_name(0)
-    local filename = vim.fn.expand('%:t')
-
-    -- special case for report.rmd is to run `$ make render`
-    if filename == "report.rmd" then
-        command = "make render"
-    end
-
-    vim.cmd(":1TermExec cmd='" .. command .. "'")
-    LastCommand = command
-end
-
 -- load my mapping DSL
 require "user.map"
 
 map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
 map "<leader>c" { nil, "Run command" }
-    map "<leader>cl" { RunLastCommand, "Re-run last command" }
-    map "<leader>cc" { InputCommand,   "Run command" }
-    map "<leader>cr" { RunCurrentFile, "Run current file" }
+    map "<leader>cc" { require"user.command".run_command,   "Run command" }
+    map "<leader>cl" { require"user.command".run_last_command, "Repeat last command" }
+    map "<leader>cr" { require"user.command".run_current_file, "Run current file" }
 
 map "<leader>o" { require'user.configs'.config_picker, "Open config picker" }
 
@@ -49,23 +17,25 @@ map "<leader>t" { nil, "Text operations" , 'nv'}
     map "<leader>ta" { "<cmd>EasyAlign<CR>",        "Easy Align", 'v' }
     map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Emoji Picker" }
 
-map "<leader>l" { require"lsp_lines".toggle,             "Toggle lsp virtual text"}
+map "<leader>l" { require"lsp_lines".toggle,             "Toggle diagnostics"}
 map "<leader>b" { "<cmd>BufferPick<CR>",                 "Pick buffer" }
 map "<leader>f" { require"telescope.builtin".find_files, "Find files"  }
-map "<leader>g" { require"telescope.builtin".live_grep,  "Live grep"   }
+map "<leader>/" { require"telescope.builtin".live_grep,  "Live grep"   }
 map "<leader>h" { require"telescope.builtin".help_tags,  "Search help tags" }
 
-map "<leader>G" { nil, "Git" }
-    map "<leader>Gc" { require"telescope.builtin".git_branches, "Commits"  }
-    map "<leader>Gb" { require"telescope.builtin".git_branches, "Branches" }
-    map "<leader>Gs" { require"telescope.builtin".git_status,   "Status"   }
-    map "<leader>Gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
-    map "<leader>GS" { require"gitsigns".stage_hunk,            "Stage hunk" }
-    map "<leader>Gr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
-    map "<leader>GR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
-    map "<leader>Gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
-    map "<leader>GB" { require"gitsigns".blame_line ,           "Blame line" }
-    map "<leader>GG" { require"neogit".open,                    "Open Neogit" }
+map "<leader>g" { nil, "Git" }
+    map "<leader>gc" { require"telescope.builtin".git_branches, "Commits"  }
+    map "<leader>gb" { require"telescope.builtin".git_branches, "Branches" }
+    map "<leader>gs" { require"telescope.builtin".git_status,   "Status"   }
+    map "<leader>gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
+    map "<leader>gS" { require"gitsigns".stage_hunk,            "Stage hunk" }
+    map "<leader>gr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
+    map "<leader>gR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
+    map "<leader>gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
+    map "<leader>gB" { require"gitsigns".blame_line ,           "Blame line" }
+    map "<leader>gg" { require"neogit".open,                    "Open Neogit" }
+
+map "<leader>n" { require'dashboard'.new_file, "New file" }
 
 map "<M-h>" { require"tmux".move_left   }
 map "<M-j>" { require"tmux".move_bottom }

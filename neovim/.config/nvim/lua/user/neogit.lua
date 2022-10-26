@@ -8,7 +8,7 @@ neogit.setup {
   -- Neogit refreshes its internal state after specific events, which can be expensive depending on the repository size.
   -- Disabling `auto_refresh` will make it so you have to manually refresh the status after you open it.
   auto_refresh = true,
-  disable_builtin_notifications = false,
+  disable_builtin_notifications = true,
   use_magit_keybindings = false,
   -- Change the default way of opening neogit
   kind = "tab",
