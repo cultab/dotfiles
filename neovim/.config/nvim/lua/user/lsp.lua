@@ -1,5 +1,6 @@
-vim.g.python3_host_prog = "~/.pyenv/versions/nvim/bin/python"
+-- vim.g.python3_host_prog = "~/.pyenv/versions/nvim/bin/python"
 
+local M = {}
 local cmp = require "user.cmp"
 local lspconfig = require("lspconfig")
 
@@ -7,11 +8,12 @@ require'nvim-autopairs'.setup{ fast_wrap = {} }
 require"neodev".setup { lspconfig = false }
 
 require'mason-lspconfig'.setup{
-    -- ensure_installed = {
-    --     "bashls",
-    --     "tsserver",
-    --     "sumneko_lua"
-    -- }
+    ensure_installed = {
+        "bashls",
+        "tsserver",
+        "sumneko_lua",
+        "pylsp",
+    }
 }
 
 local capabilities = cmp.capabilities
@@ -30,19 +32,37 @@ local on_attach = function()
     require "user.mappings".set_lsp_mappings()
 end
 
+M.on_attach = on_attach
+
 local clangd_caps = vim.tbl_deep_extend("force", capabilities, { offsetEncoding = "utf-16" })
 
 local servers = {
+    -- jedi_language_server = {},
+    pylsp = {
+    settings = {-- {{{
+    pylsp = {
+        plugins =  {
+            pydocstyle = { enabled = true },
+            mypy = { enabled = true },
+            jedi_completion = { enabled = false },
+            -- pylint = { enabled = true },
+            rope_completion = { enabled = true, eager = true },
+            isort = { enabled = true },
+            black = { enabled = true },
+        }
+    }
+    },-- }}}
+    },
     bashls = {},
     tsserver = {},
     sumneko_lua = { before_init=require'neodev.lsp'.before_init },
     gopls = {
-    -- settings = {{{{
-    --     gopls = {
-    --         semanticTokens = true,
-    --         staticcheck = true
-    --     }
-    -- }}}}
+    settings = { --{{{
+        gopls = {
+            semanticTokens = true,
+            staticcheck = true
+        }
+    } --}}}
     },
     texlab = { filetypes = { "plaintex", "tex", "rmd" }, },
     clangd = {
@@ -137,7 +157,9 @@ function Find_python_venv()
     else
         local pipe = io.popen("pipenv --venv 2> /dev/null")
         local line = pipe:read()
-        pipe:close()
+        if pipe ~= nil then
+            pipe:close()
+        end
         if line ~= nil and line:find("^/home/") ~= nil then
             return line
         else
@@ -174,15 +196,16 @@ function Pylsp_setup()
         capabilities = capabilities
     }
     -- HACK: pretty sure this is an implementation detail :^)
-    require("lspconfig")["pylsp"].manager.try_add()
+    require("lspconfig").pylsp.manager.try_add()
 end
 
-vim.cmd [[
-    augroup Pylsp
-        autocmd!
-        autocmd FileType python lua Pylsp_setup()
-    augroup end
-]]--}}}
+-- vim.cmd [[
+--     augroup Pylsp
+--         autocmd!
+--         autocmd FileType python lua Pylsp_setup()
+--     augroup end
+-- ]]
+-- }}}
 
 -- vim.cmd [[
 --     augroup diagnostics_on_hold
@@ -191,4 +214,4 @@ vim.cmd [[
 --     augroup end
 -- ]]
 
-
+return M

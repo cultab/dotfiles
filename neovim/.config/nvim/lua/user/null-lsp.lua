@@ -1,4 +1,5 @@
 local null_ls = require("null-ls")
+local on_attach = require'user.lsp'.on_attach
 null_ls.setup({
     sources = {
         -- disabled{{{
@@ -17,6 +18,10 @@ null_ls.setup({
         -- null_ls.builtins.formatting.shellharden, -- 1/2 rust is borked
         -- python
         -- null_ls.builtins.diagnostics.pylint,
+        -- null_ls.builtins.diagnostics.pydocstyle,
+        -- null_ls.builtins.diagnostics.mypy,
+        -- null_ls.builtins.formatting.black,
+        -- null_ls.builtins.formatting.isort,
         -- c++
         null_ls.builtins.diagnostics.cppcheck,
         -- generic

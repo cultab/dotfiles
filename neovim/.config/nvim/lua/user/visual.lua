@@ -54,7 +54,7 @@ if vim.g.nvui then
 end
 
 -- vim.g.ts_highlight_lua = true
-vim.opt.pumblend = 20 -- pseudo transparency for popup windows
+-- vim.opt.pumblend = 20 -- pseudo transparency for popup windows
 vim.o.termguicolors = true
 vim.o.foldtext = 'v:lua.MyFoldText()'
 vim.o.laststatus = 3

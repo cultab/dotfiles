@@ -101,12 +101,12 @@ return require('packer').startup(function(use)
         -- context
         -- use 'haringsrob/nvim_context_vt'
         use 'lukas-reineke/indent-blankline.nvim'
-        use { 'kosayoda/nvim-lightbulb',--{{{
-            config = function ()
-                vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LspDiagnosticsDefaultInformation", linehl="", numhl="" })
-                vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
-            end
-        }--}}}
+        -- use { 'kosayoda/nvim-lightbulb',--{{{
+        --     config = function ()
+        --         vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LspDiagnosticsDefaultInformation", linehl="", numhl="" })
+        --         vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
+        --     end
+        -- }--}}}
 
         -- general changes
         use 'stevearc/dressing.nvim'
