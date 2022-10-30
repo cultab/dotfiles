@@ -39,7 +39,7 @@ opt.swapfile = false
 
 -- Misc Settings
 opt.clipboard:prepend {"unnamedplus"}
-opt.updatetime = 50 -- ms
+-- opt.updatetime = 50 -- ms
 
 opt.splitbelow = true
 opt.splitright = true
@@ -48,7 +48,7 @@ opt.splitright = true
 opt.autochdir = false -- automatically change directory
 opt.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
 opt.mouse='a'  -- enable mouse for a(ll) modes
-opt.lazyredraw = true
+opt.lazyredraw = false
 opt.modeline = true
 
 opt.spelllang= 'el,en'

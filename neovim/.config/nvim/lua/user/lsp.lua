@@ -5,7 +5,13 @@ local cmp = require "user.cmp"
 local lspconfig = require("lspconfig")
 
 require'nvim-autopairs'.setup{ fast_wrap = {} }
-require"neodev".setup { lspconfig = false }
+require"neodev".setup {
+    lspconfig = false,
+        library = {
+            runtime = true,
+            plugins = false,
+    }
+}
 
 require'mason-lspconfig'.setup{
     ensure_installed = {
@@ -19,15 +25,15 @@ require'mason-lspconfig'.setup{
 local capabilities = cmp.capabilities
 
 local on_attach = function()
-    require("lsp_signature").on_attach({
-         bind = true,
-         doc_lines = 0,
-         hint_enable = true,
-         hint_prefix = " ",
-         handler_opts = {
-             border = "shadow"
-        }
-    })
+    -- require("lsp_signature").on_attach({
+    --      bind = true,
+    --      doc_lines = 0,
+    --      hint_enable = true,
+    --      hint_prefix = " ",
+    --      handler_opts = {
+    --          border = "shadow"
+    --     }
+    -- })
 
     require "user.mappings".set_lsp_mappings()
 end

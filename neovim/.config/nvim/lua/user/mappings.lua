@@ -1,7 +1,7 @@
 local M = {}
-
 -- load my mapping DSL
 require "user.map"
+
 
 map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
@@ -15,8 +15,13 @@ map "<leader>o" { require'user.configs'.config_picker, "Open config picker" }
 map "<leader>t" { nil, "Text operations" , 'nv'}
     map "<leader>tt" { ":Tabularize<space>/",       "Tabularize", 'v' }
     map "<leader>ta" { "<cmd>EasyAlign<CR>",        "Easy Align", 'v' }
-    map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Emoji Picker" }
+    map "<leader>te" { "<cmld>Telescope emoji<CR>",  "Emoji Picker" }
 
+
+-- HACK: figure out why this breaks with `map`
+vim.cmd [[
+vnoremap <leader>c :Norm<space>
+]]
 map "<leader>l" { require"lsp_lines".toggle,             "Toggle diagnostics"}
 map "<leader>b" { "<cmd>BufferPick<CR>",                 "Pick buffer" }
 map "<leader>f" { require"telescope.builtin".find_files, "Find files"  }

@@ -1,6 +1,6 @@
 local M = {}
 
-local function P(a)
+function P(a)
     print(vim.inspect(a))
 end
 
@@ -54,7 +54,7 @@ _G.map = setmetatable(prototype(), {
     end,
     __index = {
         register = function (self)
-            -- P(self)
+            local registry = {}
             for mode, mappings in pairs(self.mappings) do
                 for key, mapping_args in pairs(mappings) do
                     -- @type string|function|nil
@@ -67,19 +67,20 @@ _G.map = setmetatable(prototype(), {
                     end
 
                     if mapping ~= nil then -- real keymap
-                        wk.register(
+                        table.insert(registry, {
                             { [key] = { mapping, description } },
                             { mode = mode }
-                        )
-                    else                   -- keymap group name
-                        wk.register(
+                        })
+                    else                  -- keymap group name
+                        table.insert(registry, {
                             { [key] = { name = description } },
                             { mode = mode }
-                        )
+                        })
                     end
                 end
             end
             -- empty out registered mappings
+            wk.register(registry)
             self.mappings = prototype().mappings
         end
     }

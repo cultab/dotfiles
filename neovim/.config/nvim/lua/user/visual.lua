@@ -265,8 +265,8 @@ vim.o.relativenumber = false
 vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'marker'
 
-vim.o.scrolloff = 3 -- keep lines above and below cursor
-vim.o.sidescroll = 6
+-- vim.o.scrolloff = 3 -- keep lines above and below cursor
+-- vim.o.sidescroll = 6
 vim.o.showmode = false
 vim.o.showcmd = true
 
@@ -306,7 +306,7 @@ vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 1
 --}}}
 
-vim.cmd "colorscheme ayu-mirage"
+vim.cmd "colorscheme tokyonight-moon"
 
 vim.cmd [[
 augroup YankHighlight

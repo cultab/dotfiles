@@ -39,7 +39,7 @@ return require('packer').startup(function(use)
     use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
     use 'folke/lsp-colors.nvim'
-    use 'ray-x/lsp_signature.nvim'
+    -- use 'ray-x/lsp_signature.nvim'
     use { 'weilbith/nvim-code-action-menu',--{{{
         cmd = 'CodeActionMenu',
     }--}}}
@@ -88,15 +88,25 @@ return require('packer').startup(function(use)
         use { 'nvim-lualine/lualine.nvim',--{{{
             requires = {'kyazdani42/nvim-web-devicons', opt = false}
         }--}}}
-        use { 'rcarriga/nvim-notify',--{{{
+        use { 'rcarriga/nvim-notify' }
+        use { "folke/noice.nvim",
             config = function()
-            -- replace nvim's vim.notify with nvim-notify
-            local notify = require("notify")
-            -- notify.setup({ max_width = 35 })
-            vim.notify = notify
-            -- vim.notify("Loaded nvim-notify!")
-        end
-        }--}}}
+                require("noice").setup{
+                    lsp = { progress = { enabled = true },
+                    override = {
+                        -- override the default lsp markdown formatter with Noice
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        -- override the lsp markdown formatter with Noice
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        -- override cmp documentation with Noice (needs the other options to work)
+                        ["cmp.entry.get_documentation"] = true,
+                        },
+                    },
+                    popupmenu = { backend = "nui", }
+                }
+            end,
+            requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
+        }
 
         -- context
         -- use 'haringsrob/nvim_context_vt'
@@ -137,19 +147,6 @@ return require('packer').startup(function(use)
 
         -- extra
         use 'vim-pandoc/vim-pandoc-syntax'
-
-        use { 'xiyaowong/nvim-transparent',--{{{
-            config = function ()
-                require("transparent").setup({
-                    enable = false, -- boolean: enable transparent
-                    -- extra_groups = 'all',
-                    exclude = {}, -- table: groups you don't want to clear
-                    })
-
-            end
-        }--}}}
-        use 'folke/zen-mode.nvim'
-        use 'folke/twilight.nvim'
     --}}}
 
     -- text manipulation {{{
@@ -271,7 +268,9 @@ return require('packer').startup(function(use)
             require('which-key').setup{
                 plugins = {
                     spelling = { enabled = true }
-                }
+                },
+                show_help = false, -- for Noice
+                show_keys = false
             }
             end
         }--}}}
@@ -310,17 +309,17 @@ return require('packer').startup(function(use)
             requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
         }--}}}
         use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim" }
-        use { 'declancm/cinnamon.nvim',--{{{
-            config = function()
-                require('cinnamon').setup({
-                    extra_keymaps = true,
-                    centered = true,
-                    hide_cursor = true,
-                    default_delay = 5,
-                    max_length = 500,
-                })
-            end
-        }
+        -- use { 'declancm/cinnamon.nvim',--{{{
+        --     config = function()
+        --         require('cinnamon').setup({
+        --             extra_keymaps = true,
+        --             centered = true,
+        --             hide_cursor = true,
+        --             default_delay = 5,
+        --             max_length = 500,
+        --         })
+        --     end
+        -- }
         --}}}
 
 
