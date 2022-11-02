@@ -22,6 +22,7 @@ M.config_picker = function(opts)
                 { "xresources", "~/.config/xrdb/Xresources.xdefaults" },
                 { "Zoomer_Shell", "~/.config/zsh/.zshrc" },
                 { "themr", "~/.config/themr/themes.yaml" },
+                { "gitconfig", "~/.config/git/config"}
             },
             entry_maker = function(entry)
                 return {

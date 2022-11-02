@@ -5,6 +5,7 @@
 [core]
 	autocrlf = input
     pager = delta
+    editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
 
 [gui]
 	recentrepo = /home/evan/repos/dwm
