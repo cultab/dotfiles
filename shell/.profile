@@ -94,6 +94,8 @@ PATH="$PYENV_ROOT/bin:$PATH"
 # CUDA
 PATH="/usr/local/cuda/bin:$PATH"
 
+PATH="/opt/microchip/xc16/v2.00/bin/:$PATH"
+
 export PATH
 
 export XBPS_DISTDIR="$HOME/repos/void-packages"
