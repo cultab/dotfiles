@@ -1,16 +1,17 @@
 function _G.MyFoldText()--{{{
     -- get vim variables needed
     local start = vim.v.foldstart
-    local fend = vim.v.foldend
+    -- local fend = vim.v.foldend
+    -- @type string
     local line = vim.fn.getline(start)
     local comment_string = vim.api.nvim_buf_get_option(0, 'commentstring')
 
     -- extract before and after comment characters (if they exist)
-    s_loc = string.find(comment_string, '%%s')
+    local s_loc = string.find(comment_string, '%%s')
     -- from start to %s - 1
-    before = string.sub(comment_string, 1, s_loc - 1)
+    local before = string.sub(comment_string, 1, s_loc - 1)
     -- from %s + len(%s) = 2 to end
-    after = string.sub(comment_string, s_loc + 2, #comment_string)
+    local after = string.sub(comment_string, s_loc + 2, #comment_string)
 
     -- create strings of spaces of the correct length to replace the comment strings
     -- only do it for the comment string that's before the comment,
@@ -265,8 +266,8 @@ vim.o.relativenumber = false
 vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'marker'
 
--- vim.o.scrolloff = 3 -- keep lines above and below cursor
--- vim.o.sidescroll = 6
+vim.o.scrolloff = 3 -- keep lines above and below cursor
+vim.o.sidescroll = 1
 vim.o.showmode = false
 vim.o.showcmd = true
 

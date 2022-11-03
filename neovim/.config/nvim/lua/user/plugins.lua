@@ -88,7 +88,13 @@ return require('packer').startup(function(use)
         use { 'nvim-lualine/lualine.nvim',--{{{
             requires = {'kyazdani42/nvim-web-devicons', opt = false}
         }--}}}
-        use { 'rcarriga/nvim-notify' }
+        use { 'rcarriga/nvim-notify',
+            config = function ()
+                require'notify'.setup{
+                stages = "static",
+                timeout = "2500" -- in ms
+            }
+            end}
         use { "folke/noice.nvim",
             config = function()
                 require("noice").setup{

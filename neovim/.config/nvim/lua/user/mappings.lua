@@ -1,6 +1,10 @@
 local M = {}
+
+local cmp = require'cmp'
+local luasnip = require'luasnip'
+
 -- load my mapping DSL
-require "user.map"
+local map = require "user.map".map
 
 
 map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
@@ -47,7 +51,22 @@ map "<M-j>" { require"tmux".move_bottom }
 map "<M-k>" { require"tmux".move_top    }
 map "<M-l>" { require"tmux".move_right  }
 
-map:register()
+
+map '<C-d>' { function ()
+    if not require("noice.lsp").scroll(4) then
+        return "<C-d>"
+    end
+end, "Scroll documentation down", expr = true
+}
+
+map '<C-u>' { function ()
+    if not require("noice.lsp").scroll(-4) then
+        return "<C-u>"
+    end
+end, "Scroll documentation up", expr = true
+}
+
+-- map:register()
 
 function M.set_lsp_mappings()
     map 'gD'        { vim.lsp.buf.declaration,      "Goto declaration [LSP]"     }
@@ -65,7 +84,37 @@ function M.set_lsp_mappings()
     map '<leader>=' { function() vim.lsp.buf.range_format {async = true} end,               "Format range [LSP]" ,    'v' }
     map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
     map '<leader>q' { require"telescope.builtin".loclist, " Open loclist [LSP] " }
-    map:register()
+    -- map:register()
+end
+
+
+function M.get_cmp_mappings()
+    return {
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { "i", "s" }
+        ),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }
+        ),
+        ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    }
 end
 
 function M.set_welcome_mappings() vim.cmd[[
