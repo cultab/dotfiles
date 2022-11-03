@@ -48,9 +48,6 @@ end--}}}
 if vim.g.nvui then
   -- Configure through vim commands
   vim.cmd [[
-    NvuiCmdFontFamily FuraCode Nerd Font
-    NvuiCmdFontSize 25.0
-    NvuiScrollAnimationDuration 0.2
   ]]
 end
 
@@ -243,7 +240,7 @@ end
 
  -- used as separator for windows
 vim.o.fillchars = "vert:│"
---  HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
+ -- HACK: see: https://gthub.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
 vim.o.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  "
 vim.o.list = true
 
@@ -261,7 +258,7 @@ require("indent_blankline").setup {
 
 vim.wo.colorcolumn = "99999"
 
-vim.o.number = true
+vim.o.number = false
 vim.o.relativenumber = false
 vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'marker'
