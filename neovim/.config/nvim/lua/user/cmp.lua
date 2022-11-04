@@ -30,7 +30,7 @@ cmp.setup({
         { name = 'zsh' },
     }),
     formatting = {
-        format = require("lspkind").cmp_format({ with_text = false, menu = {
+        format = require("lspkind").cmp_format({ mode = "symbol_text", menu = {
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
             pandoc_references = "[Pandoc]",

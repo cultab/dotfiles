@@ -18,6 +18,7 @@ M.config_picker = function(opts)
                 { "Dunst", "~/.config/dunst/no_theme.dunstrc" },
                 { "Polybar", "~/.config/polybar/config.ini" },
                 { "neovim", "~/.config/nvim/init.lua", true },
+                { "neovim plugins", "~/.local/share/nvim/site/pack/packer/start/", true },
                 { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc" },
                 { "xresources", "~/.config/xrdb/Xresources.xdefaults" },
                 { "Zoomer_Shell", "~/.config/zsh/.zshrc" },

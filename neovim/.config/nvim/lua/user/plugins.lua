@@ -42,7 +42,7 @@ return require('packer').startup(function(use)
     -- use 'ray-x/lsp_signature.nvim'
     use { 'weilbith/nvim-code-action-menu',--{{{
         cmd = 'CodeActionMenu',
-    }--}}}
+    } --}}}
     use 'mfussenegger/nvim-jdtls'
     use  "folke/neodev.nvim"
     use 'jose-elias-alvarez/null-ls.nvim'
@@ -69,33 +69,33 @@ return require('packer').startup(function(use)
             config = function()
                 require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
             end
-        }--}}}
+        } --}}}
         use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
             requires = { 'nvim-treesitter/nvim-treesitter' }
-        }--}}}
+        } --}}}
         -- use { 'romgrk/nvim-treesitter-context',--{{{
         --     config = function ()
         --         require'treesitter-context'.setup(require("user.treesitter").context)
         --     end
-        -- }--}}}
+        -- } --}}}
     -- }}}
 
     -- visual {{{
         -- major ui elements
         use { 'romgrk/barbar.nvim',--{{{
             requires = { 'kyazdani42/nvim-web-devicons', opt = false }
-        }--}}}
+        } --}}}
         use { 'nvim-lualine/lualine.nvim',--{{{
             requires = {'kyazdani42/nvim-web-devicons', opt = false}
-        }--}}}
-        use { 'rcarriga/nvim-notify',
+        } --}}}
+        use { 'rcarriga/nvim-notify',-- {{{
             config = function ()
                 require'notify'.setup{
                 stages = "static",
                 timeout = "2500" -- in ms
             }
-            end}
-        use { "folke/noice.nvim",
+            end} -- }}}
+        use { "folke/noice.nvim",-- {{{
             config = function()
                 require("noice").setup{
                     lsp = { progress = { enabled = true },
@@ -112,17 +112,16 @@ return require('packer').startup(function(use)
                 }
             end,
             requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
-        }
+        } --}}}
 
         -- context
-        -- use 'haringsrob/nvim_context_vt'
         use 'lukas-reineke/indent-blankline.nvim'
         -- use { 'kosayoda/nvim-lightbulb',--{{{
         --     config = function ()
         --         vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LspDiagnosticsDefaultInformation", linehl="", numhl="" })
         --         vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
         --     end
-        -- }--}}}
+        -- } --}}}
 
         -- general changes
         use 'stevearc/dressing.nvim'
@@ -133,7 +132,7 @@ return require('packer').startup(function(use)
                 vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
                 require("lsp_lines").setup()
             end,
-        }--}}}
+        } --}}}
 
         use { 'glepnir/dashboard-nvim' }
 
@@ -144,12 +143,12 @@ return require('packer').startup(function(use)
                 -- vim.cmd [[ let g:Hexokinase_highlighters = ['backgroundfull'] ]]
                 vim.g["Hexokinase_highlighters"] = { "backgroundfull" }
             end
-        }--}}}
+        } --}}}
         use { 'folke/todo-comments.nvim',--{{{
             config = function()
                 require('todo-comments').setup()
             end
-        }--}}}
+        } --}}}
 
         -- extra
         use 'vim-pandoc/vim-pandoc-syntax'
@@ -172,14 +171,14 @@ return require('packer').startup(function(use)
                 for _, lang in ipairs(langs) do
                     ft.set(lang, {'//%s', '/*%s*/'}).set('conf', '#%s')
                 end
-            end}--}}}
+            end} --}}}
         use { 'windwp/nvim-ts-autotag',--{{{
             config = function ()
             require('nvim-ts-autotag').setup({
             filetypes = { "html" , "xml" },
             })
         end
-        }--}}}
+        } --}}}
         use { 'xiyaowong/telescope-emoji.nvim' }
         use { 'smjonas/live-command.nvim',-- {{{
             config = function()
@@ -187,7 +186,7 @@ return require('packer').startup(function(use)
                     commands = { Norm = { cmd = "norm" }, },
                 }
             end
-        }-- }}}
+        } --}}}
     --}}}
 
     -- colorschemes {{{
@@ -200,15 +199,15 @@ return require('packer').startup(function(use)
                     local noop = true
                     return  noop
                 end
-            end}--}}}
+            end} --}}}
         -- use 'lifepillar/vim-gruvbox8'
         use { 'npxbr/gruvbox.nvim',--{{{
             requires = { 'rktjmp/lush.nvim' }
-        }--}}}
+        } --}}}
         use { 'olimorris/onedarkpro.nvim',--{{{
             requires = { 'rktjmp/lush.nvim'},
             branch = "main"
-        }--}}}
+        } --}}}
         use { 'catppuccin/nvim',--{{{
             config = function ()
                 local cat = require("catppuccin")
@@ -228,7 +227,7 @@ return require('packer').startup(function(use)
                     }
                 })
             end
-        }--}}}
+        } --}}}
         use 'eddyekofo94/gruvbox-flat.nvim'
         use 'romgrk/github-light.vim'
         use 'romgrk/doom-one.vim'
@@ -254,13 +253,9 @@ return require('packer').startup(function(use)
             config = function ()
                     require('gitsigns').setup()
                 end
-        }--}}}
-        use { 'TimUntersberger/neogit',-- {{{
-            requires = {
-                'nvim-lua/plenary.nvim',
-                'sindrets/diffview.nvim'
-            }
-        }-- }}}
+        } --}}}
+        use { 'TimUntersberger/neogit', requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' }
+        }
         use { 'rhysd/committia.vim' }
     --}}}
 
@@ -279,13 +274,13 @@ return require('packer').startup(function(use)
                 show_keys = false
             }
             end
-        }--}}}
+        } --}}}
         use { 'samjwill/nvim-unception', -- {{{
             config = function()
                 vim.g.unception_open_buffer_in_new_tab = true
                 vim.g.unception_enable_flavor_text = false
             end
-        }-- }}}
+        } --}}}
         use 'equalsraf/neovim-gui-shim'
         use { 'akinsho/toggleterm.nvim',--{{{
             config = function ()
@@ -294,9 +289,9 @@ return require('packer').startup(function(use)
                     start_in_insert = true
                 }
             end
-        }--}}}
+        } --}}}
         use 'benmills/vimux'
-        use 'dstein64/vim-startuptime'
+        use { 'dstein64/vim-startuptime', cmd = "StartupTime"}
         use { 'aserowy/tmux.nvim',--{{{
             config = function ()
                 require("tmux").setup{
@@ -309,12 +304,12 @@ return require('packer').startup(function(use)
                     }
                 }
             end
-        }--}}}
+        } --}}}
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         use { 'nvim-telescope/telescope.nvim',--{{{
             requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-        }--}}}
-        use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim" }
+        } --}}}
+        use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim", ft = "norg", config = require'user.neorg'.config}
         -- use { 'declancm/cinnamon.nvim',--{{{
         --     config = function()
         --         require('cinnamon').setup({
@@ -325,8 +320,10 @@ return require('packer').startup(function(use)
         --             max_length = 500,
         --         })
         --     end
-        -- }
+        -- } --}}}
         --}}}
 
 
 end)
+
+-- vim: set foldenable:foldmethod=marker:

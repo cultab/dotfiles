@@ -83,10 +83,9 @@ function M.set_lsp_mappings()
     map '<leader>=' { function() vim.lsp.buf.format {async = true} end,                     "Format buffer [LSP]"         }
     map '<leader>=' { function() vim.lsp.buf.range_format {async = true} end,               "Format range [LSP]" ,    'v' }
     map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
-    map '<leader>q' { require"telescope.builtin".loclist, " Open loclist [LSP] " }
+    map '<leader>q' { function() vim.diagnostic.setloclist() end, " Open quickfix [LSP] " }
     -- map:register()
 end
-
 
 function M.get_cmp_mappings()
     return {
