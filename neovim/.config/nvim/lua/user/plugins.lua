@@ -43,7 +43,7 @@ return require('packer').startup(function(use)
     use { 'weilbith/nvim-code-action-menu',--{{{
         cmd = 'CodeActionMenu',
     } --}}}
-    use 'mfussenegger/nvim-jdtls'
+    use {'mfussenegger/nvim-jdtls', ft="java"}
     use  "folke/neodev.nvim"
     use 'jose-elias-alvarez/null-ls.nvim'
     -- }}}
@@ -68,10 +68,12 @@ return require('packer').startup(function(use)
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',--{{{
             config = function()
                 require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
-            end
+            end,
+            -- event = "BufReadPost"
         } --}}}
         use { 'nvim-treesitter/nvim-treesitter-textobjects',--{{{
-            requires = { 'nvim-treesitter/nvim-treesitter' }
+            requires = { 'nvim-treesitter/nvim-treesitter' },
+            event = "BufReadPost"
         } --}}}
         -- use { 'romgrk/nvim-treesitter-context',--{{{
         --     config = function ()
@@ -83,7 +85,8 @@ return require('packer').startup(function(use)
     -- visual {{{
         -- major ui elements
         use { 'romgrk/barbar.nvim',--{{{
-            requires = { 'kyazdani42/nvim-web-devicons', opt = false }
+            requires = { 'kyazdani42/nvim-web-devicons', opt = false },
+            event = "BufWinEnter"
         } --}}}
         use { 'nvim-lualine/lualine.nvim',--{{{
             requires = {'kyazdani42/nvim-web-devicons', opt = false}
@@ -171,12 +174,15 @@ return require('packer').startup(function(use)
                 for _, lang in ipairs(langs) do
                     ft.set(lang, {'//%s', '/*%s*/'}).set('conf', '#%s')
                 end
-            end} --}}}
+            end,
+            event = "BufRead"
+        }
+        --}}}
         use { 'windwp/nvim-ts-autotag',--{{{
             config = function ()
-            require('nvim-ts-autotag').setup({
-            filetypes = { "html" , "xml" },
-            })
+                require('nvim-ts-autotag').setup({
+                    filetypes = { "html" , "xml" },
+                })
         end
         } --}}}
         use { 'xiyaowong/telescope-emoji.nvim' }
@@ -252,7 +258,8 @@ return require('packer').startup(function(use)
             requires = { 'nvim-lua/plenary.nvim' },
             config = function ()
                     require('gitsigns').setup()
-                end
+                end,
+            -- event = "BufRead"
         } --}}}
         use { 'TimUntersberger/neogit', requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' }
         }
@@ -273,7 +280,8 @@ return require('packer').startup(function(use)
                 show_help = false, -- for Noice
                 show_keys = false
             }
-            end
+            end,
+            -- event = "BufWinEnter"
         } --}}}
         use { 'samjwill/nvim-unception', -- {{{
             config = function()
@@ -288,7 +296,8 @@ return require('packer').startup(function(use)
                     direction = "float",
                     start_in_insert = true
                 }
-            end
+            end,
+            event = "BufWinEnter"
         } --}}}
         use 'benmills/vimux'
         use { 'dstein64/vim-startuptime', cmd = "StartupTime"}
@@ -321,6 +330,7 @@ return require('packer').startup(function(use)
         --         })
         --     end
         -- } --}}}
+        use 'lewis6991/impatient.nvim'
         --}}}
 
 
