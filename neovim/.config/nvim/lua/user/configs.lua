@@ -14,16 +14,16 @@ M.config_picker = function(opts)
         prompt_title = "Open Configuration for:",
         finder = finders.new_table {
             results = {
-                { "bspwm", "~/.config/bspwm/bspwmrc" },
-                { "Dunst", "~/.config/dunst/no_theme.dunstrc" },
-                { "Polybar", "~/.config/polybar/config.ini" },
-                { "neovim", "~/.config/nvim/init.lua", true },
-                { "neovim plugins", "~/.local/share/nvim/site/pack/packer/start/", true },
-                { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc" },
-                { "xresources", "~/.config/xrdb/Xresources.xdefaults" },
-                { "Zoomer_Shell", "~/.config/zsh/.zshrc" },
-                { "themr", "~/.config/themr/themes.yaml" },
-                { "gitconfig", "~/.config/git/config"}
+                { "bspwm",                   "~/.config/bspwm/bspwmrc"                                },
+                { "Dunst",                   "~/.config/dunst/no_theme.dunstrc"                       },
+                { "Polybar",                 "~/.config/polybar/config.ini"                           },
+                { "neovim",                  "~/.config/nvim/init.lua",                     cd = true },
+                { "neovim plugins",          "~/.local/share/nvim/site/pack/packer/start/", cd = true },
+                { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc"                                },
+                { "xresources",              "~/.config/xrdb/Xresources.xdefaults"                    },
+                { "Zoomer Shell",            "~/.config/zsh/.zshrc"                                   },
+                { "themr",                   "~/.config/themr/themes.yaml"                            },
+                { "gitconfig",               "~/.config/git/config"                                   }
             },
             entry_maker = function(entry)
                 return {
@@ -31,7 +31,7 @@ M.config_picker = function(opts)
                     display = entry[1],
                     ordinal = entry[1],
                     path = vim.fn.expand(entry[2]),
-                    cd = entry[3]
+                    cd = entry.cd or false
                 }
             end
         },
@@ -42,9 +42,10 @@ M.config_picker = function(opts)
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
                 if selection.cd then
-                    vim.cmd('cd ' .. vim.fs.dirname(selection.path))
+                    -- vim.cmd('cd ' .. vim.fs.dirname(selection.path))
+                    vim.cmd.cd(vim.fs.dirname(selection.path))
                 end
-                vim.cmd('e ' .. selection.path)
+                vim.cmd.edit(selection.path)
             end)
             return true
         end,

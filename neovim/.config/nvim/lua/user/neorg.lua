@@ -1,6 +1,9 @@
 local M = {}
 
 M.config = function ()
+    vim.defer_fn(function()
+        print("Neorg")
+    end, 1000)
     require('neorg').setup {
         load = {
             ["core.defaults"] = {},

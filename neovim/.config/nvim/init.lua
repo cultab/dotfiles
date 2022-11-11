@@ -21,8 +21,6 @@ require 'user.mason'
 require 'user.lsp'
 require 'user.null-lsp'
 
-vim.g.committia_open_only_vim_starting = 0
-
 local disabled_built_ins = {
     -- "netrw",
     -- "netrwPlugin",
