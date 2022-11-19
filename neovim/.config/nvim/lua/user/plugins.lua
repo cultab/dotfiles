@@ -250,7 +250,7 @@ return require('packer').startup(function(use)
     use 'Mofiqul/vscode.nvim'
     use 'LunarVim/darkplus.nvim'
     use 'bluz71/vim-moonfly-colors'
-    -- use 'ghifarit53/tokyonight-vim'
+    use 'B4mbus/oxocarbon-lua.nvim'
     -- }}}
 
     -- git {{{

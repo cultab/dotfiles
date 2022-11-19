@@ -1,66 +1,57 @@
-local opt = vim.opt
-local o   = vim.o
-
 -- tabsize
-opt.expandtab = true  -- no tabs
-opt.tabstop = 4      -- tab size is 4
-opt.softtabstop = 4  -- expanded size is 4
-opt.shiftwidth = 4   -- indent size is 4
-opt.shiftround = true -- round indent to shiftwidth
+vim.opt.expandtab = true  -- no tabs
+vim.opt.tabstop = 4      -- tab size is 4
+vim.opt.softtabstop = 4  -- expanded size is 4
+vim.opt.shiftwidth = 4   -- indent size is 4
+vim.opt.shiftround = true -- round indent to shiftwidth
 
 -- wrap
-opt.wrap = true
-opt.breakindent = true
-opt.showbreak = string.rep(" ", 3) -- make it so that long lines wrap smartly, ~TJDevries
-opt.linebreak = true
-opt.breakindent = true
-
--- indent
-opt.cindent = true
-opt.autoindent = true
+vim.opt.wrap = true
+vim.opt.breakindent = true
+vim.opt.showbreak = string.rep(" ", 3) -- make it so that long lines wrap smartly, ~TJDevries
+vim.opt.linebreak = true
+vim.opt.breakindent = true
 
 -- Search Settings
-opt.inccommand = 'nosplit' -- show substitutions live, now without splitting!
-opt.incsearch = true
-opt.gdefault = true -- assume the 'g' in s/../../g
-opt.ignorecase = true
-opt.smartcase = true -- all lower search is case insensitive
+vim.opt.inccommand = 'nosplit' -- show substitutions live, now without splitting!
+vim.opt.gdefault = true -- assume the 'g' in s/../../g
+vim.opt.ignorecase = true
+vim.opt.smartcase = true -- all lower search is case insensitive
 
 -- don't give |ins-completion-menu| messages. For example,
 -- "-- XXX completion (YYY)", "match 1 of 2", "The only match",
-o.shortmess = o.shortmess .. 'c'
+vim.opt.shortmess:append('c')
 
 -- Backup and swap
-opt.backup = true
-opt.backupdir:remove('.')
-opt.undodir:remove('.')
-opt.undofile = true
-opt.swapfile = false
+vim.opt.backup = true
+vim.opt.backupdir:remove('.')
+vim.opt.undodir:remove('.')
+vim.opt.undofile = true
+vim.opt.swapfile = false
 
 -- Misc Settings
-opt.clipboard:prepend {"unnamedplus"}
--- opt.updatetime = 50 -- ms
+vim.opt.clipboard:prepend {"unnamedplus"}
+-- vim.opt.updatetime = 50 -- ms
 
-opt.splitbelow = true
-opt.splitright = true
--- opt.splitkeep = "screen" --  NOTE: wait for 0.9.0
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+-- vim.opt.splitkeep = "screen" --  NOTE: wait for 0.9.0
 
-opt.autochdir = false -- automatically change directory
-opt.hidden = true  -- Required for operations modifying multiple buffers like rename. with langclient
-opt.mouse='a'  -- enable mouse for a(ll) modes
-opt.lazyredraw = false
-opt.modeline = true
+vim.opt.autochdir = false -- automatically change directory
+vim.opt.mouse='a'  -- enable mouse for a(ll) modes
+vim.opt.lazyredraw = false
+vim.opt.modeline = true
 
-opt.spelllang= 'el,en'
-opt.keymap = 'greek_utf-8'
-opt.iminsert = 0  -- default to english
+vim.opt.spelllang= 'el,en'
+vim.opt.keymap = 'greek_utf-8'
+vim.opt.iminsert = 0  -- default to english
 
  -- Assume .h files are c headers instead of cpp
 vim.g.c_syntax_for_h = true
 
-opt.complete = '.,w,b,i,u,t,'
-opt.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
-opt.formatoptions = opt.formatoptions
+vim.opt.complete = '.,w,b,i,u,t,'
+vim.opt.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
+vim.opt.formatoptions = vim.opt.formatoptions
     - "a"
     - "t"
     + "q"
