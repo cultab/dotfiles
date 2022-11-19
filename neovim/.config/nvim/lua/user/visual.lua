@@ -110,7 +110,7 @@ end
  -- used as separator for windows
 vim.o.fillchars = "vert:│"
  -- HACK: see: https://gthub.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
-vim.o.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  ,eol:↲"
+vim.o.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  ,eol:¬" -- ↲  "
 vim.o.list = true
 
 require("indent_blankline").setup {

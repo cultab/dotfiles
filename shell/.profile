@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # XDG
-#export XDG_RUNTIME_DIR=/run/user/$(id -u)
-export XDG_RUNTIME_DIR="$HOME"/.cache/run
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+# export XDG_RUNTIME_DIR="$HOME"/.cache/run
 export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
@@ -43,8 +43,7 @@ export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs/"
 
 # keychain
-#mkdir -p /run/user/$(id -u)/keychain
-eval $(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")
+eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
 
 # export PROFILE_SOURCED=1
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -61,7 +60,6 @@ PATH_add() {
 }
 
 # add stuff to $PATH
-
 PATH_add ~/bin
 PATH_add ~/Appimages
 PATH_add ./
