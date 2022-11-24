@@ -7,11 +7,17 @@ if command -v nvim > /dev/null 2>&1; then
     alias vim='nvim --listen /tmp/nvim-$RANDOM'
 fi
 
+if command -v bat > /dev/null 2>&1; then
+    alias cat='bat -p'
+    alias bat='bat -p'
+fi
+
 # shortcuts
 alias todo='vim $HOME/.todo.txt/todo.txt'
 alias notes='vim $HOME/notes.norg'
 alias wtf='netbsd-wtf -o'
 alias coomit='git commit'
+# shellcheck disable=SC2139
 alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
 alias psg='ps aux | grep'
 alias open='xdg-open'
@@ -29,8 +35,11 @@ alias void-docs="void-docs -m"
 alias info="info --vi-keys"
 
 # don't pollute my $HOME :)
+# shellcheck disable=SC2139
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+# shellcheck disable=SC2139
 alias gdb="gdb -n -x $XDG_CONFIG_HOME/gdb/init"
+# shellcheck disable=SC2139
 alias pidgin="pidgin --config=$XDG_DATA_HOME/purple"
 
 #######
@@ -55,15 +64,22 @@ alias gdh='git diff HEAD'
 ######
 
 ls_opts='--color=auto -h'
+# shellcheck disable=SC2139
 alias ls="ls $ls_opts"
+# shellcheck disable=SC2139
 alias ll="ls -l $ls_opts"
+# shellcheck disable=SC2139
 alias la="ls -la $ls_opts"
 
 if [ "$(command -v exa)" ]; then
 	exa_opts='--group-directories-first --git --modified --group --sort=Extension'
+# shellcheck disable=SC2139
 	alias ls="exa $exa_opts"
+# shellcheck disable=SC2139
 	alias ll="exa $exa_opts --long"
+# shellcheck disable=SC2139
 	alias la="exa $exa_opts --long --all"
+# shellcheck disable=SC2139
 	alias lt="exa $exa_opts --tree"
 fi
 

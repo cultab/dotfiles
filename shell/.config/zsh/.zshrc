@@ -87,6 +87,8 @@ miniplug plugin 'spwhitt/nix-zsh-completions'
 miniplug plugin 'zdharma-continuum/fast-syntax-highlighting'
 miniplug load
 
+fast-theme --quiet XDG:overlay
+
 # HACK: maybe ask about adding this in  nix.plugin.zsh
 fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
