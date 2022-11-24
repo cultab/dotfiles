@@ -56,3 +56,5 @@ source ~/bin/exports
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
 alias luamake=/home/evan/repos/lua-language-server/3rd/luamake/luamake
+
+alias nix="NP_LOCATION=/home/evan/repos/vimconf_talk NP_RUNTIME='bwrap' /home/evan/repos/vimconf_talk/nix-portable nix"

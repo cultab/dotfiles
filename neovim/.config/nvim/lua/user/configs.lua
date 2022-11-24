@@ -22,7 +22,7 @@ M.config_picker = function(opts)
                 { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc"                                },
                 { "xresources",              "~/.config/xrdb/Xresources.xdefaults"                    },
                 { "Zoomer Shell",            "~/.config/zsh/.zshrc"                                   },
-                { "themr",                   "~/.config/themr/themes.yaml"                            },
+                { "themr",                   "~/.config/themr/themes.yaml",                 cd = true },
                 { "gitconfig",               "~/.config/git/config"                                   }
             },
             entry_maker = function(entry)

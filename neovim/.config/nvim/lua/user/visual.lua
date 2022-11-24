@@ -175,7 +175,7 @@ vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 1
 --}}}
 
-vim.cmd "colorscheme tokyonight-moon"
+vim.cmd "colorscheme ayu-mirage"
 
 vim.cmd [[
 augroup YankHighlight
