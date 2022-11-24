@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+DB=$(xrdb -query)
+
+get_xres() {
+   echo "$DB" | grep "^\*\?\.$1:" | awk '{print $2}'
+}
+
+BEFORE=$(head ~/.config/alacritty/alacritty.yml -n -27)
+
+cat <<EOF > ~/.config/alacritty/alacritty.yml
+$(printf %s "$BEFORE")
+colors:
+  # Default colors
+  primary:
+      background: '$(get_xres background)'
+      foreground: '$(get_xres foreground)'
+  
+  # Normal colors
+  normal:
+      black:   '$(get_xres color0)'
+      red:     '$(get_xres color1)'
+      green:   '$(get_xres color2)'
+      yellow:  '$(get_xres color3)'
+      blue:    '$(get_xres color4)'
+      magenta: '$(get_xres color5)'
+      cyan:    '$(get_xres color6)'
+      white:   '$(get_xres color7)'
+  
+  # Bright colors
+  bright:
+      black:   '$(get_xres color8)'
+      red:     '$(get_xres color9)'
+      green:   '$(get_xres color10)'
+      yellow:  '$(get_xres color11)'
+      blue:    '$(get_xres color12)'
+      magenta: '$(get_xres color13)'
+      cyan:    '$(get_xres color14)'
+      white:   '$(get_xres color15)'
+EOF

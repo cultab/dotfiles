@@ -12,12 +12,27 @@ echo "*middleground: #C0$background" | xrdb -merge
 # update st
 pkill -USR1 -x st
 
+exists() {
+    if command -v "$1" 2>&1 /dev/null; then
+        return 0
+    fi
+    return 1
+}
 # update dunstrc
-~/.config/dunst/reload_dunst
+if exists dunst; then
+    ~/.config/dunst/reload_dunst
+fi
 # update zathurarc
-~/.config/zathura/reload_zathura
+if exists zathura; then
+    ~/.config/zathura/reload_zathura
+fi
 # update bspwm rules
-~/.config/bspwm/bspwmrc
+if exists  bspwm; then
+    ~/.config/bspwm/bspwmrc
+fi
+if exists alacritty || exists alacritty.exe; then
+    ~/.config/alacritty/reload_alacritty
+fi
 
 # update polybar
 polybar-msg cmd restart > /dev/null 2>&1
