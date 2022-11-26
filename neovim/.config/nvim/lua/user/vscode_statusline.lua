@@ -17,7 +17,7 @@ local diagnostics = {
 
 local diff = {
 	"diff",
-	colored = false,
+	colored = true,
 	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
   cond = hide_in_width
 }
@@ -25,7 +25,7 @@ local diff = {
 local mode = {
 	"mode",
 	fmt = function(str)
-		return "-- " .. str .. " --"
+		return str -- "-- " .. str .. " --"
 	end,
 }
 
@@ -43,7 +43,7 @@ local branch = {
 
 local location = {
 	"location",
-	padding = 0,
+	padding = 1,
 }
 
 -- cool function for progress
