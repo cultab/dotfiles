@@ -111,7 +111,9 @@ return require('packer').startup(function(use)
                         ["cmp.entry.get_documentation"] = true,
                     },
                 },
-                popupmenu = { backend = "nui", }
+                popupmenu = { backend = "nui", },
+                cmdline =  { enabled = false },
+                messages = { enabled = false },
             }
         end,
         requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
@@ -143,8 +145,7 @@ return require('packer').startup(function(use)
     use { 'RRethy/vim-hexokinase', --{{{
         run = "make hexokinase",
         config = function()
-            -- vim.cmd [[ let g:Hexokinase_highlighters = ['backgroundfull'] ]]
-            vim.g["Hexokinase_highlighters"] = { "backgroundfull" }
+            vim.g.Hexokinase_highlighters = { "foregroundfull" }
         end
     } --}}}
     use { 'folke/todo-comments.nvim', --{{{
@@ -251,6 +252,7 @@ return require('packer').startup(function(use)
     use 'LunarVim/darkplus.nvim'
     use 'bluz71/vim-moonfly-colors'
     use 'B4mbus/oxocarbon-lua.nvim'
+    use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
     -- }}}
 
     -- git {{{
@@ -288,12 +290,12 @@ return require('packer').startup(function(use)
         end,
         -- event = "BufWinEnter"
     } --}}}
-    use { 'samjwill/nvim-unception', -- {{{
-        config = function()
-            vim.g.unception_open_buffer_in_new_tab = true
-            vim.g.unception_enable_flavor_text = false
-        end
-    } --}}}
+    -- use { 'samjwill/nvim-unception', -- {{{
+    --     config = function()
+    --         vim.g.unception_open_buffer_in_new_tab = true
+    --         vim.g.unception_enable_flavor_text = false
+    --     end
+    -- } --}}}
     use 'equalsraf/neovim-gui-shim'
     use { 'akinsho/toggleterm.nvim', --{{{
         config = function()

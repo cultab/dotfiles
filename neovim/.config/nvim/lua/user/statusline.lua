@@ -4,11 +4,12 @@ function ReloadStatusline(theme)
     if theme == "darkplus" or theme == "vscode" then
         statusline_config = require "user.vscode_statusline".config
     else
-        statusline_config = require "user.my_statusline".config
+        -- statusline_config = require "user.my_statusline".config
+        statusline_config = require "user.my_next_statusline".config
         -- statusline_config = require "user.evil_statusline".config
     end
 
-    -- print(vim.inspect(statusline_config))
+    statusline_config.theme = theme
 
     require("lualine").setup(statusline_config)
 end

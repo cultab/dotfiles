@@ -5,8 +5,10 @@ vim.opt.softtabstop = 4  -- expanded size is 4
 vim.opt.shiftwidth = 4   -- indent size is 4
 vim.opt.shiftround = true -- round indent to shiftwidth
 
+vim.opt.smartindent = true
+
 -- wrap
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.breakindent = true
 vim.opt.showbreak = string.rep(" ", 3) -- make it so that long lines wrap smartly, ~TJDevries
 vim.opt.linebreak = true
@@ -16,6 +18,7 @@ vim.opt.breakindent = true
 vim.opt.inccommand = 'nosplit' -- show substitutions live, now without splitting!
 vim.opt.gdefault = true -- assume the 'g' in s/../../g
 vim.opt.ignorecase = true
+vim.opt.infercase = true
 vim.opt.smartcase = true -- all lower search is case insensitive
 
 -- don't give |ins-completion-menu| messages. For example,
@@ -30,7 +33,7 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 
 -- Misc Settings
-vim.opt.clipboard:prepend {"unnamedplus"}
+-- vim.opt.clipboard:prepend {"unnamedplus"}
 -- vim.opt.updatetime = 50 -- ms
 
 vim.opt.splitbelow = true
@@ -42,9 +45,12 @@ vim.opt.mouse='a'  -- enable mouse for a(ll) modes
 vim.opt.lazyredraw = false
 vim.opt.modeline = true
 
+-- language
 vim.opt.spelllang= 'el,en'
 vim.opt.keymap = 'greek_utf-8'
 vim.opt.iminsert = 0  -- default to english
+
+vim.opt.virtualedit = 'block'
 
  -- Assume .h files are c headers instead of cpp
 vim.g.c_syntax_for_h = true

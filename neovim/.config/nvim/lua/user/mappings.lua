@@ -31,6 +31,8 @@ map "<leader>b" { "<cmd>BufferPick<CR>",                 "Pick buffer" }
 map "<leader>f" { require"telescope.builtin".find_files, "Find files"  }
 map "<leader>/" { require"telescope.builtin".live_grep,  "Live grep"   }
 map "<leader>h" { require"telescope.builtin".help_tags,  "Search help tags" }
+map "gy" { vim.cmd '"+y'}
+map "gp" { vim.cmd '"+p'}
 
 map "<leader>g" { nil, "Git" }
     map "<leader>gc" { require"telescope.builtin".git_branches, "Commits"  }

@@ -11,7 +11,7 @@ local sep = {
 
 local config = {
     options = {
-        theme = theme,
+        theme = "this will get replaced",
         component_separators = '⏽',
         section_separators = sep , -- { left = '', right = '' },
         disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },

@@ -110,7 +110,7 @@ end
  -- used as separator for windows
 vim.o.fillchars = "vert:│"
  -- HACK: see: https://gthub.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
-vim.o.listchars = "nbsp:␣,trail:·,extends:>,precedes:<,tab:  ,eol:¬" -- ↲  "
+vim.o.listchars = "nbsp:␣,trail:·,tab:  ,eol:¬" -- ↲  "
 vim.o.list = true
 
 require("indent_blankline").setup {
@@ -174,6 +174,9 @@ vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 1
 --}}}
+-- oxocarbon {{{
+vim.g.oxocarbon_lua_keep_terminal = true
+-- }}}
 
 vim.cmd "colorscheme ayu-mirage"
 

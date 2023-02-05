@@ -20,7 +20,7 @@ M.config_picker = function(opts)
                 { "neovim",                  "~/.config/nvim/init.lua",                     cd = true },
                 { "neovim plugins",          "~/.local/share/nvim/site/pack/packer/start/", cd = true },
                 { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc"                                },
-                { "xresources",              "~/.config/xrdb/Xresources.xdefaults"                    },
+                { "xresources",              "~/.config/xrdb/Xresources.xdefaults"        , cd = true },
                 { "Zoomer Shell",            "~/.config/zsh/.zshrc"                                   },
                 { "themr",                   "~/.config/themr/themes.yaml",                 cd = true },
                 { "gitconfig",               "~/.config/git/config"                                   }
