@@ -1,0 +1,54 @@
+
+#define base00 #161616
+#define base01 #ff7eb6
+#define base02 #42be65
+#define base03 #33b1ff
+#define base04 #08bdba
+#define base05 #be95ff
+#define base06 #78a9ff
+#define base07 #dde1e6
+#define base08 #525252
+#define base09 #ee5396
+#define base0A #42be65
+#define base0B #33b1ff
+#define base0C #3ddbd9
+#define base0D #82cfff
+#define base0E #78a9ff
+#define base0F #ffffff
+#define basefg #f2f4f8
+#define basebg #161616
+#define basecc #a2a9b0
+#define basesb #FFAB91 
+
+// #08bdba  #0f62fe
+// #131313  #161616
+// #262626  #33b1ff
+// #37474F  #393939
+// #3ddbd9  #42be65
+// #525252  #673AB7
+// #78a9ff  #82cfff
+// #90A4AE  #ECEFF1
+// #FAFAFA  #FF6F00
+// #FFAB91  #FFFFFF
+// #a2a9b0  #adadad
+// #be95ff  #dde1e6
+// #ee5396  #f2f4f8
+// #ff7eb6  #ffffff
+// #adadad  
+
+// #define base00-hex #161616
+// #define base01-hex #262626
+// #define base02-hex #393939
+// #define base03-hex #525252
+// #define base04-hex #dde1e6
+// #define base05-hex #f2f4f8
+// #define base06-hex #ffffff
+// #define base07-hex #08bdba
+// #define base08-hex #3ddbd9
+// #define base09-hex #78a9ff
+// #define base0A-hex #ee5396
+// #define base0B-hex #33b1ff
+// #define base0C-hex #ff7eb6
+// #define base0D-hex #42be65
+// #define base0E-hex #be95ff
+// #define base0F-hex #82cfff
