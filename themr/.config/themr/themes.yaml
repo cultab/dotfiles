@@ -79,6 +79,10 @@ saga:
   colorscheme: "darkplus"
   xresources: "saga"
 
+oxocarbon:
+  colorscheme: "oxocarbon"
+  nvim: "oxocarbon-lua"
+
 plbr_square:
   polybar: "square_modules"
 

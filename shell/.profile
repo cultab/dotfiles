@@ -24,7 +24,6 @@ export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
 export npm_config_cache="${XDG_CACHE_HOME}/npm"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
@@ -36,14 +35,13 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GOPATH="$XDG_DATA_HOME/go"
 export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs/"
 
 # keychain
-eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
+eval "$(keychain --eval --quiet)" # --dir "$XDG_RUNTIME_DIR/keychain")"
 
 # export PROFILE_SOURCED=1
 export _JAVA_AWT_WM_NONREPARENTING=1
