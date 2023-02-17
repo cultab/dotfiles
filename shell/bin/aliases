@@ -63,15 +63,8 @@ alias gdh='git diff HEAD'
 # ls #
 ######
 
-ls_opts='--color=auto -h'
-# shellcheck disable=SC2139
-alias ls="ls $ls_opts"
-# shellcheck disable=SC2139
-alias ll="ls -l $ls_opts"
-# shellcheck disable=SC2139
-alias la="ls -la $ls_opts"
-
-if [ "$(command -v exa)" ]; then
+# lsd_opts='--group-dirs first --extensionsort'
+if command -v exa > /dev/null 2>&1; then
 	exa_opts='--group-directories-first --modified --group --sort=Extension'
     if exa --git 2>&1 /dev/null; then
         exa_opts="$exa_opts --git"
@@ -84,13 +77,16 @@ if [ "$(command -v exa)" ]; then
 	alias la="exa $exa_opts --long --all"
 # shellcheck disable=SC2139
 	alias lt="exa $exa_opts --tree"
+else
+    ls_opts='--color=auto -h'
+    # shellcheck disable=SC2139
+    alias ls="ls $ls_opts"
+    # shellcheck disable=SC2139
+    alias ll="ls -l $ls_opts"
+    # shellcheck disable=SC2139
+    alias la="ls -la $ls_opts"
 fi
 
-# lsd_opts='--group-dirs first --extensionsort'
-# alias lsd="lsd $lsd_opts"
-# alias llsd="lsd $lsd_opts -l"
-# alias lasd="lsd $lsd_opts -la"
-# alias ltsd="lsd $lsd_opts --tree"
 
 alias grep='grep --color=auto'
 alias term_test='dd if=/dev/urandom | base64 | lolcat'

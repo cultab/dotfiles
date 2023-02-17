@@ -178,7 +178,7 @@ vim.g.vscode_italic_comment = 1
 vim.g.oxocarbon_lua_keep_terminal = true
 -- }}}
 
-vim.cmd "colorscheme ayu-mirage"
+vim.cmd "colorscheme tokyonight-moon"
 
 vim.cmd [[
 augroup YankHighlight
