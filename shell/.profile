@@ -90,6 +90,7 @@ PATH_add "/usr/local/cuda/bin"
 
 PATH_add "/opt/microchip/xc16/v2.00/bin/"
 PATH_add "$HOME/.local/share/neovim/bin/"
+PATH_add "$GOPATH/bin/"
 
 
 export PATH

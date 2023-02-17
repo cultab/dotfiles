@@ -11,7 +11,7 @@ local sep = {
 
 local config = {
     options = {
-        theme = theme,
+        theme = "auto",
         -- component_separators = '',
         component_separators = '⏽',
         section_separators = sep, -- { left = '', right = '' },

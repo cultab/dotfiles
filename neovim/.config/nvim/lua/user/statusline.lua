@@ -14,7 +14,7 @@ function ReloadStatusline(theme)
     require("lualine").setup(statusline_config)
 end
 
-local theme = "darkplus"
+local theme = "tokyonight-moon"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LUALINE_LOADED then
@@ -24,6 +24,6 @@ end
 
 vim.cmd [[
 augroup AutoReload
-    autocmd ColorScheme * lua ReloadStatusline()
+    autocmd ColorScheme * lua ReloadStatusline(theme)
 augroup end
 ]]
