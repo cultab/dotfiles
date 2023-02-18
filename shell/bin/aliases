@@ -4,7 +4,7 @@ alias startx='startx -- -ardelay 250 -arinterval 25'
 
 # if neovim is installed alias it
 if command -v nvim > /dev/null 2>&1; then
-    alias vim='nvim --listen /tmp/nvim-$RANDOM'
+    alias vim='nvim --listen /tmp/nvim-$RANDOM' # HACK: RANDOM only actually exists in zsh and bash
 fi
 
 if command -v bat > /dev/null 2>&1; then
@@ -66,7 +66,7 @@ alias gdh='git diff HEAD'
 # lsd_opts='--group-dirs first --extensionsort'
 if command -v exa > /dev/null 2>&1; then
 	exa_opts='--group-directories-first --modified --group --sort=Extension'
-    if exa --git 2>&1 /dev/null; then
+    if exa --git > /dev/null 2>&1 ; then
         exa_opts="$exa_opts --git"
     fi
 # shellcheck disable=SC2139
