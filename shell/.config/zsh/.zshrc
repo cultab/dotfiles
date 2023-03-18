@@ -71,13 +71,21 @@ source ~/bin/functions.sh
 
 if [[ ! -f "$HOME/.local/share/miniplug.zsh" ]]; then
     curl \
-    -sL --create-dirs \
-    https://git.sr.ht/~yerinalexey/miniplug/blob/master/miniplug.zsh \
-    -o $HOME/.local/share/miniplug.zsh
+        -sL --create-dirs \
+        https://git.sr.ht/~yerinalexey/miniplug/blob/master/miniplug.zsh \
+        -o $HOME/.local/share/miniplug.zsh
 fi
+
+source "$HOME/.local/zsh/wezterm.sh"
 
 # Add to zshrc:
 source "$HOME/.local/share/miniplug.zsh"
+
+typeset -gA FAST_BLIST_PATTERNS
+FAST_BLIST_PATTERNS[/mnt/*]=1
+FAST_BLIST_PATTERNS[/mnt/*]=1
+FAST_BLIST_PATTERNS[/mnt/*]=1
+FAST_BLIST_PATTERNS[/mnt/*]=1
 
 # miniplug plugin 'zsh-users/zsh-syntax-highlighting'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
@@ -93,3 +101,10 @@ fast-theme --quiet XDG:overlay
 fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
 prompt_nix_shell_setup "$@"
+
+if [[ "$WSL_DISTRO_NAME" ]]; then
+    pkill wezterm_reload
+    echo "Wezterm Reloader :DDD"
+    wezterm_reload &
+    disown
+fi
