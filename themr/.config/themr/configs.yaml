@@ -4,33 +4,38 @@ xresources:
   type: colorscheme
   path: "~/.config/xrdb/selected_theme.xdefaults"
   regex: '#include ".*\.xdefaults"'
-  pre: '#include "./'
-  post: '.xdefaults"'
+  replace: '#include "./{}.xdefaults"'
+  # pre: '#include "./'
+  # post: '.xdefaults"'
   cmd: "reload_xrdb"
 
 nvim:
   type: colorscheme
   path: "~/.config/nvim/lua/user/visual.lua"
   regex: 'cmd "colorscheme .*"'
-  pre: 'cmd "colorscheme '
-  post: '"'
-  cmd: "all_nvim 'colorscheme %'"
+  replace: 'cmd "colorscheme {}"'
+  cmd: "all_nvim 'colorscheme {}'"
 
 lualine:
   type: colorscheme
   path: "~/.config/nvim/lua/user/statusline.lua"
   regex: '.*local theme = ".*"'
-  pre: 'local theme = "'
-  post: '"'
-  cmd: "all_nvim 'lua ReloadStatusline(\"%\")'"
+  replace: 'local theme = "{}"'
+  cmd: "all_nvim 'lua ReloadStatusline(\"{}\")'"
 
 polybar:
   type: polybar
   path: "~/.config/polybar/config.ini"
   regex: 'include-file = .*\.ini'
-  pre: 'include-file = ./'
-  post: '.ini'
+  replace: 'include-file = ./{}.ini'
   cmd: "bspc config top_padding 0"
+
+    # color_scheme = "TokyoNight (Gogh)",
+wezterm:
+  type: colorscheme
+  path: "~/.config/wezterm/wezterm.lua"
+  regex: '    color_scheme = ".*",'
+  replace: '    color_scheme = "{}",'
 
 # lightline:
 #   path: "~/.config/nvim/init.vim"

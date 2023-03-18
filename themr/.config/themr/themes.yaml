@@ -1,7 +1,12 @@
 # Theme definitions.
 
+solarized:
+  colorscheme: solarized
+  wezterm: "Solarized Dark - Patched"
+
 tokyonight-night:
   colorscheme: "tokyonight"
+  nvim: "tokyonight-night"
   xresources: "tokyonight_night"
 
 tokyonight-storm:
@@ -11,6 +16,7 @@ tokyonight-storm:
 tokyonight-moon:
   colorscheme: "tokyonight-moon"
   xresources: "tokyonight_moon"
+  xresources: "tokyonight_night"
 
 tokyonight-day:
   colorscheme: "tokyonight-day"
@@ -23,6 +29,7 @@ potato:
 github_light:
   colorscheme: "github-light"
   xresources: "github_light"
+  wezterm: "Github (base16)"
 
 doom-one:
   nvim: "doom-one"
@@ -55,6 +62,7 @@ gruvbox-flat:
 #   lualine: "catppuccin"
 
 catppuccin:
+  wezterm: "Catppuccin Mocha"
   colorscheme: "catppuccin"
 
 wpg:
