@@ -12,7 +12,7 @@ end
 
 --- @param user_vars UserVars
 local function get_proc_name(user_vars)
-    local name =  user_vars["WEZTERM_PROG"]
+    local name = user_vars["WEZTERM_PROG"]
 
     if not name then
         return ""
@@ -29,7 +29,7 @@ end
 local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
     if false and isViProcess(pane, window) then
         window:perform_action(
-            -- This should match the keybinds you set in Neovim.
+        -- This should match the keybinds you set in Neovim.
             act.SendKey({ key = vim_direction, mods = 'ALT' }),
             -- act.SendKey({ key = 'i', mods = 'ALT' }),
             pane
@@ -65,25 +65,34 @@ local config = {
     },
     default_domain = "WSL:Debian",
     disable_default_key_bindings = true,
+    adjust_window_size_when_changing_font_size = false,
+    line_height = 1.3,
+    font_size = 10,
     leader = {
         key = 's',
         mods = 'CTRL',
         timeout_milliseconds = 1000
     },
     keys = {
-        { key = '\\', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
-        { key = '-',  mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
-        { key = 'z',  mods = 'LEADER', action = act.TogglePaneZoomState, },
-        { key = 'x',  mods = 'LEADER', action = act.CloseCurrentTab { confirm = true }, },
-        { key = 's',  mods = 'LEADER', action = act.ShowTabNavigator, },
-        { key = 'l',  mods = 'LEADER', action = act.ShowDebugOverlay },
-        { key = 'c',  mods = 'LEADER', action = act.SpawnTab "CurrentPaneDomain", },
-        { key = 'n',  mods = 'LEADER', action = act.ActivateTabRelative(1), },
-        { key = 'p',  mods = 'LEADER', action = act.ActivateTabRelative(-1), },
-        { key = 'h',  mods = 'ALT',    action = act.EmitEvent('ActivatePaneDirection-left') },
-        { key = 'j',  mods = 'ALT',    action = act.EmitEvent('ActivatePaneDirection-down') },
-        { key = 'k',  mods = 'ALT',    action = act.EmitEvent('ActivatePaneDirection-up') },
-        { key = 'l',  mods = 'ALT',    action = act.EmitEvent('ActivatePaneDirection-right') },
+        { key = '\\', mods = 'LEADER',      action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+        { key = '-',  mods = 'LEADER',      action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
+        { key = 'z',  mods = 'LEADER',      action = act.TogglePaneZoomState, },
+        { key = 'x',  mods = 'LEADER',      action = act.CloseCurrentTab { confirm = true }, },
+        { key = 's',  mods = 'LEADER',      action = act.ShowTabNavigator, },
+        { key = 'l',  mods = 'LEADER',      action = act.ShowDebugOverlay },
+        { key = 'c',  mods = 'LEADER',      action = act.SpawnTab "CurrentPaneDomain", },
+        { key = 'n',  mods = 'LEADER',      action = act.ActivateTabRelative(1), },
+        { key = 'p',  mods = 'LEADER',      action = act.ActivateTabRelative(-1), },
+        { key = 'h',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-left') },
+        { key = 'j',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-down') },
+        { key = 'k',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-up') },
+        { key = 'l',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-right') },
+        { key = 's',  mods = 'LEADER|CTRL', action = act.ActivateCopyMode },
+        { key = '=',  mods = 'CTRL',        action = act.IncreaseFontSize },
+        { key = '-',  mods = 'CTRL',        action = act.DecreaseFontSize },
+        { key = '0',  mods = 'CTRL',        action = act.ResetFontSize },
+        { key = 'c',  mods = 'CTRL|SHIFT',  action = act.Copy },
+        { key = 'v',  mods = 'CTRL|SHIFT',  action = act.Paste },
     },
     -- enable_tab_bar = false,
     window_padding = {
@@ -92,9 +101,9 @@ local config = {
         top = 2,
         bottom = 2,
     },
-    color_scheme = "TokyoNight (Gogh)",
-    -- color_scheme = "Belge (terminal.sexy)",
-    -- color_scheme = "Tinacious Design (Dark)",
+    color_scheme = "Catppuccin Mocha",
+    -- color_scheme = "Github (base16)",
+    -- color_scheme = "Github (base16)",
     launch_menu = {
         {
             label = "Open config",
@@ -154,23 +163,23 @@ local config = {
 }
 
 wezterm.on(
-  'format-tab-title',
-  -- function(tab, tabs, panes, config, hover, max_width)
-  function(tab, _, _, _, _, _)
-    local pane = tab.active_pane
-    local proc_name = get_proc_name(pane.user_vars)
+    'format-tab-title',
+    -- function(tab, tabs, panes, config, hover, max_width)
+    function(tab, _, _, _, _, _)
+        local pane = tab.active_pane
+        local proc_name = get_proc_name(pane.user_vars)
 
-    if proc_name == "" or proc_name == nil then
-        proc_name = "shell"
+        if proc_name == "" or proc_name == nil then
+            proc_name = "shell"
+        end
+
+        local title = tab.tab_index + 1
+            .. ': '
+            .. proc_name
+        return {
+            { Text = ' ' .. title .. ' ' },
+        }
     end
-
-    local title = tab.tab_index + 1
-      .. ': '
-      .. proc_name
-    return {
-      { Text = ' ' .. title .. ' ' },
-    }
-  end
 )
 
 
