@@ -6,7 +6,6 @@ local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 
--- our picker function: colors
 M.config_picker = function(opts)
   opts = opts or {}
 
@@ -23,7 +22,8 @@ M.config_picker = function(opts)
                 { "xresources",              "~/.config/xrdb/Xresources.xdefaults"        , cd = true },
                 { "Zoomer Shell",            "~/.config/zsh/.zshrc"                                   },
                 { "themr",                   "~/.config/themr/themes.yaml",                 cd = true },
-                { "gitconfig",               "~/.config/git/config"                                   }
+                { "gitconfig",               "~/.config/git/config"                                   },
+                { "wezterm",                 "~/.config/wezterm/wezterm.lua",                         },
             },
             entry_maker = function(entry)
                 return {
@@ -42,7 +42,6 @@ M.config_picker = function(opts)
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
                 if selection.cd then
-                    -- vim.cmd('cd ' .. vim.fs.dirname(selection.path))
                     vim.cmd.cd(vim.fs.dirname(selection.path))
                 end
                 vim.cmd.edit(selection.path)

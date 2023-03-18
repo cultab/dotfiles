@@ -10,6 +10,8 @@ null_ls.setup({
         --     extra_args = { "--config=" .. vim.fn.expand("~/.config/doc/vale/.vale.ini")}
         --     -- args = { "--config=/home/evan/.config/doc/vale/.vale.ini", "--no-exit", "--output=JSON", "$FILENAME" }
         -- }),}}}
+        -- Go
+        -- null_ls.builtins.diagnostics.golangci_lint,
         -- R
         null_ls.builtins.formatting.styler,
         -- shell

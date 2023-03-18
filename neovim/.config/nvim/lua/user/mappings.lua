@@ -26,13 +26,19 @@ map "<leader>t" { nil, "Text operations" , 'nv'}
 vim.cmd [[
 vnoremap <leader>c :Norm<space>
 ]]
-map "<leader>l" { require"lsp_lines".toggle,             "Toggle diagnostics"}
-map "<leader>b" { "<cmd>BufferPick<CR>",                 "Pick buffer" }
-map "<leader>f" { require"telescope.builtin".find_files, "Find files"  }
-map "<leader>/" { require"telescope.builtin".live_grep,  "Live grep"   }
-map "<leader>h" { require"telescope.builtin".help_tags,  "Search help tags" }
-map "gy" { vim.cmd '"+y'}
-map "gp" { vim.cmd '"+p'}
+
+map "<leader>L" { require"lsp_lines".toggle,                      "Toggle diagnostics" }
+map "<leader>b" { "<cmd>BufferPick<CR>",                          "Pick buffer" }
+map "<leader>f" { require"telescope.builtin".find_files,          "Find files"  }
+map "<leader>/" { require"telescope.builtin".live_grep,           "Live grep"   }
+map "<leader>h" { require"telescope.builtin".help_tags,           "Search help tags" }
+map "<leader>n" { require'dashboard'.new_file,                    "New file" }
+map "<leader>x" { function() vim.api.nvim_buf_delete(0, {}) end,  "Delete buffer" }
+map "<leader>l" { function() vim.o.number = not vim.o.number end, "Toggle line numbers" }
+map "<leader>d" { "<CMD>Lexplore<CR>",                                     "Open file explorer" }
+
+map "gy" { '"+y', "Yank to system clipboard", 'nv' }
+map "gp" { '"+p', "Paste from system clipboard", 'nv'}
 
 map "<leader>g" { nil, "Git" }
     map "<leader>gc" { require"telescope.builtin".git_branches, "Commits"  }
@@ -46,12 +52,18 @@ map "<leader>g" { nil, "Git" }
     map "<leader>gB" { require"gitsigns".blame_line ,           "Blame line" }
     map "<leader>gg" { require"neogit".open,                    "Open Neogit" }
 
-map "<leader>n" { require'dashboard'.new_file, "New file" }
-
-map "<M-h>" { require"tmux".move_left   }
-map "<M-j>" { require"tmux".move_bottom }
-map "<M-k>" { require"tmux".move_top    }
-map "<M-l>" { require"tmux".move_right  }
+-- map "<M-h>" { require"tmux".move_left   }
+-- map "<M-j>" { require"tmux".move_bottom }
+-- map "<M-k>" { require"tmux".move_top    }
+-- map "<M-l>" { require"tmux".move_right  }
+-- map "<M-h>" { function() require"Navigator".left()  end }
+-- map "<M-j>" { function() require"Navigator".down()  end }
+-- map "<M-k>" { function() require"Navigator".up()    end }
+-- map "<M-l>" { function() require"Navigator".right() end }
+map "<M-h>" { ":NavigatorLeft<CR>" }
+map "<M-j>" { ":NavigatorDown<CR>" }
+map "<M-k>" { ":NavigatorUp<CR>" }
+map "<M-l>" { ":NavigatorRight<CR>" }
 
 
 map '<C-d>' { function ()
@@ -67,8 +79,6 @@ map '<C-u>' { function ()
     end
 end, "Scroll documentation up", expr = true
 }
-
--- map:register()
 
 function M.set_lsp_mappings()
     map 'gD'        { vim.lsp.buf.declaration,      "Goto declaration [LSP]"     }
@@ -86,7 +96,6 @@ function M.set_lsp_mappings()
     map '<leader>=' { function() vim.lsp.buf.range_format {async = true} end,               "Format range [LSP]" ,    'v' }
     map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
     map '<leader>q' { function() vim.diagnostic.setloclist() end, " Open quickfix [LSP] " }
-    -- map:register()
 end
 
 function M.get_cmp_mappings()

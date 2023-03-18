@@ -118,15 +118,10 @@ return require('packer').startup(function(use)
         end,
         requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
     } --}}}
+    use { 'prichrd/netrw.nvim' }
 
     -- context
     use 'lukas-reineke/indent-blankline.nvim'
-    -- use { 'kosayoda/nvim-lightbulb',--{{{
-    --     config = function ()
-    --         vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LspDiagnosticsDefaultInformation", linehl="", numhl="" })
-    --         vim.cmd [[ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb() ]]
-    --     end
-    -- } --}}}
 
     -- general changes
     use 'stevearc/dressing.nvim'
@@ -157,8 +152,8 @@ return require('packer').startup(function(use)
     -- extra
     use { 'nyngwang/murmur.lua',
         config = function()
-            FOO = 'your_augroup_name'
-            vim.api.nvim_create_augroup(FOO, { clear = true })
+            AUGROUP = 'murmur_hold'
+            vim.api.nvim_create_augroup(AUGROUP, { clear = true })
             require('murmur').setup {
                 -- cursor_rgb = 'purple', -- default to '#393939'
                 max_len = 80, -- maximum word-length to highlight
@@ -174,7 +169,7 @@ return require('packer').startup(function(use)
                 }
             }
             vim.api.nvim_create_autocmd('CursorHold', {
-                group = FOO,
+                group = AUGROUP,
                 pattern = '*',
                 callback = function()
                     -- skip when a float-win already exists.
@@ -229,17 +224,11 @@ return require('packer').startup(function(use)
         end
     } --}}}
     use { 'xiyaowong/telescope-emoji.nvim' }
-    use { 'smjonas/live-command.nvim', -- {{{
-        config = function()
-            require("live-command").setup {
-                commands = { Norm = { cmd = "norm" }, },
-            }
-        end
-    } --}}}
     --}}}
 
     -- colorschemes {{{
-    use 'lifepillar/vim-solarized8'
+    -- use 'lifepillar/vim-solarized8'
+    use 'shaunsingh/solarized.nvim'
     use 'ntk148v/vim-horizon'
     use { 'sainnhe/everforest', --{{{
         config = function()
@@ -332,53 +321,36 @@ return require('packer').startup(function(use)
         end,
         -- event = "BufWinEnter"
     } --}}}
-    -- use { 'samjwill/nvim-unception', -- {{{
-    --     config = function()
-    --         vim.g.unception_open_buffer_in_new_tab = true
-    --         vim.g.unception_enable_flavor_text = false
-    --     end
-    -- } --}}}
     use 'equalsraf/neovim-gui-shim'
     use { 'akinsho/toggleterm.nvim', --{{{
         config = function()
             require("toggleterm").setup {
-                direction = "float",
+                direction = "horizontal", --"float",
                 start_in_insert = true
             }
         end,
         event = "BufWinEnter"
     } --}}}
-    use 'benmills/vimux'
     use { 'dstein64/vim-startuptime', cmd = "StartupTime" }
-    use { 'aserowy/tmux.nvim', --{{{
-        config = function()
-            require("tmux").setup {
-                navigation = {
-                    cycle_navigation = false,
-                    enable_default_keybindings = false,
-                },
-                resize = {
-                    enable_default_keybindings = false,
-                }
-            }
-        end
-    } --}}}
+    use { 'numToStr/Navigator.nvim' }
+    -- use { 'aserowy/tmux.nvim', --{{{
+    --     config = function()
+    --         require("tmux").setup {
+    --             navigation = {
+    --                 cycle_navigation = false,
+    --                 enable_default_keybindings = false,
+    --             },
+    --             resize = {
+    --                 enable_default_keybindings = false,
+    --             }
+    --         }
+    --     end
+    -- } --}}}
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-telescope/telescope.nvim', --{{{
         requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
     } --}}}
     use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim", ft = "norg", config = require 'user.neorg'.config }
-    -- use { 'declancm/cinnamon.nvim',--{{{
-    --     config = function()
-    --         require('cinnamon').setup({
-    --             extra_keymaps = true,
-    --             centered = true,
-    --             hide_cursor = true,
-    --             default_delay = 5,
-    --             max_length = 500,
-    --         })
-    --     end
-    -- } --}}}
     use 'lewis6991/impatient.nvim'
     --}}}
 

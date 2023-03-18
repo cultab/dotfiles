@@ -14,7 +14,7 @@ function ReloadStatusline(theme)
     require("lualine").setup(statusline_config)
 end
 
-local theme = "tokyonight-moon"
+local theme = "catppuccin"
 
 -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
 if not LUALINE_LOADED then

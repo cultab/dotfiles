@@ -4,21 +4,22 @@ local M = {}
 local cmp = require "user.cmp"
 local lspconfig = require("lspconfig")
 
-require'nvim-autopairs'.setup{ fast_wrap = {} }
-require"neodev".setup {
+require 'nvim-autopairs'.setup { fast_wrap = {} }
+require "neodev".setup {
     lspconfig = false,
-        library = {
-            runtime = true,
-            plugins = false,
+    library = {
+        runtime = true,
+        plugins = false,
     }
 }
 
-require'mason-lspconfig'.setup{
+require 'mason-lspconfig'.setup {
     ensure_installed = {
         "bashls",
         "tsserver",
         "sumneko_lua",
         "pylsp",
+        "golangci_lint_ls"
     }
 }
 
@@ -45,37 +46,49 @@ local clangd_caps = vim.tbl_deep_extend("force", capabilities, { offsetEncoding 
 local servers = {
     -- jedi_language_server = {},
     pylsp = {
-    settings = {-- {{{
-    pylsp = {
-        plugins =  {
-            pydocstyle = { enabled = true },
-            mypy = { enabled = true },
-            jedi_completion = { enabled = false },
-            -- pylint = { enabled = true },
-            rope_completion = { enabled = true, eager = true },
-            isort = { enabled = true },
-            black = { enabled = true },
-        }
-    }
-    },-- }}}
+        settings = { -- {{{
+            pylsp = {
+                plugins = {
+                    pydocstyle = { enabled = true },
+                    mypy = { enabled = true },
+                    jedi_completion = { enabled = false },
+                    -- pylint = { enabled = true },
+                    rope_completion = { enabled = true, eager = true },
+                    isort = { enabled = true },
+                    black = { enabled = true },
+                }
+            }
+        }, -- }}}
     },
     bashls = {},
-    tsserver = {},
-    sumneko_lua = { before_init=require'neodev.lsp'.before_init },
+    tsserver = {
+        filetype = { "js", "ts" },
+    },
+    sumneko_lua = { before_init = require 'neodev.lsp'.before_init },
     gopls = {
-    settings = { --{{{
-        gopls = {
-            semanticTokens = true,
-            staticcheck = true
-        }
-    } --}}}
+        settings = { --{{{
+            gopls = {
+                semanticTokens = true,
+                staticcheck = true
+            }
+        } --}}}
     },
     texlab = { filetypes = { "plaintex", "tex", "rmd" }, },
     clangd = {
         capabilities = clangd_caps,
         filetypes = { "c", "cpp", "cuda" }
     },
-    r_language_server = {}
+    r_language_server = {},
+    golangci_lint_ls = {
+        default_config = {
+            cmd = { 'golangci-lint-langserver' },
+            root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
+            init_options = {
+                command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
+                    "--issues-exit-code=1" };
+            }
+        };
+    },
 }
 
 for server, extra in pairs(servers) do
@@ -93,9 +106,10 @@ function Jdtls_configure()
     vim.notify_once("jdtls is disabled")
 
     vim.notify("Tweak jdtls install_path!")
-    require('jdtls').start_or_attach{
-        cmd = { lspinstall_path .. '/jdtls/bin/jdtls', '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')},
-        root_dir = require('jdtls.setup').find_root({'gradle.build', 'pom.xml', '.git'}),
+    require('jdtls').start_or_attach {
+        cmd = { lspinstall_path .. '/jdtls/bin/jdtls',
+            '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t') },
+        root_dir = require('jdtls.setup').find_root({ 'gradle.build', 'pom.xml', '.git' }),
         on_attach = on_attach,
         capabilities = capabilities
     }
@@ -108,37 +122,37 @@ function Jdtls_configure()
     vnoremap <leader>xm <Esc><Cmd>lua require('jdtls').extract_method(true)<CR>
     ]]
 
-    local finders = require'telescope.finders'
-    local sorters = require'telescope.sorters'
-    local actions = require'telescope.actions'
-    local pickers = require'telescope.pickers'
+    local finders = require 'telescope.finders'
+    local sorters = require 'telescope.sorters'
+    local actions = require 'telescope.actions'
+    local pickers = require 'telescope.pickers'
 
     require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
-    local opts = {}
-    pickers.new(opts, {
-        prompt_title = prompt,
-        finder    = finders.new_table {
-        results = items,
-        entry_maker = function(entry)
-            return {
-            value = entry,
-            display = label_fn(entry),
-            ordinal = label_fn(entry),
-            }
-        end,
-        },
-        sorter = sorters.get_generic_fuzzy_sorter(),
-        attach_mappings = function(prompt_bufnr)
-        actions.select_default:replace(function()
-            local selection = actions.get_selected_entry(prompt_bufnr)
-            actions.close(prompt_bufnr)
+        local opts = {}
+        pickers.new(opts, {
+            prompt_title    = prompt,
+            finder          = finders.new_table {
+                results = items,
+                entry_maker = function(entry)
+                    return {
+                        value = entry,
+                        display = label_fn(entry),
+                        ordinal = label_fn(entry),
+                    }
+                end,
+            },
+            sorter          = sorters.get_generic_fuzzy_sorter(),
+            attach_mappings = function(prompt_bufnr)
+                actions.select_default:replace(function()
+                    local selection = actions.get_selected_entry(prompt_bufnr)
+                    actions.close(prompt_bufnr)
 
-            cb(selection.value)
-        end)
+                    cb(selection.value)
+                end)
 
-        return true
-        end,
-    }):find()
+                return true
+            end,
+        }):find()
     end
 end
 
@@ -179,19 +193,19 @@ local function get_pyls_plugins()
     local python_venv = Find_python_venv()
 
     pylsp_plugins.pydocstyle = {
-            enabled = true
+        enabled = true
     }
 
     if python_venv ~= "" then
         pylsp_plugins.jedi = {
-                environment = python_venv
+            environment = python_venv
         }
     end
     return pylsp_plugins
 end
 
 function Pylsp_setup()
-    lspconfig.pylsp.setup{
+    lspconfig.pylsp.setup {
         cmd = { 'pylsp_start' },
         on_attach = on_attach,
         settings = {

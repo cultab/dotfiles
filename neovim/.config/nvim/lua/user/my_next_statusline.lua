@@ -9,20 +9,43 @@ local sep = {
     right = ''
 }
 
+local greek_mode_map = {
+    n = "Κανονικό",
+    c = "Εντολής",
+    i = "Εισαγωγής",
+    V = "Επιλογής",
+    R = "Αντικατάστασης",
+    ["\22"] = "Επιλογής-Κουτί",
+    niI = "Δε ξέρω μπρο είσαι μόνος σου ¯¯\\_(ツ)_/¯¯"
+}
+
+local short_mode_map = {
+    n = "N",
+    c = "C",
+    i = "I",
+    V = "V",
+    R = "R",
+    ["\22"] = "VB",
+}
+
+local function mode()
+    local cur_mode = vim.api.nvim_get_mode().mode
+    return short_mode_map[cur_mode]
+end
+
 local config = {
     options = {
         theme = "auto",
-        -- component_separators = '',
         component_separators = '⏽',
-        section_separators = sep, -- { left = '', right = '' },
+        section_separators = sep,
         disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
         globalstatus = true,
     },
     sections = {
         -- left sections
-        lualine_a = { { 'mode', fmt = function(str) return str:sub(1,1) end } },
-        lualine_b = { { 'branch' } },
-        lualine_c = { { 'filetype', separator = { right = '', left = ''}, }, 'filename' },
+        lualine_a = { mode, 'branch' },
+        lualine_b = { 'filetype' },
+        lualine_c = { { 'filename', separator = { right = '', left = ''}, }, },
         -- right sections
         lualine_z = { 'location', 'progress' },
         lualine_x = { { 'searchcount' } },
