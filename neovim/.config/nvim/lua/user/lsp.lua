@@ -89,6 +89,7 @@ local servers = {
             }
         };
     },
+    asm_lsp = {}
 }
 
 for server, extra in pairs(servers) do

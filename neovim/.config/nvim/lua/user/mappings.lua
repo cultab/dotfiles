@@ -6,6 +6,35 @@ local luasnip = require 'luasnip'
 -- load my mapping DSL
 local map = require "user.map".map
 
+-- easier navigation in normal / visual / operator pending mode
+map "n" { "nnz" }
+map "N" { "Nnz" }
+map "*" { "*nz" }
+map "#" { "#nz" }
+
+-- slice line
+map "S" { "i<CR><ESC>k$" }
+
+-- This unsets the last search pattern register by hitting ESC
+map "<esc>" { "<cmd>nohlsearch<cr>" }
+
+-- Change text without putting the text into register
+map "c" { "\"_c" }
+map "C" { "\"_C" }
+map "p" { "\"_dP", "", 'v' }
+map "cc" { "\"_cc" }
+map "x" { "\"_x" }
+
+--  I never use Ex mode, so re-run macros instead
+map "Q" { "QQ" }
+
+-- sane movement through wrapping lines
+map "j" { "gj" }
+map "k" { "gk" }
+
+map "U" { "<C-r>", "Redo" }
+map "gh" { "^", "Goto Line Beginning" }
+map "gl" { "$", "Goto Line End" }
 
 map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
@@ -16,10 +45,10 @@ map "<leader>cr" { require "user.command".run_current_file, "Run current file" }
 
 map "<leader>o" { require 'user.configs'.config_picker, "Open config picker" }
 
-map "<leader>t" { nil, "Text operations", 'nv' }
-map "<leader>tt" { ":Tabularize<space>/", "Tabularize", 'v' }
-map "<leader>ta" { "<cmd>EasyAlign<CR>", "Easy Align", 'v' }
-map "<leader>te" { "<cmld>Telescope emoji<CR>", "Emoji Picker" }
+map "<leader>t" { nil, "Text operations" , 'nv'}
+    map "<leader>tt" { ":Tabularize<space>/",       "Tabularize", 'v' }
+    map "<leader>ta" { "<cmd>EasyAlign<CR>",        "Easy Align", 'v' }
+    map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Emoji Picker" }
 
 
 -- HACK: figure out why this breaks with `map`
@@ -40,17 +69,17 @@ map "<leader>d" { "<CMD>Lexplore<CR>", "Open file explorer" }
 map "gy" { '"+y', "Yank to system clipboard", 'nv' }
 map "gp" { '"+p', "Paste from system clipboard", 'nv' }
 
-map "<leader>g" { nil, "Git" }
-map "<leader>gc" { require "telescope.builtin".git_branches, "Commits" }
-map "<leader>gb" { require "telescope.builtin".git_branches, "Branches" }
-map "<leader>gs" { require "telescope.builtin".git_status, "Status" }
-map "<leader>gp" { require "telescope.builtin".git_bcommits, "Commits in buffer" }
-map "<leader>gS" { require "gitsigns".stage_hunk, "Stage hunk" }
-map "<leader>gr" { require "gitsigns".reset_hunk, "Reset hunk" }
-map "<leader>gR" { require "gitsigns".reset_buffer, "Reset buffer" }
-map "<leader>gp" { require "gitsigns".preview_hunk, "Preview hunk" }
-map "<leader>gB" { require "gitsigns".blame_line, "Blame line" }
-map "<leader>gg" { require "neogit".open, "Open Neogit" }
+map "<leader>v" { nil, "Version Control [Git]" }
+    map "<leader>vs" { require"gitsigns".stage_hunk,            "Stage hunk" }
+    map "<leader>vr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
+    map "<leader>vR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
+    map "<leader>vp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
+    map "<leader>vb" { require"gitsigns".blame_line ,           "Blame line" }
+    map "<leader>vn" { require"neogit".open,                    "Open Neogit" }
+    -- map "<leader>vc" { require"telescope.builtin".git_commits, "Commits"  }
+    -- map "<leader>vb" { require"telescope.builtin".git_branches, "Branches" }
+    -- map "<leader>vs" { require"telescope.builtin".git_status,   "Status"   }
+    -- map "<leader>vp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
 
 -- map "<M-h>" { require"tmux".move_left   }
 -- map "<M-j>" { require"tmux".move_bottom }
@@ -124,6 +153,7 @@ local function format_indent_range()
 end
 map '=' { format_indent_range, "Format buffer", 'v' }
 
+
 function M.set_lsp_mappings()
     map 'gD' { vim.lsp.buf.declaration, "Goto declaration [LSP]" }
     map 'gd' { vim.lsp.buf.definition, "Goto definition [LSP]" }
@@ -135,8 +165,6 @@ function M.set_lsp_mappings()
     map '<A-CR>' { vim.lsp.buf.code_action, "Code Action [LSP]" }
     map '[' { vim.diagnostic.goto_prev, "Previous diagnostic [LSP]" }
     map ']' { vim.diagnostic.goto_next, "Next diagnostic [LSP]" }
-    -- map '<leader>=' { function() vim.lsp.buf.format { async = true } end, "Format buffer [LSP]" }
-    -- map '<leader>=' { function() vim.lsp.buf.range_format { async = true } end, "Format range [LSP]", 'v' }
     map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
     map '<leader>q' { function() vim.diagnostic.setloclist() end, " Open quickfix [LSP] " }
 end
@@ -175,6 +203,7 @@ function M.set_welcome_mappings() vim.cmd [[
     ]]
 end
 
+-- TODO: in lua or remove entirely
 vim.cmd [[
 " barbar
 " Move to previous/next
@@ -190,10 +219,31 @@ nnoremap <silent>    <A-c> :BufferClose<CR>
 -- from the good ol' init.vim
 -- it's mostly vim-compatible
 -- so it stays here for now
+-- TODO: in lua
 vim.cmd [[
 " so much more convenient
 map <space> <leader>
+]]
 
+
+
+-- TODO: in lua
+vim.cmd [[
+" sometimes I get off the shift key too slowly, ~~maybe don't do it then?~~,
+" HA abbr to the rescue
+cabbr Q q
+cabbr W w
+cabbr Wq wq
+cabbr WQ wq
+cabbr Wa wa
+cabbr WA wa
+]]
+
+-- Unused for now {{{
+local nop = function (nothing)
+    return nothing
+end
+nop [[
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -210,8 +260,10 @@ nnoremap S i<CR><ESC>k$
 nnoremap <silent><ESC> :nohlsearch<CR>
 
 " easier navigation in normal / visual / operator pending mode
-noremap H ^
-noremap L $
+noremap H <cmd>echo 'Please use gh!'<cr>
+noremap L <cmd>echo 'Please use gl!'<cr>
+" noremap H ^
+" noremap L $
 
 " Change text without putting the text into register
 noremap c "_c
@@ -226,15 +278,5 @@ nnoremap Q @@
 " sane movement through wrapping lines
 noremap <silent>j gj
 noremap <silent>k gk
-
-" sometimes I get off the shift key too slowly, ~~maybe don't do it then?~~,
-" HA abbr to the rescue
-cabbr Q q
-cabbr W w
-cabbr Wq wq
-cabbr WQ wq
-cabbr Wa wa
-cabbr WA wa
-]]
-
+]]-- }}}
 return M
