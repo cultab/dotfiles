@@ -24,6 +24,7 @@ M.config_picker = function(opts)
                 { "themr",                   "~/.config/themr/themes.yaml",                 cd = true },
                 { "gitconfig",               "~/.config/git/config"                                   },
                 { "wezterm",                 "~/.config/wezterm/wezterm.lua",                         },
+                { "starship prompt",         "~/.config/starship.toml"                                }
             },
             entry_maker = function(entry)
                 return {

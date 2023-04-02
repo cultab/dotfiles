@@ -21,6 +21,6 @@ require 'user.telescope'
 require 'user.mason'
 require 'user.lsp'
 require 'user.null-lsp'
-require 'user.netrw'
+-- require 'user.netrw' -- BUG: forgot to commit it :^)
 
 require 'Navigator'.setup()
