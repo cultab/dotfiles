@@ -63,36 +63,36 @@ local config = {
             -- default_prog = {"zsh", "-l"}
         },
     },
-    default_domain = "WSL:Debian",
+    font = wezterm.font_with_fallback { "Iosevka Nerd Font Mono" },
     disable_default_key_bindings = true,
     adjust_window_size_when_changing_font_size = false,
     line_height = 1.3,
-    font_size = 10,
+    font_size = 12,
     leader = {
         key = 's',
         mods = 'CTRL',
         timeout_milliseconds = 1000
     },
     keys = {
-        { key = '\\', mods = 'LEADER',      action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
-        { key = '-',  mods = 'LEADER',      action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
-        { key = 'z',  mods = 'LEADER',      action = act.TogglePaneZoomState, },
-        { key = 'x',  mods = 'LEADER',      action = act.CloseCurrentTab { confirm = true }, },
-        { key = 's',  mods = 'LEADER',      action = act.ShowTabNavigator, },
-        { key = 'l',  mods = 'LEADER',      action = act.ShowDebugOverlay },
-        { key = 'c',  mods = 'LEADER',      action = act.SpawnTab "CurrentPaneDomain", },
-        { key = 'n',  mods = 'LEADER',      action = act.ActivateTabRelative(1), },
-        { key = 'p',  mods = 'LEADER',      action = act.ActivateTabRelative(-1), },
-        { key = 'h',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-left') },
-        { key = 'j',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-down') },
-        { key = 'k',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-up') },
-        { key = 'l',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-right') },
-        { key = 's',  mods = 'LEADER|CTRL', action = act.ActivateCopyMode },
-        { key = '=',  mods = 'CTRL',        action = act.IncreaseFontSize },
-        { key = '-',  mods = 'CTRL',        action = act.DecreaseFontSize },
-        { key = '0',  mods = 'CTRL',        action = act.ResetFontSize },
-        { key = 'c',  mods = 'CTRL|SHIFT',  action = act.Copy },
-        { key = 'v',  mods = 'CTRL|SHIFT',  action = act.Paste },
+        { key = '\\', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+        { key = '-', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
+        { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState, },
+        { key = 'x', mods = 'LEADER', action = act.CloseCurrentTab { confirm = true }, },
+        { key = 's', mods = 'LEADER', action = act.ShowTabNavigator, },
+        { key = 'l', mods = 'LEADER', action = act.ShowDebugOverlay },
+        { key = 'c', mods = 'LEADER', action = act.SpawnTab "CurrentPaneDomain", },
+        { key = 'n', mods = 'LEADER', action = act.ActivateTabRelative(1), },
+        { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1), },
+        { key = 'h', mods = 'ALT', action = act.EmitEvent('ActivatePaneDirection-left') },
+        { key = 'j', mods = 'ALT', action = act.EmitEvent('ActivatePaneDirection-down') },
+        { key = 'k', mods = 'ALT', action = act.EmitEvent('ActivatePaneDirection-up') },
+        { key = 'l', mods = 'ALT', action = act.EmitEvent('ActivatePaneDirection-right') },
+        { key = 's', mods = 'LEADER|CTRL', action = act.ActivateCopyMode },
+        { key = '=', mods = 'CTRL', action = act.IncreaseFontSize },
+        { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
+        { key = '0', mods = 'CTRL', action = act.ResetFontSize },
+        { key = 'c', mods = 'CTRL|SHIFT', action = act.Copy },
+        { key = 'v', mods = 'CTRL|SHIFT', action = act.Paste },
     },
     -- enable_tab_bar = false,
     window_padding = {
@@ -101,7 +101,7 @@ local config = {
         top = 2,
         bottom = 2,
     },
-    color_scheme = "Catppuccin Mocha",
+    color_scheme = "tokyonight",
     -- color_scheme = "Github (base16)",
     -- color_scheme = "Github (base16)",
     launch_menu = {
@@ -161,6 +161,12 @@ local config = {
         -- },
     },
 }
+
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+    config.default_domain = "WSL:Debian"
+    config.font_size = 10
+    config.font = nil
+end
 
 wezterm.on(
     'format-tab-title',
