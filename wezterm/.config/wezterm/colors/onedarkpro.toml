@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#1E1E1E',
+    '#e06c75',
+    '#98C379',
+    '#e5c07b',
+    '#61afef',
+    '#c678dd',
+    '#56b6c2',
+    '#abb2bf',
+]
+background = '#282c34'
+brights = [
+    '#5c6370',
+    '#e06c75',
+    '#98C379',
+    '#d19a66',
+    '#61afef',
+    '#c678dd',
+    '#56b6c2',
+    '#fafafa',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#fafafa'
+foreground = '#fafafa'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'onedarkpro'

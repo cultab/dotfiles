@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#6E6C7C',
+    '#E28C8C',
+    '#B3E1A3',
+    '#EADDA0',
+    '#A4B9EF',
+    '#C6AAE8',
+    '#F0AFE1',
+    '#D7DAE0',
+]
+background = '#1E1E28'
+brights = [
+    '#6E6C7C',
+    '#E28C8C',
+    '#B3E1A3',
+    '#EADDA0',
+    '#A4B9EF',
+    '#C6AAE8',
+    '#F0AFE1',
+    '#D7DAE0',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#D7DAE0'
+foreground = '#D7DAE0'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'catppuccin'

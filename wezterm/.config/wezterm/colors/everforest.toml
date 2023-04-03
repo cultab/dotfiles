@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#12252d',
+    '#e67e80',
+    '#a7c080',
+    '#dbbc7f',
+    '#7fbbb3',
+    '#d699b6',
+    '#83c092',
+    '#7a8478',
+]
+background = '#323c41'
+brights = [
+    '#5c6a72',
+    '#f85552',
+    '#8da101',
+    '#f57d26',
+    '#3a94c5',
+    '#df69ba',
+    '#35a77c',
+    '#829181',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#a9b1d6'
+foreground = '#eaf2eb'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'everforest'

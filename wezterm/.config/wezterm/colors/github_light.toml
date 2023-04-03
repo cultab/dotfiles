@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#ffffff',
+    '#c03545',
+    '#1cad3c',
+    '#eab700',
+    '#0d33a5',
+    '#6f42c1',
+    '#2076d8',
+    '#202020',
+]
+background = '#ffffff'
+brights = [
+    '#f4fbfe',
+    '#EDB34D',
+    '#6cf26d',
+    '#ffe914',
+    '#599eff',
+    '#8f42c1',
+    '#80a0ff',
+    '#000000',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#202020'
+foreground = '#202020'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'github_light'

@@ -1,0 +1,60 @@
+#!/bin/sh
+
+filename=$(echo "$1" | rev | cut -d '/' -f 1  | rev | cut -d '.' -f 1)
+
+DB=$(cat "$1")
+
+get_color() {
+    color=$(echo "$DB" | grep "^#define $1" | awk '{print $3}')
+    if echo "$color" | grep -v "#" > /dev/null; then
+        color=$(get_color "$color")
+    fi
+    # don't recurse too much
+    if echo "$color" | grep -v "#" > /dev/null; then
+        return
+    fi
+    echo "$color"
+}
+
+foreground=$(get_color "basefg")
+background=$(get_color "basebg")
+cursor=$(get_color "basecc")
+
+echo "Writing to ${filename}.toml"
+cat > "${filename}.toml"<< EOF
+[colors]
+ansi = [
+    '$(get_color "base00")',
+    '$(get_color "base01")',
+    '$(get_color "base02")',
+    '$(get_color "base03")',
+    '$(get_color "base04")',
+    '$(get_color "base05")',
+    '$(get_color "base06")',
+    '$(get_color "base07")',
+]
+background = '${background}'
+brights = [
+    '$(get_color "base08")',
+    '$(get_color "base09")',
+    '$(get_color "base0A")',
+    '$(get_color "base0B")',
+    '$(get_color "base0C")',
+    '$(get_color "base0D")',
+    '$(get_color "base0E")',
+    '$(get_color "base0F")',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '${cursor}'
+foreground = '${foreground}'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = '$filename'
+EOF
+
+

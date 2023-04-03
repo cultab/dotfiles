@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#323437',
+    '#ff5454',
+    '#8cc85f',
+    '#e3c78a',
+    '#80a0ff',
+    '#d183e8',
+    '#79dac8',
+    '#c6c6c6',
+]
+background = '#080808'
+brights = [
+    '#949494',
+    '#ff5189',
+    '#36c692',
+    '#c2c292',
+    '#74b2ff',
+    '#ae81ff',
+    '#85dc85',
+    '#e4e4e4',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#b2ceee'
+foreground = '#b2b2b2'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'moonfly'

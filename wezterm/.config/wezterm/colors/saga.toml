@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#0A0D0F',
+    '#FF9E99',
+    '#B4F8C8',
+    '#FFFAAD',
+    '#BCA7DD',
+    '#FFAEBC',
+    '#A0E7E5',
+    '#FAF8F6',
+]
+background = '#0A0D0F'
+brights = [
+    '#3A3D3F',
+    '#FF9E99',
+    '#B4F8C8',
+    '#FFFAAD',
+    '#BCA7DD',
+    '#FFAEBC',
+    '#A0E7E5',
+    '#FAF8F6',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#FAF8F6'
+foreground = '#FAF8F6'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'saga'

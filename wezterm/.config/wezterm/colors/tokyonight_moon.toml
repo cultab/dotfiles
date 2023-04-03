@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#1b1d2b',
+    '#ff757f',
+    '#c3e88d',
+    '#ffc777',
+    '#82aaff',
+    '#c099ff',
+    '#86e1fc',
+    '#828bb8',
+]
+background = '#222436'
+brights = [
+    '#444a73',
+    '#ff757f',
+    '#c3e88d',
+    '#ffc777',
+    '#82aaff',
+    '#c099ff',
+    '#86e1fc',
+    '#c8d3f5',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#c8d3f5'
+foreground = '#c8d3f5'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'tokyonight_moon'

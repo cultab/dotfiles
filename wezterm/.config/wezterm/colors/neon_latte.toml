@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#393b44',
+    '#CF4F6D',
+    '#51ee72',
+    '#FFE070',
+    '#96e2f0',
+    '#d97bf2',
+    '#63cdcf',
+    '#dfdfe0',
+]
+background = '#150b26'
+brights = [
+    '#7f8c98',
+    '#e06c75',
+    '#58cd8b',
+    '#FFE37E',
+    '#84CEE4',
+    '#B8A1E3',
+    '#59F0FF',
+    '#FDEBC3',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#DF97DB'
+foreground = '#FDEBC3'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'neon_latte'

@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#252525',
+    '#d16969',
+    '#6a9955',
+    '#d7ba7d',
+    '#569cd6',
+    '#c586c0',
+    '#4ec9b0',
+    '#cccccc',
+]
+background = '#1e1e1e'
+brights = [
+    '#525252',
+    '#9a151b',
+    '#589f0c',
+    '#ffcc66',
+    '#007acc',
+    '#d16d9e',
+    '#4fc1ff',
+    '#d8dee9',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#BBBBBB'
+foreground = '#c0caf5'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'darkplus'

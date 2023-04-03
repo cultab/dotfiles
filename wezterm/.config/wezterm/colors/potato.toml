@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#37372B',
+    '#FF7040',
+    '#AFCE57',
+    '#d9b85d',
+    '#7AA2F7',
+    '#CC78B2',
+    '#86C393',
+    '#DFD8C0',
+]
+background = '#303025'
+brights = [
+    '#5a5b66',
+    '#FF4545',
+    '#A0FF40',
+    '#F6A329',
+    '#5CA8FF',
+    '#E44269',
+    '#80E8C8',
+    '#DFD8C0',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#DFD8C0'
+foreground = '#DFD8C0'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'potato'

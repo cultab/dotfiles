@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#1d2021',
+    '#cc241d',
+    '#98971a',
+    '#d79921',
+    '#458588',
+    '#b16286',
+    '#689d6a',
+    '#a89984',
+]
+background = '#1d2021'
+brights = [
+    '#928374',
+    '#fb4934',
+    '#b8bb26',
+    '#fabd2f',
+    '#83a598',
+    '#d3869b',
+    '#8ec07c',
+    '#ebdbb2',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#a89984'
+foreground = '#a89984'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'gruvbox'

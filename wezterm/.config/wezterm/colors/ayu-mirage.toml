@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#1d2021',
+    '#F28779',
+    '#BAE67E',
+    '#FFD580',
+    '#73D0FF',
+    '#D4BFFF',
+    '#95E6CB',
+    '#FFE6B3',
+]
+background = '#1F2430'
+brights = [
+    '#626A73',
+    '#F07178',
+    '#C2D94C',
+    '#FFB454',
+    '#59C2FF',
+    '#A37ACC',
+    '#4CBF99',
+    '#D1E4F4',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#707A8C'
+foreground = '#CBCCC6'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'ayu-mirage'

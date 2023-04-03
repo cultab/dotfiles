@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#1b2229',
+    '#ff6c6b',
+    '#c3e05d',
+    '#ecbe7b',
+    '#2257A0',
+    '#c678dd',
+    '#5699AF',
+    '#DFDFDF',
+]
+background = '#282c34'
+brights = [
+    '#3f444a',
+    '#ff4540',
+    '#98be65',
+    '#cc8548',
+    '#51afef',
+    '#a9a1e1',
+    '#4ddfbd',
+    '#dfdfdf',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#e4ddd6'
+foreground = '#bbc2cf'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'doom-one'

@@ -91,8 +91,8 @@ local config = {
         { key = '=', mods = 'CTRL', action = act.IncreaseFontSize },
         { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
         { key = '0', mods = 'CTRL', action = act.ResetFontSize },
-        { key = 'c', mods = 'CTRL|SHIFT', action = act.Copy },
-        { key = 'v', mods = 'CTRL|SHIFT', action = act.Paste },
+        { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo 'ClipboardAndPrimarySelection' },
+        { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
     },
     -- enable_tab_bar = false,
     window_padding = {
@@ -166,6 +166,7 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     config.default_domain = "WSL:Debian"
     config.font_size = 10
     config.font = nil
+    config.color_scheme_dirs = { '~/.config/wezterm/colors' }
 end
 
 wezterm.on(

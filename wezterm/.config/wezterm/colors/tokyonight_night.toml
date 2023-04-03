@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#15161e',
+    '#f7768e',
+    '#9ece6a',
+    '#e0af68',
+    '#7aa2f7',
+    '#bb9af7',
+    '#7dcfff',
+    '#a9b1d6',
+]
+background = '#1a1b26'
+brights = [
+    '#414868',
+    '#f7768e',
+    '#9ece6a',
+    '#e0af68',
+    '#7aa2f7',
+    '#bb9af7',
+    '#7dcfff',
+    '#c0caf5',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#c0caf5'
+foreground = '#c0caf5'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'tokyonight_night'

@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#161616',
+    '#ff7eb6',
+    '#42be65',
+    '#33b1ff',
+    '#08bdba',
+    '#be95ff',
+    '#78a9ff',
+    '#dde1e6',
+]
+background = '#161616'
+brights = [
+    '#525252',
+    '#ee5396',
+    '#42be65',
+    '#33b1ff',
+    '#3ddbd9',
+    '#82cfff',
+    '#78a9ff',
+    '#ffffff',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#a2a9b0'
+foreground = '#f2f4f8'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'oxocarbon'

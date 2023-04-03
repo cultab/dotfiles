@@ -1,0 +1,24 @@
+#!/bin/sh
+
+pkill inotifywait
+WATCH_PATH="$HOME/dotfiles/wezterm/.config/wezterm"
+DEST_PATH="/mnt/c/Users/evan/.config/wezterm/"
+
+inotifywait -r -m "$WATCH_PATH" | while read -r dir event file; do
+if [ "$event" = "MODIFY" ]; then
+    case $file in
+        Xresources*) ;;
+        selected_theme*) ;;
+        *) case $dir in
+            *colors*)
+            # echo "cp -f $dir$file ${DEST_PATH}colors"
+            cp -f "$dir$file" "${DEST_PATH}colors"
+            ;;
+        *) 
+            # echo "cp -f $dir$file $DEST_PATH"
+            cp -f "$dir$file" "$DEST_PATH"
+            ;;
+    esac
+esac
+fi
+done
