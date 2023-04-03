@@ -32,9 +32,8 @@ github_light:
   wezterm: "Github (base16)"
 
 doom-one:
-  nvim: "doom-one"
+  colorscheme: "doom-one"
   lualine: "onedark"
-  xresources: "doom-one"
 
 onedarkpro:
   colorscheme: "onedarkpro"
