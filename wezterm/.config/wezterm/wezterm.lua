@@ -65,6 +65,7 @@ local config = {
     },
     font = wezterm.font_with_fallback { "Iosevka Nerd Font Mono" },
     disable_default_key_bindings = true,
+    front_end = "Software",
     adjust_window_size_when_changing_font_size = false,
     line_height = 1.3,
     font_size = 13,
@@ -95,6 +96,8 @@ local config = {
         { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
     },
     -- enable_tab_bar = false,
+    mux_output_parser_coalesce_delay_ms = 0,
+    window_decorations = "INTEGRATED_BUTTONS|RESIZE",
     window_padding = {
         left = 2,
         right = 2,
