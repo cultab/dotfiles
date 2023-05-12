@@ -4,9 +4,11 @@
 
 # terminal emulator
 super + Return
-	st -t 'Simple terminal' -e tmux
+  st -e tmux # !!!themr marker:terminal!!!
+	# st -t 'Simple terminal' -e tmux
 
 super + ctrl + Return
+	# wezterm
 	st -t 'Simple terminal' -e scroll
 
 super + shift + {w, d}

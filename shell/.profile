@@ -91,6 +91,7 @@ PATH_add "/usr/local/cuda/bin"
 PATH_add "/opt/microchip/xc16/v2.00/bin/"
 PATH_add "$HOME/.local/share/neovim/bin/"
 PATH_add "$GOPATH/bin/"
+PATH_add "/opt/quarto-1.3.340/bin"
 
 
 export PATH

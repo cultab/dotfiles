@@ -37,6 +37,7 @@ xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 # Rice #
 ########
 
+# trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --transparent true &
 #dwmstatus &
 # slstatus &
 [ -f ~/.config/xrdb/Xresources.xdefaults ] && \
@@ -49,7 +50,8 @@ xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 activate-linux "Activate Linux" "Edit /etc/settings.d to activate" &
 barrier &
 # picom --experimental-backend -b & # picom-jonaburg
-picom --experimental-backend -b &  # picom is picom-pijulious
+# picom --experimental-backend -b &  # picom is picom-pijulious
+picom -b &  # picom is picom-pijulious
 ~/bin/autoshutdown_on_low_power &
 appimaged &
 pipewire & # pulseaudio --start &
@@ -74,3 +76,8 @@ megasync &
 
 # start WM/DE                          \/ and extras
 exec dbus-launch --exit-with-session startwm bspwm
+
+
+
+
+

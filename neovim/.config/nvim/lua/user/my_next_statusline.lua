@@ -34,8 +34,8 @@ local short_mode_map = {
 
 local function mode()
     local cur_mode = vim.api.nvim_get_mode().mode
-    local text = greek_mode_map[cur_mode]
-    -- local text = short_mode_map[cur_mode]
+    -- local text = greek_mode_map[cur_mode]
+    local text = short_mode_map[cur_mode]
     if text == nil then
         return cur_mode
     end

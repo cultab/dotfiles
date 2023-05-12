@@ -37,6 +37,20 @@ wezterm:
   regex: '    color_scheme = ".*",'
   replace: '    color_scheme = "{}",'
 
+sxhkd:
+  type: terminal
+  path: "~/.config/sxhkd/sxhkdrc"
+  regex: '.*!!!themr marker:terminal'
+  replace: '  {} # !!!themr marker:terminal'
+  cmd: pkill --signal USR1 sxhkd
+
+term_env_var:
+  type: terminal
+  path: "~/bin/exports"
+  regex: 'export TERMINAL=.*'
+  replace: 'export TERMINAL="{}"'
+
+
 # lightline:
 #   path: "~/.config/nvim/init.vim"
 #   regex: '    \\   "colorscheme" : .*'

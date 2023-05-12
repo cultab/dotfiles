@@ -1,5 +1,6 @@
 local fn = vim.fn
 
+
 local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
     print("Cloning to: " .. install_path .. "...")
@@ -38,7 +39,6 @@ return require('packer').startup(function(use)
     use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
     use 'folke/lsp-colors.nvim'
-    -- use 'ray-x/lsp_signature.nvim'
     use { 'weilbith/nvim-code-action-menu', --{{{
         cmd = 'CodeActionMenu',
     } --}}}
@@ -119,6 +119,7 @@ return require('packer').startup(function(use)
         requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
     } --}}}
     use { 'prichrd/netrw.nvim' }
+    use { 'luukvbaal/statuscol.nvim' }
 
     -- context
     use 'lukas-reineke/indent-blankline.nvim'
@@ -129,12 +130,14 @@ return require('packer').startup(function(use)
     use { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', --{{{
         config = function()
             -- Disable virtual_text since it's redundant due to lsp_lines.
-            vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+            vim.diagnostic.config({ virtual_text = false, virtual_lines = { only_current_line = true } })
             require("lsp_lines").setup()
         end,
     } --}}}
 
-    use { 'glepnir/dashboard-nvim' }
+    use { 'glepnir/dashboard-nvim', config = function ()
+        require'dashboard'.setup(require'user.welcome'.config)
+    end }
 
     -- colorising
     use { 'RRethy/vim-hexokinase', --{{{
@@ -192,7 +195,7 @@ return require('packer').startup(function(use)
 
         end
     }
-    use 'vim-pandoc/vim-pandoc-syntax'
+    -- use 'vim-pandoc/vim-pandoc-syntax'
     --}}}
 
     -- text manipulation {{{
@@ -287,16 +290,10 @@ return require('packer').startup(function(use)
     -- }}}
 
     -- git {{{
-    use { 'lewis6991/gitsigns.nvim', --{{{
-        requires = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('gitsigns').setup()
-        end,
-        -- event = "BufRead"
-    } --}}}
-    use { 'TimUntersberger/neogit',
-        requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' }
-    }
+    use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, }
+    -- use { 'TimUntersberger/neogit',
+    --     requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' }
+    -- }
     use { 'rhysd/committia.vim',
         config = function()
             vim.g.committia_open_only_vim_starting = 0
@@ -325,7 +322,7 @@ return require('packer').startup(function(use)
     use { 'akinsho/toggleterm.nvim', --{{{
         config = function()
             require("toggleterm").setup {
-                direction = "horizontal", --"float",
+                direction = "float", -- "horizontal", --"float",
                 start_in_insert = true
             }
         end,
@@ -352,9 +349,33 @@ return require('packer').startup(function(use)
     } --}}}
     use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim", ft = "norg", config = require 'user.neorg'.config }
     use 'lewis6991/impatient.nvim'
-    --}}}
-
-
+    use 'quarto-dev/quarto-nvim'
+    use 'jmbuhr/otter.nvim'
+    -- use { 'quarto-dev/quarto-vim',-- {{{
+    --     ft = 'quarto',
+    --     requires = { 'vim-pandoc/vim-pandoc-syntax' },
+    --     -- note: needs additional syntax highlighting enabled for markdown
+    --     --       in `nvim-treesitter`
+    --     config = function()
+    --   -- conceal can be tricky because both
+    --   -- the treesitter highlighting and the
+    --   -- regex vim syntax files can define conceals
+    --
+    --   -- see `:h conceallevel`
+    --   vim.opt.conceallevel = 1
+    --
+    --   -- disable conceal in markdown/quarto
+    --   vim.g['pandoc#syntax#conceal#use'] = true
+    --
+    --   -- embeds are already handled by treesitter injectons
+    --   vim.g['pandoc#syntax#codeblocks#embeds#use'] = false
+    --   vim.g['pandoc#syntax#conceal#blacklist'] = { 'codeblock_delim', 'codeblock_start' }
+    --
+    --   -- but allow some types of conceal in math regions:
+    --   -- see `:h g:tex_conceal`
+    --   vim.g['tex_conceal'] = 'gm'
+    --     end
+    --   }-- }}}
 end)
 
 -- vim: set foldenable:foldmethod=marker:

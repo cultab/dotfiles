@@ -26,7 +26,7 @@ potato:
   colorscheme: "potato"
   lualine: "auto"
 
-github_light:
+github light:
   colorscheme: "github-light"
   xresources: "github_light"
   wezterm: "Github (base16)"
@@ -35,11 +35,11 @@ doom-one:
   colorscheme: "doom-one"
   lualine: "onedark"
 
-onedarkpro:
+one dark pro:
   colorscheme: "onedarkpro"
   lualine: "auto"
 
-onedark:
+one dark:
   colorscheme: "onedark"
   lualine: "auto"
 
@@ -90,13 +90,14 @@ oxocarbon:
   colorscheme: "oxocarbon"
   nvim: "oxocarbon-lua"
 
-plbr_square:
+plbr square:
   polybar: "square_modules"
 
-plbr_round_trnsprnt:
+plbr round trns:
   polybar: "round_transparent_modules"
-# blue:
-#   colors: "blueness_five"
-#   fontsize: 11
-#   xresources: "something-very-specific-and-blue"
 
+use st:
+  terminal: st -e tmux
+
+use wezterm:
+  terminal: wezterm

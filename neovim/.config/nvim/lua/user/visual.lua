@@ -129,9 +129,9 @@ require("indent_blankline").setup {
 
 vim.wo.colorcolumn = "99999"
 
-vim.o.number = false
+vim.o.number = true
 vim.o.relativenumber = false
-vim.o.signcolumn = 'yes:3'
+-- vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'marker'
 vim.o.foldenable = false
 

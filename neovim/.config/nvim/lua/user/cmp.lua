@@ -19,6 +19,7 @@ cmp.setup({
     mapping = require'user.mappings'.get_cmp_mappings(),
     sources = cmp.config.sources({
         { name = 'luasnip' }, -- For luasnip users.
+        { name = 'otter' },
         { name = 'conventionalcommits' },
         { name = 'neorg' },
         { name = 'nvim_lsp' },
@@ -33,6 +34,7 @@ cmp.setup({
         format = require("lspkind").cmp_format({ mode = "symbol_text", menu = {
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
+            otter = "[Otter]",
             pandoc_references = "[Pandoc]",
             path = "[Path]",
             buffer = "[Buffer]",

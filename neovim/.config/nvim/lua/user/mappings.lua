@@ -33,8 +33,8 @@ map "j" { "gj" }
 map "k" { "gk" }
 
 map "U" { "<C-r>", "Redo" }
-map "gh" { "^", "Goto Line Beginning" }
-map "gl" { "$", "Goto Line End" }
+map "H" { "^", "Goto Line Beginning" }
+map "L" { "$", "Goto Line End" }
 
 map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
@@ -69,17 +69,17 @@ map "<leader>d" { "<CMD>Lexplore<CR>", "Open file explorer" }
 map "gy" { '"+y', "Yank to system clipboard", 'nv' }
 map "gp" { '"+p', "Paste from system clipboard", 'nv' }
 
-map "<leader>v" { nil, "Version Control [Git]" }
-    map "<leader>vs" { require"gitsigns".stage_hunk,            "Stage hunk" }
-    map "<leader>vr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
-    map "<leader>vR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
-    map "<leader>vp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
-    map "<leader>vb" { require"gitsigns".blame_line ,           "Blame line" }
-    map "<leader>vn" { require"neogit".open,                    "Open Neogit" }
-    -- map "<leader>vc" { require"telescope.builtin".git_commits, "Commits"  }
-    -- map "<leader>vb" { require"telescope.builtin".git_branches, "Branches" }
-    -- map "<leader>vs" { require"telescope.builtin".git_status,   "Status"   }
-    -- map "<leader>vp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
+map "<leader>g" { nil, "Version Control [Git]" }
+    map "<leader>gs" { require"gitsigns".stage_hunk,            "Stage hunk" }
+    map "<leader>gr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
+    map "<leader>gR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
+    map "<leader>gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
+    map "<leader>gb" { require"gitsigns".blame_line ,           "Blame line" }
+    -- map "<leader>gn" { require"neogit".open,                    "Open Neogit" }
+    -- map "<leader>gc" { require"telescope.builtin".git_commits, "Commits"  }
+    -- map "<leader>gb" { require"telescope.builtin".git_branches, "Branches" }
+    -- map "<leader>gs" { require"telescope.builtin".git_status,   "Status"   }
+    -- map "<leader>gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
 
 -- map "<M-h>" { require"tmux".move_left   }
 -- map "<M-j>" { require"tmux".move_bottom }
@@ -200,6 +200,10 @@ end
 
 function M.set_welcome_mappings() vim.cmd [[
     nnoremap <buffer> q :q<CR>
+    augroup DASH
+    autocmd!
+        autocmd BufLeave <buffer> bdelete
+    augroup END
     ]]
 end
 
@@ -260,10 +264,8 @@ nnoremap S i<CR><ESC>k$
 nnoremap <silent><ESC> :nohlsearch<CR>
 
 " easier navigation in normal / visual / operator pending mode
-noremap H <cmd>echo 'Please use gh!'<cr>
-noremap L <cmd>echo 'Please use gl!'<cr>
-" noremap H ^
-" noremap L $
+noremap H ^
+noremap L $
 
 " Change text without putting the text into register
 noremap c "_c

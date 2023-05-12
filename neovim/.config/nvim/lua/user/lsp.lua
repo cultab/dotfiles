@@ -17,7 +17,7 @@ require 'mason-lspconfig'.setup {
     ensure_installed = {
         "bashls",
         "tsserver",
-        "sumneko_lua",
+        "lua_ls",
         "pylsp",
         "golangci_lint_ls"
     }
@@ -64,7 +64,7 @@ local servers = {
     tsserver = {
         filetype = { "js", "ts" },
     },
-    sumneko_lua = { before_init = require 'neodev.lsp'.before_init },
+    lua_ls = { before_init = require 'neodev.lsp'.before_init },
     gopls = {
         settings = { --{{{
             gopls = {

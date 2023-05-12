@@ -1,4 +1,4 @@
-
+#!/usr/bin/zsh
 autoload -Uz compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 autoload -Uz edit-command-line;
@@ -9,7 +9,7 @@ zmodload zsh/zpty
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
-HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
+HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|qq|qqq|qqqq|qqqqq|qqqqqq*|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
 setopt nomatch
 setopt extendedglob
 setopt globdots # complete (dot).files
@@ -41,7 +41,6 @@ bindkey "^X"    edit-command-line
 bindkey "^[[3~" delete-char
 bindkey " "     magic-space
 
-
 # bindkey -M vicmd 'k' history-beginning-search-backward
 # bindkey -M vicmd 'j' history-beginning-search-forward
 # disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
@@ -62,6 +61,14 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
+# conditional source
+# if file exists source it
+csource() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+    fi
+}
+
 source ~/.config/zsh/transient_starship_prompt
 # eval $(thefuck --alias)
 
@@ -77,16 +84,8 @@ if [[ ! -f "$HOME/.local/share/miniplug.zsh" ]]; then
         -o $HOME/.local/share/miniplug.zsh
 fi
 
-source "$HOME/.local/zsh/wezterm.sh"
-
 # Add to zshrc:
 source "$HOME/.local/share/miniplug.zsh"
-
-typeset -gA FAST_BLIST_PATTERNS
-FAST_BLIST_PATTERNS[/mnt/*]=1
-FAST_BLIST_PATTERNS[/mnt/*]=1
-FAST_BLIST_PATTERNS[/mnt/*]=1
-FAST_BLIST_PATTERNS[/mnt/*]=1
 
 # miniplug plugin 'zsh-users/zsh-syntax-highlighting'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
@@ -98,6 +97,13 @@ miniplug load
 
 fast-theme --quiet XDG:overlay
 
+csource "$HOME/.local/zsh/wezterm.sh"
+
+# don't autocomplete files in path
+typeset -gA FAST_BLIST_PATTERNS
+FAST_BLIST_PATTERNS[/mnt/*]=1
+
+
 # HACK: maybe ask about adding this in  nix.plugin.zsh
 fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
@@ -105,7 +111,7 @@ prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
     pkill wezterm_reload
-    echo "Wezterm Reloader :DDD"
+    echo "Wezterm Reloader :D"
     wezterm_reload &
     disown
 fi

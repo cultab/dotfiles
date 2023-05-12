@@ -22,9 +22,11 @@ M.run_current_file = function()
     local command = vim.api.nvim_buf_get_name(0)
     local filename = vim.fn.expand('%:t')
 
-    -- special case for report.rmd is to run `$ make render`
+    -- special cases
     if filename == "report.rmd" then
         command = "make render"
+    elseif filename == "report.qmd" then
+        command = "quarto render " .. filename .. "--to pdf"
     end
 
     vim.cmd(":1TermExec cmd='" .. command .. "'")

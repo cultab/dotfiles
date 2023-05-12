@@ -21,8 +21,6 @@ charging_symbol = ""
 discharging_symbol = ""
 
 [aws]
-symbol = " "
-style = "yellow"
 disabled = true
 
 [conda]
@@ -38,7 +36,7 @@ disabled = true
 disabled = true
 
 [dart]
-symbol = " "
+disabled = true
 
 [directory]
 read_only = " "
@@ -51,11 +49,9 @@ symbol = " "
 disabled = true
 
 [elixir]
-symbol = " "
 disabled = true
 
 [elm]
-symbol = " "
 disabled = true
 
 [erlang]
@@ -70,8 +66,8 @@ symbol = " "
 [golang]
 symbol = " "
 
-# [haskell]
-# symbol = " "
+[haskell]
+symbol = " "
 
 [helm]
 disabled = true
@@ -85,7 +81,6 @@ symbol = " "
 
 [julia]
 symbol = " "
-disabled = true
 
 [kotlin]
 disabled = true
@@ -99,7 +94,6 @@ disabled = false
 
 [nim]
 symbol = " "
-disabled = true
 
 [nix_shell]
 symbol = " "
@@ -117,11 +111,10 @@ disabled = true
 symbol = " "
 
 [perl]
-symbol = " "
 disabled = true
 
 [php]
-symbol = " "
+disabled = true
 
 [purescript]
 disabled = true
@@ -131,10 +124,8 @@ symbol = " "
 
 [rlang]
 symbol = "Rﱨ "
-disabled = true
 
 [ruby]
-symbol = " "
 disabled = true
 
 [rust]
@@ -145,11 +136,9 @@ disabled = false
 disabled = true
 
 [scala]
-symbol = " "
 disabled = true
 
 [swift]
-symbol = "ﯣ "
 disabled = true
 
 [terraform]
