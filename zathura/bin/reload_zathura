@@ -1,0 +1,95 @@
+#!/bin/sh
+
+# Generates zathura configuration file
+
+DB=$(xrdb -query)
+
+get_xres() {
+    echo "$DB" | grep "^\*\?$1:" | awk '{print $2}'
+}
+
+font=$(echo "$DB" | grep '\*.font:' | cut -f 2- -d ':' | sed 's/\t//')
+# color0=$(echo "$DB" | grep 'color0:' | cut -f 2 -d ':' | sed 's/\t//')
+color1=$(echo "$DB" | grep 'color1:' | cut -f 2 -d ':' | sed 's/\t//')
+color2=$(echo "$DB" | grep 'color2:' | cut -f 2 -d ':' | sed 's/\t//')
+color3=$(echo "$DB" | grep 'color3:' | cut -f 2 -d ':' | sed 's/\t//')
+# color4=$(echo "$DB" | grep 'color4:' | cut -f 2 -d ':' | sed 's/\t//')
+# color5=$(echo "$DB" | grep 'color5:' | cut -f 2 -d ':' | sed 's/\t//')
+# color6=$(echo "$DB" | grep 'color6:' | cut -f 2 -d ':' | sed 's/\t//')
+# color7=$(echo "$DB" | grep 'color7:' | cut -f 2 -d ':' | sed 's/\t//')
+# color8=$(echo "$DB" | grep 'color8:' | cut -f 2 -d ':' | sed 's/\t//')
+# color9=$(echo "$DB" | grep 'color9:' | cut -f 2 -d ':' | sed 's/\t//')
+# color10=$(echo "$DB" | grep 'color10:' | cut -f 2 -d ':' | sed 's/\t//')
+# color11=$(echo "$DB" | grep 'color11:' | cut -f 2 -d ':' | sed 's/\t//')
+# color12=$(echo "$DB" | grep 'color12:' | cut -f 2 -d ':' | sed 's/\t//')
+# color13=$(echo "$DB" | grep 'color13:' | cut -f 2 -d ':' | sed 's/\t//')
+# color14=$(echo "$DB" | grep 'color14:' | cut -f 2 -d ':' | sed 's/\t//')
+# color15=$(echo "$DB" | grep 'color15:' | cut -f 2 -d ':' | sed 's/\t//')
+background=$(echo "$DB" | grep '\*background:' | cut -f 2 -d ':' | sed 's/\t//')
+foreground=$(echo "$DB" | grep '\*foreground:' | cut -f 2 -d ':' | sed 's/\t//')
+
+rm -f zathurarc
+cat <<CONF > ~/.config/zathura/zathurarc
+set completion-bg "$background"
+set completion-fg "$foreground"
+set completion-group-bg "$background"
+set completion-group-fg "$color2"
+set completion-highlight-bg "$foreground"
+set completion-highlight-fg "$background"
+
+set default-bg "$background"
+set default-fg "$foreground"
+
+set inputbar-bg "$background"
+set inputbar-fg "$foreground"
+
+set notification-bg "$background"
+set notification-fg "$foreground"
+set notification-error-bg "$color1"
+set notification-error-fg "$foreground"
+set notification-warning-bg "$color3"
+set notification-warning-fg "$foreground"
+
+set statusbar-bg "$background"
+set statusbar-fg "$foreground"
+
+# Define the color in index mode
+set index-bg "$background"
+set index-fg "$foreground"
+set index-active-bg "$foreground"
+set index-active-fg "$background"
+
+set render-loading-bg "$background"
+set render-loading-fg "$foreground"
+
+set window-title-home-tilde true
+set statusbar-basename true
+set selection-clipboard clipboard
+
+set highlight-color             "$color3"
+set highlight-active-color      "$color2"
+
+set default-bg                  "$background"
+set default-fg                  "$foreground"
+
+set render-loading              true
+set render-loading-fg           "$background"
+set render-loading-bg           "$background"
+
+# Recolor book content's color
+set recolor                     true
+set recolor-lightcolor          "$background"
+set recolor-darkcolor           "$foreground"
+set recolor-keephue             true
+
+set window-title-basename true
+set statusbar-v-padding  15
+set statusbar-h-padding  75
+set selection-clipboard clipboard
+
+set font "$font"
+set adjust-open width
+set pages-per-row 1
+set statusbar-basename          true
+set page-padding 1
+CONF
