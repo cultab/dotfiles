@@ -26,7 +26,7 @@ M.run_current_file = function()
     if filename == "report.rmd" then
         command = "make render"
     elseif filename == "report.qmd" then
-        command = "quarto render " .. filename .. "--to pdf"
+        command = "quarto render " .. filename .. " --to pdf"
     end
 
     vim.cmd(":1TermExec cmd='" .. command .. "'")

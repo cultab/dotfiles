@@ -1,5 +1,12 @@
 local M = {}
 
+M.partial = function(func, ...)
+    local args = {...}
+    return function()
+        func(unpack(args))
+    end
+end
+
 local zipgen = function(args)
     -- find minimum
     local min = #args[1]

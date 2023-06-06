@@ -23,8 +23,7 @@ require 'user.lsp'
 require 'user.null-lsp'
 require 'user.netrw'
 require 'user.statuscolumn'
+require 'user.navigator'
+require 'user.quarto'
 
-require 'Navigator'.setup()
 
-require 'quarto'.setup()
-require 'otter'.dev_setup()

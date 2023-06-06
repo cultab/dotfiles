@@ -15,7 +15,7 @@ M.config_picker = function(opts)
             results = {
                 { "bspwm",                   "~/.config/bspwm/bspwmrc"                                },
                 { "Dunst",                   "~/.config/dunst/no_theme.dunstrc"                       },
-                { "Polybar",                 "~/.config/polybar/config.ini"                           },
+                { "Polybar",                 "~/.config/polybar/config.ini",                cd = true },
                 { "neovim",                  "~/.config/nvim/init.lua",                     cd = true },
                 { "neovim plugins",          "~/.local/share/nvim/site/pack/packer/start/", cd = true },
                 { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc"                                },
