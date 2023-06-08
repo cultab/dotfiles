@@ -90,11 +90,17 @@ oxocarbon:
   colorscheme: "oxocarbon"
   nvim: "oxocarbon-lua"
 
-plbr square:
+square ui:
   polybar: "square_modules"
+  picom: 0
+  bspwm-single_monocle: true
+  bspwm-window_gap: 4
 
-plbr round trns:
+round ui:
   polybar: "round_transparent_modules"
+  picom: 15
+  bspwm-single_monocle: false
+  bspwm-window_gap: 16
 
 use st:
   terminal: st -e tmux
