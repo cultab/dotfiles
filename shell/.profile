@@ -94,6 +94,7 @@ PATH_add "$HOME/.local/share/neovim/bin/"
 PATH_add "$GOPATH/bin/"
 PATH_add "/opt/quarto-1.3.340/bin"
 PATH_add "$HOME/.local/share/cargo/bin"
+PATH_add "$HOME/.local/share/bob/nvim-bin"
 
 
 export PATH
