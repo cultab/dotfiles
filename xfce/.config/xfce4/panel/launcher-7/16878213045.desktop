@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Exec=st -e tmux
+TryExec=st
+Icon=utilities-terminal
+Terminal=false
+Categories=System;TerminalEmulator;
+Name=Simple Terminal
+GenericName=Terminal
+Comment=st is a simple terminal implementation for X
+StartupWMClass=st-256color
+X-XFCE-Source=file:///usr/local/share/applications/st.desktop

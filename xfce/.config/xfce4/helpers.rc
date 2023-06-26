@@ -1,4 +1,4 @@
 TerminalEmulator=custom-TerminalEmulator
-FileManager=pcmanfm
+FileManager=thunar
+WebBrowser=firefox
 
-WebBrowser=vivaldi-snapshot
