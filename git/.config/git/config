@@ -47,4 +47,13 @@
     line-numbers-right-style = blue
     whitespace-error-style = 22 reverse
 
+[merge]
+	tool = nvim
+    conflictstyle = diff3
 
+[mergetool]
+    prompt = false
+
+
+[mergetool "nvim"]
+	cmd = nvim -d -c \"wincmd l\" -c \"norm ]c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"

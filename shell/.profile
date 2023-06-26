@@ -42,7 +42,7 @@ export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs/"
 
 # keychain
-eval "$(keychain --eval)" # --dir "$XDG_RUNTIME_DIR/keychain")"
+eval "$(keychain --eval --quiet)" # --dir "$XDG_RUNTIME_DIR/keychain")"
 
 # export PROFILE_SOURCED=1
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -93,6 +93,7 @@ PATH_add "/opt/microchip/xc16/v2.00/bin/"
 PATH_add "$HOME/.local/share/neovim/bin/"
 PATH_add "$GOPATH/bin/"
 PATH_add "/opt/quarto-1.3.340/bin"
+PATH_add "$HOME/.local/share/cargo/bin"
 
 
 export PATH

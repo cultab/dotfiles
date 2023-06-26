@@ -19,8 +19,8 @@ export ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
 # X settings #
 ##############
 
-xsetroot -cursor_name left_ptr
-xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
+#xsetroot -cursor_name left_ptr
+#xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 # xset r rate 250 50;
 # setxkbmap -option
 # setxkbmap \
@@ -47,37 +47,32 @@ xhost +si:localuser:root # to allow acpi handler to xautolock -locknow
 # User Daemons #
 ################
 
-activate-linux "Activate Linux" "Edit /etc/settings.d to activate" &
-barrier &
+#activate-linux "Activate Linux" "Edit /etc/settings.d to activate" &
+#barrier &
 # picom --experimental-backend -b & # picom-jonaburg
 # picom --experimental-backend -b &  # picom is picom-pijulious
-picom -b &  # picom is picom-pijulious
-~/bin/autoshutdown_on_low_power &
-appimaged &
-pipewire & # pulseaudio --start &
-xautolock \
-    -locker 'slock -m  "$(cowsay $(fortune -s))"' \
-    -notify 300 \
-    -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
-    -time 30 \
-    -detectsleep &
-    # 300 -> notify 5 mins before lock
-    # 30 -> lock in 30 mins 
-    # 15000 ms before msg disapears
+#picom -b &  # picom is picom-pijulious
+#~/bin/autoshutdown_on_low_power &
+#appimaged &
+#pipewire & # pulseaudio --start &
+#xautolock \
+#    -locker 'slock -m  "$(cowsay $(fortune -s))"' \
+#    -notify 300 \
+#    -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
+#    -time 30 \
+#    -detectsleep &
+#    # 300 -> notify 5 mins before lock
+#    # 30 -> lock in 30 mins 
+#    # 15000 ms before msg disapears
 # -locker 'slock -m  "Locked at $(date +%T)"' \
 
 #############
 # Autostart #
 #############
 
-udiskie --tray &
-keepassxc &
-megasync &
+#udiskie --tray &
+#keepassxc &
+#megasync &
 
 # start WM/DE                          \/ and extras
-exec dbus-launch --exit-with-session startwm bspwm
-
-
-
-
-
+#exec dbus-launch --exit-with-session startwm bspwm

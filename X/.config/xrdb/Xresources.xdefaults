@@ -10,9 +10,9 @@
 ! st.font:  scientifica :size=13
 
 *.font:  Iosevka Nerd Font:size=11
-st.font: Iosevka Nerd Font Mono:size=12
+st.font: Iosevka Nerd Font Mono:size=13
 
-*.opacity: 1.0
+*.opacity: 0.999
 
 *.color0:  base00
 *.color1:  base01
