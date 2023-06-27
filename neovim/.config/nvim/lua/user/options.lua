@@ -86,7 +86,7 @@ augroup end
 vim.cmd [[
 augroup autoSpellcheck
     autocmd!
-    autocmd FileType norg,rmd,text setlocal spell
+    autocmd FileType norg,rmd,quarto,text setlocal spell wrap
 augroup end
 ]]
 

@@ -95,12 +95,16 @@ square ui:
   picom: 0
   bspwm-single_monocle: true
   bspwm-window_gap: 4
+  dunst-corner: 0
+  dunst-offset: "10x80"
 
 round ui:
   polybar: "round_transparent_modules"
   picom: 15
   bspwm-single_monocle: false
   bspwm-window_gap: 16
+  dunst-corner: 15
+  dunst-offset: "30x80"
 
 use st:
   terminal: st -e tmux

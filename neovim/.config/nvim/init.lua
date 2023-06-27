@@ -25,5 +25,6 @@ require 'user.netrw'
 require 'user.statuscolumn'
 require 'user.navigator'
 require 'user.quarto'
+require 'user.headlines'
 
 

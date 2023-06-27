@@ -133,7 +133,7 @@ separator_color = frame
 startup_notification = false
 
 # rounded corners.
-# corner_radius = 13
+# corner_radius = 0
 corner_radius = 0
 
 # dmenu path.

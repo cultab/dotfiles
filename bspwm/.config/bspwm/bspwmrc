@@ -22,10 +22,10 @@ bspc config presel_feedback true
 bspc config split_ratio          0.50
 
 bspc config border_width 4
-bspc config window_gap   4
+bspc config window_gap 4 # themr:bspwm-window_gap #
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
-bspc config single_monocle       true
+bspc config single_monocle true # themr:bspwm-single_monocle #
 
 # bspc config automatic_scheme spiral
 bspc config automatic_scheme alternate
@@ -52,3 +52,4 @@ bspc rule --add "Polybar tray window" layer=above border=on # does it work?
 bspc rule -a Screenkey manage=off
 
 notify-send -a bspwm "Reloaded" "bspwm config"
+

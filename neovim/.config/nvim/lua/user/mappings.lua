@@ -19,7 +19,7 @@ map "S" { "i<CR><ESC>k$" }
 -- This unsets the last search pattern register by hitting ESC
 map "<esc>" { "<cmd>nohlsearch<cr>" }
 
--- Change text without putting the text into register
+-- Change text without putting the text into register                                                                                                                                                                asdasfdsakfjhkjhkjashdkjhsakjdhkjhsadh                     askjdhkjhsakjdhsakjddddddddddddddddda sdha kjshdkj ha
 map "c" { "\"_c" }
 map "C" { "\"_C" }
 map "p" { "\"_dP", "", 'v' }
@@ -30,8 +30,8 @@ map "x" { "\"_x" }
 map "Q" { "QQ" }
 
 -- sane movement through wrapping lines
-map "j" { "gj" }
-map "k" { "gk" }
+map "j" { "gj", nil, 'nv' }
+map "k" { "gk", nil, 'nv' }
 
 map "U" { "<C-r>", "Redo" }
 map "H" { "^", "Goto Line Beginning" }

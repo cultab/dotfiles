@@ -36,6 +36,16 @@ M.configs = {
     },
 }
 
+vim.cmd [[highlight link @H1Marker @variable.builtin ]]
+vim.cmd [[highlight link @H2Marker MatchParen ]]
+vim.cmd [[highlight link @H3Marker @string ]]
+vim.cmd [[highlight link @H4Marker @operator ]]
+vim.cmd [[highlight link @H5Marker @function ]]
+vim.cmd [[highlight link @H6Marker @constructor ]]
+-- vim.cmd [[highlight link @codeblock Pmenu]]
+-- vim.cmd [[highlight link @codeblock_lang @keyword ]]
+
+
 -- M.context = {
 --     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 --     throttle = true, -- Throttles plugin updates (may improve performance)

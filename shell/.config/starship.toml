@@ -1,6 +1,8 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = '$all$fill$cmd_duration$line_break$character'
+
 [username]
 show_always = false
 
@@ -16,15 +18,21 @@ vicmd_symbol = "[v](bold blue)"
 # use_symbol_for_status = true
 
 [battery]
-full_symbol = ""
-charging_symbol = ""
-discharging_symbol = ""
+full_symbol = " "
+charging_symbol = " "
+discharging_symbol = " "
+
+[fill]
+symbol = " "
+
+[cmd_duration]
+show_milliseconds = true
 
 [aws]
 disabled = true
 
 [conda]
-symbol = " "
+symbol = "  "
 
 [cmake]
 disabled = true
@@ -39,11 +47,11 @@ disabled = true
 disabled = true
 
 [directory]
-read_only = " "
+read_only = " "
 
 [docker_context]
 disabled = true
-symbol = " "
+symbol = "  "
 
 [dotnet]
 disabled = true
@@ -61,26 +69,25 @@ disabled = true
 disabled = true
 
 [git_branch]
-symbol = " "
+symbol = "  "
 
 [golang]
-symbol = " "
+symbol = "  "
 
 [haskell]
-symbol = " "
+symbol = "  "
 
 [helm]
 disabled = true
 
 [hg_branch]
-symbol = " "
-disabled = true
+symbol = "  "
 
 [java]
 symbol = " "
 
 [julia]
-symbol = " "
+disabled = true
 
 [kotlin]
 disabled = true
@@ -96,10 +103,10 @@ disabled = false
 symbol = " "
 
 [nix_shell]
-symbol = " "
+symbol = "  "
 
 [nodejs]
-symbol = " "
+symbol = "  "
 
 [ocaml]
 disabled = true
@@ -120,16 +127,16 @@ disabled = true
 disabled = true
 
 [python]
-symbol = " "
+symbol = "  "
 
 [rlang]
-symbol = "Rﱨ "
+symbol = "  "
 
 [ruby]
 disabled = true
 
 [rust]
-symbol = " "
+symbol = "  "
 disabled = false
 
 [singularity]
@@ -150,3 +157,5 @@ disabled = true
 [zig]
 disabled = false
 
+[lua]
+symbol = "  "

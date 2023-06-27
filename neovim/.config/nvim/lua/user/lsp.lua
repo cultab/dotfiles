@@ -73,7 +73,7 @@ local servers = {
             }
         } --}}}
     },
-    texlab = { filetypes = { "plaintex", "tex", "rmd" }, },
+    texlab = { filetypes = { "plaintex", "tex", "rmd", "quarto" }, },
     clangd = {
         capabilities = clangd_caps,
         filetypes = { "c", "cpp", "cuda" }

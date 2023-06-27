@@ -1,5 +1,9 @@
 local M = {}
 
+M.call = function(func)
+    return func()
+end
+
 M.partial = function(func, ...)
     local args = {...}
     return function()

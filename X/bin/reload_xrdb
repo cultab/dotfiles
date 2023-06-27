@@ -20,11 +20,11 @@ exists() {
 }
 # update dunstrc
 if exists dunst; then
-    ~/.config/dunst/reload_dunst
+    reload_dunst
 fi
 # update zathurarc
 if exists zathura; then
-    ~/.config/zathura/reload_zathura
+    reload_zathura
 fi
 # update bspwm rules
 if exists  bspwm; then

@@ -38,7 +38,11 @@ M.map = setmetatable({}, {
         -- @param mapping_args list
         local closure = function(mapping_args)
             -- default to normal mode
-            local modes = mapping_args[3] or "n"
+            local temp = mapping_args[3] or "n"
+            local modes = {}
+            for mode in string.gmatch(temp, ".") do
+                table.insert(modes, mode)
+            end
 
             -- @type string|function|nil
             local mapping = mapping_args[1]
@@ -48,17 +52,19 @@ M.map = setmetatable({}, {
             local expr = mapping_args["expr"] or false
             -- @type boolean
             local silent = mapping_args["silent"] or true
-            -- set the mapping for each mode
-            for i = 1, #modes do
-                local mode = modes:sub(i, i)
+            -- @type boolean
+            local noremap = mapping_args["noremap"] or true
 
-                if mapping ~= nil then -- real keymap
-                    vim.keymap.set(mode, key, mapping, {
-                        silent = silent,
-                        expr = expr,
-                        desc = description
-                    })
-                else -- which-key group name
+            if mapping ~= nil then -- real keymap
+                vim.keymap.set(modes, key, mapping, {
+                    silent = silent,
+                    expr = expr,
+                    desc = description,
+                    noremap = noremap,
+                })
+            else -- which-key group name
+                -- set the mapping for each mode
+                for mode in pairs(modes) do
                     wk.register {
                         { [key] = { name = description } },
                         { mode = mode }

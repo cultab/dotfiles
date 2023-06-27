@@ -102,7 +102,7 @@ lel() {
 
 ssh_display() {
     if [ "$SSH_CLIENT" ] ; then
-        export DISPLAY="$(echo $SSH_CLIENT|cut -f1 -d\ ):0.0"
+        export DISPLAY="$(echo $SSH_CLIENT | cut -f1 -d\ ):0.0"
         echo "Found ssh client, using DISPLAY=$DISPLAY."
     fi
 }
@@ -115,8 +115,7 @@ ssh_unset_display() {
 }
 
 vimw() {
-    prog=$(which "$*")
-    if [ $? = 0 ]; then
+    if prog=$(which "$*"); then
         vim "$prog"
     else
         echo "$prog"

@@ -64,7 +64,7 @@ return require('packer').startup(function(use)
     use 'cultab/cmp-conventionalcommits' -- my fork with less features :^)
     -- }}}
 
-    -- treesitter{{{
+    -- treesitter {{{
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', --{{{
         config = function()
             require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
@@ -75,6 +75,28 @@ return require('packer').startup(function(use)
         requires = { 'nvim-treesitter/nvim-treesitter' },
         event = "BufReadPost"
     } --}}}
+    use { 'nvim-treesitter/playground', config = function()
+        require "nvim-treesitter.configs".setup {
+            playground = {
+                enable = true,
+                disable = {},
+                updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+                persist_queries = false, -- Whether the query persists across vim sessions
+                keybindings = {
+                    toggle_query_editor = 'o',
+                    toggle_hl_groups = 'i',
+                    toggle_injected_languages = 't',
+                    toggle_anonymous_nodes = 'a',
+                    toggle_language_display = 'I',
+                    focus_language = 'f',
+                    unfocus_language = 'F',
+                    update = 'R',
+                    goto_node = '<cr>',
+                    show_help = '?',
+                },
+            }
+        }
+    end }
     -- use { 'romgrk/nvim-treesitter-context',--{{{
     --     config = function ()
     --         require'treesitter-context'.setup(require("user.treesitter").context)
@@ -112,7 +134,7 @@ return require('packer').startup(function(use)
                     },
                 },
                 popupmenu = { backend = "nui", },
-                cmdline =  { enabled = false },
+                cmdline = { enabled = false },
                 messages = { enabled = false },
             }
         end,
@@ -134,9 +156,10 @@ return require('packer').startup(function(use)
             require("lsp_lines").setup()
         end,
     } --}}}
+    use { '~/repos/headlines.nvim' }
 
-    use { 'glepnir/dashboard-nvim', config = function ()
-        require'dashboard'.setup(require'user.welcome'.config)
+    use { 'glepnir/dashboard-nvim', config = function()
+        require 'dashboard'.setup(require 'user.welcome'.config)
     end }
 
     -- colorising
@@ -286,7 +309,7 @@ return require('packer').startup(function(use)
     use 'LunarVim/darkplus.nvim'
     use 'bluz71/vim-moonfly-colors'
     use 'B4mbus/oxocarbon-lua.nvim'
-    use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
+    use { 'shaunsingh/oxocarbon.nvim', run = './install.sh' }
     -- }}}
 
     -- git {{{

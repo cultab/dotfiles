@@ -33,6 +33,7 @@ alias gradle='gradle --console rich'
 alias up="up --no-colors"
 alias void-docs="void-docs -m"
 alias info="info --vi-keys"
+alias nix="nix --extra-experimental-features 'nix-command flakes"
 
 # don't pollute my $HOME :)
 # shellcheck disable=SC2139

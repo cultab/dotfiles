@@ -24,7 +24,6 @@ lualine:
   cmd: "all_nvim 'lua ReloadStatusline(\"{}\")'"
 
 polybar:
-  type: polybar
   path: "~/.config/polybar/config.ini"
   regex: 'include-file = .*\.ini'
   replace: 'include-file = ./{}.ini'
@@ -45,24 +44,32 @@ sxhkd:
   cmd: pkill --signal USR1 sxhkd
 
 picom:
-  type: picom
   path: "~/.config/picom.conf"
   regex: ".*corner-radius = .*# themr #"
   replace: "corner-radius = {} # themr #"
 
 bspwm-single_monocle:
-  type: bspwm-single_monocle
   path: "~/.config/bspwm/bspwmrc"
   regex: ".* single_monocle .* # themr:bspwm-single_monocle #"
   replace: "bspc config single_monocle {} # themr:bspwm-single_monocle #"
   cmd: "bspc config single_monocle {}"
 
 bspwm-window_gap:
-  type: bspwm-window_gap
   path: "~/.config/bspwm/bspwmrc"
   regex: ".* window_gap .* # themr:bspwm-window_gap #"
   replace: "bspc config window_gap {} # themr:bspwm-window_gap #"
   cmd: "bspc config window_gap {}"
+
+dunst-corner:
+  path: "~/.config/dunst/no_theme.dunstrc"
+  regex: "corner_radius = .*"
+  replace: "corner_radius = {}"
+
+dunst-offset:
+  path: "~/.config/dunst/no_theme.dunstrc"
+  regex: "offset = .*"
+  replace: "offset = {}"
+  cmd: "reload_dunst"
 
 term_env_var:
   type: terminal
