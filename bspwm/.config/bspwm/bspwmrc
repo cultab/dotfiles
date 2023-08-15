@@ -47,9 +47,15 @@ bspc rule -a KeePassXC:keepassxc state=floating
 
 bspc rule -a activate-linux           layer=above
 bspc rule --add "Polybar tray window" layer=above border=on # does it work?
+
 # bspc rule --add "Polybar" layer=above border=off # does it work?
 
 bspc rule -a Screenkey manage=off
+
+if pgrep xfce4 > /dev/null; then
+    bspc config top_padding 21
+fi
+bspc rule -a Plank manage=on border=off locked=on focus=off follow=off
 
 notify-send -a bspwm "Reloaded" "bspwm config"
 
