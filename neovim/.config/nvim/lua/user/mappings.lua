@@ -90,19 +90,19 @@ map "<M-k>" { ":NavigatorUp<CR>" }
 map "<M-l>" { ":NavigatorRight<CR>" }
 
 
-map '<C-d>' { function()
-    if not require("noice.lsp").scroll(4) then
-        return "<C-d>"
-    end
-end, "Scroll documentation down", expr = true
-}
-
-map '<C-u>' { function()
-    if not require("noice.lsp").scroll(-4) then
-        return "<C-u>"
-    end
-end, "Scroll documentation up", expr = true
-}
+-- map '<C-d>' { function()
+--     if not require("cmp").scroll_docs(4) then
+--         return "<C-d>"
+--     end
+-- end, "Scroll documentation down", expr = true
+-- }
+--
+-- map '<C-u>' { function()
+--     if not require("cmp").scroll_docs(-4) then
+--         return "<C-u>"
+--     end
+-- end, "Scroll documentation up", expr = true
+-- }
 
 ---
 ---If any LSP server attached to the current buffer can provide the @server_capability,

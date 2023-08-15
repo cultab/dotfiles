@@ -9,9 +9,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
         "clone",
         "--depth",
         "1",
-        "https://github.com/wbthomason/packer.nvim",
-        install_path,
-    }
+        "https://github.com/wbthomason/packer.nvim", install_path, }
     print "Installing packer, close and reopen Neovim..."
 end
 
@@ -41,7 +39,7 @@ return require('packer').startup(function(use)
     use 'folke/lsp-colors.nvim'
     use { 'weilbith/nvim-code-action-menu', --{{{
         cmd = 'CodeActionMenu',
-    } --}}}
+    }                                       --}}}
     use { 'mfussenegger/nvim-jdtls', ft = "java" }
 
     use "folke/neodev.nvim"
@@ -70,7 +68,7 @@ return require('packer').startup(function(use)
             require('nvim-treesitter.configs').setup(require("user.treesitter").configs)
         end,
         -- event = "BufReadPost"
-    } --}}}
+    }                                                    --}}}
     use { 'nvim-treesitter/nvim-treesitter-textobjects', --{{{
         requires = { 'nvim-treesitter/nvim-treesitter' },
         event = "BufReadPost"
@@ -80,7 +78,7 @@ return require('packer').startup(function(use)
             playground = {
                 enable = true,
                 disable = {},
-                updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+                updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
                 persist_queries = false, -- Whether the query persists across vim sessions
                 keybindings = {
                     toggle_query_editor = 'o',
@@ -109,37 +107,39 @@ return require('packer').startup(function(use)
     use { 'romgrk/barbar.nvim', --{{{
         requires = { 'kyazdani42/nvim-web-devicons', opt = false },
         config = require 'user.bufferline'.config,
-    } --}}}
+    }                                  --}}}
     use { 'nvim-lualine/lualine.nvim', --{{{
         requires = { 'kyazdani42/nvim-web-devicons', opt = false }
-    } --}}}
-    use { 'rcarriga/nvim-notify', -- {{{
+    }                                  --}}}
+    use { 'rcarriga/nvim-notify',      -- {{{
         config = function()
             require 'notify'.setup {
                 stages = "static",
                 timeout = "2500" -- in ms
             }
-        end } -- }}}
-    use { "folke/noice.nvim", -- {{{
-        config = function()
-            require("noice").setup {
-                lsp = { progress = { enabled = true },
-                    override = {
-                        -- override the default lsp markdown formatter with Noice
-                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                        -- override the lsp markdown formatter with Noice
-                        ["vim.lsp.util.stylize_markdown"] = true,
-                        -- override cmp documentation with Noice (needs the other options to work)
-                        ["cmp.entry.get_documentation"] = true,
-                    },
-                },
-                popupmenu = { backend = "nui", },
-                cmdline = { enabled = false },
-                messages = { enabled = false },
-            }
-        end,
-        requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
-    } --}}}
+        end }                    -- }}}
+    -- use { "folke/noice.nvim", -- {{{
+    --     config = function()
+    --         require("noice").setup {
+    --             lsp = { progress = { enabled = true },
+    --                 override = {
+    --                     -- override the default lsp markdown formatter with Noice
+    --                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+    --                     -- override the lsp markdown formatter with Noice
+    --                     ["vim.lsp.util.stylize_markdown"] = true,
+    --                     -- override cmp documentation with Noice (needs the other options to work)
+    --                     ["cmp.entry.get_documentation"] = true,
+    --                 },
+    --             },
+    --             popupmenu = { backend = "nui", },
+    --             cmdline = { enabled = false },
+    --             messages = { enabled = false },
+    --         }
+    --     end,
+    --     requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
+    -- } --}}}
+    use { 'MunifTanjim/nui.nvim' }
+    use { 'j-hui/fidget.nvim', tag = 'legacy' }
     use { 'prichrd/netrw.nvim' }
     use { 'luukvbaal/statuscol.nvim' }
 
@@ -168,7 +168,7 @@ return require('packer').startup(function(use)
         config = function()
             vim.g.Hexokinase_highlighters = { "foregroundfull" }
         end
-    } --}}}
+    }                                 --}}}
     use { 'folke/todo-comments.nvim', --{{{
         config = function()
             require('todo-comments').setup()
@@ -215,7 +215,6 @@ return require('packer').startup(function(use)
                     end
                 end
             })
-
         end
     }
     -- use 'vim-pandoc/vim-pandoc-syntax'
@@ -263,15 +262,15 @@ return require('packer').startup(function(use)
                 local noop = true
                 return noop
             end
-        end } --}}}
+        end }                          --}}}
     -- use 'lifepillar/vim-gruvbox8'
-    use { 'npxbr/gruvbox.nvim', --{{{
+    use { 'npxbr/gruvbox.nvim',        --{{{
         requires = { 'rktjmp/lush.nvim' }
-    } --}}}
+    }                                  --}}}
     use { 'olimorris/onedarkpro.nvim', --{{{
         requires = { 'rktjmp/lush.nvim' },
         branch = "main"
-    } --}}}
+    }                        --}}}
     use { 'catppuccin/nvim', --{{{
         config = function()
             local cat = require("catppuccin")
@@ -320,7 +319,6 @@ return require('packer').startup(function(use)
     use { 'rhysd/committia.vim',
         config = function()
             vim.g.committia_open_only_vim_starting = 0
-
         end }
     --}}}
 
@@ -340,7 +338,7 @@ return require('packer').startup(function(use)
             }
         end,
         -- event = "BufWinEnter"
-    } --}}}
+    }                                --}}}
     use 'equalsraf/neovim-gui-shim'
     use { 'akinsho/toggleterm.nvim', --{{{
         config = function()
@@ -353,24 +351,16 @@ return require('packer').startup(function(use)
     } --}}}
     use { 'dstein64/vim-startuptime', cmd = "StartupTime" }
     use { 'numToStr/Navigator.nvim' }
-    -- use { 'aserowy/tmux.nvim', --{{{
-    --     config = function()
-    --         require("tmux").setup {
-    --             navigation = {
-    --                 cycle_navigation = false,
-    --                 enable_default_keybindings = false,
-    --             },
-    --             resize = {
-    --                 enable_default_keybindings = false,
-    --             }
-    --         }
-    --     end
-    -- } --}}}
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-telescope/telescope.nvim', --{{{
         requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
-    } --}}}
-    use { 'nvim-neorg/neorg', requires = "nvim-lua/plenary.nvim", ft = "norg", config = require 'user.neorg'.config }
+    }                                      --}}}
+    use { 'nvim-neorg/neorg',
+        commit = 'f296a22',
+        requires = "nvim-lua/plenary.nvim",
+        ft = "norg",
+        config = require 'user.neorg'.config
+    }
     use 'lewis6991/impatient.nvim'
     use 'quarto-dev/quarto-nvim'
     use 'jmbuhr/otter.nvim'

@@ -3,7 +3,11 @@ local zip = require 'user.util'.zip
 vim.g.dashboard_default_executive = 'telescope'
 
 function OpenConfig()
-    vim.cmd "tabnew $MYVIMRC | tcd %:p:h"
+    -- vim.cmd "tabnew $MYVIMRC | tcd %:p:h"
+    local vimrc = vim.fn.expand("$MYVIMRC")
+    vim.cmd.cd(vim.fs.dirname(vimrc))
+    vim.cmd.edit(vimrc)
+    vim.cmd.edit(vimrc) -- HACK: re-edit to get highlighting
 end
 
 

@@ -40,11 +40,11 @@ local markdown_like = {
 }
 
 
-require "headlines".setup {
-    quarto = markdown_like,
-    rmd = markdown_like,
-    markdown = markdown_like,
-}
+-- require "headlines".setup {
+--     quarto = markdown_like,
+--     rmd = markdown_like,
+--     markdown = markdown_like,
+-- }
 
 vim.cmd [[highlight link @headline1 @variable.builtin ]]
 vim.cmd [[highlight link @headline2 MatchParen ]]

@@ -127,6 +127,9 @@ require("indent_blankline").setup {
     space_char_blankline = " ",
 }
 
+require("fidget").setup()
+vim.notify = require("notify")
+
 vim.wo.colorcolumn = "99999"
 
 vim.o.number = true
@@ -178,7 +181,7 @@ vim.g.vscode_italic_comment = 1
 vim.g.oxocarbon_lua_keep_terminal = true
 -- }}}
 
-vim.cmd "colorscheme tokyonight-storm"
+vim.cmd "colorscheme tokyonight-night"
 
 vim.cmd [[
 augroup YankHighlight

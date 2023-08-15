@@ -13,14 +13,13 @@ require "neodev".setup {
     }
 }
 
-require 'mason-lspconfig'.setup {
-    ensure_installed = {
-        "bashls",
-        "tsserver",
-        "lua_ls",
-        "pylsp",
-        "golangci_lint_ls"
-    }
+require"user.mason".ensure_installed {
+    "bash-language-server",
+    "typescript-language-server",
+    "python-lsp-server",
+    "lua-language-server",
+    "gopls",
+    "golangci-lint-langserver",
 }
 
 local capabilities = cmp.capabilities

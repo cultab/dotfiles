@@ -40,9 +40,10 @@ null_ls.setup({
 local mason = require'user.mason'
 
 local tools = {
-    "shfmt",
-    "shellcheck",
+        "shellcheck",
+        "shfmt@v3.7.0",
     -- "shellharden" -- 2/2 rust is still borked
 }
+
 
 mason.ensure_installed(tools)

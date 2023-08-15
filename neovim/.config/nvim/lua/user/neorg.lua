@@ -6,18 +6,17 @@ M.config = function ()
     end, 1000)
     require('neorg').setup {
         load = {
-            ["core.defaults"] = {},
-            ["core.norg.concealer"] = {
+            ["core.concealer"] = {
                 config = {
                     folds = false,
                 }
             },
-            ["core.norg.esupports.metagen"] = {
+            ["core.esupports.metagen"] = {
                 config = {
                     type = "auto",
                 }
             },
-            ["core.norg.completion"] = {
+            ["core.completion"] = {
                 config = {
                     engine = "nvim-cmp"
                 },
@@ -28,14 +27,13 @@ M.config = function ()
                     norg_leader = "<Leader>m"
                 }
             },
-            -- ["core.norg.dirman"] = {
-            --     config = {
-            --         workspaces = {
-            --             default = "~/.neorg"
-            --         }
-            --     }
-            -- },
-            -- ["core.integrations.telescope"] = {},
+            ["core.dirman"] = {
+                config = {
+                    workspaces = {
+                        default = "~/.neorg"
+                    }
+                }
+            },
             ["core.export"] = {}
 
         }
