@@ -83,3 +83,6 @@ gnuplot*line8Dashes:   13
 
 gnuplot*font: mbfont:-misc-fixed-medium-r-normal-*-*-*-100-100-*-*-iso10646-*
 gnuplot*encoding: utf-8
+
+Zutty.font: Iosevka-me
+Zutty.fontpath: /home/evan/.fonts:/usr/share/fonts
