@@ -51,28 +51,29 @@ export ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
 #barrier &
 # picom --experimental-backend -b & # picom-jonaburg
 # picom --experimental-backend -b &  # picom is picom-pijulious
-#picom -b &  # picom is picom-pijulious
-#~/bin/autoshutdown_on_low_power &
-#appimaged &
-#pipewire & # pulseaudio --start &
-#xautolock \
-#    -locker 'slock -m  "$(cowsay $(fortune -s))"' \
-#    -notify 300 \
-#    -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
-#    -time 30 \
-#    -detectsleep &
-#    # 300 -> notify 5 mins before lock
-#    # 30 -> lock in 30 mins 
-#    # 15000 ms before msg disapears
+picom -b &  # picom is picom-pijulious
+# ~/bin/autoshutdown_on_low_power &
+appimaged &
+pipewire & # pulseaudio --start &
+xautolock \
+    -locker 'slock -m  "$(cowsay $(fortune -s))"' \
+    -notify 300 \
+    -notifier "notify-send -u critical -t 15000 -- 'Locking screen in 5 minutes'" \
+    -time 30 \
+    -detectsleep &
+    # 300 -> notify 5 mins before lock
+    # 30 -> lock in 30 mins 
+    # 15000 ms before msg disapears
 # -locker 'slock -m  "Locked at $(date +%T)"' \
 
 #############
 # Autostart #
 #############
 
-#udiskie --tray &
-#keepassxc &
-#megasync &
+udiskie --tray &
+syncthingtray &
+keepassxc &
+megasync &
 
 # start WM/DE                          \/ and extras
-#exec dbus-launch --exit-with-session startwm bspwm
+exec dbus-launch --exit-with-session startwm bspwm

@@ -1,0 +1,4 @@
+#compdef vimw
+
+# complete basename of external commands
+_command_names -e

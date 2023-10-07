@@ -4,6 +4,11 @@ SEARCH_URL='https://startpage.com/sp/search?query='
 # SEARCH_URL='https://www.google.com/search?q='
 QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
 
+if [ ! "$QUERY" ]; then
+    notify-send -a surf 'No Query' 'No query given!'
+    exit 0
+fi
+
 # if query does not contain dot, assume it's not a url
 # but a search term
 if ! echo "$QUERY" | grep '\.'; then

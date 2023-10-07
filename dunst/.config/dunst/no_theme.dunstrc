@@ -61,7 +61,7 @@ hide_duplicates_count = yes
 width = (10, 500)
 height = 150
 
-offset = 10x80
+offset = 30x80
 
 # Shrink window if it's smaller than the width.  Will be ignored if
 # width is 0.
@@ -133,8 +133,8 @@ separator_color = frame
 startup_notification = false
 
 # rounded corners.
-# corner_radius = 0
-corner_radius = 0
+# corner_radius = 15
+corner_radius = 15
 
 # dmenu path.
 dmenu = /usr/bin/dmenu -p dunst:

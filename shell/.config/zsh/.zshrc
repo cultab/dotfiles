@@ -5,11 +5,13 @@ autoload -Uz edit-command-line;
 zle -N edit-command-line
 
 zmodload zsh/zpty
+# zmodload zsh/zprof
 
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=9999999999999999  # infinite!
 SAVEHIST=$HISTSIZE
 HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|qq|qqq|qqqq|qqqqq|qqqqqq*|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
+typeset -gA FAST_BLIST_PATTERNS; FAST_BLIST_PATTERNS[/mnt/*]=1 # don't autocomplete files in path
 setopt nomatch
 setopt extendedglob
 setopt globdots # complete (dot).files
@@ -88,10 +90,10 @@ fi
 source "$HOME/.local/share/miniplug.zsh"
 
 # miniplug plugin 'zsh-users/zsh-syntax-highlighting'
+# miniplug plugin 'spwhitt/nix-zsh-completions'
+# miniplug plugin 'se-jaeger/zsh-activate-py-environment'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
-miniplug plugin 'se-jaeger/zsh-activate-py-environment'
 miniplug plugin 'zpm-zsh/colorize'
-miniplug plugin 'spwhitt/nix-zsh-completions'
 miniplug plugin 'zdharma-continuum/fast-syntax-highlighting'
 miniplug load
 
@@ -99,15 +101,11 @@ fast-theme --quiet XDG:overlay
 
 csource "$HOME/.local/zsh/wezterm.sh"
 
-# don't autocomplete files in path
-typeset -gA FAST_BLIST_PATTERNS
-FAST_BLIST_PATTERNS[/mnt/*]=1
-
 
 # HACK: maybe ask about adding this in  nix.plugin.zsh
-fpath=(~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
+fpath=(~/.local/share/zsh/complete ~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
-prompt_nix_shell_setup "$@"
+# prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
     pkill wezterm_reload
@@ -115,3 +113,5 @@ if [[ "$WSL_DISTRO_NAME" ]]; then
     wezterm_reload &
     disown
 fi
+
+# zprof

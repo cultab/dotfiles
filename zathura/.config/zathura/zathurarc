@@ -1,7 +1,7 @@
 set completion-bg ""
 set completion-fg ""
 set completion-group-bg ""
-set completion-group-fg "#9ece6a"
+set completion-group-fg "#BAE67E"
 set completion-highlight-bg ""
 set completion-highlight-fg ""
 
@@ -13,9 +13,9 @@ set inputbar-fg ""
 
 set notification-bg ""
 set notification-fg ""
-set notification-error-bg "#f7768e"
+set notification-error-bg "#F28779"
 set notification-error-fg ""
-set notification-warning-bg "#e0af68"
+set notification-warning-bg "#FFD580"
 set notification-warning-fg ""
 
 set statusbar-bg ""
@@ -34,8 +34,8 @@ set window-title-home-tilde true
 set statusbar-basename true
 set selection-clipboard clipboard
 
-set highlight-color             "#e0af68"
-set highlight-active-color      "#9ece6a"
+set highlight-color             "#FFD580"
+set highlight-active-color      "#BAE67E"
 
 set default-bg                  ""
 set default-fg                  ""
