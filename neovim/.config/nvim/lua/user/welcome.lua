@@ -7,7 +7,6 @@ function OpenConfig()
     local vimrc = vim.fn.expand("$MYVIMRC")
     vim.cmd.cd(vim.fs.dirname(vimrc))
     vim.cmd.edit(vimrc)
-    vim.cmd.edit(vimrc) -- HACK: re-edit to get highlighting
 end
 
 
