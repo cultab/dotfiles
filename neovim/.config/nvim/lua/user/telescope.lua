@@ -11,7 +11,7 @@ require('telescope').setup{
     },
     pickers = {
         find_files = {
-            find_command = { "fdfind" }
+            find_command = { "fd" }
         }
     }
 }

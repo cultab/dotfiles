@@ -10,7 +10,6 @@
 require 'impatient'
 require 'user.disable_builtins'
 require 'user.plugins'
-require 'impatient'
 require 'user.options'
 require 'user.visual'
 require "user.statusline"

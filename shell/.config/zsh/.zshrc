@@ -8,9 +8,24 @@ zmodload zsh/zpty
 # zmodload zsh/zprof
 
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
-HISTSIZE=9999999999999999  # infinite!
-SAVEHIST=$HISTSIZE
+HISTSIZE=1000000
+SAVEHIST=1000000
 HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|qq|qqq|qqqq|qqqqq|qqqqqq*|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
+
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+# setopt EXTENDED_HISTORY        # Write the history file in the ":start:elapsed;command" format.
+# setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+# setopt HIST_EXPIRE_DUPS_FIRST  # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+# setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+# setopt HIST_FIND_NO_DUPS       # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+# setopt HIST_SAVE_NO_DUPS       # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
 typeset -gA FAST_BLIST_PATTERNS; FAST_BLIST_PATTERNS[/mnt/*]=1 # don't autocomplete files in path
 setopt nomatch
 setopt extendedglob
@@ -48,19 +63,6 @@ bindkey " "     magic-space
 # disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
 export TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S'
 
-setopt BANG_HIST                 # Treat the '!' character specially during expansion.
-# setopt EXTENDED_HISTORY        # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
-# setopt HIST_EXPIRE_DUPS_FIRST  # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
-# setopt HIST_FIND_NO_DUPS       # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
-# setopt HIST_SAVE_NO_DUPS       # Don't write duplicate entries in the history file.
-setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
-setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
 # conditional source
