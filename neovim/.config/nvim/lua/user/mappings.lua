@@ -51,7 +51,7 @@ map "<leader>tt" { ":Tabularize<space>/",       "Tabularize", 'v' }
 map "<leader>ta" { "<cmd>EasyAlign<CR>",        "Easy Align", 'v' }
 map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Emoji Picker" }
 
-map "<leader>L" { require "lsp_lines".toggle, "Toggle diagnostics" }
+-- map "<leader>L" { require "lsp_lines".toggle, "Toggle diagnostics" }
 map "<leader>b" { "<cmd>BufferPick<CR>", "Pick buffer" }
 map "<leader>f" { require "telescope.builtin".find_files, "Find files" }
 map "<leader>/" { require "telescope.builtin".live_grep, "Live grep" }
@@ -84,10 +84,10 @@ map "<leader>gb" { require"gitsigns".blame_line ,           "Blame line" }
 -- map "<M-j>" { function() require"Navigator".down()  end }
 -- map "<M-k>" { function() require"Navigator".up()    end }
 -- map "<M-l>" { function() require"Navigator".right() end }
-map "<M-h>" { ":NavigatorLeft<CR>" }
-map "<M-j>" { ":NavigatorDown<CR>" }
-map "<M-k>" { ":NavigatorUp<CR>" }
-map "<M-l>" { ":NavigatorRight<CR>" }
+-- map "<M-h>" { ":NavigatorLeft<CR>" }
+-- map "<M-j>" { ":NavigatorDown<CR>" }
+-- map "<M-k>" { ":NavigatorUp<CR>" }
+-- map "<M-l>" { ":NavigatorRight<CR>" }
 
 
 -- map '<C-d>' { function()
@@ -129,12 +129,12 @@ local function if_lsp_else_vim(server_capability, lsp_func, lsp_args, vim_cmd)
         end
         lsp_func(lsp_args)
     else
-        vim.cmd(vim_cmd)
+        vim.cmd(vim.api.nvim_replace_termcodes(vim_cmd, true, false, true))
     end
 end
 
 map 'K'         { partial(if_lsp_else_vim, "hoverProvider", vim.lsp.buf.hover, {}, ":normal! K"), "Hover documentation" }
-map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, "gg=G<C-o>") , "Format buffer", 'n' }
+map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>") , "Format buffer", 'n' }
 map '='         { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "=") , "Format buffer", 'v' }
 
 
@@ -183,7 +183,7 @@ function M.get_cmp_mappings()
 end
 
 function M.set_welcome_mappings() vim.cmd [[
-    nnoremap <buffer> q :q<CR>
+    nnoremap <buffer> q <CMD>q<CR>
     augroup DASH
     autocmd!
     autocmd BufLeave <buffer> bdelete
@@ -228,41 +228,41 @@ cabbr WA wa
 ]]
 
 -- Unused for now {{{
-    local nop = function (nothing)
-        return nothing
-    end
-    nop [[
-    " Search results centered please
-    nnoremap <silent> n nzz
-    nnoremap <silent> N Nzz
-    nnoremap <silent> * *zz
-    nnoremap <silent> # #zz
+local nop = function (nothing)
+    return nothing
+end
+nop [[
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
 
-    " cut line
-    nnoremap S i<CR><ESC>k$
+" cut line
+nnoremap S i<CR><ESC>k$
 
-    " split prefix, C-w is taken by tmux
-    " nnoremap <C-a> <C-w>
+" split prefix, C-w is taken by tmux
+" nnoremap <C-a> <C-w>
 
-    " This unsets the last search pattern register by hitting ESC
-    nnoremap <silent><ESC> :nohlsearch<CR>
+" This unsets the last search pattern register by hitting ESC
+nnoremap <silent><ESC> :nohlsearch<CR>
 
-    " easier navigation in normal / visual / operator pending mode
-    noremap H ^
-    noremap L $
+" easier navigation in normal / visual / operator pending mode
+noremap H ^
+noremap L $
 
-    " Change text without putting the text into register
-    noremap c "_c
-    noremap C "_C
-    vnoremap p "_dP
-    noremap cc "_cc
-    noremap x "_x
+" Change text without putting the text into register
+noremap c "_c
+noremap C "_C
+vnoremap p "_dP
+noremap cc "_cc
+noremap x "_x
 
-    " I never use Ex mode, so re-run macros instead
-    nnoremap Q @@
+" I never use Ex mode, so re-run macros instead
+nnoremap Q @@
 
-    " sane movement through wrapping lines
-    noremap <silent>j gj
-    noremap <silent>k gk
-    ]]-- }}}
-    return M
+" sane movement through wrapping lines
+noremap <silent>j gj
+noremap <silent>k gk
+]]-- }}}
+return M

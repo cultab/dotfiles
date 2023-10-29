@@ -42,7 +42,7 @@ local function mode()
     return text
 end
 
-local config = {
+M.config = {
     options = {
         theme = "auto",
         component_separators = '⏽',
@@ -73,7 +73,5 @@ local config = {
     tabline = {},
     extensions = {},
 }
-
-M.config = config
 
 return M

@@ -100,10 +100,10 @@ augroup end
 vim.cmd [[
 augroup autoSauce
     autocmd!
-    autocmd User         PackerCompileDone lua vim.notify("Packer Compiled Successfully!")
-    autocmd BufWritePost */nvim/init.lua nested source $MYVIMRC
-    autocmd BufWritePost */nvim/lua/user/*.lua nested source <afile> | lua vim.notify("Sourced!")
-    autocmd BufWritePost */nvim/lua/user/plugins.lua nested PackerCompile
+    "autocmd User         PackerCompileDone lua vim.notify("Packer Compiled Successfully!")
+    "autocmd BufWritePost */nvim/init.lua nested source $MYVIMRC
+    "autocmd BufWritePost */nvim/lua/user/*.lua nested source <afile> | lua vim.notify("Sourced!")
+    "autocmd BufWritePost */nvim/lua/user/plugins.lua nested PackerCompile
     " autocmd BufWritePost plugins.lua :PackerCompile
     " autocmd BufWritePost plugins.lua nested source %
 

@@ -93,12 +93,12 @@ vim.diagnostic.handlers.signs = {
     end,
 }
 
-require("lsp-colors").setup({
-    Error = "#db4b4b",
-    Warning = "#e0af68",
-    Information = "#0db9d7",
-    Hint = "#10B981"
-})
+--require("lsp-colors").setup({
+--    Error = "#db4b4b",
+--    Warning = "#e0af68",
+--    Information = "#0db9d7",
+--    Hint = "#10B981"
+--})
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
@@ -112,23 +112,6 @@ vim.o.fillchars = "vert:│"
  -- HACK: see: https://gthub.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
 vim.o.listchars = "nbsp:␣,trail:·,tab:  " -- ↲  "
 vim.o.list = true
-
-require("indent_blankline").setup {
-    -- enabled = true,
-    -- char = '┊'
-    char = '│',
-    use_treesitter = true,
-    show_current_context = true,
-    show_first_indent_level = true,
-    show_trailing_blankline_indent = true,
-    show_end_of_line = true,
-    filetype_exclude = {'help', 'terminal', 'dashboard', 'lspinstaller'},
-    context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' },
-    space_char_blankline = " ",
-}
-
-require("fidget").setup()
-vim.notify = require("notify")
 
 vim.wo.colorcolumn = "99999"
 
@@ -181,7 +164,6 @@ vim.g.vscode_italic_comment = 1
 vim.g.oxocarbon_lua_keep_terminal = true
 -- }}}
 
-vim.cmd "colorscheme tokyonight-night"
 
 vim.cmd [[
 augroup YankHighlight

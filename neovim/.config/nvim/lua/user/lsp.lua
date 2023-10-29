@@ -1,31 +1,55 @@
 -- vim.g.python3_host_prog = "~/.pyenv/versions/nvim/bin/python"
 
 local M = {}
-local cmp = require "user.cmp"
+
 local lspconfig = require("lspconfig")
+local Registry = require 'mason-registry'
+local Package = require 'mason-core.package'
 
-require 'nvim-autopairs'.setup { fast_wrap = {} }
-require "neodev".setup {
-    lspconfig = false,
-    library = {
-        runtime = true,
-        plugins = false,
-    }
-}
+M.ensure_installed = function(tools)
+    for _, tool in ipairs(tools) do
+        local name, version = Package.Parse(tool)
 
-require"user.mason".ensure_installed {
-    "bash-language-server",
-    "typescript-language-server",
-    "python-lsp-server",
-    "lua-language-server",
-    "gopls",
-    "golangci-lint-langserver",
-}
+        local pkg = Registry.get_package(name)
 
-local capabilities = cmp.capabilities
+        if not pkg:is_installed() then
+            vim.notify("Installing " .. name .. "@latest version")
+            pkg:install()
+            return
+        -- else
+        --     vim.notify(name .. "is installed")
+        end
 
-local on_attach = function()
-    -- require("lsp_signature").on_attach({
+        pkg:get_installed_version(function(success, version_or_err)
+            if not success then
+                vim.notify("error: " .. version_or_err)
+                return
+            end
+
+            -- local installed_version = string.sub(version_or_err, 2, #version_or_err)
+            local installed_version = version_or_err
+            local is_pinned_version = version == installed_version
+            -- vim.notify(name .. ": " .. (version and version or "nil") .. "|" ..  version_or_err)
+            --
+            if is_pinned_version or not version then
+                -- vim.notify(name .. "@" .. installed_version .. " already installed")
+                return
+            end
+
+            vim.notify("Updating " .. tool .. " to version v" .. version)
+            pkg:install({ version = version })
+
+        end)
+
+    end
+end
+
+
+-- Setup lspconfig.
+M.capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+M.on_attach = function()
+    -- require("lsp_signature").on_attach({{{{
     --      bind = true,
     --      doc_lines = 0,
     --      hint_enable = true,
@@ -33,72 +57,22 @@ local on_attach = function()
     --      handler_opts = {
     --          border = "shadow"
     --     }
-    -- })
+    -- })}}}
 
     require "user.mappings".set_lsp_mappings()
 end
 
-M.on_attach = on_attach
+-- setup all servers
+M.setup_servers = function(servers)
+    for server, extra in pairs(servers) do
+        local settings = {
+            on_attach = M.on_attach,
+            capabilities = M.capabilities,
+        }
 
-local clangd_caps = vim.tbl_deep_extend("force", capabilities, { offsetEncoding = "utf-16" })
-
-local servers = {
-    -- jedi_language_server = {},
-    pylsp = {
-        settings = { -- {{{
-            pylsp = {
-                plugins = {
-                    pydocstyle = { enabled = true },
-                    mypy = { enabled = true },
-                    jedi_completion = { enabled = false },
-                    -- pylint = { enabled = true },
-                    rope_completion = { enabled = true, eager = true },
-                    isort = { enabled = true },
-                    black = { enabled = true },
-                }
-            }
-        }, -- }}}
-    },
-    bashls = {},
-    tsserver = {
-        filetype = { "js", "ts" },
-    },
-    lua_ls = { before_init = require 'neodev.lsp'.before_init },
-    gopls = {
-        settings = { --{{{
-            gopls = {
-                semanticTokens = true,
-                staticcheck = true
-            }
-        } --}}}
-    },
-    texlab = { filetypes = { "plaintex", "tex", "rmd", "quarto" }, },
-    clangd = {
-        capabilities = clangd_caps,
-        filetypes = { "c", "cpp", "cuda" }
-    },
-    r_language_server = {},
-    golangci_lint_ls = {
-        default_config = {
-            cmd = { 'golangci-lint-langserver' },
-            root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
-            init_options = {
-                command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
-                    "--issues-exit-code=1" };
-            }
-        };
-    },
-    asm_lsp = {}
-}
-
-for server, extra in pairs(servers) do
-    local settings = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-    }
-
-    settings = vim.tbl_deep_extend("force", settings, extra)
-    lspconfig[server].setup(settings)
+        settings = vim.tbl_deep_extend("force", settings, extra)
+        lspconfig[server].setup(settings)
+    end
 end
 
 -- Jdtls configuration --{{{
@@ -108,10 +82,10 @@ function Jdtls_configure()
     vim.notify("Tweak jdtls install_path!")
     require('jdtls').start_or_attach {
         cmd = { lspinstall_path .. '/jdtls/bin/jdtls',
-            '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t') },
+        '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t') },
         root_dir = require('jdtls.setup').find_root({ 'gradle.build', 'pom.xml', '.git' }),
         on_attach = on_attach,
-        capabilities = capabilities
+        capabilities = M.capabilities
     }
 
     vim.cmd [[
@@ -157,10 +131,10 @@ function Jdtls_configure()
 end
 
 vim.cmd [[
-    augroup lsp
-        au!
-        au FileType java lua _G.Jdtls_configure()
-    augroup end
+augroup lsp
+au!
+au FileType java lua _G.Jdtls_configure()
+augroup end
 ]]
 
 --}}}
@@ -213,7 +187,7 @@ function Pylsp_setup()
                 plugins = get_pyls_plugins()
             }
         },
-        capabilities = capabilities
+        capabilities = M.capabilities
     }
     -- HACK: pretty sure this is an implementation detail :^)
     require("lspconfig").pylsp.manager.try_add()
