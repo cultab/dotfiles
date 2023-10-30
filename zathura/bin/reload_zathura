@@ -28,7 +28,7 @@ color3=$(echo "$DB" | grep 'color3:' | cut -f 2 -d ':' | sed 's/\t//')
 background=$(echo "$DB" | grep '\*background:' | cut -f 2 -d ':' | sed 's/\t//')
 foreground=$(echo "$DB" | grep '\*foreground:' | cut -f 2 -d ':' | sed 's/\t//')
 
-rm -f zathurarc
+rm -f ~/.config/zathura/zathurarc
 cat <<CONF > ~/.config/zathura/zathurarc
 set completion-bg "$background"
 set completion-fg "$foreground"
