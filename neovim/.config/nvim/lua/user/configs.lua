@@ -13,18 +13,19 @@ M.config_picker = function(opts)
         prompt_title = "Open Configuration for:",
         finder = finders.new_table {
             results = {
-                { "bspwm",                   "~/.config/bspwm/bspwmrc"                                },
                 { "Dunst",                   "~/.config/dunst/no_theme.dunstrc"                       },
                 { "Polybar",                 "~/.config/polybar/config.ini",                cd = true },
-                { "neovim",                  "~/.config/nvim/init.lua",                     cd = true },
-                { "neovim plugins",          "~/.local/share/nvim/site/pack/packer/start/", cd = true },
                 { "Simple X keybind daemon", "~/.config/sxhkd/sxhkdrc"                                },
-                { "xresources",              "~/.config/xrdb/Xresources.xdefaults"        , cd = true },
                 { "Zoomer Shell",            "~/.config/zsh/.zshrc"                                   },
-                { "themr",                   "~/.config/themr/themes.yaml",                 cd = true },
+                { "bspwm",                   "~/.config/bspwm/bspwmrc"                                },
                 { "gitconfig",               "~/.config/git/config"                                   },
+                { "neovim plugins",          "~/.local/share/nvim/lazy",                    cd = true },
+                { "neovim",                  "~/.config/nvim/init.lua",                     cd = true },
+                { "starship prompt",         "~/.config/starship.toml"                                },
+                { "tmux",                    "~/.config/tmux/tmux.conf",                              },
+                { "themr",                   "~/.config/themr/themes.yaml",                 cd = true },
                 { "wezterm",                 "~/.config/wezterm/wezterm.lua",                         },
-                { "starship prompt",         "~/.config/starship.toml"                                }
+                { "xresources",              "~/.config/xrdb/Xresources.xdefaults"        , cd = true },
             },
             entry_maker = function(entry)
                 return {

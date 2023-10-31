@@ -8,10 +8,10 @@ local map = require "user.map".map
 local partial = require "user.util".partial
 
 -- easier navigation in normal / visual / operator pending mode
-map "n" { "nnz" }
-map "N" { "Nnz" }
-map "*" { "*nz" }
-map "#" { "#nz" }
+map "n" { "nzz", "two" }
+map "N" { "Nzz" }
+map "*" { "*zz" }
+map "#" { "#zz" }
 
 -- slice line
 map "S" { "i<CR><ESC>k$" }
@@ -84,10 +84,10 @@ map "<leader>gb" { require"gitsigns".blame_line ,           "Blame line" }
 -- map "<M-j>" { function() require"Navigator".down()  end }
 -- map "<M-k>" { function() require"Navigator".up()    end }
 -- map "<M-l>" { function() require"Navigator".right() end }
--- map "<M-h>" { ":NavigatorLeft<CR>" }
--- map "<M-j>" { ":NavigatorDown<CR>" }
--- map "<M-k>" { ":NavigatorUp<CR>" }
--- map "<M-l>" { ":NavigatorRight<CR>" }
+map "<M-h>" { "<CMD>NavigatorLeft<CR>" }
+map "<M-j>" { "<CMD>NavigatorDown<CR>" }
+map "<M-k>" { "<CMD>NavigatorUp<CR>" }
+map "<M-l>" { "<CMD>NavigatorRight<CR>" }
 
 
 -- map '<C-d>' { function()
@@ -231,6 +231,8 @@ cabbr WA wa
 local nop = function (nothing)
     return nothing
 end
+
+
 nop [[
 " Search results centered please
 nnoremap <silent> n nzz

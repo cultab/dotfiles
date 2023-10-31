@@ -1,13 +1,14 @@
 return {
     'onsails/lspkind-nvim',
-    -- {
-    --     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    --     config = function()
-    --         -- Disable virtual_text since it's redundant due to lsp_lines.
-    --         vim.diagnostic.config({ virtual_text = false, virtual_lines = { only_current_line = true } })
-    --         require("lsp_lines").register_lsp_virtual_lines()
-    --     end,
-    -- },
+    {
+        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+        config = function()
+            -- Disable virtual_text since it's redundant due to lsp_lines.
+            -- TODO: toggle in Lazy: ?
+            vim.diagnostic.config({ virtual_text = false, virtual_lines = { only_current_line = true } })
+            require("lsp_lines").register_lsp_virtual_lines()
+        end,
+    },
     {
         'windwp/nvim-autopairs',
         opts = { fast_wrap = {} }
@@ -128,7 +129,10 @@ return {
         'kovetskiy/sxhkd-vim',
         ft = { "sxhkd" }
     },
-    'folke/todo-comments.nvim',
+    {
+        'folke/todo-comments.nvim',
+        config = true,
+    },
     {
         'akinsho/toggleterm.nvim',
         opts = {

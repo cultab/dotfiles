@@ -118,7 +118,7 @@ return {
                         {
                             icon = "x ",
                             desc = "Exit Neovim                      ",
-                            key = "q    ",
+                            key = "q",
                             action = "q"
                         }
                         -- {
