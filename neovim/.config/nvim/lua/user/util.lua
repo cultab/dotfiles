@@ -37,4 +37,13 @@ M.zip = function(...)
     return coroutine.wrap(function() zipgen(args) end)
 end
 
+M.to_vim_list = function(tbl)
+    local ret = ""
+    for key, value in pairs(tbl) do
+        ret = ret .. key .. ":" .. value .. ","
+    end
+
+    return string.sub(ret, 1, #ret - 1)
+end
+
 return M

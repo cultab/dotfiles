@@ -1,60 +1,14 @@
-function _G.MyFoldText()--{{{
-    -- get vim variables needed
-    local start = vim.v.foldstart
-    -- local fend = vim.v.foldend
-    -- @type string
-    local line = vim.fn.getline(start)
-    local comment_string = vim.api.nvim_buf_get_option(0, 'commentstring')
-
-    -- extract before and after comment characters (if they exist)
-    local s_loc = string.find(comment_string, '%%s')
-    -- from start to %s - 1
-    local before = string.sub(comment_string, 1, s_loc - 1)
-    -- from %s + len(%s) = 2 to end
-    local after = string.sub(comment_string, s_loc + 2, #comment_string)
-
-    -- create strings of spaces of the correct length to replace the comment strings
-    -- only do it for the comment string that's before the comment,
-    -- so the comment starts at the same column when folding
-    local before_space = ''
-    for _=1 , #before do
-        before_space = before_space .. ' '
-    end
-
-    -- for the other half incase I change my mind
-    local after_space = ''
-    -- for _=1, #after  do
-    --     after_space = after_space .. ' '
-    -- end
-
-    --  TODO: escape more than '*' and '-', should escape all magic chars instead
-    before = string.gsub(before, '%*', '%%*')
-    after = string.gsub(after, '%*', '%%*')
-    before = string.gsub(before, '%-', '%%-')
-    after = string.gsub(after, '%-', '%%-')
-
-    -- remove fold markers
-    line = string.gsub(line, '}' .. '}}', '' ) -- HACK: split fold markers to trick vim to not see them, when editing this file
-    line = string.gsub(line, '{' .. '{{', '' )
-
-    -- remove comment string
-    line = string.gsub(line, before, before_space)
-    line = string.gsub(line, after, after_space)
-
-    -- return line .. " ﬌ " .. fend - start .. " lines"
-    return line
-end--}}}
-
 if vim.g.nvui then
-  -- Configure through vim commands
-  vim.cmd [[
-  ]]
+    -- Configure through vim commands
+    vim.cmd [[
+    ]]
 end
 
 -- vim.g.ts_highlight_lua = true
 -- vim.opt.pumblend = 20 -- pseudo transparency for popup windows
+
+vim.o.foldtext = require 'user.foldfunc'.lua_global_func
 vim.o.termguicolors = true
-vim.o.foldtext = 'v:lua.MyFoldText()'
 vim.o.laststatus = 3
 
 vim.cmd [[highlight link CompeDocumentation Normal]]
@@ -79,7 +33,7 @@ vim.diagnostic.handlers.signs = {
         for _, d in pairs(diagnostics) do
             local m = max_severity_per_line[d.lnum]
             if not m or d.severity < m.severity then
-            max_severity_per_line[d.lnum] = d
+                max_severity_per_line[d.lnum] = d
             end
         end
 
@@ -100,28 +54,49 @@ vim.diagnostic.handlers.signs = {
 --    Hint = "#10B981"
 --})
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = {
+    Error = " ",
+    Warn = " ",
+    Hint = "󰌵 ",
+    Info = " ",
+}
 
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
- -- used as separator for windows
-vim.o.fillchars = "vert:│"
- -- HACK: see: https://gthub.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054
-vim.o.listchars = "nbsp:␣,trail:·,tab:  " -- ↲  "
-vim.o.list = true
+-- used as separator for windows
 
+vim.opt.fillchars = {
+    vert = "│",
+    -- vert = '┊',
+    -- vert = '│',
+    foldclose = "",
+    foldopen = "",
+    foldsep = " ",
+}
+vim.o.list = true
+vim.opt.listchars = {
+    nbsp = "␣",
+    trail = "·",
+    tab = "   ",
+    -- eol = "↲ ",
+}
+
+-- HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054"
 vim.wo.colorcolumn = "99999"
 
 vim.o.number = true
 vim.o.relativenumber = false
 -- vim.o.signcolumn = 'yes:3'
-vim.o.foldmethod = 'marker'
-vim.o.foldenable = false
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldenable = true
+vim.o.foldlevelstart = 99
+vim.o.foldcolumn = "1"
 
-vim.o.scrolloff = 3 -- keep lines above and below cursor
+vim.o.scrolloff = 1 -- keep lines above and below cursor
 vim.o.sidescroll = 1
 vim.o.showmode = false
 vim.o.showcmd = true
@@ -132,37 +107,40 @@ vim.o.cursorline = true -- highlight current line
 
 -- Colorscheme Options
 
-local sidebars = { "qf", "vista_kind", "terminal", "packer" }
-local transparent = false
-local lualine_bold = true
-local italic_functions = true
-local hide_inactive_status = true
+local function scope()
+    local sidebars = { "qf", "vista_kind", "terminal", "packer" }
+    local transparent = false
+    local lualine_bold = true
+    local italic_functions = true
+    local hide_inactive_status = true
 
-vim.g.palenight_terminal_italics = true
-vim.g.solarized_extra_hi_groups = true
-vim.g.ayucolor = "dark"
+    vim.g.palenight_terminal_italics = true
+    vim.g.solarized_extra_hi_groups = true
+    vim.g.ayucolor = "dark"
 
--- Tokyonight {{{
-vim.g.tokyonight_transparent = transparent
-vim.g.tokyonight_italic_functions = italic_functions
-vim.g.tokyonight_sidebars = sidebars
-vim.g.tokyonight_lualine_bold = lualine_bold
-vim.g.tokyonight_hide_inactive_statusline = hide_inactive_status
---}}}
--- Gruvbox {{{
-vim.g.gruvbox_italic_functions = italic_functions
-vim.g.gruvbox_transparent = transparent
-vim.g.gruvbox_sidebars = sidebars
-vim.g.gruvbox_lualine_bold = lualine_bold
-vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
---}}}
--- vscode {{{
-vim.g.vscode_style = "dark"
-vim.g.vscode_italic_comment = 1
---}}}
--- oxocarbon {{{
-vim.g.oxocarbon_lua_keep_terminal = true
--- }}}
+    -- Tokyonight {{{
+    vim.g.tokyonight_transparent = transparent
+    vim.g.tokyonight_italic_functions = italic_functions
+    vim.g.tokyonight_sidebars = sidebars
+    vim.g.tokyonight_lualine_bold = lualine_bold
+    vim.g.tokyonight_hide_inactive_statusline = hide_inactive_status
+    --}}}
+    -- Gruvbox {{{
+    vim.g.gruvbox_italic_functions = italic_functions
+    vim.g.gruvbox_transparent = transparent
+    vim.g.gruvbox_sidebars = sidebars
+    vim.g.gruvbox_lualine_bold = lualine_bold
+    vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
+    --}}}
+    -- vscode {{{
+    vim.g.vscode_style = "dark"
+    vim.g.vscode_italic_comment = 1
+    --}}}
+    -- oxocarbon {{{
+    vim.g.oxocarbon_lua_keep_terminal = true
+    -- }}}
+end
+scope()
 
 
 vim.cmd [[

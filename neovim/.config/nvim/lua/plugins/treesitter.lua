@@ -56,7 +56,7 @@ return {
                     lsp_interop = {
                         enable = true,
                         peek_definition_code = {
-                            ["gp"] = "@function.outer",
+                            ["gc"] = "@function.outer",
                             ["gC"] = "@class.outer",
                         },
                     },

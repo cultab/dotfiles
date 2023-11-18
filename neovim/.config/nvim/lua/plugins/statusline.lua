@@ -1,4 +1,5 @@
 function ReloadStatusline(theme)
+    -- vim.print("called")
     require("plenary.reload").reload_module("lualine", true)
     local statusline_config = {}
     if theme == "darkplus" or theme == "vscode" then
@@ -16,12 +17,13 @@ end
 
 local theme = "tokyonight"
 
-vim.cmd [[
-augroup AutoReload
-autocmd ColorScheme * lua ReloadStatusline(theme)
-augroup end
-]]
-
+-- FIX: this causes flickering..
+-- vim.cmd [[
+-- augroup AutoReload
+-- autocmd ColorScheme * lua ReloadStatusline(theme)
+-- augroup end
+-- ]]
+--
 LUALINE_LOADED = false
 
 return {

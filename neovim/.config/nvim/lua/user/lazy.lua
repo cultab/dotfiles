@@ -12,10 +12,10 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup{
+require("lazy").setup {
     spec = {
         { "folke/lazy.nvim" },
-        { import = "plugins" } 
+        { import = "plugins" }
     },
     defaults = {
         lazy = false,
@@ -32,18 +32,18 @@ require("lazy").setup{
                 "gzip",
                 "zip",
                 "zipPlugin",
-   		"tar",
-   		"tarPlugin",
-   		"getscript",
-   		"getscriptPlugin",
-   		"vimball",
-   		"vimballPlugin",
-   		"2html_plugin",
-   		"logipat",
-   		"rrhelper",
-   		"spellfile_plugin",
-   		-- "matchit"
- 
+                "tar",
+                "tarPlugin",
+                "getscript",
+                "getscriptPlugin",
+                "vimball",
+                "vimballPlugin",
+                "2html_plugin",
+                "logipat",
+                "rrhelper",
+                "spellfile_plugin",
+                -- "matchit"
+
             }
         }
     }

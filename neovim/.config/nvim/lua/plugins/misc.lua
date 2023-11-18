@@ -6,8 +6,9 @@ return {
             -- Disable virtual_text since it's redundant due to lsp_lines.
             -- TODO: toggle in Lazy: ?
             vim.diagnostic.config({ virtual_text = false, virtual_lines = { only_current_line = true } })
-            require("lsp_lines").register_lsp_virtual_lines()
+            require("lsp_lines").setup()
         end,
+        version = false,
     },
     {
         'windwp/nvim-autopairs',
@@ -51,22 +52,6 @@ return {
     },
     'stevearc/dressing.nvim',
     { 'j-hui/fidget.nvim', tag = 'legacy' },
-    {
-        'lukas-reineke/indent-blankline.nvim',
-        version = 'v2.20.8',
-        opts = { -- enabled = true,
-            -- char = '┊'
-            char = '│',
-            use_treesitter = true,
-            show_current_context = true,
-            show_first_indent_level = true,
-            show_trailing_blankline_indent = true,
-            show_end_of_line = true,
-            filetype_exclude = { 'help', 'terminal', 'dashboard', 'lspinstaller' },
-            context_patterns = { 'class', 'function', 'method', '^if', '^while', '^for', '^table', 'block', 'arguments', 'loop' },
-            space_char_blankline = " ",
-        }
-    },
     {
         'nyngwang/murmur.lua',
         config = function()
@@ -151,8 +136,3 @@ return {
         end
     },
 }
-
--- ○ neovim-gui-shim
--- ○ nvim-jdtls
--- ○ vim-hexokinase
--- ○ vim-startuptime
