@@ -67,7 +67,7 @@ local config = {
     disable_default_key_bindings = true,
     adjust_window_size_when_changing_font_size = false,
     line_height = 1.3,
-    font_size = 12,
+    font_size = 13,
     leader = {
         key = 's',
         mods = 'CTRL',
@@ -101,7 +101,7 @@ local config = {
         top = 2,
         bottom = 2,
     },
-    color_scheme = "ayu-mirage",
+    color_scheme = "Catppuccin Mocha",
     -- color_scheme = "Github (base16)",
     -- color_scheme = "Github (base16)",
     launch_menu = {
