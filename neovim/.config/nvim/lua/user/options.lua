@@ -1,8 +1,8 @@
 -- tabsize
 vim.opt.expandtab = true  -- no tabs
-vim.opt.tabstop = 4      -- tab size is 4
-vim.opt.softtabstop = 4  -- expanded size is 4
-vim.opt.shiftwidth = 4   -- indent size is 4
+vim.opt.tabstop = 4       -- tab size is 4
+vim.opt.softtabstop = 4   -- expanded size is 4
+vim.opt.shiftwidth = 4    -- indent size is 4
 vim.opt.shiftround = true -- round indent to shiftwidth
 
 vim.opt.smartindent = true
@@ -16,7 +16,7 @@ vim.opt.breakindent = true
 
 -- Search Settings
 vim.opt.inccommand = 'nosplit' -- show substitutions live, now without splitting!
-vim.opt.gdefault = true -- assume the 'g' in s/../../g
+vim.opt.gdefault = true        -- assume the 'g' in s/../../g
 vim.opt.ignorecase = true
 vim.opt.infercase = true
 vim.opt.smartcase = true -- all lower search is case insensitive
@@ -33,7 +33,20 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 
 -- Misc Settings
--- vim.opt.clipboard:prepend {"unnamedplus"}
+vim.opt.clipboard:prepend { "unnamedplus" }
+vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+        ['+'] = 'clip.exe',
+        ['*'] = 'clip.exe',
+    },
+    paste = {
+        ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+}
+
 -- vim.opt.updatetime = 50 -- ms
 
 vim.opt.splitbelow = true
@@ -41,18 +54,18 @@ vim.opt.splitright = true
 -- vim.opt.splitkeep = "screen" --  NOTE: wait for 0.9.0
 
 vim.opt.autochdir = false -- automatically change directory
-vim.opt.mouse='a'  -- enable mouse for a(ll) modes
+vim.opt.mouse = 'a'       -- enable mouse for a(ll) modes
 vim.opt.lazyredraw = false
 vim.opt.modeline = true
 
 -- language
-vim.opt.spelllang= 'el,en'
+vim.opt.spelllang = 'el,en'
 vim.opt.keymap = 'greek_utf-8'
-vim.opt.iminsert = 0  -- default to english
+vim.opt.iminsert = 0 -- default to english
 
 vim.opt.virtualedit = 'block'
 
- -- Assume .h files are c headers instead of cpp
+-- Assume .h files are c headers instead of cpp
 vim.g.c_syntax_for_h = true
 
 vim.opt.complete = '.,w,b,i,u,t,'
