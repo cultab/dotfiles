@@ -15,6 +15,6 @@ fi
 export ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
 
 dbus-launch --exit-with-x11 > ~/.dbus-address
-. ~/dbus-address
+. ~/.dbus-address
 
 exec startwm
