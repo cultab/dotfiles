@@ -1,6 +1,8 @@
 .directory
 .netrwhist
 
+*.appimage
+
 neovim/.config/nvim/autoload
 neovim/.config/nvim/backup
 neovim/.config/nvim/plugged

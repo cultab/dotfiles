@@ -65,7 +65,7 @@ local config = {
     },
     font = wezterm.font_with_fallback { "Iosevka Nerd Font Mono" },
     disable_default_key_bindings = true,
-    front_end = "Software",
+    -- front_end = "Software",
     adjust_window_size_when_changing_font_size = false,
     line_height = 1.3,
     font_size = 13,
@@ -167,7 +167,7 @@ local config = {
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     config.default_domain = "WSL:Debian"
-    config.font_size = 10
+    config.font_size = 11
     config.font = nil
     config.color_scheme_dirs = { '~/.config/wezterm/colors' }
 end
