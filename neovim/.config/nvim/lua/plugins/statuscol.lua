@@ -6,12 +6,12 @@ return {
             -- signcolumn = false,
             numhl = true,
             signs = {
-                add          = { text = '│' },
-                change       = { text = '│' },
-                delete       = { text = '│' },
-                topdelete    = { text = '│' },
-                changedelete = { text = '│' },
-                untracked    = { text = ' ' },
+                add          = { text = '▏' },
+                change       = { text = '▏' },
+                delete       = { text = '▏' },
+                topdelete    = { text = '▏' },
+                changedelete = { text = '▏' },
+                untracked    = { text = '▏' },
             },
         },
     },
@@ -24,23 +24,42 @@ return {
                 relculright = true,
                 segments = {
                     {
-                        sign = { name = { ".*" }, maxwidth = 1, colwidth = 1, auto = true, wrap = true },
+                        sign = {
+                            name = { ".*" },
+                            maxwidth = 1,
+                            colwidth = 1,
+                            auto = true,
+                            wrap = true,
+                        },
                     },
                     {
-                        sign = { name = { "Diagnostic" }, maxwidth = 1, auto = true },
+                        sign = {
+                            name = { "Diagnostic" },
+                            maxwidth = 1,
+                            colwidth = 1,
+                            auto = true,
+                        },
                         click = "v:lua.ScSa"
                     },
                     {
-                        text = { builtin.foldfunc },
+                        text = { builtin.foldfunc, " " },
+                        hl = "FoldColumn",
+                        wrap = true,
+                        colwidth = 1,
                         click = "v:lua.ScFa"
                     },
                     {
                         text = { builtin.lnumfunc, " " },
-                        condition = { true, builtin.not_empty },
+                        colwidth = 1,
                         click = "v:lua.ScLa",
                     },
                     {
-                        sign = { name = { "GitSigns*" } },
+                        sign = {
+                            name = { "GitSigns*" },
+                            colwidth = 1,
+                            fillchar = "▏",
+                            fillcharhl = "Nrline"
+                        },
                         click = "v:lua.ScSa"
                     },
                 },

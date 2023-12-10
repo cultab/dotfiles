@@ -51,7 +51,7 @@ vim.g.clipboard = {
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
--- vim.opt.splitkeep = "screen" --  NOTE: wait for 0.9.0
+vim.opt.splitkeep = "screen"
 
 vim.opt.autochdir = false -- automatically change directory
 vim.opt.mouse = 'a'       -- enable mouse for a(ll) modes

@@ -1,5 +1,3 @@
-
-
 -- Custom headers: {{{
 -- db.custom_header = {
 -- [[                                      __              ]],
@@ -58,10 +56,13 @@ local linkgroups = {
 }
 
 
--- fallback highlights if missing from the current colorscheme
-for link, group in zip(linkgroups, hlgroups) do
-    if vim.fn.hlexists(group) == 0 then
-        vim.api.nvim_set_hl(0, group, { link = link })
+function DashboardFallback()
+    vim.print("was run")
+    -- fallback highlights if missing from the current colorscheme
+    for link, group in zip(linkgroups, hlgroups) do
+        if vim.fn.hlexists(group) == 0 then
+            vim.api.nvim_set_hl(0, group, { link = link })
+        end
     end
 end
 
@@ -69,70 +70,72 @@ vim.cmd [[
 augroup UserDashboard
 autocmd!
 autocmd FileType dashboard lua require("user.mappings").set_welcome_mappings()
+autocmd ColorScheme * lua DashboardFallback()
 augroup end
 ]]
+
 return {
     {
         'glepnir/dashboard-nvim',
         event = 'VimEnter',
         opts = {
-                theme = 'doom',
-                hide = { statusline = false, tabline = false, winbar = false },
-                config = {
-                    header = {
-                        [[                                                     ]],
-                        [[                                     _               ]],
-                        [[                                    |_|              ]],
-                        [[ ______   ______   ______  __   __   _   ___________ ]],
-                        [[|  __  | | ____ | |  __  | \ \ / /  | | |  __   __  |]],
-                        [[| |  | | | _____| | |  | |  \ v /   | | | |  | |  | |]],
-                        [[| |  | | | |____  | |__| |   \ /    | | | |  | |  | |]],
-                        [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
-                        [[                                                     ]],
+            theme = 'doom',
+            hide = { statusline = false, tabline = false, winbar = false },
+            config = {
+                header = {
+                    [[                                                     ]],
+                    [[                                     _               ]],
+                    [[                                    |_|              ]],
+                    [[ ______   ______   ______  __   __   _   ___________ ]],
+                    [[|  __  | | ____ | |  __  | \ \ / /  | | |  __   __  |]],
+                    [[| |  | | | _____| | |  | |  \ v /   | | | |  | |  | |]],
+                    [[| |  | | | |____  | |__| |   \ /    | | | |  | |  | |]],
+                    [[|_|  |_| |______| |______|    v     |_| |_|  |_|  |_|]],
+                    [[                                                     ]],
+                },
+                center = {
+                    {
+                        icon = " ",
+                        desc = "New file                         ",
+                        key = "SPC n",
+                        action = "enew"
                     },
-                    center = {
-                        {
-                            icon = " ",
-                            desc = "New file                         ",
-                            key = "SPC n",
-                            action = "enew"
-                        },
-                        {
-                            icon = " ",
-                            desc = "Find file                        ",
-                            key = "SPC f",
-                            action = "Telescope find_files"
-                        },
-                        {
-                            icon = " ",
-                            desc = "Live grep                        ",
-                            key = "SPC /",
-                            action = "Telescope live_grep"
-                        },
-                        {
-                            icon = " ",
-                            desc = "Settings                         ",
-                            key = "SPC o",
-                            action = "lua OpenConfig()"
-                        },
-                        {
-                            icon = "x ",
-                            desc = "Exit Neovim                      ",
-                            key = "q",
-                            action = "q"
-                        }
-                        -- {
-                        --     icon = 'test',
-                        --     icon_hl = 'group',
-                        --     desc = 'description',
-                        --     desc_hl = 'group',
-                        --     key = 'shortcut key in dashboard buffer not keymap !!',
-                        --     key_hl = 'group',
-                        --     action = '',
-                        -- },
+                    {
+                        icon = " ",
+                        desc = "Find file                        ",
+                        key = "SPC f",
+                        action = "Telescope find_files"
                     },
-                    -- footer = {},
-                }
+                    {
+                        icon = " ",
+                        desc = "Live grep                        ",
+                        key = "SPC /",
+                        action = "Telescope live_grep"
+                    },
+                    {
+                        icon = " ",
+                        desc = "Settings                         ",
+                        key = "SPC o",
+                        action = "lua OpenConfig()"
+                    },
+                    {
+                        icon = "x ",
+                        desc = "Exit Neovim                      ",
+                        key = "q",
+                        action = "q"
+                    }
+                    -- {
+                    --     icon = 'test',
+                    --     icon_hl = 'group',
+                    --     desc = 'description',
+                    --     desc_hl = 'group',
+                    --     key = 'shortcut key in dashboard buffer not keymap !!',
+                    --     key_hl = 'group',
+                    --     action = '',
+                    -- },
+                },
+                -- footer = {},
             }
+        }
     }
 }
