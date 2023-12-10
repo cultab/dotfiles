@@ -8,7 +8,7 @@ local map = require "user.map".map
 local partial = require "user.util".partial
 
 -- easier navigation in normal / visual / operator pending mode
-map "n" { "nzz", "two" }
+map "n" { "nzz" }
 map "N" { "Nzz" }
 map "*" { "*zz" }
 map "#" { "#zz" }
@@ -27,7 +27,7 @@ map "cc" { "\"_cc" }
 map "x" { "\"_x" }
 
 --  I never use Ex mode, so re-run macros instead
-map "Q" { "QQ" }
+map "Q" { "@@" }
 
 -- sane movement through wrapping lines
 map "j" { "gj", nil, 'nv' }
