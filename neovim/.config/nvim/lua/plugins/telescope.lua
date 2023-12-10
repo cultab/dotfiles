@@ -1,3 +1,10 @@
+local function get_fd()
+    if vim.env.WSL_DISTRO_NAME == "Debian" then
+        return "fdfind"
+    end
+
+    return "fd"
+end
 
 return {
     {
@@ -7,7 +14,7 @@ return {
             local actions = require('telescope.actions')
 
 
-            require("telescope").setup{
+            require("telescope").setup {
                 defaults = {
                     -- file_sorter = require'telescope.sorters'.get_fzy_sorter,
                     -- generic_sorter = require'telescope.sorters'.get_fzy_sorter,
@@ -19,16 +26,20 @@ return {
                 },
                 pickers = {
                     find_files = {
-                        find_command = { "fd" }
+                        find_command = { get_fd() }
                     }
                 }
             }
-            require('telescope').load_extension('fzf')
             require("telescope").load_extension("emoji")
         end
     },
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        config = function()
+            require('telescope').load_extension('fzf')
+        end
+    },
     { 'xiyaowong/telescope-emoji.nvim' },
 
 }
-

@@ -20,33 +20,42 @@ return {
                 "lua-language-server",
                 "gopls",
                 "golangci-lint-langserver",
-                "pylyzer"
+                -- "pylyzer"
             }
+            return
 
-            lsp.setup_servers {
-                -- jedi_language_server = {},
-                pylsp = {
-                    settings = { -- {{{
-                        pylsp = {
-                            plugins = {
-                                pydocstyle = { enabled = true },
-                                mypy = { enabled = true },
-                                jedi_completion = { enabled = false },
-                                -- pylint = { enabled = true },
-                                rope_completion = { enabled = true, eager = true },
-                                isort = { enabled = true },
-                                black = { enabled = true },
+                lsp.setup_servers {
+                    -- jedi_language_server = {},
+                    pylsp = { settings = { pylsp = { plugins = {
+                        pydocstyle = {
+                            enabled = true,
+                            ignore = {
+                                "D103",
+                                "D100",
+                            },
+                        },
+                        mypy = { enabled = true },
+                        pylint = {
+                            enabled = false,
+                            ignore = {
+                                "C0116",
+                                "C0114",
                             }
-                        }
-                    }, -- }}}
-                },
-                -- pylyzer = {},
-                bashls = {},
-                tsserver = {
-                    filetype = { "js", "ts" },
-                },
-                lua_ls = { -- before_init = require 'neodev.lsp'.before_init
-                    settings = {
+                        },
+                        jedi_completion = { enabled = true },
+                        rope_completion = {
+                            enabled = false,
+                            eager = true
+                        },
+                        isort = { enabled = true },
+                    } } }, },
+                    -- pylyzer = {},
+                    bashls = {},
+                    tsserver = {
+                        filetype = { "js", "ts" },
+                    },
+                    -- before_init = require 'neodev.lsp'.before_init
+                    lua_ls = { settings = {
                         workspace = {
                             checkThirdParty = false,
                         },
@@ -54,23 +63,20 @@ return {
                             diagnostics = { globals = { 'vim' } }
                         }
                     },
-                },
-                gopls = {
-                    settings = {
-                        gopls = {
-                            semanticTokens = true,
-                            staticcheck = true
-                        }
+                    },
+                    gopls = { settings = { gopls = {
+                        semanticTokens = true,
+                        staticcheck = true
                     }
-                },
-                texlab = { filetypes = { "plaintex", "tex", "rmd", "quarto" }, },
-                clangd = {
-                    capabilities = vim.tbl_deep_extend("force", lsp.capabilities, { offsetEncoding = "utf-16" }),
-                    filetypes = { "c", "cpp", "cuda" }
-                },
-                r_language_server = {},
-                golangci_lint_ls = {
-                    default_config = {
+                    }
+                    },
+                    texlab = { filetypes = { "plaintex", "tex", "rmd", "quarto" }, },
+                    clangd = {
+                        capabilities = vim.tbl_deep_extend("force", lsp.capabilities, { offsetEncoding = "utf-16" }),
+                        filetypes = { "c", "cpp", "cuda" }
+                    },
+                    r_language_server = {},
+                    golangci_lint_ls = { default_config = {
                         cmd = { 'golangci-lint-langserver' },
                         -- root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
                         init_options = {
@@ -79,9 +85,9 @@ return {
                                 "--issues-exit-code=1" },
                         }
                     },
-                },
-                asm_lsp = {}
-            }
+                    },
+                    asm_lsp = {}
+                }
         end
     },
     'williamboman/mason-lspconfig.nvim',

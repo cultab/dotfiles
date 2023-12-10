@@ -10,6 +10,11 @@ M.ensure_installed = function(tools)
     for _, tool in ipairs(tools) do
         local name, version = Package.Parse(tool)
 
+        if not Registry.has_package(name) then
+            print("user/lsp error: no package with name '" .. name .. "'")
+            return
+        end
+
         local pkg = Registry.get_package(name)
 
         if not pkg:is_installed() then
@@ -21,8 +26,11 @@ M.ensure_installed = function(tools)
         end
 
         pkg:get_installed_version(function(success, version_or_err)
+            if not version then
+                return
+            end
             if not success then
-                vim.notify("error: " .. version_or_err)
+                vim.notify("user/lsp error: " .. version_or_err .. " for " .. name)
                 return
             end
 
@@ -31,7 +39,7 @@ M.ensure_installed = function(tools)
             local is_pinned_version = version == installed_version
             -- vim.notify(name .. ": " .. (version and version or "nil") .. "|" ..  version_or_err)
             --
-            if is_pinned_version or not version then
+            if is_pinned_version then
                 -- vim.notify(name .. "@" .. installed_version .. " already installed")
                 return
             end

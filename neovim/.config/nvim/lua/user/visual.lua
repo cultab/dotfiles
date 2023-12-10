@@ -101,7 +101,6 @@ vim.o.sidescroll = 1
 vim.o.showmode = false
 vim.o.showcmd = true
 
-vim.o.colorcolumn = false
 vim.o.background = "dark"
 vim.o.cursorline = true -- highlight current line
 

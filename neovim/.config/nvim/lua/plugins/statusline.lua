@@ -24,6 +24,7 @@ local theme = "tokyonight"
 -- augroup end
 -- ]]
 --
+
 LUALINE_LOADED = false
 
 return {

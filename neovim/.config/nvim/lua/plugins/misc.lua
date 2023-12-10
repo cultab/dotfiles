@@ -1,16 +1,6 @@
 return {
     'onsails/lspkind-nvim',
     {
-        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        config = function()
-            -- Disable virtual_text since it's redundant due to lsp_lines.
-            -- TODO: toggle in Lazy: ?
-            vim.diagnostic.config({ virtual_text = false, virtual_lines = { only_current_line = true } })
-            require("lsp_lines").setup()
-        end,
-        version = false,
-    },
-    {
         'windwp/nvim-autopairs',
         opts = { fast_wrap = {} }
     },
