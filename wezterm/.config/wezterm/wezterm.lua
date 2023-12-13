@@ -56,8 +56,8 @@ end)
 local config = {
     wsl_domains = {
         {
-            name = 'WSL:Debian',
-            distribution = 'debian',
+            name = 'WSL:void',
+            distribution = 'void',
             -- username = "hunter",
             default_cwd = "~",
             -- default_prog = {"zsh", "-l"}
@@ -166,7 +166,7 @@ local config = {
 }
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-    config.default_domain = "WSL:Debian"
+    config.default_domain = "WSL:void"
     config.font_size = 11
     config.font = nil
     config.color_scheme_dirs = { '~/.config/wezterm/colors' }

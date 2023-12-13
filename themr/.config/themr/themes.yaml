@@ -79,6 +79,10 @@ vscode:
 ayu-mirage:
   colorscheme: "ayu-mirage"
 
+ayu-dark:
+  colorscheme: "ayu-dark"
+  wezterm: "Ayu Dark (Gogh)"
+
 moonfly:
   colorscheme: "moonfly"
 

@@ -12,7 +12,7 @@ return {
         --     return diagnostic.message
         -- end,
         -- gap_size = 1,
-        scope = 'cursor',        -- 'cursor', 'line' this changes the scope, so instead of showing errors under the cursor, it shows errors on the entire line.
+        scope = 'line',        -- 'cursor', 'line' this changes the scope, so instead of showing errors under the cursor, it shows errors on the entire line.
         -- text_align = 'right',                                      -- 'left', 'right'
         placement = 'top',       -- 'top', 'inline'
         inline_padding_left = 0, -- the padding left when the placement is inline

@@ -5,7 +5,7 @@ autoload -Uz edit-command-line;
 zle -N edit-command-line
 
 zmodload zsh/zpty
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=1000000
@@ -116,4 +116,4 @@ if [[ "$WSL_DISTRO_NAME" ]]; then
     disown
 fi
 
-zprof
+# zprof

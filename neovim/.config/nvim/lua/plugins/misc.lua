@@ -111,7 +111,7 @@ return {
     {
         'akinsho/toggleterm.nvim',
         opts = {
-            direction = "float", -- "horizontal", --"float",
+            direction = "horizontal", -- "horizontal", --"float",
             start_in_insert = true
         }
         ,

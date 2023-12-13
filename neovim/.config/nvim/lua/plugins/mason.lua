@@ -14,12 +14,13 @@ return {
             local lsp = require 'user.lsp'
 
             lsp.ensure_installed {
-                "bash-language-server",
-                "typescript-language-server",
+                -- "bash-language-server",
+                -- "typescript-language-server",
                 "python-lsp-server",
                 "lua-language-server",
                 "gopls",
-                "golangci-lint-langserver",
+                "clangd",
+                -- "golangci-lint-langserver",
                 -- "pylyzer"
             }
             return
@@ -86,7 +87,8 @@ return {
                         }
                     },
                     },
-                    asm_lsp = {}
+                    omnisharp = {},
+                    asm_lsp = {},
                 }
         end
     },

@@ -57,7 +57,6 @@ local linkgroups = {
 
 
 function DashboardFallback()
-    vim.print("was run")
     -- fallback highlights if missing from the current colorscheme
     for link, group in zip(linkgroups, hlgroups) do
         if vim.fn.hlexists(group) == 0 then
