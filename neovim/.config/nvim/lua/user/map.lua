@@ -44,7 +44,7 @@ M.map = setmetatable({}, {
                 table.insert(modes, mode)
             end
 
-            -- @type string|function|nil
+            -- @type string | function | nil
             local mapping = mapping_args[1]
             -- @type string
             local description = mapping_args[2] or ""

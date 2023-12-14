@@ -6,3 +6,4 @@ require 'user.lazy'
 
 require 'user.colorscheme'
 require 'user.mappings'
+require 'user.lsp'
