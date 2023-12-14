@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+
+import random
+
+food = {
+    "souvlaki": 0.25,
+    "skepasti": 0.25,
+    "pizza": 0.3,
+    "borgar": 0.4,
+    "noodz": 0.5,
+    "1+1 special": 0.5
+}
+
+first_choice = random.choices(list(food.keys()), weights=list(food.values()))
+print(f"You get to eat {first_choice[0]}!")
+
+answer = input("Satisfied?\n(no to try again)\n> ")
+
+if not answer.lower().startswith("n"):
+    print(f"Nice, enjoy your {first_choice[0]}!")
+    exit(0)
+
+
+backup_choice = random.choices(list(food.keys()), weights=list(food.values()))
+print(f"... or maybe {backup_choice[0]}!")
+
+answer = input("Can't decide between the two?\n(yes to get your final answer.)\n> ")
+
+if not answer.lower().startswith("y"):
+    print(f"Nice, enjoy your {backup_choice[0]}!")
+    exit(0)
+
+fuck_you_choice = random.choice([first_choice, backup_choice])
+print(f"If you can't decide you can eat {fuck_you_choice[0]}, I don't care either way!")
