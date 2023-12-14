@@ -29,6 +29,8 @@ map "x" { "\"_x" }
 --  I never use Ex mode, so re-run macros instead
 map "Q" { "@@" }
 
+map '<leader>=' { partial(require "conform".format, { async = true, lsp_fallback = true }), "Format buffer [Conform]", 'nv' }
+
 -- sane movement through wrapping lines
 map "j" { "gj", nil, 'nv' }
 map "k" { "gk", nil, 'nv' }
@@ -46,63 +48,53 @@ map "<leader>cr" { require "user.command".run_current_file, "Run current file" }
 
 map "<leader>o" { require 'user.configs'.config_picker, "Open config picker" }
 
-map "<leader>t" { nil, "Text operations" , 'nv'}
-map "<leader>tt" { ":Tabularize<space>/",       "Tabularize", 'v' }
-map "<leader>ta" { "<cmd>EasyAlign<CR>",        "Easy Align", 'v' }
-map "<leader>te" { "<cmd>Telescope emoji<CR>",  "Emoji Picker" }
+map "<leader>t" { nil, "Text operations", 'nv' }
+map "<leader>tt" { ":Tabularize<space>/", "Tabularize", 'v' }
+map "<leader>ta" { "<cmd>EasyAlign<CR>", "Easy Align", 'v' }
+map "<leader>te" { "<cmd>Telescope emoji<CR>", "Emoji Picker" }
 
--- map "<leader>L" { require "lsp_lines".toggle, "Toggle diagnostics" }
 map "<leader>b" { "<cmd>BufferPick<CR>", "Pick buffer" }
 map "<leader>f" { require "telescope.builtin".find_files, "Find files" }
 map "<leader>/" { require "telescope.builtin".live_grep, "Live grep" }
 map "<leader>h" { require "telescope.builtin".help_tags, "Search help tags" }
 map "<leader>n" { require "user.newfile".new_file, "New file" }
 map "<leader>x" { function() vim.api.nvim_buf_delete(0, {}) end, "Delete buffer" }
-map "<leader>l" { function() vim.o.number = not vim.o.number end, "Toggle line numbers" }
 map "<leader>d" { "<CMD>Lexplore<CR>", "Open file explorer" }
 
 map "gy" { '"+y', "Yank to system clipboard", 'nv' }
 map "gp" { '"+p', "Paste from system clipboard", 'nv' }
 
 map "<leader>g" { nil, "Version Control [Git]" }
-map "<leader>gs" { require"gitsigns".stage_hunk,            "Stage hunk" }
-map "<leader>gr" { require"gitsigns".reset_hunk ,           "Reset hunk" }
-map "<leader>gR" { require"gitsigns".reset_buffer ,         "Reset buffer" }
-map "<leader>gp" { require"gitsigns".preview_hunk ,         "Preview hunk" }
-map "<leader>gb" { require"gitsigns".blame_line ,           "Blame line" }
+map "<leader>gs" { require "gitsigns".stage_hunk, "Stage hunk" }
+map "<leader>gr" { require "gitsigns".reset_hunk, "Reset hunk" }
+map "<leader>gR" { require "gitsigns".reset_buffer, "Reset buffer" }
+map "<leader>gp" { require "gitsigns".preview_hunk, "Preview hunk" }
+map "<leader>gb" { require "gitsigns".blame_line, "Blame line" }
 -- map "<leader>gn" { require"neogit".open,                    "Open Neogit" }
 -- map "<leader>gc" { require"telescope.builtin".git_commits, "Commits"  }
 -- map "<leader>gb" { require"telescope.builtin".git_branches, "Branches" }
 -- map "<leader>gs" { require"telescope.builtin".git_status,   "Status"   }
 -- map "<leader>gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
 
--- map "<M-h>" { require"tmux".move_left   }
--- map "<M-j>" { require"tmux".move_bottom }
--- map "<M-k>" { require"tmux".move_top    }
--- map "<M-l>" { require"tmux".move_right  }
--- map "<M-h>" { function() require"Navigator".left()  end }
--- map "<M-j>" { function() require"Navigator".down()  end }
--- map "<M-k>" { function() require"Navigator".up()    end }
--- map "<M-l>" { function() require"Navigator".right() end }
 map "<M-h>" { "<CMD>NavigatorLeft<CR>" }
 map "<M-j>" { "<CMD>NavigatorDown<CR>" }
 map "<M-k>" { "<CMD>NavigatorUp<CR>" }
 map "<M-l>" { "<CMD>NavigatorRight<CR>" }
 
 
--- map '<C-d>' { function()
---     if not require("cmp").scroll_docs(4) then
---         return "<C-d>"
---     end
--- end, "Scroll documentation down", expr = true
--- }
---
--- map '<C-u>' { function()
---     if not require("cmp").scroll_docs(-4) then
---         return "<C-u>"
---     end
--- end, "Scroll documentation up", expr = true
--- }
+map '<C-d>' { function()
+    if not require("cmp").scroll_docs(4) then
+        return "<C-d>"
+    end
+end, "Scroll documentation down", expr = true
+}
+
+map '<C-u>' { function()
+    if not require("cmp").scroll_docs(-4) then
+        return "<C-u>"
+    end
+end, "Scroll documentation up", expr = true
+}
 
 ---
 ---If any LSP server attached to the current buffer can provide the @server_capability,
@@ -133,9 +125,9 @@ local function if_lsp_else_vim(server_capability, lsp_func, lsp_args, vim_cmd)
     end
 end
 
-map 'K'         { partial(if_lsp_else_vim, "hoverProvider", vim.lsp.buf.hover, {}, ":normal! K"), "Hover documentation" }
-map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>") , "Format buffer", 'n' }
-map '='         { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "=") , "Format buffer", 'v' }
+map 'K' { partial(if_lsp_else_vim, "hoverProvider", vim.lsp.buf.hover, {}, ":normal! K"), "Hover documentation" }
+-- map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
+-- map '=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
 
 
 function M.set_lsp_mappings()
@@ -182,7 +174,8 @@ function M.get_cmp_mappings()
     }
 end
 
-function M.set_welcome_mappings() vim.cmd [[
+function M.set_welcome_mappings()
+    vim.cmd [[
     nnoremap <buffer> q <CMD>q<CR>
     augroup DASH
     autocmd!
@@ -228,7 +221,7 @@ cabbr WA wa
 ]]
 
 -- Unused for now {{{
-local nop = function (nothing)
+local nop = function(nothing)
     return nothing
 end
 
@@ -266,5 +259,5 @@ nnoremap Q @@
 " sane movement through wrapping lines
 noremap <silent>j gj
 noremap <silent>k gk
-]]-- }}}
+]] -- }}}
 return M

@@ -27,7 +27,7 @@ local function isViProcess(pane, _)
 end
 
 local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
-    if false and isViProcess(pane, window) then
+    if isViProcess(pane, window) then
         window:perform_action(
         -- This should match the keybinds you set in Neovim.
             act.SendKey({ key = vim_direction, mods = 'ALT' }),

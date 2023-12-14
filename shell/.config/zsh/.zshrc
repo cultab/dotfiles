@@ -101,7 +101,7 @@ miniplug load
 
 fast-theme --quiet XDG:overlay
 
-# csource "$HOME/.local/zsh/wezterm.sh"
+csource "$HOME/.local/zsh/wezterm.sh"
 
 
 # HACK: maybe ask about adding this in  nix.plugin.zsh

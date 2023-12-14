@@ -6,8 +6,8 @@ end
 
 M.partial = function(func, ...)
     local args = { ... }
-    return function(...)
-        func(unpack(args), unpack{ ... })
+    return function()
+        func(unpack(args))
     end
 end
 

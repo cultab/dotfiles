@@ -36,17 +36,10 @@ return {
                         sign = {
                             name = { "Diagnostic" },
                             maxwidth = 1,
-                            colwidth = 1,
-                            auto = true,
+                            colwidth = 2,
+                            auto = false,
                         },
                         click = "v:lua.ScSa"
-                    },
-                    {
-                        text = { builtin.foldfunc, " " },
-                        hl = "FoldColumn",
-                        wrap = true,
-                        colwidth = 1,
-                        click = "v:lua.ScFa"
                     },
                     {
                         text = { builtin.lnumfunc, " " },
@@ -61,6 +54,13 @@ return {
                             fillcharhl = "Nrline"
                         },
                         click = "v:lua.ScSa"
+                    },
+                    {
+                        text = { builtin.foldfunc, " " },
+                        hl = "FoldColumn",
+                        wrap = true,
+                        colwidth = 1,
+                        click = "v:lua.ScFa"
                     },
                 },
             }

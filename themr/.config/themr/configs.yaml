@@ -12,8 +12,8 @@ xresources:
 nvim:
   type: colorscheme
   path: "~/.config/nvim/lua/user/colorscheme.lua"
-  regex: 'cmd "colorscheme .*"'
-  replace: 'cmd "colorscheme {}"'
+  regex: 'return ".*"'
+  replace: 'return "{}"'
   cmd: "all_nvim 'colorscheme {}'"
 
 lualine:

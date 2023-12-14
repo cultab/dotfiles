@@ -22,6 +22,10 @@ require("lazy").setup {
         version = "*", -- latest tagged
         --version = false, -- latest commit
     },
+    install = {
+        missing = true,
+        colorscheme = { require 'user.colorscheme' },
+    },
     performance = {
         rtp = {
             disabled_plugins = {
