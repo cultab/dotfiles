@@ -27,6 +27,7 @@ export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
 export npm_config_cache="${XDG_CACHE_HOME}/npm"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
+eval "$(pyenv init --path)"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java

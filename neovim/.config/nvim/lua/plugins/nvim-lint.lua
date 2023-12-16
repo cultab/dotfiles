@@ -4,7 +4,7 @@ return {
         local linters_by_ft = {
             -- cpp = { 'clang-tidy' },
             gitcommit = { 'commitlint' },
-            go = { "golangci-lint" },
+            go = { "golangcilint" },
             sh = { "shellcheck" },
             bash = { "shellcheck" },
             css = { "stylelint" },

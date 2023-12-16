@@ -111,8 +111,9 @@ return {
     {
         'akinsho/toggleterm.nvim',
         opts = {
-            direction = "horizontal", -- "horizontal", --"float",
-            start_in_insert = true
+            direction = "vertical",
+            start_in_insert = true,
+            size = vim.o.columns * 0.4
         }
         ,
         event = "BufWinEnter",
