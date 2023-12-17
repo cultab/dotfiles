@@ -1,25 +1,25 @@
 -- tabsize
-vim.opt.expandtab = true  -- no tabs
-vim.opt.tabstop = 4       -- tab size is 4
-vim.opt.softtabstop = 4   -- expanded size is 4
-vim.opt.shiftwidth = 4    -- indent size is 4
-vim.opt.shiftround = true -- round indent to shiftwidth
+vim.opt.expandtab   = true -- no tabs
+vim.opt.tabstop     = 4    -- tab size is 4
+vim.opt.softtabstop = 4    -- expanded size is 4
+vim.opt.shiftwidth  = 4    -- indent size is 4
+vim.opt.shiftround  = true -- round indent to shiftwidth
 
 vim.opt.smartindent = true
 
 -- wrap
-vim.opt.wrap = false
+vim.opt.wrap        = false
 vim.opt.breakindent = true
-vim.opt.showbreak = string.rep(" ", 3) -- make it so that long lines wrap smartly, ~TJDevries
-vim.opt.linebreak = true
+vim.opt.showbreak   = string.rep(" ", 3) -- make it so that long lines wrap smartly, ~TJDevries
+vim.opt.linebreak   = true
 vim.opt.breakindent = true
 
 -- Search Settings
-vim.opt.inccommand = 'nosplit' -- show substitutions live, now without splitting!
-vim.opt.gdefault = true        -- assume the 'g' in s/../../g
-vim.opt.ignorecase = true
-vim.opt.infercase = true
-vim.opt.smartcase = true -- all lower search is case insensitive
+vim.opt.inccommand  = 'nosplit' -- show substitutions live, now without splitting!
+vim.opt.gdefault    = true      -- assume the 'g' in s/../../g
+vim.opt.smartcase   = true      -- all lower search is case insensitive
+vim.opt.ignorecase  = true
+vim.opt.infercase   = true
 
 -- don't give |ins-completion-menu| messages. For example,
 -- "-- XXX completion (YYY)", "match 1 of 2", "The only match",
@@ -28,8 +28,8 @@ vim.opt.shortmess:append('c')
 -- Backup and swap
 vim.opt.backup = true
 vim.opt.backupdir:remove('.')
-vim.opt.undodir:remove('.')
 vim.opt.undofile = true
+vim.opt.undodir:remove('.')
 vim.opt.swapfile = false
 
 -- Misc Settings
@@ -51,27 +51,27 @@ end
 
 -- vim.opt.updatetime = 50 -- ms
 
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.splitkeep = "screen"
+vim.opt.splitbelow    = true
+vim.opt.splitright    = true
+vim.opt.splitkeep     = "screen"
 
-vim.opt.autochdir = false -- automatically change directory
-vim.opt.mouse = 'a'       -- enable mouse for a(ll) modes
-vim.opt.lazyredraw = false
-vim.opt.modeline = true
+vim.opt.autochdir     = false -- automatically change directory
+vim.opt.mouse         = 'a'   -- enable mouse for a(ll) modes
+vim.opt.lazyredraw    = false
+vim.opt.modeline      = true
 
 -- language
-vim.opt.spelllang = 'el,en'
-vim.opt.keymap = 'greek_utf-8'
-vim.opt.iminsert = 0 -- default to english
+vim.opt.spelllang     = 'el,en'
+vim.opt.keymap        = 'greek_utf-8'
+vim.opt.iminsert      = 0 -- default to english
 
-vim.opt.virtualedit = 'block'
+vim.opt.virtualedit   = 'block'
 
 -- Assume .h files are c headers instead of cpp
-vim.g.c_syntax_for_h = true
+vim.g.c_syntax_for_h  = true
 
-vim.opt.complete = '.,w,b,i,u,t,'
-vim.opt.completeopt = "menu,menuone,noselect" -- ,noinsert,longest"
+vim.opt.complete      = '.,w,b,i,u,t,'
+vim.opt.completeopt   = "menu,menuone,noselect" -- ,noinsert,longest"
 vim.opt.formatoptions = vim.opt.formatoptions
     - "a"
     - "t"
@@ -82,12 +82,20 @@ vim.opt.formatoptions = vim.opt.formatoptions
     + "j"
     - "2"
 
+vim.opt.autoread      = true
+
+vim.cmd [[
+augroup autoread
+    autocmd! FocusGained * :checktime
+augroup end
+]]
+
 vim.cmd [[
 augroup termBinds
     autocmd!
     autocmd TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
     autocmd TermOpen * nnoremap <buffer> <Esc> :ToggleTermToggleAll<CR>
-    autocmd FileType fzf tunmap <buffer> <Esc>
+    " autocmd FileType fzf tunmap <buffer> <Esc>
 augroup end
 ]]
 

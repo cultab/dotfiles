@@ -27,6 +27,7 @@
 -- }}}
 --
 local zip = require 'user.util'.zip
+local icons = require 'user.icons'
 vim.g.dashboard_default_executive = 'telescope'
 
 function OpenConfig()
@@ -94,31 +95,31 @@ return {
                 },
                 center = {
                     {
-                        icon = " ",
+                        icon = icons.file.normal,
                         desc = "New file                         ",
                         key = "SPC n",
                         action = "enew"
                     },
                     {
-                        icon = " ",
+                        icon = icons.misc.search,
                         desc = "Find file                        ",
                         key = "SPC f",
                         action = "Telescope find_files"
                     },
                     {
-                        icon = " ",
+                        icon = icons.misc.grep,
                         desc = "Live grep                        ",
                         key = "SPC /",
                         action = "Telescope live_grep"
                     },
                     {
-                        icon = " ",
+                        icon = icons.misc.settings,
                         desc = "Settings                         ",
                         key = "SPC o",
                         action = "lua OpenConfig()"
                     },
                     {
-                        icon = "x ",
+                        icon = icons.misc.close,
                         desc = "Exit Neovim                      ",
                         key = "q",
                         action = "q"

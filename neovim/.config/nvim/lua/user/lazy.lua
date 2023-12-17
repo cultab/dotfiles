@@ -26,6 +26,10 @@ require("lazy").setup {
         missing = true,
 --        colorscheme = { require 'user.colorscheme' },
     },
+    change_detection = {
+        nabled = false,
+        notify = false,
+    },
     performance = {
         rtp = {
             disabled_plugins = {

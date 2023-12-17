@@ -1,4 +1,5 @@
 vim.g.barbar_auto_setup = false
+local icons = require'user.icons'
 
 return {
     {
@@ -32,11 +33,11 @@ return {
 
             icons = {
                 filetype = { enabled = true },
-                separator = { left = '▎', },
-                button = '',
-                modified = { button = '●' },
-                pinned = { button = '車' },
-                inactive = { separator = { left = '▎' } }
+                separator = { left = icons.line.left_thick, },
+                button = icons.close,
+                modified = { icons.file.modilied },
+                pinned = { icons.file.pinned },
+                inactive = { separator = { left = icons.line.left_thick } }
             },
 
             -- Default is to insert after current buffer.

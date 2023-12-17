@@ -1,8 +1,10 @@
 local M = {}
+local icons = require'user.icons'
 LastCommand = nil
 
+
 M.run_command = function()
-    vim.ui.input({ prompt = "cmd: ", completion = 'shellcmd' }, function (command)
+    vim.ui.input({ prompt = icons.misc.term .. "cmd: ", completion = 'shellcmd' }, function (command)
         if command then
             LastCommand = command
             vim.cmd(":1TermExec cmd='" .. command .. "'")
@@ -14,7 +16,7 @@ M.run_last_command = function()
     if LastCommand then
         vim.cmd(":1TermExec cmd='" .. LastCommand .. "'")
     else
-        vim.notify("No command to repeat", nil, { title = "mappings.lua" })
+        vim.notify(icons.misc.term .. "No command to repeat", nil, { title = "mappings.lua" })
     end
 end
 

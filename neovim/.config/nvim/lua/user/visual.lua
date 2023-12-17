@@ -4,6 +4,8 @@ if vim.g.nvui then
     ]]
 end
 
+local icons = require'user.icons'
+
 -- vim.g.ts_highlight_lua = true
 -- vim.opt.pumblend = 20 -- pseudo transparency for popup windows
 
@@ -55,10 +57,10 @@ vim.diagnostic.handlers.signs = {
 --})
 
 local signs = {
-    Error = " ",
-    Warn = " ",
-    Hint = "󰌵 ",
-    Info = " ",
+    Error = icons.diagnostic.error,
+    Warn = icons.diagnostic.warn,
+    Hint = icons.diagnostic.hint,
+    Info = icons.diagnostic.info,
 }
 
 for type, icon in pairs(signs) do
@@ -69,18 +71,16 @@ end
 -- used as separator for windows
 
 vim.opt.fillchars = {
-    vert = "│",
-    -- vert = '┊',
-    -- vert = '│',
-    foldclose = "",
-    foldopen = "",
-    foldsep = " ",
+    vert = icons.line.center_line,
+    foldclose = icons.fold.close,
+    foldopen = icons.fold.open,
+    foldsep = icons.fold.sep,
 }
 vim.o.list = true
 vim.opt.listchars = {
-    nbsp = "␣",
-    trail = "·",
-    tab = "   ",
+    nbsp = icons.listchars.nbsp,
+    trail = icons.listchars.trail,
+    tab = icons.listchars.tab,
     -- eol = "↲ ",
 }
 

@@ -1,3 +1,4 @@
+local icons = require'user.icons'
 return {
     'lukas-reineke/indent-blankline.nvim',
     version = '*',
@@ -5,9 +6,7 @@ return {
     setup = function()
         require "ilb".setup {
             indent = {
-                char = '▏',
-                -- char = '┊',
-                -- char = '│',
+                char = icons.line.left_thin,
                 -- highlight = { "Function", "Label" }
             },
             scope = {

@@ -1,1 +1,1 @@
-return "ayu-mirage"
+return "ayu-dark"

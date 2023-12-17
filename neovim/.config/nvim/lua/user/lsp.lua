@@ -68,13 +68,13 @@ local servers = {
     asm_lsp = {},
 }
 
-local mason_packages = {}
-
-for server, _ in pairs(servers) do
-    table.insert(mason_packages, toMason[server])
-end
-
-utils.ensure_installed(mason_packages)
+-- local mason_packages = {}
+--
+-- for server, _ in pairs(servers) do
+--     table.insert(mason_packages, toMason[server])
+-- end
+--
+-- utils.ensure_installed(mason_packages)
 
 
 local on_attach = function()
@@ -82,7 +82,7 @@ local on_attach = function()
         bind = true,
         doc_lines = 0,
         hint_enable = true,
-        hint_prefix = " ",
+        hint_prefix = " ", -- TODO: replace with user.icons reference
         handler_opts = {
             border = "none" -- double, rounded, single, shadow, none, or a table of borders
         }

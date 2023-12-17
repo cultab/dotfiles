@@ -109,7 +109,7 @@ autoload -U compinit && compinit
 # prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
-    pkill wezterm_reload
+    pkill -9 wezterm_reload
     echo "Wezterm Reloader :D"
     wezterm_reload &
     disown

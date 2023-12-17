@@ -1,3 +1,4 @@
+local icons = require'user.icons'
 return {
     {
         'lewis6991/gitsigns.nvim',
@@ -6,12 +7,12 @@ return {
             -- signcolumn = false,
             numhl = true,
             signs = {
-                add          = { text = '▏' },
-                change       = { text = '▏' },
-                delete       = { text = '▏' },
-                topdelete    = { text = '▏' },
-                changedelete = { text = '▏' },
-                untracked    = { text = '▏' },
+                add          = { text = icons.line.left_medium },
+                change       = { text = icons.line.left_medium },
+                delete       = { text = icons.line.left_medium },
+                topdelete    = { text = icons.line.left_medium },
+                changedelete = { text = icons.line.left_medium },
+                untracked    = { text = icons.line.left_medium },
             },
         },
     },
@@ -50,7 +51,7 @@ return {
                         sign = {
                             name = { "GitSigns*" },
                             colwidth = 1,
-                            fillchar = "▏",
+                            fillchar = icons.line.left_medium,
                             fillcharhl = "Nrline"
                         },
                         click = "v:lua.ScSa"

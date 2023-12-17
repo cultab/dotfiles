@@ -1,3 +1,5 @@
+local icons = require'user.icons'
+
 return {
     {
         'williamboman/mason.nvim',
@@ -6,9 +8,9 @@ return {
             require 'mason'.setup({
                 ui = {
                     icons = {
-                        package_installed = "✓",
-                        package_pending = "➜ ",
-                        package_uninstalled = "✗"
+                        package_installed = icons.misc.check,
+                        package_pending = icons.misc.right_arrow,
+                        package_uninstalled = icons.misc.x,
                     }
                 }
             })
