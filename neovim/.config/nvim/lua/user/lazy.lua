@@ -24,7 +24,7 @@ require("lazy").setup {
     },
     install = {
         missing = true,
-        colorscheme = { require 'user.colorscheme' },
+--        colorscheme = { require 'user.colorscheme' },
     },
     performance = {
         rtp = {

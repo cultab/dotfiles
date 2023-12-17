@@ -8,7 +8,7 @@ return {
             sh = { "shellcheck" },
             bash = { "shellcheck" },
             css = { "stylelint" },
-            zsh = { "zsh", skip = true }
+            zsh = { "zsh" },
         }
         require('lint').linters_by_ft = linters_by_ft
         local mason_packages = {}
@@ -21,6 +21,7 @@ return {
             end
             ::continue::
         end
+        table.insert(mason_packages, "golangci-lint")
         -- vim.print("plugin/nvim-lint: ensure_installed:", mason_packages)
         require"user.mason_utils".ensure_installed(mason_packages)
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {

@@ -13,7 +13,7 @@ M.ensure_installed = function(tools)
         local name, version = Package.Parse(tool)
 
         if not Registry.has_package(name) then
-            print("user/lsp error: no package with name '" .. name .. "'")
+            print("user/mason_utils error: no package with name '" .. name .. "'")
             return
         end
 
