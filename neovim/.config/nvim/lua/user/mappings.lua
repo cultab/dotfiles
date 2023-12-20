@@ -132,7 +132,7 @@ function M.set_lsp_mappings()
     map 'gD' { vim.lsp.buf.declaration, "Goto declaration [LSP]" }
     map 'gd' { vim.lsp.buf.definition, "Goto definition [LSP]" }
     map 'gi' { vim.lsp.buf.implementation, "Goto implementation [LSP]" }
-    map '<C-k>' { vim.lsp.buf.signature_help, "Open signature help [LSP]" }
+    map '<C-k>' { vim.lsp.buf.signature_help, "Open signature help [LSP]", "i" }
     map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
     map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
     map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }

@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-  wezterm # !!!themr marker:terminal!!!
+  st -e tmux # !!!themr marker:terminal!!!
 	# st -t 'Simple terminal' -e tmux
 
 super + ctrl + Return

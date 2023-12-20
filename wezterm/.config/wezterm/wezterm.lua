@@ -105,8 +105,7 @@ local config = {
         top = 2,
         bottom = 2,
     },
-    color_scheme = "Ayu Dark (Gogh)",
-    -- color_scheme = "Github (base16)",
+    color_scheme = "ayu-mirage",
     -- color_scheme = "Github (base16)",
     launch_menu = {
         {

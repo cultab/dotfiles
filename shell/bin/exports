@@ -3,7 +3,7 @@ export BROWSER="vivaldi-stable"
 export EDITOR="nvim"
 export LS_COLORS= #$(dircolors)
 export FZF_DEFAULT_COMMAND="fd"
-export TERMINAL="wezterm"
+export TERMINAL="st -e tmux"
 
 # man colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 3)            # begin bold

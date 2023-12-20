@@ -14,7 +14,11 @@ local servers = {
                     pydocstyle = {
                         enabled = true,
                         ignore = {
+                            "D101",
+                            "D102",
                             "D103",
+                            "D203",
+                            "D107",
                             "D100",
                         },
                     },
@@ -76,6 +80,22 @@ local servers = {
 --
 -- utils.ensure_installed(mason_packages)
 
+local border = {
+      {"╭", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╮", "FloatBorder"},
+      {"│", "FloatBorder"},
+      {"╯", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╰", "FloatBorder"},
+      {"│", "FloatBorder"},
+}
+
+-- LSP settings (for overriding per client)
+local handlers =  {
+  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
+  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+}
 
 local on_attach = function()
     require("lsp_signature").on_attach({
@@ -84,7 +104,7 @@ local on_attach = function()
         hint_enable = true,
         hint_prefix = " ", -- TODO: replace with user.icons reference
         handler_opts = {
-            border = "none" -- double, rounded, single, shadow, none, or a table of borders
+            border = "rounded" -- double, rounded, single, shadow, none, or a table of borders
         }
     })
 
@@ -96,6 +116,7 @@ for server, extra in pairs(servers) do
     local settings = {
         on_attach = on_attach,
         capabilities = capabilities,
+        handlers = handlers,
     }
 
     settings = vim.tbl_deep_extend("force", settings, extra)
