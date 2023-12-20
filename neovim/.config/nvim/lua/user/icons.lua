@@ -56,12 +56,22 @@ return {
     },
     progress = { "██", "▇▇", "▆▆", "▅▅", "▄▄", "▃▃", "▂▂", "▁▁", "  " },
     border = {
-        top_left     = "┌",
-        top_right    = "┐",
-        bottom_left  = "└",
-        bottom_right = "┘",
-        horizontal   = "─",
-        vertical     = "│"
+        square = {
+            top_left     = "┌",
+            top_right    = "┐",
+            bottom_left  = "└",
+            bottom_right = "┘",
+            horizontal   = "─",
+            vertical     = "│"
+        },
+        round = {
+            top_left     = "╭",
+            top_right    = "╮",
+            bottom_left  = "╰",
+            bottom_right = "╯",
+            horizontal   = "─",
+            vertical     = "│",
+        }
     },
     lazy = {
         cmd = " ",
