@@ -52,6 +52,7 @@ map "<leader>t" { nil, "Text operations", 'nv' }
 map "<leader>tt" { ":Tabularize<space>/", "Tabularize", 'v' }
 map "<leader>ta" { "<cmd>EasyAlign<CR>", "Easy Align", 'v' }
 map "<leader>te" { "<cmd>Telescope emoji<CR>", "Emoji Picker" }
+map "<leader>tt" { "<cmd>Telescope todo-comments<CR>", "Todo, Fixme etc.", 'n' }
 
 map "<leader>b" { "<cmd>BufferPick<CR>", "Pick buffer" }
 map "<leader>f" { require "telescope.builtin".find_files, "Find files" }
@@ -60,9 +61,6 @@ map "<leader>h" { require "telescope.builtin".help_tags, "Search help tags" }
 map "<leader>n" { require "user.newfile".new_file, "New file" }
 map "<leader>x" { function() vim.api.nvim_buf_delete(0, {}) end, "Delete buffer" }
 map "<leader>d" { "<CMD>Lexplore<CR>", "Open file explorer" }
-
-map "gy" { '"+y', "Yank to system clipboard", 'nv' }
-map "gp" { '"+p', "Paste from system clipboard", 'nv' }
 
 map "<leader>g" { nil, "Version Control [Git]" }
 map "<leader>gs" { require "gitsigns".stage_hunk, "Stage hunk" }

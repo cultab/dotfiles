@@ -23,6 +23,9 @@ return {
             require 'statuscol'.setup {
                 -- setopt = true,
                 relculright = true,
+                clickhandlers = {
+                    Lnum = builtin.gitsigns_click,
+                },
                 segments = {
                     {
                         sign = {
