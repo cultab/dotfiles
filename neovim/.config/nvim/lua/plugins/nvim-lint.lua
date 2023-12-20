@@ -17,7 +17,10 @@ return {
             "shellcheck",
             "stylelint",
         }
-        vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "BufWritePost" }, {
+        require 'lint'.linters.commitlint.args = {
+            "--config", vim.fn.expand("~/config/nvim/commitlint.config.js"),
+        }
+        vim.api.nvim_create_autocmd({ "BufEnter", "TextChanged", "InsertLeave", "BufWritePost" }, {
             callback = function()
                 require("lint").try_lint()
             end,
