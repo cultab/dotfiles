@@ -3,7 +3,7 @@
 <channel name="displays" version="1.0">
   <property name="ActiveProfile" type="string" value="Default"/>
   <property name="Default" type="empty">
-    <property name="HDMI-0" type="string" value="LG 22&quot;">
+    <property name="HDMI-0" type="string" value="LG Electronics 22&quot;">
       <property name="Active" type="bool" value="true"/>
       <property name="EDID" type="string" value="ad70066de3ae0bfd8827e39aaed5587e62f64cab"/>
       <property name="Resolution" type="string" value="1920x1080"/>
@@ -22,7 +22,7 @@
     </property>
   </property>
   <property name="Fallback" type="empty">
-    <property name="HDMI-0" type="string" value="LG 22&quot;">
+    <property name="HDMI-0" type="string" value="LG Electronics 22&quot;">
       <property name="Active" type="bool" value="true"/>
       <property name="EDID" type="string" value="ad70066de3ae0bfd8827e39aaed5587e62f64cab"/>
       <property name="Resolution" type="string" value="1920x1080"/>

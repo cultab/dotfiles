@@ -25,6 +25,9 @@ M.ensure_installed = function(tools)
             goto continue
         -- else
         --     vim.notify(name .. "is installed")
+            vim.notify("Installing " .. name .. "@" .. (version and version or "latest"))
+            pkg:install( { version = version } and version or nil )
+            return
         end
 
         pkg:get_installed_version(function(success, version_or_err)
@@ -36,17 +39,17 @@ M.ensure_installed = function(tools)
                 return
             end
 
-            -- local installed_version = string.sub(version_or_err, 2, #version_or_err)
-            local installed_version = version_or_err
-            local is_pinned_version = version == installed_version
+            local is_pinned_version = version == version_or_err
             -- vim.notify(name .. ": " .. (version and version or "nil") .. "|" ..  version_or_err)
             --
             if is_pinned_version then
                 -- vim.notify(name .. "@" .. installed_version .. " already installed")
+                -- vim.notify(name .. "@" .. installed_version .. " already installed")
+                -- vim.notify(name .. "@" .. version_or_err .. " already installed")
                 return
             end
 
-            vim.notify("Updating " .. tool .. " to version v" .. version)
+            vim.notify("Updating " .. tool .. " to @" .. version)
             pkg:install({ version = version })
 
         end)

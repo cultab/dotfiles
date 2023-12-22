@@ -4,6 +4,6 @@ python
 acpi event thingy
 tlp power management
 starship prompt
-exa or lsd
+exa or lsd, now eza
 bluetooth (check gentoo wiki)
 

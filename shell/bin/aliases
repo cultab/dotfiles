@@ -94,5 +94,3 @@ alias term_test='dd if=/dev/urandom | base64 | lolcat'
 
 #alias mpiall="mpirun --use-hwthread-cpus"
 #alias mpirf="mpirun --oversubscribe"
-
-alias sued='sudoedit'

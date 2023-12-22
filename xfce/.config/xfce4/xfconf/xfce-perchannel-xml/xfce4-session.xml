@@ -28,6 +28,10 @@
       <property name="Client4_PerScreen" type="empty"/>
     </property>
   </property>
+  <property name="compat" type="empty">
+    <property name="LaunchGNOME" type="bool" value="false"/>
+    <property name="LaunchKDE" type="bool" value="false"/>
+  </property>
   <property name="security" type="empty">
     <property name="EnableTcp" type="bool" value="false"/>
   </property>
