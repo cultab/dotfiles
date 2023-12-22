@@ -58,13 +58,11 @@ local config = {
         {
             name = 'WSL:void',
             distribution = 'void',
-            -- username = "hunter",
             default_cwd = "~",
-            -- default_prog = {"zsh", "-l"}
         },
     },
     term = "wezterm",
-    font = wezterm.font_with_fallback { "Iosevka Nerd Font Mono" },
+    font = wezterm.font_with_fallback { "Iosevka Term" },
     disable_default_key_bindings = true,
     -- front_end = "Software",
     adjust_window_size_when_changing_font_size = false,
@@ -89,6 +87,10 @@ local config = {
         { key = 'j',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-down') },
         { key = 'k',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-up') },
         { key = 'l',  mods = 'ALT',         action = act.EmitEvent('ActivatePaneDirection-right') },
+        { key = 'h',  mods = 'ALT|SHIFT',   action = act.AdjustPaneSize { 'Left', 4 } },
+        { key = 'j',  mods = 'ALT|SHIFT',   action = act.AdjustPaneSize { 'Down', 4 } },
+        { key = 'k',  mods = 'ALT|SHIFT',   action = act.AdjustPaneSize { 'Up', 4 } },
+        { key = 'l',  mods = 'ALT|SHIFT',   action = act.AdjustPaneSize { 'Right', 4 } },
         { key = 's',  mods = 'LEADER|CTRL', action = act.ActivateCopyMode },
         { key = '=',  mods = 'CTRL',        action = act.IncreaseFontSize },
         { key = '-',  mods = 'CTRL',        action = act.DecreaseFontSize },
@@ -97,6 +99,7 @@ local config = {
         { key = 'v',  mods = 'CTRL|SHIFT',  action = act.PasteFrom 'Clipboard' },
     },
     -- enable_tab_bar = false,
+    use_fancy_tab_bar = false,
     mux_output_parser_coalesce_delay_ms = 0,
     window_decorations = "INTEGRATED_BUTTONS|RESIZE",
     window_padding = {
@@ -105,7 +108,7 @@ local config = {
         top = 2,
         bottom = 2,
     },
-    color_scheme = "ayu-mirage",
+    color_scheme = "ayu-dark",
     -- color_scheme = "Github (base16)",
     launch_menu = {
         {

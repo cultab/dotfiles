@@ -51,6 +51,7 @@ xautolock \
 appimaged &
 pipewire &
 plank &
+poweralertd &
 
 
 flatpak run com.discordapp.Discord &

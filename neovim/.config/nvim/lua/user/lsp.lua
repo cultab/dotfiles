@@ -21,6 +21,7 @@ local servers = {
                             "D203",
                             "D107",
                             "D100",
+                            "D212",
                         },
                     },
                     mypy = { enabled = true },

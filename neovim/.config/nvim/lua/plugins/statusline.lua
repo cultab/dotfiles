@@ -15,7 +15,7 @@ function ReloadStatusline(theme)
     require("lualine").setup(statusline_config)
 end
 
-local theme = "ayu-mirage"
+local theme = "ayu-dark"
 
 -- FIX: this causes flickering..
 -- vim.cmd [[

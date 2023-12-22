@@ -9,8 +9,8 @@
 ! st.font:  Terminus :size=13
 ! st.font:  scientifica :size=13
 
-*.font:  Iosevka Nerd Font:size=11
-st.font: Iosevka Nerd Font Mono:size=12
+*.font:  Iosevka:size=11
+st.font: Iosevka Fixed:size=12
 ! st.font: BitstromWera Nerd Font:size=10
 ! st.chscale: 1.0 ! have to apply center patch...
 

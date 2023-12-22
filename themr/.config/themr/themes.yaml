@@ -81,7 +81,7 @@ ayu-mirage:
 
 ayu-dark:
   colorscheme: "ayu-dark"
-  wezterm: "Ayu Dark (Gogh)"
+  wezterm: "ayu-dark"
 
 moonfly:
   colorscheme: "moonfly"

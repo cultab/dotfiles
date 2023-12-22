@@ -101,7 +101,9 @@ miniplug load
 
 fast-theme --quiet XDG:overlay
 
-csource "$HOME/.local/zsh/wezterm.sh"
+if [ "$WEZTERM_EXECUTABLE" ]; then
+    csource "$HOME/.local/zsh/wezterm.sh"
+fi
 
 
 # HACK: maybe ask about adding this in  nix.plugin.zsh
@@ -111,7 +113,6 @@ autoload -U compinit && compinit
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
     pkill -9 wezterm_reload
-    echo "Wezterm Reloader :D"
     wezterm_reload &
     disown
 fi

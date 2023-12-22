@@ -69,7 +69,25 @@ disabled = true
 disabled = true
 
 [git_branch]
-symbol = "  "
+symbol = "󰘬 "
+
+[git_metrics]
+disabled = false
+
+[git_status]
+conflicted = '='
+ahead = ''
+behind = ''
+diverged = ' '
+up_to_date = ' '
+untracked = '?'
+stashed = '$'
+modified = '!'
+staged = ' '
+renamed = '»' 
+deleted = ' '
+typechanged = ''
+# windows_starship = '/mnt/c/something'
 
 [golang]
 symbol = "  "

@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # paplay /usr/share/sounds/freedesktop/stereo/message.oga
-paplay "$HOME/Pop Notification.ogg"
+pw-play "$XDG_DATA_HOME/Pop_Notification.ogg"
 
 
