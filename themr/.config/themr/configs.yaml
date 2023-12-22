@@ -5,6 +5,7 @@ xresources:
   path: "~/.config/xrdb/selected_theme.xdefaults"
   regex: '#include ".*\.xdefaults"'
   replace: '#include "./{}.xdefaults"'
+  create: true
   # pre: '#include "./'
   # post: '.xdefaults"'
   cmd: "reload_xrdb"
@@ -14,6 +15,7 @@ nvim:
   path: "~/.config/nvim/lua/user/colorscheme.lua"
   regex: 'return ".*"'
   replace: 'return "{}"'
+  create: true
   cmd: "all_nvim 'colorscheme {}'"
 
 lualine:
@@ -25,16 +27,17 @@ lualine:
 
 polybar:
   path: "~/.config/polybar/config.ini"
-  regex: 'include-file = .*\.ini'
+  regex:   'include-file = .*\.ini'
   replace: 'include-file = ./{}.ini'
   cmd: "bspc config top_padding 0"
 
     # color_scheme = "TokyoNight (Gogh)",
 wezterm:
   type: colorscheme
-  path: "~/.config/wezterm/wezterm.lua"
-  regex: '    color_scheme = ".*",'
-  replace: '    color_scheme = "{}",'
+  path: "~/.config/wezterm/colorscheme.lua"
+  regex: 'return ".*"'
+  replace: 'return "{}"'
+  create: true
 
 sxhkd:
   type: terminal

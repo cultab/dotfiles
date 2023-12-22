@@ -59,6 +59,5 @@ return {
     'Mofiqul/vscode.nvim',
     'LunarVim/darkplus.nvim',
     'bluz71/vim-moonfly-colors',
-    'B4mbus/oxocarbon-lua.nvim',
-    { 'shaunsingh/oxocarbon.nvim', build = './install.sh' },
+    'nyoom-engineering/oxocarbon.nvim'
 }

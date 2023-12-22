@@ -1,9 +1,8 @@
 local function get_fd()
-    if vim.env.WSL_DISTRO_NAME == "Debian" then
-        return "fdfind"
-    end
+    local suc, errcode, ret = os.execute("fd")
 
-    return "fd"
+    vim.notify("plugin/telescope: could not find fd (get it?)")
+    return "asdfg"
 end
 
 return {
@@ -18,17 +17,8 @@ return {
                 defaults = {
                     -- file_sorter = require'telescope.sorters'.get_fzy_sorter,
                     -- generic_sorter = require'telescope.sorters'.get_fzy_sorter,
-                    mappings = {
-                        i = {
-                            ["<esc>"] = actions.close
-                        },
-                    },
+                    mappings = { i = { ["<esc>"] = actions.close } },
                 },
-                pickers = {
-                    find_files = {
-                        find_command = { get_fd() }
-                    }
-                }
             }
             require("telescope").load_extension("emoji")
         end

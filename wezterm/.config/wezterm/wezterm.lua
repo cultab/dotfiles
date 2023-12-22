@@ -67,7 +67,7 @@ local config = {
     -- front_end = "Software",
     adjust_window_size_when_changing_font_size = false,
     line_height = 1.3,
-    font_size = 13,
+    font_size = 12,
     leader = {
         key = 's',
         mods = 'CTRL',
@@ -108,8 +108,7 @@ local config = {
         top = 2,
         bottom = 2,
     },
-    color_scheme = "ayu-dark",
-    -- color_scheme = "Github (base16)",
+    color_scheme = require"colorscheme",
     launch_menu = {
         {
             label = "Open config",
