@@ -30,7 +30,7 @@ local config = {
                 error = ' ',
                 warn = ' ',
                 info = ' ',
-                hint = ' ',
+                hint = '󰌵 ',
             } }
         },
         lualine_y = { 'fileformat', 'filetype', 'progress' },

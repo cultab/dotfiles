@@ -18,9 +18,9 @@ return {
         left_thick    = '▊',
     },
     misc = {
-        check       = "✓",
+        check       = " ",
         close       = " ",
-        grep        = " ",
+        grep        = "󰈞 ",
         right_arrow = "➜",
         search      = " ",
         settings    = " ",
@@ -37,7 +37,7 @@ return {
     file = {
         normal   = " ",
         modilied = '●',
-        pinned   = '車',
+        pinned   = '󰐃 ',
     },
     git = {
         branch = " ",
@@ -50,7 +50,7 @@ return {
         },
         bold = {
             added    = ' ',
-            modified = '柳 ',
+            modified = '  ',
             removed  = ' ',
         },
     },

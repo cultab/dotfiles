@@ -43,7 +43,7 @@ function M.foldfunc()
     line = string.gsub(line, before, before_space)
     line = string.gsub(line, after, after_space)
 
-    -- return line .. " ﬌ " .. fend - start .. " lines"
+    -- return line .. "  " .. fend - start .. " lines"
     return line
 end
 
