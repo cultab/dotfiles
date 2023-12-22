@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#0A0E14',
+    '#F07178',
+    '#C2D94C',
+    '#E6B450',
+    '#39BAE6',
+    '#FFEE99',
+    '#95E6CB',
+    '#B3B1AD',
+]
+background = '#0A0E14'
+brights = [
+    '#3E4B59',
+    '#FF3333',
+    '#C2D94C',
+    '#E6B450',
+    '#39BAE6',
+    '#FFEE99',
+    '#95E6CB',
+    '#626A73',
+]
+# cursor_bg = '#202746'
+# cursor_border = '#979db4'
+cursor_fg = '#707A8C'
+foreground = '#B3B1AD'
+# selection_bg = '#5e6687'
+# selection_fg = '#979db4'
+
+[colors.indexed]
+
+[metadata]
+name = 'ayu-dark'
