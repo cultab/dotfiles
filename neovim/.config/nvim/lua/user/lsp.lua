@@ -7,6 +7,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 
 local servers = {
     -- jedi_language_server = {},
+    rust_analyzer = {},
     pylsp = {
         settings = {
             pylsp = {

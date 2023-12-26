@@ -64,20 +64,29 @@ alias gdh='git diff HEAD'
 # ls #
 ######
 
-# lsd_opts='--group-dirs first --extensionsort'
-if command -v exa > /dev/null 2>&1; then
-	exa_opts='--group-directories-first --modified --group --sort=Extension'
-    if exa --git > /dev/null 2>&1 ; then
-        exa_opts="$exa_opts --git"
+if command -v lsd > /dev/null 2>&1; then
+    lsd_opts='--group-dirs first --extensionsort'
+    # shellcheck disable=SC2139
+        alias ls="lsd $lsd_opts"
+    # shellcheck disable=SC2139
+        alias ll="lsd $lsd_opts --long"
+    # shellcheck disable=SC2139
+        alias la="lsd $lsd_opts --long --all"
+    # shellcheck disable=SC2139
+        alias lt="lsd $lsd_opts --tree"
+elif command -v eza > /dev/null 2>&1; then
+	eza_opts='--group-directories-first --modified --group --sort=Extension'
+    if eza --git > /dev/null 2>&1 ; then
+        eza_opts="$eza_opts --git"
     fi
 # shellcheck disable=SC2139
-	alias ls="exa $exa_opts"
+	alias ls="eza $eza_opts"
 # shellcheck disable=SC2139
-	alias ll="exa $exa_opts --long"
+	alias ll="eza $eza_opts --long"
 # shellcheck disable=SC2139
-	alias la="exa $exa_opts --long --all"
+	alias la="eza $eza_opts --all"
 # shellcheck disable=SC2139
-	alias lt="exa $exa_opts --tree"
+	alias lt="eza $eza_opts --tree"
 else
     ls_opts='--color=auto -h'
     # shellcheck disable=SC2139

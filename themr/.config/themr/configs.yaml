@@ -6,8 +6,6 @@ xresources:
   regex: '#include ".*\.xdefaults"'
   replace: '#include "./{}.xdefaults"'
   create: true
-  # pre: '#include "./'
-  # post: '.xdefaults"'
   cmd: "reload_xrdb"
 
 nvim:
@@ -31,7 +29,6 @@ polybar:
   replace: 'include-file = ./{}.ini'
   cmd: "bspc config top_padding 0"
 
-    # color_scheme = "TokyoNight (Gogh)",
 wezterm:
   type: colorscheme
   path: "~/.config/wezterm/colorscheme.lua"

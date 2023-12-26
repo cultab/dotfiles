@@ -1,5 +1,7 @@
 local M = {}
 
+
+
 return {
     {
         'hrsh7th/nvim-cmp',
@@ -26,7 +28,7 @@ return {
                 },
                 mapping = require 'user.mappings'.get_cmp_mappings(),
                 sources = cmp.config.sources({
-                    { name = 'luasnip' }, -- For luasnip users.
+                    { name = 'luasnip' },
                     { name = 'otter' },
                     { name = 'conventionalcommits' },
                     { name = 'neorg' },
@@ -39,20 +41,25 @@ return {
                     { name = 'zsh' },
                 }),
                 formatting = {
-                    format = require("lspkind").cmp_format({ mode = "symbol_text", menu = {
-                        nvim_lsp = "[LSP]",
-                        luasnip = "[Snippet]",
-                        otter = "[Otter]",
-                        pandoc_references = "[Pandoc]",
-                        path = "[Path]",
-                        buffer = "[Buffer]",
-                        tmux = "[tmux]",
-                        nvim_lua = "[nvim]",
-                        latex_symbols = "[LaTeX]",
-                        zsh = "[zsh]",
-                        neorg = "[neorg]",
-                        conventionalcommits = "[git]",
-                    } })
+                    fields = { "abbr", "kind", "menu" },
+                    format = require("lspkind").cmp_format({
+                        symbol_map = require 'user.icons'.lsp_cozette,
+                        mode = "symbol_text",
+                        menu = {
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[Snippet]",
+                            otter = "[Otter]",
+                            pandoc_references = "[Pandoc]",
+                            path = "[Path]",
+                            buffer = "[Buffer]",
+                            tmux = "[tmux]",
+                            nvim_lua = "[nvim]",
+                            latex_symbols = "[LaTeX]",
+                            zsh = "[zsh]",
+                            neorg = "[neorg]",
+                            conventionalcommits = "[git]",
+                        },
+                    })
                 },
                 view = {
                     experimental = {

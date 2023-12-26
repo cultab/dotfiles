@@ -3,7 +3,7 @@ return {
         error = ' ',
         warn  = ' ',
         info  = ' ',
-        hint  = ' '
+        hint  = ' ',
     },
     fold = { -- WARN: single char wide
         close = "",
@@ -20,11 +20,11 @@ return {
     misc = {
         check       = " ",
         close       = " ",
-        grep        = "󰈞 ",
+        grep        = " ",
         right_arrow = "➜",
-        search      = " ",
-        settings    = " ",
-        settings2   = " ",
+        search      = " ",
+        settings    = " ",
+        settings2   = " ",
         term        = " ",
         x           = "✗",
     },
@@ -53,6 +53,11 @@ return {
             modified = '  ',
             removed  = ' ',
         },
+        cozette = {
+            added    = ' ',
+            removed  = ' ',
+            modilied = ' ',
+        },
     },
     progress = { "██", "▇▇", "▆▆", "▅▅", "▄▄", "▃▃", "▂▂", "▁▁", "  " },
     border = {
@@ -74,9 +79,9 @@ return {
         }
     },
     lazy = {
-        cmd = " ",
+        cmd = " ",
         config = "",
-        event = "",
+        event = "",
         ft = " ",
         init = " ",
         import = " ",
@@ -88,8 +93,35 @@ return {
         runtime = " ",
         require = "󰢱 ",
         source = " ",
-        start = "",
+        start = "⏵",
         task = "✔ ",
-        list = { "●", "➜", "★", "‒" },
+        list = { "●", "➜", "✭", "‒" },
     },
+    lsp_cozette = {
+        Text = "", -- ﭨ
+        Method = "⚇", -- ?
+        Function = "",
+        Constructor = "",
+        Field = "",
+        Variable = "⍺",
+        Class = "",
+        Interface = "",
+        Module = "",
+        Property = "", -- ?
+        Unit = "", --  ruler?
+        Value = "",
+        Enum = "",
+        Keyword = "",
+        Snippet = "謹",
+        Color = "",
+        File = "",
+        Reference = "⇒", -- ?
+        Folder = "",
+        EnumMember = "",
+        Constant = "",
+        Struct = "󰙅",
+        Event = "",
+        Operator = "±",
+        TypeParameter = "",
+    }
 }

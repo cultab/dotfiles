@@ -10,19 +10,22 @@ neovim/.config/nvim/undo
 neovim/.config/nvim/spell
 neovim/.config/nvim/plugin
 
-X/xrdb/.config/xrdb/selected_theme.xdefaults
+X/.config/xrdb/selected_theme.xdefaults
+wezterm/.config/wezterm/colorscheme.lua
+neovim/.config/nvim/lua/user/colorscheme.lua
+neovim/.config/nvim/lua/user/colorscheme_statusline.lua
 
 bash/bin/remove-vivaldi-snapshot.sh
 bash/bin/vivaldi-snapshot
 
 tmux/.config/tmux/plugins
+kakoune/.config/kak/plugins
 
 xfce/.config/xfce4/desktop
+shell/.config/zsh/.zcompdump
 
-kakoune/.config/kak/plugins
 
 ssh/.ssh/*
 
 dunst/.config/dunst/dunstrc
 
-shell/.config/zsh/.zcompdump

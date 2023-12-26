@@ -1,5 +1,8 @@
 return {
-    'onsails/lspkind-nvim',
+    {
+        'onsails/lspkind-nvim',
+        version = "*",
+    },
     {
         'windwp/nvim-autopairs',
         opts = { fast_wrap = {} }

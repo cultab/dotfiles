@@ -102,7 +102,7 @@ miniplug load
 fast-theme --quiet XDG:overlay
 
 if [ "$WEZTERM_EXECUTABLE" ]; then
-    csource "$HOME/.local/zsh/wezterm.sh"
+    csource "$HOME/.local/share/zsh/wezterm.sh"
 fi
 
 

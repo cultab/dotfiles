@@ -1,5 +1,6 @@
 local M = {}
 
+local icons = require'user.icons'
 -- local sep = {
 --     left = '',
 --     right = ''
@@ -58,10 +59,10 @@ M.config = {
             'diagnostics',
             sources = { 'nvim_diagnostic' },
             symbols = {
-                error = ' ',
-                warn  = ' ',
-                info  = ' ',
-                hint  = '󰌵 ',
+                error = icons.diagnostic.error,
+                warn  = icons.diagnostic.warn,
+                info  = icons.diagnostic.info,
+                hint  = icons.diagnostic.hint,
             }
         }
         },

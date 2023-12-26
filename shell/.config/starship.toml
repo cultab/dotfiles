@@ -31,8 +31,8 @@ show_milliseconds = true
 [aws]
 disabled = true
 
-[conda]
-symbol = "  "
+# [conda]
+# symbol = "  "
 
 [cmake]
 disabled = true
@@ -47,11 +47,11 @@ disabled = true
 disabled = true
 
 [directory]
-read_only = " "
+# read_only = " "
 
 [docker_context]
 disabled = true
-symbol = "  "
+# symbol = "  "
 
 [dotnet]
 disabled = true
@@ -65,44 +65,35 @@ disabled = true
 [erlang]
 disabled = true
 
+# [golang]
+# symbol = ""
+
 [gcloud]
 disabled = true
 
 [git_branch]
-symbol = "󰘬 "
+# symbol = "󰘬 "
 
 [git_metrics]
 disabled = false
 
 [git_status]
-conflicted = '='
-ahead = ''
-behind = ''
-diverged = ' '
-up_to_date = ' '
+# conflicted = '='
+# ahead = ''
+# behind = ''
+# diverged = ' '
+# up_to_date = ''
 untracked = '?'
-stashed = '$'
+stashed = '\$'
 modified = '!'
-staged = ' '
-renamed = '»' 
-deleted = ' '
-typechanged = ''
+# staged = ' '
+# renamed = '»' 
+# deleted = ' '
+# typechanged = ''
 # windows_starship = '/mnt/c/something'
-
-[golang]
-symbol = "  "
-
-[haskell]
-symbol = "  "
 
 [helm]
 disabled = true
-
-[hg_branch]
-symbol = "  "
-
-[java]
-symbol = " "
 
 [julia]
 disabled = true
@@ -114,17 +105,14 @@ disabled = true
 disabled = true
 
 [memory_usage]
-symbol = " "
+# symbol = " "
 disabled = false
-
-[nim]
-symbol = " "
 
 [nix_shell]
 symbol = "  "
 
-[nodejs]
-symbol = "  "
+# [nodejs]
+# symbol = "  "
 
 [ocaml]
 disabled = true
@@ -132,8 +120,8 @@ disabled = true
 [openstack]
 disabled = true
 
-[package]
-symbol = " "
+# [package]
+# symbol = " "
 
 [perl]
 disabled = true
@@ -144,17 +132,11 @@ disabled = true
 [purescript]
 disabled = true
 
-[python]
-symbol = "  "
-
-[rlang]
-symbol = "  "
-
 [ruby]
 disabled = true
 
 [rust]
-symbol = "  "
+symbol = ""
 disabled = false
 
 [singularity]
@@ -174,6 +156,3 @@ disabled = true
 
 [zig]
 disabled = false
-
-[lua]
-symbol = "  "
