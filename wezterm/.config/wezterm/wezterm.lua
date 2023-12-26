@@ -71,6 +71,7 @@ config.wsl_domains = {
     },
 }
 config.term = "wezterm"
+config.font_size = 13
 config.font = wezterm.font_with_fallback {
     {
 
@@ -83,17 +84,15 @@ config.font = wezterm.font_with_fallback {
     },
     {
         family = "CozetteHiDpi",
+        -- family = "Cozette",
         assume_emoji_presentation = true
     }
 }
-config.font_size = 13
 config.freetype_load_flags = "NO_HINTING"
 config.custom_block_glyphs = false
--- font = wezterm.font_with_fallback { "IosevkaTerm NerdFont" },
 -- allow_square_glyphs_to_overflow_width = "Never",
 -- cell_width = 1.1,
 config.disable_default_key_bindings = true
--- front_end = "Software",
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
 config.leader = {
