@@ -6,9 +6,11 @@ return {
         hint  = ' ',
     },
     fold = { -- WARN: single char wide
-        close = "",
-        open = "",
+        close = "›",
+        open = "⌵",
         sep = " ",
+        -- close = "",
+        -- open = "",
     },
     line = {
         center_dotted = '┊',
