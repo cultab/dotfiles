@@ -49,27 +49,29 @@ local function conditionalActivatePane(window, pane, pane_direction, vim_directi
     end
 end
 
-wezterm.on('ActivatePaneDirection-right', function(window, pane)
-    conditionalActivatePane(window, pane, 'Right', 'l')
-end)
-wezterm.on('ActivatePaneDirection-left', function(window, pane)
-    conditionalActivatePane(window, pane, 'Left', 'h')
-end)
-wezterm.on('ActivatePaneDirection-up', function(window, pane)
-    conditionalActivatePane(window, pane, 'Up', 'k')
-end)
-wezterm.on('ActivatePaneDirection-down', function(window, pane)
-    conditionalActivatePane(window, pane, 'Down', 'j')
-end)
+wezterm.on('ActivatePaneDirection-right',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Right', 'l')
+    end)
+wezterm.on('ActivatePaneDirection-left',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Left', 'h')
+    end)
+wezterm.on('ActivatePaneDirection-up',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Up', 'k')
+    end)
+wezterm.on('ActivatePaneDirection-down',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Down', 'j')
+    end)
 
 
-config.wsl_domains = {
-    {
-        name = 'WSL:void',
-        distribution = 'void',
-        default_cwd = "~",
-    },
-}
+config.wsl_domains = { {
+    name = 'WSL:void',
+    distribution = 'void',
+    default_cwd = "~",
+}, }
 config.term = "wezterm"
 config.font_size = 13
 config.font = wezterm.font_with_fallback {
@@ -88,6 +90,8 @@ config.font = wezterm.font_with_fallback {
         assume_emoji_presentation = true
     }
 }
+config.underline_thickness = '2px'
+config.underline_position = '-2px'
 config.freetype_load_flags = "NO_HINTING"
 config.custom_block_glyphs = false
 -- allow_square_glyphs_to_overflow_width = "Never",
@@ -127,6 +131,14 @@ config.keys = {
     { key = 'v',  mods = 'CTRL|SHIFT',  action = act.PasteFrom 'Clipboard' },
     { key = 'u',  mods = 'ALT',         action = act.ScrollToPrompt(-1) },
     { key = 'd',  mods = 'ALT',         action = act.ScrollToPrompt(1) },
+
+}
+config.mouse_bindings = {
+    {
+        event = { Down = { streak = 3, button = 'Left' } },
+        action = act.SelectTextAtMouseCursor 'SemanticZone',
+        mods = 'NONE',
+    },
 }
 -- enable_tab_bar = false
 config.use_fancy_tab_bar = false

@@ -1,4 +1,4 @@
-local icons = require'user.icons'
+local icons = require 'user.icons'
 
 return {
     {
@@ -14,7 +14,6 @@ return {
                     }
                 }
             })
-
         end
     },
     {

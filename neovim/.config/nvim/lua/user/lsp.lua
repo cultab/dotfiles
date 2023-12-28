@@ -53,6 +53,7 @@ local servers = {
         settings = {
             workspace = { checkThirdParty = false, },
             Lua = {
+                hint = { enable = true },
                 diagnostics = { globals = { 'vim' } },
                 runtime = { version = "LuaJIT" },
             }
@@ -62,9 +63,21 @@ local servers = {
         settings = {
             gopls = {
                 semanticTokens = true,
-                staticcheck = true
+                -- staticcheck = true,
+                analyses = {
+                    unusedparams = true,
+                },
+                hints = {
+                    assignVariableTypes = true,
+                    compositeLiteralFields = true,
+                    compositeLiteralTypes = true,
+                    constantValues = true,
+                    functionTypeParameters = true,
+                    parameterNames = true,
+                    rangeVariableTypes = true,
+                },
             }
-        }
+        },
     },
     texlab = { filetypes = { "plaintex", "tex", "rmd", "quarto" }, },
     clangd = {
@@ -81,9 +94,9 @@ local servers = {
             root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
             init_options = {
                 command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
-                    "--issues-exit-code=1" };
+                    "--issues-exit-code=1" },
             }
-        };
+        },
     },
     ruff_lsp = {},
 }
@@ -97,20 +110,20 @@ local servers = {
 -- utils.ensure_installed(mason_packages)
 
 local border = {
-      {"╭", "FloatBorder"},
-      {"─", "FloatBorder"},
-      {"╮", "FloatBorder"},
-      {"│", "FloatBorder"},
-      {"╯", "FloatBorder"},
-      {"─", "FloatBorder"},
-      {"╰", "FloatBorder"},
-      {"│", "FloatBorder"},
+    { "╭", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╮", "FloatBorder" },
+    { "│", "FloatBorder" },
+    { "╯", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╰", "FloatBorder" },
+    { "│", "FloatBorder" },
 }
 
 -- LSP settings (for overriding per client)
-local handlers =  {
-  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+local handlers = {
+    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 }
 
 local on_attach = function()
@@ -125,6 +138,7 @@ local on_attach = function()
     })
 
     require "user.mappings".set_lsp_mappings()
+    vim.lsp.inlay_hint.enable()
 end
 
 -- setup all servers
