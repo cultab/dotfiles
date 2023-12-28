@@ -1,6 +1,10 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+local function WSL()
+    return wezterm.target_triple == 'x86_64-pc-windows-msvc'
+end
+
 -- This table will hold the configuration.
 local config = {}
 
@@ -72,36 +76,21 @@ config.wsl_domains = { {
     distribution = 'void',
     default_cwd = "~",
 }, }
-config.front_end = "Software"
+-- config.front_end = "Software"
 config.term = "wezterm"
 config.font_size = 8
-local font
-if config.font_size == 8 then
-    font = "Cozette"
-elseif config.font_size == 14 then
-    font = "CozetteHiDpi"
-else
-    font = "CozetteVector"
-end
+config.default_domain = "WSL:void" or WSL() and nil
 config.font = wezterm.font_with_fallback {
-    {
-        family = font,
-        assume_emoji_presentation = true
-    },
-    {
-
-        -- family = "Terminus (TTF)",
-        -- family = "CozetteHiDpi",
-        family = font,
-        -- family = "Iosevka Term",
-        -- family = "Terminus (TTF)",
-        -- weight = "Light",
-    },
+    { family = "Cozette", assume_emoji_presentation = true },
+    { family = "Cozette" },
 }
+-- family = "Terminus (TTF)",
+-- family = "CozetteHiDpi",
+-- family = "Iosevka Term",
+-- family = "Terminus (TTF)",
 config.underline_thickness = '2px'
 config.underline_position = '-2px'
--- config.freetype_load_flags = "NO_HINTING"
-config.custom_block_glyphs = false
+config.freetype_load_flags = "NO_HINTING"
 -- allow_square_glyphs_to_overflow_width = "Never",
 -- cell_width = 1.1,
 config.disable_default_key_bindings = true
@@ -207,11 +196,9 @@ config.hyperlink_rules = {
 }
 
 
-if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-    config.default_domain = "WSL:void"
-    config.font_size = 11
-    -- config.font = nil
 
+if WSL() then
+    config.font_dirs = { "\\\\wsl.localhost/void/home/evan/local/share/fonts" }
     wezterm.on(
         'format-tab-title',
         -- function(tab, tabs, panes, config, hover, max_width)
