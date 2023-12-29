@@ -1,10 +1,6 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
-local WSL = require 'utils'.WSL
-local get_proc_name = require'utils'.get_proc_name
-local conditionalActivatePane = require'utils'.conditionalActivatePane
-
 -- This table will hold the configuration.
 local config = {}
 
@@ -17,71 +13,124 @@ end
 config.color_scheme_dirs = { '~/.config/wezterm/colors' }
 config.color_scheme = require "colorscheme"
 
-if WSL() then
-    config.default_domain = "WSL:void"
+local function get_user_vars(pane)
+    if pane["user_vars"] ~= nil then
+        return pane.user_vars
+    elseif pane["get_user_vars"] ~= nil then
+        return pane:get_user_vars()
+    end
 end
+
+local function get_proc_name(pane)
+    local name = get_user_vars(pane)["WEZTERM_PROG"]
+
+    if not name then
+        return ""
+    end
+
+    -- get argv[0] only
+    return string.gsub(name, ' .*', '')
+end
+
+
+local function isViProcess(pane, _)
+    return get_proc_name(pane):find('n?vim') ~= nil
+end
+
+local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
+    if isViProcess(pane, window) then
+        window:perform_action(
+        -- This should match the keybinds you set in Neovim.
+            act.SendKey({ key = vim_direction, mods = 'ALT' }),
+            pane
+        )
+    else
+        window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
+    end
+end
+
+wezterm.on('ActivatePaneDirection-right',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Right', 'l')
+    end)
+wezterm.on('ActivatePaneDirection-left',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Left', 'h')
+    end)
+wezterm.on('ActivatePaneDirection-up',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Up', 'k')
+    end)
+wezterm.on('ActivatePaneDirection-down',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Down', 'j')
+    end)
+
+
+<<<<<<< HEAD
 config.wsl_domains = { {
     name = 'WSL:void',
     distribution = 'void',
     default_cwd = "~",
 }, }
--- config.front_end = "Software"
-config.term = "wezterm"
-config.default_domain = "WSL:void" or WSL() and nil
-
-local name
--- name = "Cozette"
-name = "CozetteHiDpi"
--- name = "CozetteVector"
--- name = "Iosevka Term"
--- name = "Terminus (TTF)"
-
--- For Cozette
-if name:gmatch("Cozette") then
-    config.font = wezterm.font_with_fallback {
-        { family = name, assume_emoji_presentation = true },
-        { family = name },
-    }
-    config.custom_block_glyphs = false
-
-    config.underline_thickness = '2px'
-    config.underline_position = '-2px'
-
-    -- font size
-    if name:gmatch(".*HiDpi") then
-        config.font_size = 12
-    elseif name:gmatch(".*Vector") then
-        config.font_size = 19
-    else
-        config.font_size = 19
-    end
-else
-    config.font = wezterm.font_with_fallback {
-        { family = name }
-    }
-end
-
-
--- enable_tab_bar = false
-config.use_fancy_tab_bar = false
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-config.window_padding = {
-    left = 2,
-    right = 2,
-    top = 2,
-    bottom = 2,
+config.front_end = "Software"
+||||||| parent of c758746 (sync)
+config.wsl_domains = {
+    {
+        name = 'WSL:void',
+        distribution = 'void',
+        default_cwd = "~",
+    },
 }
--- config.freetype_load_flags = "DEFAULT"
+=======
+config.wsl_domains = { {
+    name = 'WSL:void',
+    distribution = 'void',
+    default_cwd = "~",
+}, }
+>>>>>>> c758746 (sync)
+config.term = "wezterm"
+config.font_size = 8
+local font
+if config.font_size == 8 then
+    font = "Cozette"
+elseif config.font_size == 14 then
+    font = "CozetteHiDpi"
+else
+    font = "CozetteVector"
+end
+config.font = wezterm.font_with_fallback {
+    {
+        family = font,
+        assume_emoji_presentation = true
+    },
+    {
 
+        -- family = "Terminus (TTF)",
+        -- family = "CozetteHiDpi",
+        family = font,
+        -- family = "Iosevka Term",
+        -- family = "Terminus (TTF)",
+        -- weight = "Light",
+    },
+}
+<<<<<<< HEAD
+config.underline_thickness = '2px'
+config.underline_position = '-2px'
+-- config.freetype_load_flags = "NO_HINTING"
+||||||| parent of c758746 (sync)
+config.freetype_load_flags = "NO_HINTING"
+=======
+config.underline_thickness = '2px'
+config.underline_position = '-2px'
+config.freetype_load_flags = "NO_HINTING"
+>>>>>>> c758746 (sync)
+config.custom_block_glyphs = false
 -- allow_square_glyphs_to_overflow_width = "Never",
 -- cell_width = 1.1,
-
+config.disable_default_key_bindings = true
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
-
-config.mux_output_parser_coalesce_delay_ms = 0
-
-config.disable_default_key_bindings = true
 config.leader = {
     key = 's',
     mods = 'CTRL',
@@ -122,6 +171,16 @@ config.mouse_bindings = {
         action = act.SelectTextAtMouseCursor 'SemanticZone',
         mods = 'NONE',
     },
+}
+-- enable_tab_bar = false
+config.use_fancy_tab_bar = false
+config.mux_output_parser_coalesce_delay_ms = 0
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.window_padding = {
+    left = 2,
+    right = 2,
+    top = 2,
+    bottom = 2,
 }
 
 config.hyperlink_rules = {
@@ -172,25 +231,11 @@ config.hyperlink_rules = {
 }
 
 
-wezterm.on('ActivatePaneDirection-right',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Right', 'l')
-    end)
-wezterm.on('ActivatePaneDirection-left',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Left', 'h')
-    end)
-wezterm.on('ActivatePaneDirection-up',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Up', 'k')
-    end)
-wezterm.on('ActivatePaneDirection-down',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Down', 'j')
-    end)
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+    config.default_domain = "WSL:void"
+    config.font_size = 11
+    -- config.font = nil
 
-if WSL() then
-    config.font_dirs = { "\\\\wsl.localhost/void/home/evan/.local/share/fonts" }
     wezterm.on(
         'format-tab-title',
         -- function(tab, tabs, panes, config, hover, max_width)
