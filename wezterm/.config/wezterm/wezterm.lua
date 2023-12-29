@@ -37,40 +37,10 @@ local function get_proc_name(pane)
 end
 
 
-local function isViProcess(pane, _)
-    return get_proc_name(pane):find('n?vim') ~= nil
+
+if WSL() then
+    config.default_domain = "WSL:void"
 end
-
-local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
-    if isViProcess(pane, window) then
-        window:perform_action(
-        -- This should match the keybinds you set in Neovim.
-            act.SendKey({ key = vim_direction, mods = 'ALT' }),
-            pane
-        )
-    else
-        window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
-    end
-end
-
-wezterm.on('ActivatePaneDirection-right',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Right', 'l')
-    end)
-wezterm.on('ActivatePaneDirection-left',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Left', 'h')
-    end)
-wezterm.on('ActivatePaneDirection-up',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Up', 'k')
-    end)
-wezterm.on('ActivatePaneDirection-down',
-    function(window, pane)
-        conditionalActivatePane(window, pane, 'Down', 'j')
-    end)
-
-
 config.wsl_domains = { {
     name = 'WSL:void',
     distribution = 'void',
@@ -78,24 +48,38 @@ config.wsl_domains = { {
 }, }
 -- config.front_end = "Software"
 config.term = "wezterm"
-config.font_size = 8
 config.default_domain = "WSL:void" or WSL() and nil
+
+-- name = "Terminus (TTF)",
+-- name = "CozetteHiDpi",
+local name = "Cozette"
+-- name = "Iosevka Term",
+-- name = "Terminus (TTF)",
+config.font_size = 8
 config.font = wezterm.font_with_fallback {
-    { family = "Cozette", assume_emoji_presentation = true },
-    { family = "Cozette" },
+    { family = name, assume_emoji_presentation = true },
+    { family = name },
 }
--- family = "Terminus (TTF)",
--- family = "CozetteHiDpi",
--- family = "Iosevka Term",
--- family = "Terminus (TTF)",
 config.underline_thickness = '2px'
 config.underline_position = '-2px'
+
+-- enable_tab_bar = false
+config.use_fancy_tab_bar = false
+config.mux_output_parser_coalesce_delay_ms = 0
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.window_padding = {
+    left = 2,
+    right = 2,
+    top = 2,
+    bottom = 2,
+}
 config.freetype_load_flags = "NO_HINTING"
 -- allow_square_glyphs_to_overflow_width = "Never",
 -- cell_width = 1.1,
 config.disable_default_key_bindings = true
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
+
 config.leader = {
     key = 's',
     mods = 'CTRL',
@@ -136,16 +120,6 @@ config.mouse_bindings = {
         action = act.SelectTextAtMouseCursor 'SemanticZone',
         mods = 'NONE',
     },
-}
--- enable_tab_bar = false
-config.use_fancy_tab_bar = false
-config.mux_output_parser_coalesce_delay_ms = 0
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-config.window_padding = {
-    left = 2,
-    right = 2,
-    top = 2,
-    bottom = 2,
 }
 
 config.hyperlink_rules = {
@@ -196,9 +170,41 @@ config.hyperlink_rules = {
 }
 
 
+local function isViProcess(pane, _)
+    return get_proc_name(pane):find('n?vim') ~= nil
+end
+
+local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
+    if isViProcess(pane, window) then
+        window:perform_action(
+        -- This should match the keybinds you set in Neovim.
+            act.SendKey({ key = vim_direction, mods = 'ALT' }),
+            pane
+        )
+    else
+        window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
+    end
+end
+
+wezterm.on('ActivatePaneDirection-right',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Right', 'l')
+    end)
+wezterm.on('ActivatePaneDirection-left',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Left', 'h')
+    end)
+wezterm.on('ActivatePaneDirection-up',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Up', 'k')
+    end)
+wezterm.on('ActivatePaneDirection-down',
+    function(window, pane)
+        conditionalActivatePane(window, pane, 'Down', 'j')
+    end)
 
 if WSL() then
-    config.font_dirs = { "\\\\wsl.localhost/void/home/evan/local/share/fonts" }
+    config.font_dirs = { "\\\\wsl.localhost/void/home/evan/.local/share/fonts" }
     wezterm.on(
         'format-tab-title',
         -- function(tab, tabs, panes, config, hover, max_width)
