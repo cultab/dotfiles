@@ -28,7 +28,18 @@ M.get_proc_name = function(pane)
 end
 
 M.isViProcess = function(pane, _)
-    return M.get_proc_name(pane):find('n?vim') ~= nil
+    local patterns = {
+        'n?vim',
+        'git', -- from `git commit`
+        'gc',
+        'gca',
+    }
+    for _, ptrn in ipairs(patterns) do
+        if M.get_proc_name(pane):find(ptrn) ~= nil then
+            return true
+        end
+    end
+    return false
 end
 
 M.conditionalActivatePane = function(window, pane, pane_direction, vim_direction)
