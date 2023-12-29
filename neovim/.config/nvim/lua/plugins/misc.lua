@@ -44,7 +44,7 @@ return {
         ft = { "html", "xml" }
     },
     'stevearc/dressing.nvim',
-    { 'j-hui/fidget.nvim', tag = 'legacy' },
+    { 'j-hui/fidget.nvim',        tag = 'legacy' },
     {
         'prichrd/netrw.nvim',
         ft = "netrw"
@@ -133,6 +133,7 @@ return {
         },
         version = "*",
     },
+    { 'xiyaowong/nvim-cursorword' },
     {
         'akinsho/toggleterm.nvim',
         opts = {
