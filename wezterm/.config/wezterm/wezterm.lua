@@ -2,6 +2,7 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 local WSL = require 'utils'.WSL
+local get_proc_name = require'utils'.get_proc_name
 
 -- This table will hold the configuration.
 local config = {}
@@ -28,11 +29,13 @@ config.term = "wezterm"
 config.default_domain = "WSL:void" or WSL() and nil
 
 local name
-name = "CozetteHiDpi"
 -- name = "Cozette"
+name = "CozetteHiDpi"
+-- name = "CozetteVector"
 -- name = "Iosevka Term"
 -- name = "Terminus (TTF)"
-config.font_size = 8
+
+-- For Cozette
 if name:gmatch("Cozette") then
     config.font = wezterm.font_with_fallback {
         { family = name, assume_emoji_presentation = true },
@@ -42,6 +45,15 @@ if name:gmatch("Cozette") then
 
     config.underline_thickness = '2px'
     config.underline_position = '-2px'
+
+    -- font size
+    if name:gmatch(".*HiDpi") then
+        config.font_size = 12
+    elseif name:gmatch(".*Vector") then
+        config.font_size = 19
+    else
+        config.font_size = 19
+    end
 else
     config.font = wezterm.font_with_fallback {
         { family = name }
