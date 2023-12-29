@@ -127,6 +127,10 @@ map 'K' { partial(if_lsp_else_vim, "hoverProvider", vim.lsp.buf.hover, {}, ":nor
 -- map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
 -- map '=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
 
+map '[d' { vim.diagnostic.goto_prev, "Previous diagnostic" }
+map ']d' { vim.diagnostic.goto_next, "Next diagnostic" }
+map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics" }
+map '<leader>q' { function() vim.diagnostic.setloclist() end, " Open quickfix" }
 
 function M.set_lsp_mappings()
     map 'gD' { vim.lsp.buf.declaration, "Goto declaration [LSP]" }
@@ -137,10 +141,6 @@ function M.set_lsp_mappings()
     map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
     map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
     map '<A-CR>' { vim.lsp.buf.code_action, "Code Action [LSP]" }
-    map '[' { vim.diagnostic.goto_prev, "Previous diagnostic [LSP]" }
-    map ']' { vim.diagnostic.goto_next, "Next diagnostic [LSP]" }
-    map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics [LSP]" }
-    map '<leader>q' { function() vim.diagnostic.setloclist() end, " Open quickfix [LSP] " }
 end
 
 function M.get_cmp_mappings()

@@ -49,7 +49,7 @@ if vim.env.WSL then
     }
 end
 
--- vim.opt.updatetime = 50 -- ms
+vim.opt.updatetime = 50 -- ms
 
 vim.opt.splitbelow    = true
 vim.opt.splitright    = true

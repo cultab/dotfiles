@@ -48,8 +48,6 @@ return {
     {
         'nyngwang/murmur.lua',
         config = function()
-            AUGROUP = 'murmur_hold'
-            vim.api.nvim_create_augroup(AUGROUP, { clear = true })
             require('murmur').setup {
                 -- cursor_rgb = 'purple', -- default to '#393939'
                 max_len = 80, -- maximum word-length to highlight
@@ -59,29 +57,39 @@ return {
                     -- to trigger the close_events of vim.diagnostic.open_float.
                     function()
                         -- Close floating diag. and make it triggerable again.
-                        vim.cmd('doautocmd InsertEnter')
+                        vim.api.nvim_exec_autocmds("User", { pattern = "MurmurDiagnostics" })
                         vim.w.diag_shown = false
                     end,
                 }
             }
+
+            local GROUP = 'Murmur'
+            vim.api.nvim_create_augroup(GROUP, { clear = true })
             vim.api.nvim_create_autocmd('CursorHold', {
-                group = AUGROUP,
+                group = GROUP,
                 pattern = '*',
                 callback = function()
                     -- skip when a float-win already exists.
                     if vim.w.diag_shown then return end
 
                     -- open float-win when hovering on a cursor-word.
-                    if vim.w.cursor_word ~= '' then
-                        vim.diagnostic.open_float(nil, {
-                            focusable = true,
-                            close_events = { 'InsertEnter' },
-                            border = 'rounded',
-                            source = 'always',
-                            prefix = ' ',
-                            scope = 'cursor',
+                    if vim.w.cursor_word ~= "" then
+                        local buf = vim.diagnostic.open_float({
+                            scope = "cursor",
+                            -- Only close the window on InsertEnter and the explicit diagnostic close event
+                            close_events = { "InsertEnter", "User MurmurDiagnostics" },
+                        })
+                        -- If the window closes for any reason *other* than it being closed by a callback,
+                        -- make it triggerable again
+                        vim.api.nvim_create_autocmd("WinClosed", {
+                            group = GROUP,
+                            buffer = buf,
+                            once = true,
+                            callback = function() vim.w.diag_shown = false end,
                         })
                         vim.w.diag_shown = true
+                    else
+                        vim.w.diag_shown = false
                     end
                 end
             })

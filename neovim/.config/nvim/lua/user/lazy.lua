@@ -49,8 +49,8 @@ require("lazy").setup {
                 "2html_plugin",
                 "logipat",
                 "rrhelper",
-                "spellfile_plugin",
-                -- "matchit"
+                -- "spellfile_plugin",
+                "matchit"
 
             }
         }

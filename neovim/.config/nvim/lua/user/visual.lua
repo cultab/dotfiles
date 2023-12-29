@@ -4,7 +4,7 @@ if vim.g.nvui then
     ]]
 end
 
-local icons = require'user.icons'
+local icons = require 'user.icons'
 
 -- vim.g.ts_highlight_lua = true
 -- vim.opt.pumblend = 20 -- pseudo transparency for popup windows
@@ -55,6 +55,16 @@ vim.diagnostic.handlers.signs = {
 --    Information = "#0db9d7",
 --    Hint = "#10B981"
 --})
+
+vim.diagnostic.config {
+    float = {
+        close_events = { 'InsertEnter' },
+        border = 'rounded',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+    }
+}
 
 local signs = {
     Error = icons.diagnostic.error,
