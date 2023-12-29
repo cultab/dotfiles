@@ -10,7 +10,8 @@
 ! st.font:  scientifica :size=13
 
 *.font:  Iosevka:size=11
-st.font: Iosevka Term:size=12
+! st.font: Cozette:size=8
+st.font: CozetteHiDpi:size=16
 ! st.font: BitstromWera Nerd Font:size=10
 ! st.chscale: 1.0 ! have to apply center patch...
 

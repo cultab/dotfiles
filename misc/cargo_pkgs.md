@@ -1,8 +1,3 @@
-# Requirements
-
-- cargo
-
-
 # install
 
 
@@ -13,6 +8,9 @@ cat cargo_pkgs.md |
     xargs cargo install
 ```
 
+# Requirements
+
+- cargo
 
 
 * bob-nvim

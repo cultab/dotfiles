@@ -72,27 +72,35 @@ config.wsl_domains = { {
     distribution = 'void',
     default_cwd = "~",
 }, }
+config.front_end = "Software"
 config.term = "wezterm"
-config.font_size = 13
+config.font_size = 8
+local font
+if config.font_size == 8 then
+    font = "Cozette"
+elseif config.font_size == 14 then
+    font = "CozetteHiDpi"
+else
+    font = "CozetteVector"
+end
 config.font = wezterm.font_with_fallback {
+    {
+        family = font,
+        assume_emoji_presentation = true
+    },
     {
 
         -- family = "Terminus (TTF)",
-        family = "CozetteHiDpi",
-        -- family = "Cozette",
+        -- family = "CozetteHiDpi",
+        family = font,
         -- family = "Iosevka Term",
         -- family = "Terminus (TTF)",
         -- weight = "Light",
     },
-    {
-        family = "CozetteHiDpi",
-        -- family = "Cozette",
-        assume_emoji_presentation = true
-    }
 }
 config.underline_thickness = '2px'
 config.underline_position = '-2px'
-config.freetype_load_flags = "NO_HINTING"
+-- config.freetype_load_flags = "NO_HINTING"
 config.custom_block_glyphs = false
 -- allow_square_glyphs_to_overflow_width = "Never",
 -- cell_width = 1.1,

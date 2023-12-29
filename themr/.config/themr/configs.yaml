@@ -18,9 +18,10 @@ nvim:
 
 lualine:
   type: colorscheme
-  path: "~/.config/nvim/lua/plugins/statusline.lua"
-  regex: '.*local theme = ".*"'
-  replace: 'local theme = "{}"'
+  path: "~/.config/nvim/lua/user/colorscheme_statusline.lua"
+  regex: 'return ".*"'
+  replace: 'return "{}"'
+  create: true
   cmd: "all_nvim 'lua ReloadStatusline(\"{}\")'"
 
 polybar:
