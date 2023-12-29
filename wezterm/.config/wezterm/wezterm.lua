@@ -1,9 +1,7 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
-local function WSL()
-    return wezterm.target_triple == 'x86_64-pc-windows-msvc'
-end
+local WSL = require 'utils'.WSL
 
 -- This table will hold the configuration.
 local config = {}
@@ -17,27 +15,6 @@ end
 config.color_scheme_dirs = { '~/.config/wezterm/colors' }
 config.color_scheme = require "colorscheme"
 
-local function get_user_vars(pane)
-    if pane["user_vars"] ~= nil then
-        return pane.user_vars
-    elseif pane["get_user_vars"] ~= nil then
-        return pane:get_user_vars()
-    end
-end
-
-local function get_proc_name(pane)
-    local name = get_user_vars(pane)["WEZTERM_PROG"]
-
-    if not name then
-        return ""
-    end
-
-    -- get argv[0] only
-    return string.gsub(name, ' .*', '')
-end
-
-
-
 if WSL() then
     config.default_domain = "WSL:void"
 end
@@ -50,22 +27,30 @@ config.wsl_domains = { {
 config.term = "wezterm"
 config.default_domain = "WSL:void" or WSL() and nil
 
--- name = "Terminus (TTF)",
--- name = "CozetteHiDpi",
-local name = "Cozette"
--- name = "Iosevka Term",
--- name = "Terminus (TTF)",
+local name
+name = "CozetteHiDpi"
+-- name = "Cozette"
+-- name = "Iosevka Term"
+-- name = "Terminus (TTF)"
 config.font_size = 8
-config.font = wezterm.font_with_fallback {
-    { family = name, assume_emoji_presentation = true },
-    { family = name },
-}
-config.underline_thickness = '2px'
-config.underline_position = '-2px'
+if name:gmatch("Cozette") then
+    config.font = wezterm.font_with_fallback {
+        { family = name, assume_emoji_presentation = true },
+        { family = name },
+    }
+    config.custom_block_glyphs = false
+
+    config.underline_thickness = '2px'
+    config.underline_position = '-2px'
+else
+    config.font = wezterm.font_with_fallback {
+        { family = name }
+    }
+end
+
 
 -- enable_tab_bar = false
 config.use_fancy_tab_bar = false
-config.mux_output_parser_coalesce_delay_ms = 0
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = {
     left = 2,
@@ -73,13 +58,17 @@ config.window_padding = {
     top = 2,
     bottom = 2,
 }
-config.freetype_load_flags = "NO_HINTING"
+-- config.freetype_load_flags = "DEFAULT"
+
 -- allow_square_glyphs_to_overflow_width = "Never",
 -- cell_width = 1.1,
-config.disable_default_key_bindings = true
+
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
 
+config.mux_output_parser_coalesce_delay_ms = 0
+
+config.disable_default_key_bindings = true
 config.leader = {
     key = 's',
     mods = 'CTRL',
@@ -169,22 +158,6 @@ config.hyperlink_rules = {
     },
 }
 
-
-local function isViProcess(pane, _)
-    return get_proc_name(pane):find('n?vim') ~= nil
-end
-
-local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
-    if isViProcess(pane, window) then
-        window:perform_action(
-        -- This should match the keybinds you set in Neovim.
-            act.SendKey({ key = vim_direction, mods = 'ALT' }),
-            pane
-        )
-    else
-        window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
-    end
-end
 
 wezterm.on('ActivatePaneDirection-right',
     function(window, pane)
