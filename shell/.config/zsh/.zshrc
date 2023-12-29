@@ -10,7 +10,7 @@ export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=1000000
 SAVEHIST=1000000
 mkdir -p $(dirname "$HISTFILE")
-HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|qq|qqq|qqqq|qqqqq|qqqqqq*|bg *|bg|fg *|fg|history *|history|clear|exec zsh)'
+HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|qq|qqq|qqqq|qqqqq|qqqqqq*|bg *|bg|fg *|fg|history *|history|clear|exec zsh|gs)'
 
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 # setopt EXTENDED_HISTORY        # Write the history file in the ":start:elapsed;command" format.
