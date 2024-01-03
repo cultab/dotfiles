@@ -34,8 +34,8 @@ function OpenConfig()
     -- vim.cmd "tabnew $MYVIMRC | tcd %:p:h"
     local vimrc = vim.fn.expand("$MYVIMRC")
     vim.cmd.cd(vim.fs.dirname(vimrc))
+    vim.cmd.edit(vimrc) -- HACK: yes twice
     vim.cmd.edit(vimrc)
-    print(vimrc)
 end
 
 local hlgroups = {
