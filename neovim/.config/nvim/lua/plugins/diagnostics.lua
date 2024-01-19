@@ -5,7 +5,6 @@ return {
         enable = function()
             return vim.bo.filetype ~= "lazy"
         end,
-        enable = true,
         -- max_width = 60,         -- The maximum width of the diagnostic messages
         -- max_height = 10,        -- the maximum height per diagnostics
         -- format = function(diagnostic)

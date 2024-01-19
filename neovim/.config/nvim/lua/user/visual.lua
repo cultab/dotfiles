@@ -58,7 +58,7 @@ vim.diagnostic.handlers.signs = {
 
 vim.diagnostic.config {
     float = {
-        close_events = { 'InsertEnter' },
+        close_events = { 'InsertEnter', 'CursorMoved' },
         border = 'rounded',
         source = 'always',
         prefix = ' ',

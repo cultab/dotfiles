@@ -1,28 +1,13 @@
-return {
-    -- 'lifepillar/vim-solarized8'
-    'shaunsingh/solarized.nvim',
-    'ntk148v/vim-horizon',
-    {
-        'sainnhe/everforest',
-        config = function()
-            if vim.g.colors_name == "everforest" then
-                -- vim.o.background = "light"
-                local noop = true
-                return noop
-            end
-        end
-    },
-    -- 'lifepillar/vim-gruvbox8'
-    {
-        'npxbr/gruvbox.nvim',
-        dependencies = { 'rktjmp/lush.nvim' }
-    },
-    {
-        'olimorris/onedarkpro.nvim',
-        dependencies = { 'rktjmp/lush.nvim' },
-        branch = "main"
-    },
-    {
+local skip = function(plugin)
+    return ""
+end
+
+local use = function(plugin)
+    return plugin
+end
+
+local colors = {
+    use {
         'catppuccin/nvim',
         config = function()
             local cat = require("catppuccin")
@@ -43,21 +28,61 @@ return {
             })
         end
     },
-    'eddyekofo94/gruvbox-flat.nvim',
-    'romgrk/github-light.vim',
-    'romgrk/doom-one.vim',
-    { 'joshdick/onedark.vim',      branch = "main" },
-    'folke/tokyonight.nvim',
-    'Shatur/neovim-ayu',
-    'Reewr/vim-monokai-phoenix',
-    'cultab/potato-colors',
-    'noahfrederick/vim-noctu',
-    'jsit/disco.vim',
-    'lourenci/github-colors',
-    'deviantfero/wpgtk.vim',
-    'https://gitlab.com/protesilaos/tempus-themes-vim.git',
-    'Mofiqul/vscode.nvim',
-    'LunarVim/darkplus.nvim',
-    'bluz71/vim-moonfly-colors',
-    'nyoom-engineering/oxocarbon.nvim'
+    -- prot
+    use 'https://gitlab.com/protesilaos/tempus-themes-vim.git',
+    -- first class light
+    use 'romgrk/github-light.vim',
+    use 'lourenci/github-colors',
+    use 'sainnhe/everforest',
+    -- oldvim
+    use 'shaunsingh/solarized.nvim',
+    use 'Reewr/vim-monokai-phoenix',
+    use 'cultab/potato-colors',
+    skip 'lifepillar/vim-solarized8',
+    skip 'lifepillar/vim-gruvbox8',
+    -- low contrast
+       use  {
+            "2nthony/vitesse.nvim",
+            dependencies = { "tjdevries/colorbuddy.nvim" }
+        },
+    -- high constrast
+    use 'bluz71/vim-moonfly-colors',
+    use 'ntk148v/vim-horizon',
+    use "zootedb0t/citruszest.nvim",
+    use 'nyoom-engineering/oxocarbon.nvim',
+    use 'Shatur/neovim-ayu',
+    -- :set notermguicolors
+    use 'noahfrederick/vim-noctu',
+    use 'jsit/disco.vim',
+    use 'deviantfero/wpgtk.vim',
+    -- gruvbox
+    use 'eddyekofo94/gruvbox-flat.nvim',
+    use {
+        'npxbr/gruvbox.nvim',
+        dependencies = { 'rktjmp/lush.nvim' }
+    },
+    -- vscode
+    use 'Mofiqul/vscode.nvim',
+    use 'LunarVim/darkplus.nvim',
+    -- one dark family
+    use 'romgrk/doom-one.vim',
+    use { 'joshdick/onedark.vim', branch = "main" },
+    use 'folke/tokyonight.nvim',
+    use {
+        'olimorris/onedarkpro.nvim',
+        dependencies = { 'rktjmp/lush.nvim' },
+        branch = "main"
+    },
 }
+
+-- set all colorschemes to not be lazy loaded
+for _, scheme in ipairs(colors) do
+    if type(scheme) == "string" then
+        scheme = { scheme }
+    end
+    scheme.lazy = false
+    scheme.priority = 1000
+end
+
+
+return colors

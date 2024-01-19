@@ -158,13 +158,13 @@ function M.Jdtls_configure()
     vim.notify_once("jdtls is disabled")
 
     vim.notify("Tweak jdtls install_path!")
-    require('jdtls').start_or_attach {
-        cmd = { lspinstall_path .. '/jdtls/bin/jdtls',
-            '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t') },
-        root_dir = require('jdtls.setup').find_root({ 'gradle.build', 'pom.xml', '.git' }),
-        on_attach = on_attach,
-        capabilities = capabilities
-    }
+    -- require('jdtls').start_or_attach {
+    --     cmd = { lspinstall_path .. '/jdtls/bin/jdtls',
+    --         '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t') },
+    --     root_dir = require('jdtls.setup').find_root({ 'gradle.build', 'pom.xml', '.git' }),
+    --     on_attach = on_attach,
+    --     capabilities = capabilities
+    -- }
 
     vim.cmd [[
     nnoremap <leader>xv <Cmd>lua require('jdtls').extract_variable()<CR>

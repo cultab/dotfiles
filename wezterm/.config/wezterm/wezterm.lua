@@ -2,8 +2,8 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 local WSL = require 'utils'.WSL
-local get_proc_name = require'utils'.get_proc_name
-local conditionalActivatePane = require'utils'.conditionalActivatePane
+local get_proc_name = require 'utils'.get_proc_name
+local conditionalActivatePane = require 'utils'.conditionalActivatePane
 
 -- This table will hold the configuration.
 local config = {}
@@ -31,13 +31,14 @@ config.default_domain = "WSL:void" or WSL() and nil
 
 local name
 -- name = "Cozette"
-name = "CozetteHiDpi"
+-- name = "CozetteHiDpi"
 -- name = "CozetteVector"
 -- name = "Iosevka Term"
 -- name = "Terminus (TTF)"
+name = "Monaspace"
 
 -- For Cozette
-if name:gmatch("Cozette") then
+if name:find("Cozette") then
     config.font = wezterm.font_with_fallback {
         { family = name, assume_emoji_presentation = true },
         { family = name },
@@ -47,14 +48,94 @@ if name:gmatch("Cozette") then
     config.underline_thickness = '2px'
     config.underline_position = '-2px'
 
-    -- font size
-    if name:gmatch(".*HiDpi") then
+    -- disable italics :(
+    config.font_rules = {
+        {
+            italic = true,
+            font = wezterm.font {
+                family = name,
+                weight = 'Bold',
+                style = 'Normal',
+            },
+        },
+    }
+
+    -- default to size for normal cozette
+    config.font_size = 6
+    if name:find(".*HiDpi") then
+        wezterm.log_info "HiDpi"
         config.font_size = 12
-    elseif name:gmatch(".*Vector") then
-        config.font_size = 19
-    else
+    elseif name:find(".*Vector") then
         config.font_size = 19
     end
+elseif name:find("Monaspace") then
+    config.underline_position = '-2px'
+    config.font = wezterm.font_with_fallback {
+        { family = "Monaspace Neon" }
+    }
+    config.font_rules = {
+        { -- Krypton is underlined
+            underline = "Single",
+            italic = false,
+            intensity = "Normal",
+            font = wezterm.font {
+                family = "Monaspace Krypton",
+                style = "Normal",
+            }
+        },
+        {
+            underline = "Double",
+            italic = false,
+            intensity = "Normal",
+            font = wezterm.font {
+                family = "Monaspace Krypton",
+                style = "Normal",
+            }
+        },
+        { -- Xenon is dim
+            italic = false,
+            intensity = "Half",
+            font = wezterm.font {
+                family = "Monaspace Xenon",
+                weight = "Light",
+                style = "Normal",
+            }
+        },
+        { -- Argon is bold
+            italic = false,
+            intensity = "Bold",
+            font = wezterm.font {
+                family = "Monaspace Argon",
+                weight = "Bold",
+                style = "Normal",
+            }
+        },
+        { -- Radon is italic
+            intensity = 'Bold',
+            italic = true,
+            font = wezterm.font {
+                family = 'Monaspace Radon',
+                weight = 'Bold',
+                style = 'Italic',
+            },
+        },
+        {
+            italic = true,
+            intensity = 'Half',
+            font = wezterm.font {
+                family = 'Monaspace Radon',
+                weight = 'Light',
+                style = 'Italic',
+            },
+        },
+        {
+            italic = true,
+            intensity = 'Normal',
+            font = wezterm.font {
+                family = 'Monaspace Radon',
+                style = 'Normal',
+            },
+        }, }
 else
     config.font = wezterm.font_with_fallback {
         { family = name }

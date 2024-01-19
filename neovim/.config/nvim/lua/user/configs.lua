@@ -9,7 +9,7 @@ local action_state = require "telescope.actions.state"
 M.config_picker = function(opts)
   opts = opts or {}
 
-    pickers.new(opts, {
+   pickers.new(opts, {
         prompt_title = "Open Configuration for:",
         finder = finders.new_table {
             results = {

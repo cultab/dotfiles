@@ -100,7 +100,7 @@ return {
         list = { "●", "➜", "✭", "‒" },
     },
     lsp_cozette = {
-        Text = "", -- ﭨ
+        Text = "ﭨ", -- ﭨ
         Method = "⚇", -- ?
         Function = "",
         Constructor = "",

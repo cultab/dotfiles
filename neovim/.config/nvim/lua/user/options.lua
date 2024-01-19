@@ -49,7 +49,7 @@ if vim.env.WSL then
     }
 end
 
-vim.opt.updatetime = 50 -- ms
+vim.opt.updatetime    = 50 -- ms
 
 vim.opt.splitbelow    = true
 vim.opt.splitright    = true
@@ -84,57 +84,87 @@ vim.opt.formatoptions = vim.opt.formatoptions
 
 vim.opt.autoread      = true
 
-vim.cmd [[
-augroup autoread
-    autocmd! FocusGained * :checktime
-augroup end
-]]
+local ____no = 1
 
-vim.cmd [[
-augroup termBinds
-    autocmd!
-    autocmd TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-    autocmd TermOpen * nnoremap <buffer> <Esc> :ToggleTermToggleAll<CR>
-    " autocmd FileType fzf tunmap <buffer> <Esc>
-augroup end
-]]
+local augroup     = vim.api.nvim_create_augroup
+local autocmd         = vim.api.nvim_create_autocmd
 
-vim.cmd [[
-augroup TwoSpaces
-    autocmd!
-    autocmd FileType yaml,norg setlocal ts=2 sts=2 sw=2 expandtab
-augroup end
-]]
+local misc            = augroup("focusChecktime", {})
 
-vim.cmd [[
-augroup autoSpellcheck
-    autocmd!
-    autocmd FileType norg,rmd,quarto,text setlocal spell wrap
-augroup end
-]]
+autocmd("FocusGained", {
+    pattern = "*",
+    command = ":checktime",
+    group = misc,
+})
 
-vim.cmd [[
-augroup autoFileTypes
-    autocmd!
-    autocmd BufEnter */srcpkgs/*/template :setfiletype sh
-augroup end
-]]
+local fo = augroup("filetypeOpts", {})
 
-vim.cmd [[
-augroup autoSauce
-    autocmd!
-    "autocmd User         PackerCompileDone lua vim.notify("Packer Compiled Successfully!")
-    "autocmd BufWritePost */nvim/init.lua nested source $MYVIMRC
-    "autocmd BufWritePost */nvim/lua/user/*.lua nested source <afile> | lua vim.notify("Sourced!")
-    "autocmd BufWritePost */nvim/lua/user/plugins.lua nested PackerCompile
-    " autocmd BufWritePost plugins.lua :PackerCompile
-    " autocmd BufWritePost plugins.lua nested source %
+autocmd("FileType", {
+    pattern = "yaml,norg",
+    command = "setlocal ts=2 sts=2 sw=2 expandtab",
+    group = fo,
+})
 
-    autocmd BufWritePost .tmux.conf silent !tmux display-message 'Sourced .tmux.conf\!' ';' source-file ~/.tmux.conf
-    autocmd BufWritePost *.xdefaults silent !reload_xrdb
-    autocmd BufWritePost bspwmrc silent !~/.config/bspwm/bspwmrc
-    " autocmd BufWritePost *.tex,*.latex silent !xelatex %
-augroup end
-]]
+autocmd("FileType", {
+    pattern = "norg,rmd,quarto,text",
+    command = "setlocal spell wrap",
+    group = fo,
+})
 
---
+autocmd("BufEnter", {
+    pattern = "*/srcpkgs/*/template",
+    command = ":setfiletype sh",
+    group = fo,
+})
+
+autocmd("TermOpen", {
+    pattern = "*",
+    command = "nnoremap <buffer> <Esc> :ToggleTermToggleAll<CR>",
+    group = fo,
+})
+
+autocmd("TermOpen", {
+    pattern = "*",
+    command = "tnoremap <buffer> <Esc> <c-\\><c-n>",
+    group = fo,
+})
+
+local ns = augroup("newSauce", {})
+
+autocmd("BufWritePost", {
+    pattern = "*/user/*.lua",
+    group = ns,
+    callback = function(_)
+        for pkg, mod in pairs(package.loaded) do
+            if string.find(pkg, "user%..*") then
+                if not string.find(pkg, "user%.lazy") and not string.find(pkg, "user%.colorscheme") then
+                    package.loaded[pkg] = nil
+                end
+            end
+        end
+        vim.schedule(function()
+            vim.cmd.source(vim.fn.expand("$MYVIMRC"))
+        end)
+        vim.cmd.LspStop()
+        vim.defer_fn(function()
+            vim.cmd.LspStart()
+        end, 10000)
+        vim.notify("Reloaded config!", "info")
+    end
+})
+
+autocmd("BufWritePost", {
+    pattern = ".tmux.conf",
+    command = "silent !tmux display-message 'Sourced .tmux.conf\\!' ';' source-file ~/.tmux.conf",
+    group = ns,
+})
+autocmd("BufWritePost", {
+    pattern = "*.xdefaults",
+    command = "silent !reload_xrdb",
+    group = ns,
+})
+autocmd("BufWritePost", {
+    pattern = "bspwmrc",
+    command = "silent !~/.config/bspwm/bspwmrc",
+    group = ns,
+})

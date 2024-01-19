@@ -1,3 +1,7 @@
+# Requirements
+
+- cargo
+
 # install
 
 
@@ -8,10 +12,7 @@ cat cargo_pkgs.md |
     xargs cargo install
 ```
 
-# Requirements
-
-- cargo
-
+# random
 
 * bob-nvim
     neovim version manager
@@ -19,6 +20,8 @@ cat cargo_pkgs.md |
     the GOAT of `$PS1`
 * dua-cli
     disk usage analizer, think windirstat
+* pyenv-python
+    faster `pyenv` shim
 
 
 

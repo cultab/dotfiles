@@ -41,7 +41,12 @@ disabled = true
 disabled = true
 
 [c]
-disabled = true
+symbol = " "
+disabled = false
+
+[cpp]
+symbol = " "
+disabled = false
 
 [dart]
 disabled = true
@@ -51,7 +56,7 @@ disabled = true
 
 [docker_context]
 disabled = true
-# symbol = "  "
+symbol = "  "
 
 [dotnet]
 disabled = true
@@ -65,8 +70,8 @@ disabled = true
 [erlang]
 disabled = true
 
-# [golang]
-# symbol = ""
+[golang]
+symbol = " "
 
 [gcloud]
 disabled = true
@@ -104,6 +109,9 @@ disabled = true
 [kubernetes]
 disabled = true
 
+[lua]
+symbol = " "
+
 [memory_usage]
 # symbol = " "
 disabled = false
@@ -131,6 +139,9 @@ disabled = true
 
 [purescript]
 disabled = true
+
+[python]
+symbol = " "
 
 [ruby]
 disabled = true

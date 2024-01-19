@@ -10,8 +10,19 @@ local function Tmux(cmd)
     vim.notify("user/command: the tmux backend is still unimplemented")
 end
 
+---Returns executable suffix based on platform
+---COPIED FROM: Navigator.nvim
+---@return string
+local function suffix()
+    local uname = vim.loop.os_uname()
+    if string.find(uname.release, 'WSL.*$') or string.find(uname.sysname, '^Win') then
+        return '.exe'
+    end
+    return ''
+end
+
 local function weztermCli(subcmd)
-    local cli = "wezterm cli "
+    local cli = "wezterm" .. suffix() .. " cli "
     local pipe = io.popen(cli .. subcmd)
     if not pipe then
         return "", "failed to run wezterm cli subcmd: " .. subcmd
@@ -65,21 +76,41 @@ M.run_last_command = function()
     end
 end
 
+
+--- @alias rule table<string, function>
+--- @type rule[]
+local rules = {
+    ["report%.rmd"] = function(_)
+        return "make render"
+    end
+    ,
+    ["report%.qmd"] = function(_)
+        return "quarto render"
+    end
+    ,
+    [".*%.py"] = function(filepath)
+        return "python3 " .. filepath
+    end
+    ,
+    [".*%.lua"] = function(filepath)
+        return "nvim -l " .. filepath
+    end
+    ,
+}
+
 M.run_current_file = function()
     local command = vim.api.nvim_buf_get_name(0)
     local filename = vim.fn.expand('%:t')
 
-    -- special cases
-    if filename == "report.rmd" then
-        command = "make render"
-    elseif filename == "report.qmd" then
-        command = "quarto render " .. filename .. " --to pdf"
-    elseif string.gmatch(filename, ".*\\.py") then
-        command = "python3 " .. filename
+    for pattern, callback in pairs(rules) do
+        if string.find(filename, pattern) then
+            command = callback(vim.fn.expand('%:p'))
+        end
     end
 
     backend(command)
     LastCommand = command
 end
+-- package.loaded["user.command"] = nil
 
 return M

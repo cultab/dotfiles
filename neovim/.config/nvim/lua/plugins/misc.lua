@@ -52,10 +52,13 @@ return {
     'MunifTanjim/nui.nvim',
     {
         'rcarriga/nvim-notify',
-        opts = {
-            stages = "static",
-            timeout = "2500" -- in ms
-        },
+        config = function()
+            require 'notify'.setup {
+                stages = "static",
+                timeout = "2500" -- in ms
+            }
+            vim.notify = require'notify'
+        end
     },
     {
         'weilbith/nvim-code-action-menu',
@@ -72,9 +75,9 @@ return {
             keywords = {
                 FIX           = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
                 TODO          = { icon = " ", color = "info" },
-                HACK          = { icon = " ", color = "warning", alt = { "WARNING" } },
+                HACK          = { icon = " ", color = "warning", alt = { "BODGE" } },
                 WARN          = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-                PERF          = { icon = " ", color = "default", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+                PERF          = { icon = " ", color = "default", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
                 NOTE          = { icon = " ", color = "hint", alt = { "INFO" } },
                 TEST          = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
                 JUSTIFICATION = { icon = "∵", color = "argumentation", alt = { "BECAUSE", "EXPLANATION", "REASON" } },
@@ -91,7 +94,6 @@ return {
                 CONTEXT       = { icon = "❄ ", color = "info" },
                 DECIDE        = { icon = " ", color = "actionItem" },
                 DISABLED      = { icon = " ", color = "default" },
-                FIXME         = { icon = " ", color = "error" },
                 IDEA          = { icon = "☀ ", color = "idea" },
                 LOOKUP        = { icon = "󰊪 ", color = "actionItem" },
                 MAYBE         = { icon = "󱍊 ", color = "idea" },

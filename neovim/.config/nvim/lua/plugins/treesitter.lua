@@ -4,13 +4,13 @@
 --     command = "TSBufEnable highlight",
 -- })
 
-vim.cmd [[highlight link @H1Marker @variable.builtin ]]
-vim.cmd [[highlight link @H2Marker MatchParen ]]
-vim.cmd [[highlight link @H3Marker @string ]]
-vim.cmd [[highlight link @H4Marker @operator ]]
-vim.cmd [[highlight link @H5Marker @function ]]
-vim.cmd [[highlight link @H6Marker @constructor ]]
--- vim.cmd [[highlight link @codeblock Pmenu]]
+-- vim.cmd [[highlight link @H1Marker @variable.builtin ]]
+-- vim.cmd [[highlight link @H2Marker MatchParen ]]
+-- vim.cmd [[highlight link @H3Marker @string ]]
+-- vim.cmd [[highlight link @H4Marker @operator ]]
+-- vim.cmd [[highlight link @H5Marker @function ]]
+-- vim.cmd [[highlight link @H6Marker @constructor ]]
+-- vim.cmd [[highlight link @codeblock CodeBlock]]
 -- vim.cmd [[highlight link @codeblock_lang @keyword ]]
 
 
@@ -46,9 +46,10 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
+        version = false,
         config = function()
             require("nvim-treesitter.configs").setup {
-                ensure_installed = "all", -- one of "all"  or a list of languages
+                -- ensure_installed = "all", -- one of "all"  or a list of languages
                 highlight = { enable = true },
                 incremental_selection = { enable = true },
                 textobjects = {
@@ -64,17 +65,23 @@ return {
                         enable = true,
                         lookahead = true,
                         keymaps = {
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = "@class.inner",
-                            ["al"] = "@loop.outer",
-                            ["il"] = "@loop.inner",
-                            ["la"] = "@assignment.lhs",
-                            ["ra"] = "@assignment.rhs",
-                            ["ib"] = "@block.inner",
-                            ["ab"] = "@block.outer",
+                            ["af"] = { query = "@function.outer", desc = "outer function" },
+                            ["if"] = { query = "@function.inner", desc = "inner function" },
+                            ["ac"] = { query = "@class.outer", desc = "outer class" },
+                            ["ic"] = { query = "@class.inner", desc = "inner class" },
+                            ["al"] = { query = "@loop.outer", desc = "outer loop" },
+                            ["il"] = { query = "@loop.inner", desc = "inner loop" },
+                            -- ["ib"] = { query = "@block.inner", desc = "outer block" },
+                            -- ["ab"] = { query = "@block.outer", desc = "inner block" },
+                            -- ["ia"] = { query = "@assignment.lhs", desc = "Left of [A]ssignment" },
+                            -- ["aa"] = { query = "@assignment.rhs", desc = "Right of [A]ssignment" },
                         }
+                    }
+                },
+                move = {
+                    enable = true,
+                    goto_next_start = {
+                        ["<leader>z"] = "@function.inner"
                     }
                 },
                 indent = {
@@ -84,7 +91,7 @@ return {
                 playground = {
                     enable = true,
                     disable = {},
-                    updatetime = 25,     -- Debounced time for highlighting nodes in the playground from source code
+                    updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
                     persist_queries = false, -- Whether the query persists across vim sessions
                     keybindings = {
                         toggle_query_editor = 'o',
@@ -102,6 +109,12 @@ return {
             }
         end
     },
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'nvim-treesitter/playground',
+    {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        -- event = "VeryLazy",
+    },
+    {
+        'nvim-treesitter/playground',
+        cmd = "TSPlaygroundToggle"
+    },
 }

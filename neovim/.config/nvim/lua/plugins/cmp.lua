@@ -1,14 +1,9 @@
-local M = {}
-
-
-
 return {
     {
         'hrsh7th/nvim-cmp',
         config = function()
             local cmp = require "cmp"
-            cmp.setup
-            {
+            cmp.setup {
                 -- enabled = function()
                 --     local context = require"cmp.config.context"
                 --     if context.in_treesitter_capture("comment") == true or context.in_syntax_group("Comment") then
@@ -111,6 +106,7 @@ return {
     },
     {
         "ray-x/lsp_signature.nvim",
+        version = false,
         event = "VeryLazy",
         opts = {},
         config = function(_, opts) require 'lsp_signature'.setup(opts) end

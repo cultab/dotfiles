@@ -38,7 +38,7 @@ return {
                     },
                     {
                         sign = {
-                            name = { "Diagnostic" },
+                            namespace = { "diagnostic*" },
                             maxwidth = 1,
                             colwidth = 2,
                             auto = false,
