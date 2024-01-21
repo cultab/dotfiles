@@ -84,9 +84,9 @@ vim.opt.formatoptions = vim.opt.formatoptions
 
 vim.opt.autoread      = true
 
-local ____no = 1
+local ____no          = 1
 
-local augroup     = vim.api.nvim_create_augroup
+local augroup         = vim.api.nvim_create_augroup
 local autocmd         = vim.api.nvim_create_autocmd
 
 local misc            = augroup("focusChecktime", {})
@@ -137,19 +137,20 @@ autocmd("BufWritePost", {
     callback = function(_)
         for pkg, mod in pairs(package.loaded) do
             if string.find(pkg, "user%..*") then
-                if not string.find(pkg, "user%.lazy") and not string.find(pkg, "user%.colorscheme") then
-                    package.loaded[pkg] = nil
+                local ignore = { "lazy", "colorscheme", "lsp" }
+                for _, ignored_pkg in pairs(ignore) do
+                    if pkg:find("user%." .. ignored_pkg) then
+                        goto skip
+                    end
                 end
+                package.loaded[pkg] = nil
+                ::skip::
             end
         end
         vim.schedule(function()
             vim.cmd.source(vim.fn.expand("$MYVIMRC"))
+            vim.notify("Config reload successfull!", "info", {title = "Reloaded"})
         end)
-        vim.cmd.LspStop()
-        vim.defer_fn(function()
-            vim.cmd.LspStart()
-        end, 10000)
-        vim.notify("Reloaded config!", "info")
     end
 })
 
