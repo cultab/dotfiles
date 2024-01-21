@@ -2,16 +2,32 @@ local M = {}
 local icons = require 'user.icons'
 LastCommand = nil
 
+---@enum level
+local levels = {
+    TRACE = 0,
+    DEBUG = 1,
+    INFO = 2,
+    WARN = 3,
+    ERROR = 4,
+    OFF = 5,
+}
+---@param msg string
+---@param level level
+local function notify(msg, level)
+    vim.notify(msg, level, { title = "user/command.lua", icon = icons.misc.term })
+end
+
 local function ToggleTerm(cmd)
     require 'toggleterm'.exec(cmd)
 end
 
 local function Tmux(cmd)
-    vim.notify("user/command: the tmux backend is still unimplemented")
+    notify("the tmux backend is still unimplemented", "warn")
 end
 
+
 ---Returns executable suffix based on platform
----COPIED FROM: Navigator.nvim
+---REF: Navigator.nvim
 ---@return string
 local function suffix()
     local uname = vim.loop.os_uname()
@@ -35,7 +51,7 @@ end
 local function weztermRun(cmd, pane_id)
     local _, err = weztermCli("send-text --no-paste --pane-id " .. pane_id .. " -- '" .. cmd .. "\n'")
     if err ~= nil then
-        vim.notify("user/command failed to run command: " .. err)
+        notify("failed to run command: " .. err, levels.ERROR)
         return
     end
 end
@@ -43,13 +59,13 @@ end
 local function Wezterm(cmd)
     local pane, err = weztermCli("get-pane-direction right")
     if err ~= nil then
-        vim.notify("user/command: " .. err)
+        notify(err, levels.ERROR)
     end
     if not pane then
         pane = weztermCli("split-pane --right")
         _, err = weztermCli("activate-pane-direction left")
         if err ~= nil then
-            vim.notify(err)
+            notify(err, levels.ERROR)
         end
     end
     weztermRun(cmd, pane)
@@ -58,59 +74,128 @@ end
 -- local backend = ToggleTerm
 local backend = Wezterm
 
+local Input = require("nui.input")
+local event = require("nui.utils.autocmd").event
+
+local popup_options = {
+    relative = "editor",
+    position = '50%',
+    size = {
+        width = 24,
+    },
+    border = {
+        style = "rounded",
+        text = {
+            top = icons.misc.term .. "cmd: ",
+            top_align = "left",
+        },
+    },
+    win_options = {
+        winhighlight = "Normal:Normal",
+    },
+}
 
 M.run_command = function()
-    vim.ui.input({ prompt = icons.misc.term .. "cmd: ", completion = 'shellcmd' }, function(command)
-        if command then
-            LastCommand = command
-            backend(command)
-        end
+    local input = Input(popup_options, {
+        prompt = "$ ",
+        default_value = "",
+        on_close = function()
+            -- print("Input closed!")
+        end,
+        on_submit = function(command)
+            if command then
+                LastCommand = command
+                backend(command)
+            end
+        end,
+        -- on_change = function(value)
+        --     print("Value changed: ", value)
+        -- end,
+    })
+
+    -- unmount component when cursor leaves buffer
+    input:on(event.BufLeave, function()
+        input:unmount()
     end)
+
+    input:on(event.InsertLeave, function()
+        input:unmount()
+    end)
+    -- mount/open the component
+    input:mount()
+    -- vim.ui.input({ prompt = icons.misc.term .. "cmd: ", completion = 'shellcmd' }, function(command)
+    --     if command then
+    --         LastCommand = command
+    --         backend(command)
+    --     end
+    -- end)
 end
 
 M.run_last_command = function()
     if LastCommand then
         backend(LastCommand)
     else
-        vim.notify(icons.misc.term .. "No command to repeat", nil, { title = "mappings.lua" })
+        notify("No command to repeat", levels.WARN)
     end
 end
 
 
---- @alias rule table<string, function>
+--- @alias rule table<string, fun(string?):string>
 --- @type rule[]
 local rules = {
     ["report%.rmd"] = function(_)
         return "make render"
-    end
-    ,
+    end,
     ["report%.qmd"] = function(_)
         return "quarto render"
-    end
-    ,
+    end,
     [".*%.py"] = function(filepath)
         return "python3 " .. filepath
-    end
-    ,
+    end,
     [".*%.lua"] = function(filepath)
         return "nvim -l " .. filepath
-    end
-    ,
+    end,
+    ["Makefile"] = function(_)
+        return "make"
+    end,
 }
 
 M.run_current_file = function()
     local command = vim.api.nvim_buf_get_name(0)
     local filename = vim.fn.expand('%:t')
+    local filepath = vim.fn.expand('%:p')
 
     for pattern, callback in pairs(rules) do
         if string.find(filename, pattern) then
-            command = callback(vim.fn.expand('%:p'))
+            command = callback(filepath)
+            goto run
         end
     end
 
+    do -- HACK: restrict scope of local 'perms' so we can goto after it :)
+        -- if we're gonna run the file as is, check if it's executable first
+        local perms = vim.fn.getfperm(filepath)
+        if not perms:find("x") then
+            vim.ui.select({ "Yes", "No" }, {
+                    prompt = icons.misc.term .. "make executable?"
+                },
+                function(choice)
+                    if choice and choice:find("[Yy]") then
+                        backend("chmod +x " .. filepath)
+                        backend(command)
+                        LastCommand = command
+                    else
+                        notify("didn't run file, as it's not executable", levels.INFO)
+                    end
+                end)
+            goto exit
+        end
+    end
+
+    ::run::
     backend(command)
     LastCommand = command
+    ::exit::
 end
--- package.loaded["user.command"] = nil
 
 return M
