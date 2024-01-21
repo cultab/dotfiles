@@ -70,15 +70,18 @@ setopt noclobber                 # Don't overwrite existing file when redirectin
 csource() {
     if [[ -f "$1" ]]; then
         source "$1"
+    else
+        echo "Didn't source: $1"
+        echo "As it is missing."
     fi
 }
 
-source ~/.config/zsh/transient_starship_prompt
+csource ~/.config/zsh/transient_starship_prompt
 # eval $(thefuck --alias)
 
-source ~/bin/exports
-source ~/bin/aliases
-source ~/bin/functions.sh
+csource ~/bin/exports
+csource ~/bin/aliases
+csource ~/bin/functions.sh
 
 
 if [[ ! -f "$HOME/.local/share/miniplug.zsh" ]]; then
@@ -101,20 +104,16 @@ miniplug load
 
 fast-theme --quiet XDG:overlay
 
-if [ "$WEZTERM_EXECUTABLE" ]; then
-    csource "$HOME/.local/share/zsh/wezterm.sh"
-fi
+csource "$HOME/.local/zsh/wezterm.sh"
 
 
-# HACK: maybe ask about adding this in  nix.plugin.zsh
 fpath=(~/.local/share/zsh/complete ~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
 # prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
-    pkill -9 wezterm_reload
-    wezterm_reload &
-    disown
+    pkill -9 wezterm_reload; wezterm_reload & disown
+    pkill -9 oneterm_reload; oneterm_reload & disown
 fi
 
 # zprof

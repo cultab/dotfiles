@@ -10,6 +10,7 @@ ansi = [
     '#a9b1d6',
 ]
 background = '#24283b'
+# background = '#ffffff'
 brights = [
     '#414868',
     '#f7768e',

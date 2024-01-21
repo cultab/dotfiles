@@ -17,15 +17,15 @@ end
 config.color_scheme_dirs = { '~/.config/wezterm/colors' }
 config.color_scheme = require "colorscheme"
 
-if WSL() then
-    config.default_domain = "WSL:void"
-end
 config.wsl_domains = { {
     name = 'WSL:void',
     distribution = 'void',
     default_cwd = "~",
 }, }
--- config.front_end = "Software"
+
+if WSL() then
+    config.default_domain = "WSL:void"
+end
 config.term = "wezterm"
 config.default_domain = "WSL:void" or WSL() and nil
 
@@ -74,24 +74,6 @@ elseif name:find("Monaspace") then
         { family = "Monaspace Neon" }
     }
     config.font_rules = {
-        { -- Krypton is underlined
-            underline = "Single",
-            italic = false,
-            intensity = "Normal",
-            font = wezterm.font {
-                family = "Monaspace Krypton",
-                style = "Normal",
-            }
-        },
-        {
-            underline = "Double",
-            italic = false,
-            intensity = "Normal",
-            font = wezterm.font {
-                family = "Monaspace Krypton",
-                style = "Normal",
-            }
-        },
         { -- Xenon is dim
             italic = false,
             intensity = "Half",
@@ -160,7 +142,10 @@ config.window_padding = {
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
 
-config.mux_output_parser_coalesce_delay_ms = 0
+-- config.mux_output_parser_coalesce_delay_ms = 3
+config.front_end = "WebGpu"
+config.webgpu_power_preference = "HighPerformance"
+config.max_fps = 144
 
 config.disable_default_key_bindings = true
 config.leader = {
@@ -247,8 +232,8 @@ config.hyperlink_rules = {
     -- -- As long as a full URL hyperlink regex exists above this it should not match a full URL to
     -- -- GitHub or GitLab / BitBucket (i.e. https://gitlab.com/user/project.git is still a whole clickable URL)
     {
-        regex = [[["]?([\w\d]{1}[-\w\d]+)(/){1}([-\w\d\.]+)["]?]],
-        format = 'https://www.github.com/$1/$3',
+        regex = [[["' /]([\w\d]{1}[-\w\d]*)/([\w\d]{1}[\.\-\w\d]*)["' ]{1}]],
+        format = 'https://www.github.com/$1/$2',
     },
 }
 
@@ -271,7 +256,7 @@ wezterm.on('ActivatePaneDirection-down',
     end)
 
 if WSL() then
-    config.font_dirs = { "\\\\wsl.localhost/void/home/evan/.local/share/fonts" }
+    config.font_dirs = { "C:/Users/evan/.local/share/fonts" }
     wezterm.on(
         'format-tab-title',
         -- function(tab, tabs, panes, config, hover, max_width)
@@ -291,6 +276,27 @@ if WSL() then
         end
     )
 end
+
+wezterm.on('update-status',
+    function(window, pane)
+        local host_icon
+        if WSL() then
+            -- icon = wezterm.nerdfonts.md_microsoft_windows
+            host_icon = wezterm.nerdfonts.dev_windows
+        else
+            host_icon = wezterm.nerdfonts.linux_void
+        end
+        window:set_left_status(wezterm.format {
+            { Text = " " .. host_icon .. "  " }
+        })
+        local clock = wezterm.nerdfonts.fa_clock_o
+        -- I like my date/time in this style, also: "Wed Mar 3 08:14"
+        local date = wezterm.strftime '%a %b %-d %H:%M'
+        window:set_right_status(wezterm.format {
+            { Text = clock .. " " },
+            { Text = date },
+        })
+    end)
 
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"

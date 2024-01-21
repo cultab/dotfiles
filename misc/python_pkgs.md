@@ -19,3 +19,5 @@ cat python_pkgs.md |
     `rm` but with trashcan
 * yt-dlp
     youtube downloader
+* tldr
+    `man` but quick

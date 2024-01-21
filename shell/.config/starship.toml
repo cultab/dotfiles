@@ -44,10 +44,6 @@ disabled = true
 symbol = " "
 disabled = false
 
-[cpp]
-symbol = " "
-disabled = false
-
 [dart]
 disabled = true
 
