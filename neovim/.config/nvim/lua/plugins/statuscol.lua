@@ -1,4 +1,5 @@
-local icons = require'user.icons'
+local icons = require 'user.icons'
+local git_sign_icon = icons.line.left_medium
 return {
     {
         'lewis6991/gitsigns.nvim',
@@ -7,17 +8,18 @@ return {
             -- signcolumn = false,
             numhl = true,
             signs = {
-                add          = { text = icons.line.left_medium },
-                change       = { text = icons.line.left_medium },
-                delete       = { text = icons.line.left_medium },
-                topdelete    = { text = icons.line.left_medium },
-                changedelete = { text = icons.line.left_medium },
-                untracked    = { text = icons.line.left_medium },
+                add          = { text = git_sign_icon },
+                change       = { text = git_sign_icon },
+                delete       = { text = git_sign_icon },
+                topdelete    = { text = git_sign_icon },
+                changedelete = { text = git_sign_icon },
+                untracked    = { text = git_sign_icon },
             },
         },
     },
     {
         'luukvbaal/statuscol.nvim',
+        branch = "0.10",
         config = function()
             local builtin = require 'statuscol.builtin'
             require 'statuscol'.setup {
@@ -30,20 +32,14 @@ return {
                     {
                         sign = {
                             name = { ".*" },
-                            maxwidth = 1,
-                            colwidth = 1,
-                            auto = true,
-                            wrap = true,
-                        },
-                    },
-                    {
-                        sign = {
-                            namespace = { "diagnostic*" },
+                            namespace = { ".*" },
+                            -- namespace = { ".*diagnostic.*" },
+                            -- name = { "todo%-sign.*" }, -- WARN: escape the dash `-`
                             maxwidth = 1,
                             colwidth = 2,
                             auto = false,
+                            wrap = true,
                         },
-                        click = "v:lua.ScSa"
                     },
                     {
                         text = { builtin.lnumfunc, " " },
@@ -53,8 +49,9 @@ return {
                     {
                         sign = {
                             name = { "GitSigns*" },
+                            namespace = { "gitsigns"},
                             colwidth = 1,
-                            fillchar = icons.line.left_medium,
+                            fillchar = git_sign_icon,
                             fillcharhl = "Nrline"
                         },
                         click = "v:lua.ScSa"

@@ -114,6 +114,9 @@ return {
                 idea = { "IdeaMsg", "#FDFF74" },
                 info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
                 warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FB8F24" },
+            },
+            hightlight = {
+                multiline = false,
             }
         },
         version = "*",
