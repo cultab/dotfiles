@@ -1,6 +1,5 @@
 local M = {}
 
-local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
 -- load my mapping DSL
@@ -38,7 +37,6 @@ map "k" { "gk", nil, 'nv' }
 map "H" { "^", "Goto Line Beginning", nil, 'nv' }
 map "L" { "$", "Goto Line End", nil, 'nv' }
 
-map "<leader><space>" { "<cmd>ToggleTerm 1<CR>", "Toggle terminal" }
 
 map "<leader>c" { nil, "Run command" }
 map "<leader>cc" { require "user.command".run_command, "Run command" }
@@ -53,16 +51,19 @@ map "<leader>ta" { "<cmd>EasyAlign<CR>", "Easy Align", 'v' }
 map "<leader>te" { "<cmd>Telescope emoji<CR>", "Emoji Picker" }
 map "<leader>tt" { "<cmd>Telescope todo-comments<CR>", "Todo, Fixme etc. [Telescope]" }
 map "<leader>tk" { "<cmd>Telescope keymaps<CR>", "Keymaps [Telescope]" }
+map "<leader>tn" { "<cmd>Nerdy<CR>", "Nerdfonts [Telescope]" }
 
 map "<leader>l" { "<cmd>Lazy<CR>", "Open Lazy" }
 
-map "<leader>b" { "<cmd>BufferPick<CR>", "Pick buffer" }
+map "<leader><space>" { "<cmd>BufferPick<CR>", "Pick buffer" }
+map "<leader>b" { partial(print, "Use <leader><space> instead!"), "Pick buffer" }
 map "<leader>f" { require "telescope.builtin".find_files, "Find files" }
 map "<leader>/" { require "telescope.builtin".live_grep, "Live grep" }
 map "<leader>h" { require "telescope.builtin".help_tags, "Search help tags" }
 map "<leader>n" { require "user.newfile".new_file, "New file" }
 map "<leader>x" { function() vim.api.nvim_buf_delete(0, {}) end, "Delete buffer" }
-map "<leader>d" { "<CMD>Lexplore<CR>", "Open file explorer" }
+map "<leader>e" { "<cmd>e .<cr>", "Open file explorer" }
+
 
 map "<leader>g" { nil, "Version Control [Git]" }
 map "<leader>gs" { require "gitsigns".stage_hunk, "Stage hunk" }
@@ -76,25 +77,6 @@ map "<leader>gb" { require "gitsigns".blame_line, "Blame line" }
 -- map "<leader>gs" { require"telescope.builtin".git_status,   "Status"   }
 -- map "<leader>gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
 
-map "<M-h>" { "<CMD>NavigatorLeft<CR>" }
-map "<M-j>" { "<CMD>NavigatorDown<CR>" }
-map "<M-k>" { "<CMD>NavigatorUp<CR>" }
-map "<M-l>" { "<CMD>NavigatorRight<CR>" }
-
-
-map '<C-d>' { function()
-    if not require("cmp").scroll_docs(4) then
-        return "<C-d>"
-    end
-end, "Scroll documentation down", expr = true
-}
-
-map '<C-u>' { function()
-    if not require("cmp").scroll_docs(-4) then
-        return "<C-u>"
-    end
-end, "Scroll documentation up", expr = true
-}
 
 ---
 --- If any LSP server attached to the current buffer can provide the @server_capability,
@@ -105,23 +87,23 @@ end, "Scroll documentation up", expr = true
 ---@param lsp_args table?
 ---@param vim_cmd string
 local function if_lsp_else_vim(server_capability, lsp_func, lsp_args, vim_cmd)
-    local clients = vim.lsp.get_active_clients { bufn = 0 }
-    local capabillity_supported = false
-    for _, client in ipairs(clients) do
-        if client.server_capabilities[server_capability] and client.name ~= "null-ls" then
-            capabillity_supported = true
-            break
-        end
-    end
+	local clients = vim.lsp.get_active_clients { bufn = 0 }
+	local capabillity_supported = false
+	for _, client in ipairs(clients) do
+		if client.server_capabilities[server_capability] and client.name ~= "null-ls" then
+			capabillity_supported = true
+			break
+		end
+	end
 
-    if capabillity_supported then
-        if type(lsp_args) == "table" then
-            lsp_args = unpack(lsp_args)
-        end
-        lsp_func(lsp_args)
-    else
-        vim.cmd(vim.api.nvim_replace_termcodes(vim_cmd, true, false, true))
-    end
+	if capabillity_supported then
+		if type(lsp_args) == "table" then
+			lsp_args = unpack(lsp_args)
+		end
+		lsp_func(lsp_args)
+	else
+		vim.cmd(vim.api.nvim_replace_termcodes(vim_cmd, true, false, true))
+	end
 end
 
 map 'K' { partial(if_lsp_else_vim, "hoverProvider", vim.lsp.buf.hover, nil, ":normal! K"), "Hover documentation" }
@@ -130,64 +112,79 @@ map 'K' { partial(if_lsp_else_vim, "hoverProvider", vim.lsp.buf.hover, nil, ":no
 
 map '[d' { vim.diagnostic.goto_prev, "Previous diagnostic" }
 map ']d' { vim.diagnostic.goto_next, "Next diagnostic" }
-map '<leader>e' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics" }
+map '<leader>d' { function() vim.diagnostic.open_float(nil, { focusable = false }) end, "Show line diagnostics" }
 map '<leader>q' { function() vim.diagnostic.setloclist() end, "Open loclist" }
 map '<leader>Q' { function() vim.diagnostic.setqflist() end, "Open qflist" }
 
 function M.set_lsp_mappings()
-    map 'gD' { function()
-        vim.lsp.buf.declaration()
-        vim.cmd.normal "zz"
-    end, "Goto declaration [LSP]" }
-    map 'gd' { function()
-        vim.lsp.buf.definition()
-        vim.cmd.normal "zz"
-    end, "Goto definition [LSP]" }
-    map 'gi' { vim.lsp.buf.implementation, "Goto implementation [LSP]" }
-    map '<C-k>' { vim.lsp.buf.signature_help, "Open signature help [LSP]", "i" }
-    map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
-    map '<leader>R' { vim.lsp.buf.references, "Show references [LSP]" }
-    map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
-    map '<A-CR>' { vim.lsp.buf.code_action, "Code Action [LSP]" }
+	map 'gD' { function()
+		vim.lsp.buf.declaration()
+		vim.cmd.normal "zz"
+	end, "Goto declaration [LSP]" }
+	map 'gd' { function()
+		vim.lsp.buf.definition()
+		vim.cmd.normal "zz"
+	end, "Goto definition [LSP]" }
+	map 'gi' { vim.lsp.buf.implementation, "Goto implementation [LSP]" }
+	map 'gr' { vim.lsp.buf.references, "Goto references [LSP]" }
+	map '<leader>D' { vim.lsp.buf.type_definition, "Show type definition [LSP]" }
+	map '<leader>r' { vim.lsp.buf.rename, "Rename symbol [LSP]" }
+	map '<A-CR>' { vim.lsp.buf.code_action, "Code Action [LSP]" }
+end
+
+local has_words_before = function()
+	unpack = unpack or table.unpack
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 function M.get_cmp_mappings()
-    return {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end, { "i", "s" }
-        ),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }
-        ),
-        ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-    }
+	local cmp = require 'cmp'
+	return {
+		['<C-u>'] = cmp.mapping.scroll_docs(-4),
+		['<C-d>'] = cmp.mapping.scroll_docs(4),
+		['<Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				if #cmp.get_entries() == 1 then
+					cmp.confirm({ select = true })
+				else
+					cmp.select_next_item()
+				end
+			elseif has_words_before() then
+				cmp.complete()
+				if #cmp.get_entries() == 1 then
+					cmp.confirm({ select = true })
+				end
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		['<S-Tab>'] = cmp.mapping.select_prev_item(),
+		-- ['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		['<CR>'] = cmp.mapping.confirm({ select = false }),
+	}
+	-- map '<C-d>' { function() if not require("cmp").scroll_docs(4) then return "<C-d>" end end, "Scroll documentation down", expr = true }
+	-- map '<C-u>' { function() if not require("cmp").scroll_docs(-4) then return "<C-u>" end end, "Scroll documentation up", expr = true }
 end
 
+map '<C-n>' { function() luasnip.jump(1) end, "Next snippet node", "is" }
+map '<C-p>' { function() luasnip.jump(-1) end, "Prev snippet node", "is" }
+map '<C-e>' { function()
+	if luasnip.choice_active() then
+		luasnip.change_choice(1)
+	end
+end, "Prev snippet node", "is" }
+
 function M.set_welcome_mappings()
-    map "q" { "<CMD>q<CR>", "Quit", 'nv', buffer = true }
-    -- local grp = vim.api.nvim_create_augroup("DASH" , {})
-    --
-    -- vim.api.nvim_create_autocmd( "BufLeave" , {
-    --     group = grp,
-    --     buffer = 0,
-    --     command = "bdelete",
-    -- })
+	map "q" { "<CMD>q<CR>", "Quit", 'nv', buffer = true }
+	-- local grp = vim.api.nvim_create_augroup("DASH" , {})
+	--
+	-- vim.api.nvim_create_autocmd( "BufLeave" , {
+	--     group = grp,
+	--     buffer = 0,
+	--     command = "bdelete",
+	-- })
 end
 
 -- TODO: in lua or remove entirely

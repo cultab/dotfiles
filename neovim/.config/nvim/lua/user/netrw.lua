@@ -10,4 +10,4 @@ vim.cmd [[
 
 -- TODO: keybinds, see: https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/ "Keymaps"
 
-require'netrw'.setup()
+require 'netrw'.setup()

@@ -1,21 +1,21 @@
 function ReloadStatusline(theme)
-    -- vim.print("called")
-    require("plenary.reload").reload_module("lualine", true)
-    local statusline_config = {}
-    if theme == "darkplus" or theme == "vscode" then
-        statusline_config = require "user.statusline_vscode".config
-    else
-        -- statusline_config = require "user.my_statusline".config
-        statusline_config = require "user.statusline_next".config
-        -- statusline_config = require "user.statusline_evil".config
-    end
+	-- vim.print("called")
+	require("plenary.reload").reload_module("lualine", true)
+	local statusline_config = {}
+	if theme == "darkplus" or theme == "vscode" then
+		statusline_config = require "user.statusline_vscode".config
+	else
+		-- statusline_config = require "user.my_statusline".config
+		statusline_config = require "user.statusline_next".config
+		-- statusline_config = require "user.statusline_evil".config
+	end
 
-    statusline_config.theme = theme
+	statusline_config.theme = theme
 
-    require("lualine").setup(statusline_config)
+	require("lualine").setup(statusline_config)
 end
 
-local theme = require'user.colorscheme_statusline'
+local theme = require 'user.colorscheme_statusline'
 
 -- FIX: this causes flickering..
 -- vim.cmd [[
@@ -28,16 +28,15 @@ local theme = require'user.colorscheme_statusline'
 LUALINE_LOADED = false
 
 return {
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'kyazdani42/nvim-web-devicons', opt = false },
-        config = function()
-
-            -- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
-            if not LUALINE_LOADED then
-                ReloadStatusline(theme)
-                LUALINE_LOADED = true
-            end
-        end
-    },
+	{
+		'nvim-lualine/lualine.nvim',
+		dependencies = { 'kyazdani42/nvim-web-devicons', opt = false },
+		config = function()
+			-- HACK: see https://github.com/hoob3rt/lualine.nvim/issues/276
+			if not LUALINE_LOADED then
+				ReloadStatusline(theme)
+				LUALINE_LOADED = true
+			end
+		end
+	},
 }

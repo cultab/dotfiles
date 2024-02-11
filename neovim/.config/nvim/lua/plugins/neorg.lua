@@ -1,4 +1,3 @@
-
 return {
 	{
 		'nvim-neorg/neorg',

@@ -53,49 +53,49 @@ local wk = require "which-key"
 --- @operator call:fun(key: string): fun(mapping_args: mapping)
 --- @overload fun(key: string): fun(mapping_args: mapping)
 M.map = setmetatable({}, {
-    __call = function(_, key)
-        --- @param mapping_args mapping
-        return function(mapping_args)
-            -- default to normal mode
-            local temp = mapping_args[3] or "n"
-            --- @type mode[]
-            local modes = {}
-            for mode in string.gmatch(temp, ".") do
-                table.insert(modes, mode)
-            end
+	__call = function(_, key)
+		--- @param mapping_args mapping
+		return function(mapping_args)
+			-- default to normal mode
+			local temp = mapping_args[3] or "n"
+			--- @type mode[]
+			local modes = {}
+			for mode in string.gmatch(temp, ".") do
+				table.insert(modes, mode)
+			end
 
-            --- @type action?
-            local action = mapping_args[1]
-            --- @type string
-            local description = mapping_args[2] or ""
-            --- @type boolean
-            local expr = mapping_args["expr"] or false
-            --- @type boolean
-            local silent = mapping_args["silent"] or true
-            --- @type boolean
-            local noremap = mapping_args["noremap"] or true
-            --- @type boolean
-            local buffer = mapping_args["buffer"] or false
+			--- @type action?
+			local action = mapping_args[1]
+			--- @type string
+			local description = mapping_args[2] or ""
+			--- @type boolean
+			local expr = mapping_args["expr"] or false
+			--- @type boolean
+			local silent = mapping_args["silent"] or true
+			--- @type boolean
+			local noremap = mapping_args["noremap"] or true
+			--- @type boolean
+			local buffer = mapping_args["buffer"] or false
 
-            if action ~= nil then -- real keymap
-                vim.keymap.set(modes, key, action, {
-                    desc = description,
-                    silent = silent,
-                    expr = expr,
-                    noremap = noremap,
-                    buffer = buffer,
-                })
-            else -- which-key group name
-                -- set the mapping for each mode
-                for mode in pairs(modes) do
-                    wk.register {
-                        { [key] = { name = description } },
-                        { mode = mode }
-                    }
-                end
-            end
-        end
-    end,
+			if action ~= nil then -- real keymap
+				vim.keymap.set(modes, key, action, {
+					desc = description,
+					silent = silent,
+					expr = expr,
+					noremap = noremap,
+					buffer = buffer,
+				})
+			else -- which-key group name
+				-- set the mapping for each mode
+				for mode in pairs(modes) do
+					wk.register {
+						{ [key] = { name = description } },
+						{ mode = mode }
+					}
+				end
+			end
+		end
+	end,
 })
 
 return M
