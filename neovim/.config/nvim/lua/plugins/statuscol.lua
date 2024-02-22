@@ -1,10 +1,11 @@
 local icons = require 'user.icons'
 local git_sign_icon = icons.line.left_medium
+local user_command = vim.api.nvim_create_user_command
 return {
 	{
 		'lewis6991/gitsigns.nvim',
 		dependencies = { 'nvim-lua/plenary.nvim' },
-		cmd = 'GitSigns',
+		cmd = 'VeryLazy',
 		opts = {
 			-- signcolumn = false,
 			numhl = true,

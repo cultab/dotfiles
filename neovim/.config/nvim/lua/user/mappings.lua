@@ -4,7 +4,7 @@ local luasnip = require 'luasnip'
 
 -- load my mapping DSL
 local map = require('user.map').map
-local partial = require('user.util').partial
+local apply = require('user.util').apply
 
 -- easier navigation in normal / visual / operator pending mode
 map 'n' { 'nzz' }
@@ -29,7 +29,7 @@ map 'x' { '"_x' }
 map 'Q' { '@@' }
 
 map '<leader>=' {
-	partial(require('conform').format, { async = true, lsp_fallback = true }),
+	apply(require('conform').format, { async = true, lsp_fallback = true }),
 	'Format buffer [Conform]',
 	'nv',
 }
@@ -72,16 +72,11 @@ map '<leader>x' {
 map '<leader>e' { '<cmd>e .<cr>', 'Open file explorer' }
 
 map '<leader>g' { nil, 'Version Control [Git]' }
-map '<leader>gs' { '<CMD>Gitsigns stage_hunk<CR>', 'Stage hunk' }
-map '<leader>gr' { '<CMD>Gitsigns reset_hunk<CR>', 'Reset hunk' }
-map '<leader>gR' { '<CMD>Gitsigns reset_buffer<CR>', 'Reset buffer' }
-map '<leader>gp' { '<CMD>Gitsigns preview_hunk<CR>', 'Preview hunk' }
-map '<leader>gb' { '<CMD>Gitsigns blame_line<CR>', 'Blame line' }
--- map "<leader>gn" { require"neogit".open,                    "Open Neogit" }
--- map "<leader>gc" { require"telescope.builtin".git_commits, "Commits"  }
--- map "<leader>gb" { require"telescope.builtin".git_branches, "Branches" }
--- map "<leader>gs" { require"telescope.builtin".git_status,   "Status"   }
--- map "<leader>gp" { require"telescope.builtin".git_bcommits, "Commits in buffer" }
+map '<leader>gs' { require('gitsigns').stage_hunk, 'Stage hunk' }
+map '<leader>gr' { require('gitsigns').reset_hunk, 'Reset hunk' }
+map '<leader>gR' { require('gitsigns').reset_buffer, 'Reset buffer' }
+map '<leader>gp' { require('gitsigns').preview_hunk, 'Preview hunk' }
+map '<leader>gb' { require('gitsigns').blame_line, 'Blame line' }
 
 map '<M-h>' { '<CMD>NavigatorLeft<CR>' }
 map '<M-j>' { '<CMD>NavigatorDown<CR>' }
@@ -116,9 +111,9 @@ local function if_lsp_else_vim(server_capability, lsp_func, lsp_args, vim_cmd)
 	end
 end
 
-map 'K' { partial(if_lsp_else_vim, 'hoverProvider', vim.lsp.buf.hover, nil, ':normal! K'), 'Hover documentation' }
--- map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
--- map '=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
+map 'K' { apply(if_lsp_else_vim, 'hoverProvider', vim.lsp.buf.hover, nil, ':normal! K'), 'Hover documentation' }
+-- map '<leader>=' { apply(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
+-- map '=' { apply(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
 
 local builtin = require 'telescope.builtin'
 map '[d' { vim.diagnostic.goto_prev, 'Previous diagnostic' }

@@ -18,9 +18,9 @@ vicmd_symbol = "[v](bold blue)"
 # use_symbol_for_status = true
 
 [battery]
-full_symbol = " "
-charging_symbol = " "
-discharging_symbol = " "
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
 
 [fill]
 symbol = " "
@@ -48,7 +48,7 @@ disabled = false
 disabled = true
 
 [directory]
-# read_only = " "
+# read_only = "󰌾 "
 
 [docker_context]
 disabled = true
@@ -109,7 +109,7 @@ disabled = true
 symbol = " "
 
 [memory_usage]
-# symbol = " "
+# symbol = "󰍛 "
 disabled = false
 
 [nix_shell]
@@ -125,7 +125,7 @@ disabled = true
 disabled = true
 
 # [package]
-# symbol = " "
+# symbol = "󰏗 "
 
 [perl]
 disabled = true
@@ -137,7 +137,7 @@ disabled = true
 disabled = true
 
 [python]
-symbol = " "
+symbol = "󰌠 "
 
 [ruby]
 disabled = true

@@ -35,7 +35,7 @@ return {
 				formatting = {
 					fields = { 'abbr', 'kind', 'menu' },
 					format = require('lspkind').cmp_format {
-						symbol_map = require('user.icons').lsp_vscode,
+						symbol_map = require('user.icons').lsp,
 						mode = 'symbol_text',
 						menu = {
 							luasnip = '[Snippet]',

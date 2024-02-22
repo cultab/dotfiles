@@ -1,9 +1,92 @@
-return {
+local lsp_icons = {
+	cozette = {
+		Text = '󰉿', --   󰉿
+		Method = '∈', -- ?
+		Function = '',
+		Constructor = '',
+		Field = '',
+		Variable = '⍺',
+		Class = '', -- 
+		Interface = '⌘', -- 
+		Module = '',
+		Property = '∷', -- ?
+		Unit = '€', --  ruler?
+		Value = '',
+		Enum = '',
+		Keyword = '',
+		Snippet = '謹',
+		Color = '',
+		File = '',
+		Reference = '⇒', -- ?
+		Folder = '',
+		EnumMember = '',
+		Constant = '',
+		Struct = '󰙅',
+		Event = '',
+		Operator = '±',
+		TypeParameter = '∀',
+	},
+	nerd = {
+		Text = '󰉿',
+		Method = '∈',
+		Function = '󰊕',
+		Constructor = '',
+		Field = '',
+		Variable = '⍺',
+		Class = '󰅩',
+		Interface = '⌘',
+		Module = '󰆧',
+		Property = '∷',
+		Unit = '€',
+		Value = '󰎠',
+		Enum = '',
+		Keyword = '󰌋',
+		Snippet = '󰗀',
+		Color = '󰏘',
+		File = '󰈙',
+		Reference = '⇒',
+		Folder = '󰉋',
+		EnumMember = '',
+		Constant = '󰏿',
+		Struct = '󰙅',
+		Event = '',
+		Operator = '±',
+		TypeParameter = '∀',
+	},
+	vscode = {
+		Text = '  ',
+		Method = '  ',
+		Function = '  ',
+		Constructor = '  ',
+		Field = '  ',
+		Variable = '  ',
+		Class = '  ',
+		Interface = '  ',
+		Module = '  ',
+		Property = '  ',
+		Unit = '  ',
+		Value = '  ',
+		Enum = '  ',
+		Keyword = '  ',
+		Snippet = '  ',
+		Color = '  ',
+		File = '  ',
+		Reference = '  ',
+		Folder = '  ',
+		EnumMember = '  ',
+		Constant = '  ',
+		Struct = '  ',
+		Event = '  ',
+		Operator = '  ',
+		TypeParameter = '  ',
+	},
+}
+local icons = {
 	diagnostic = {
 		error = ' ',
 		warn = ' ',
 		info = ' ',
-		hint = ' ',
+		hint = '󰌵 ',
 	},
 	fold = { -- WARN: single char wide
 		close = '›',
@@ -27,7 +110,7 @@ return {
 		close = ' ',
 		grep = ' ',
 		right_arrow = '➜',
-		search = '⌕ ', -- 
+		search = '⌕ ', -- 󰃬
 		settings = ' ',
 		settings2 = ' ',
 		term = ' ',
@@ -105,58 +188,8 @@ return {
 		task = '✔ ',
 		list = { '●', '➜', '✭', '‒' },
 	},
-	lsp_cozette = {
-		Text = '󰉿', --   󰉿
-		Method = '∈', -- ?
-		Function = '',
-		Constructor = '',
-		Field = '',
-		Variable = '⍺',
-		Class = '', -- 
-		Interface = '⌘', -- 
-		Module = '',
-		Property = '∷', -- ?
-		Unit = '€', --  ruler?
-		Value = '',
-		Enum = '',
-		Keyword = '',
-		Snippet = '謹',
-		Color = '',
-		File = '',
-		Reference = '⇒', -- ?
-		Folder = '',
-		EnumMember = '',
-		Constant = '',
-		Struct = '󰙅',
-		Event = '',
-		Operator = '±',
-		TypeParameter = '∀',
-	},
-	lsp_vscode = {
-		Text = '  ',
-		Method = '  ',
-		Function = '  ',
-		Constructor = '  ',
-		Field = '  ',
-		Variable = '  ',
-		Class = '  ',
-		Interface = '  ',
-		Module = '  ',
-		Property = '  ',
-		Unit = '  ',
-		Value = '  ',
-		Enum = '  ',
-		Keyword = '  ',
-		Snippet = '  ',
-		Color = '  ',
-		File = '  ',
-		Reference = '  ',
-		Folder = '  ',
-		EnumMember = '  ',
-		Constant = '  ',
-		Struct = '  ',
-		Event = '  ',
-		Operator = '  ',
-		TypeParameter = '  ',
-	},
 }
+
+icons.lsp = lsp_icons.nerd
+
+return icons

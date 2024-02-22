@@ -23,8 +23,15 @@ config.wsl_domains = { {
     default_cwd = "~",
 }, }
 
+config.ssh_domains = { {
+	name = "SSH:void",
+	remote_address = "localhost",
+	username = "evan",
+}, }
+
 if WSL() then
-    config.default_domain = "WSL:void"
+    -- config.default_domain = "WSL:void"
+    config.default_domain = "SSH:void"
 end
 config.term = "wezterm"
 config.default_domain = "WSL:void" or WSL() and nil

@@ -1,14 +1,14 @@
 local M = {}
 
 local icons = require 'user.icons'
-local sep = {
-	left = '',
-	right = '',
-}
 -- local sep = {
---     left = '',
---     right = ''
+-- 	left = '',
+-- 	right = '',
 -- }
+local sep = {
+    left = '',
+    right = ''
+}
 
 local greek_modemap = {
 	n = 'Κανονικό',
@@ -72,7 +72,7 @@ local function mode_with_modemap(map)
 end
 
 local gr_mode = { mode_with_modemap(greek_modemap), icon = icons.misc.neovim }
-local short_mode = { mode_with_modemap(short_modemap) }
+local short_mode = { mode_with_modemap(short_modemap), icon = icons.misc.vim }
 local long_mode = { mode_with_modemap(long_modemap) }
 
 M.config = {
@@ -85,7 +85,7 @@ M.config = {
 	},
 	sections = {
 		-- left sections
-		lualine_a = { gr_mode },
+		lualine_a = { short_mode },
 		lualine_b = { 'branch', 'diff' },
 		lualine_c = { 'man', 'mason', 'lazy', 'quickfix' },
 		-- right sections
