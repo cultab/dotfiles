@@ -13,7 +13,6 @@
 -- vim.cmd [[highlight link @codeblock CodeBlock]]
 -- vim.cmd [[highlight link @codeblock_lang @keyword ]]
 
-
 -- M.context = {
 --     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 --     throttle = true, -- Throttles plugin updates (may improve performance)
@@ -41,14 +40,13 @@
 --     },
 -- }
 
-
 return {
 	{
 		'nvim-treesitter/nvim-treesitter',
 		build = ':TSUpdate',
 		version = false,
 		config = function()
-			require("nvim-treesitter.configs").setup {
+			require('nvim-treesitter.configs').setup {
 				-- ensure_installed = "all", -- one of "all"  or a list of languages
 				highlight = { enable = true },
 				incremental_selection = { enable = true },
@@ -57,41 +55,41 @@ return {
 					lsp_interop = {
 						enable = true,
 						peek_definition_code = {
-							["gP"] = "@function.outer",
-							["gC"] = "@class.outer",
+							['gP'] = '@function.outer',
+							['gC'] = '@class.outer',
 						},
 					},
 					select = {
 						enable = true,
 						lookahead = true,
 						keymaps = {
-							["af"] = { query = "@function.outer", desc = "outer function" },
-							["if"] = { query = "@function.inner", desc = "inner function" },
-							["ac"] = { query = "@class.outer", desc = "outer class" },
-							["ic"] = { query = "@class.inner", desc = "inner class" },
-							["al"] = { query = "@loop.outer", desc = "outer loop" },
-							["il"] = { query = "@loop.inner", desc = "inner loop" },
+							['af'] = { query = '@function.outer', desc = 'outer function' },
+							['if'] = { query = '@function.inner', desc = 'inner function' },
+							['ac'] = { query = '@class.outer', desc = 'outer class' },
+							['ic'] = { query = '@class.inner', desc = 'inner class' },
+							['al'] = { query = '@loop.outer', desc = 'outer loop' },
+							['il'] = { query = '@loop.inner', desc = 'inner loop' },
 							-- ["ib"] = { query = "@block.inner", desc = "outer block" },
 							-- ["ab"] = { query = "@block.outer", desc = "inner block" },
 							-- ["ia"] = { query = "@assignment.lhs", desc = "Left of [A]ssignment" },
 							-- ["aa"] = { query = "@assignment.rhs", desc = "Right of [A]ssignment" },
-						}
-					}
+						},
+					},
 				},
 				move = {
 					enable = true,
 					goto_next_start = {
-						["<leader>z"] = "@function.inner"
-					}
+						['<leader>z'] = '@function.inner',
+					},
 				},
 				indent = {
 					enable = false,
-					disable = { 'python', 'java' }
+					disable = { 'python', 'java' },
 				},
 				playground = {
 					enable = true,
 					disable = {},
-					updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+					updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
 					persist_queries = false, -- Whether the query persists across vim sessions
 					keybindings = {
 						toggle_query_editor = 'o',
@@ -105,9 +103,9 @@ return {
 						goto_node = '<cr>',
 						show_help = '?',
 					},
-				}
+				},
 			}
-		end
+		end,
 	},
 	{
 		'nvim-treesitter/nvim-treesitter-textobjects',
@@ -115,6 +113,6 @@ return {
 	},
 	{
 		'nvim-treesitter/playground',
-		cmd = "TSPlaygroundToggle"
+		cmd = 'TSPlaygroundToggle',
 	},
 }

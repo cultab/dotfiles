@@ -10,14 +10,14 @@ M.ensure_installed = function(tools)
 		local pkg = Registry.get_package(name)
 
 		if not pkg:is_installed() then
-			vim.notify("Installing " .. name .. "@" .. (version and version or "latest"))
+			vim.notify('Installing ' .. name .. '@' .. (version and version or 'latest'))
 			pkg:install({ version = version } and version or nil)
 			return
 		end
 
 		pkg:get_installed_version(function(success, version_or_err)
 			if not success then
-				vim.notify("mason get installed version error: " .. version_or_err .. "\n" .. "tool:" .. name)
+				vim.notify('mason get installed version error: ' .. version_or_err .. '\n' .. 'tool:' .. name)
 				return
 			end
 
@@ -29,8 +29,8 @@ M.ensure_installed = function(tools)
 				return
 			end
 
-			vim.notify("Updating " .. tool .. " to @" .. version)
-			pkg:install({ version = version })
+			vim.notify('Updating ' .. tool .. ' to @' .. version)
+			pkg:install { version = version }
 		end)
 	end
 end

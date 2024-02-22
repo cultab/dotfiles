@@ -1,7 +1,6 @@
 local skip = function(plugin)
-	return ""
+	return ''
 end
-
 
 -- -- set all colorschemes to not be lazy loaded
 -- for _, scheme in ipairs(colors) do
@@ -14,7 +13,7 @@ end
 
 local lazy = function(plug)
 	local plugin = {}
-	if type(plug) == "string" then
+	if type(plug) == 'string' then
 		table.insert(plugin, plug)
 	else
 		plugin = plug
@@ -28,11 +27,12 @@ end
 
 local colors = {
 	lazy { dir = '~/repos/uniwa.nvim' },
+	'rktjmp/shipwright.nvim',
 	lazy {
 		'catppuccin/nvim',
 		config = function()
-			local cat = require("catppuccin")
-			cat.setup({
+			local cat = require 'catppuccin'
+			cat.setup {
 				-- colorscheme = "neon_latte",
 				transparency = false,
 				integrations = {
@@ -41,17 +41,17 @@ local colors = {
 					which_key = true,
 					indent_blankline = {
 						enabled = true,
-						colored_indent_levels = true
+						colored_indent_levels = true,
 					},
 					barbar = true,
-					markdown = true
-				}
-			})
-		end
+					markdown = true,
+				},
+			}
+		end,
 	},
 	{
 		'rktjmp/lush.nvim',
-		version = false
+		version = false,
 	},
 	'katawful/kreative',
 	-- prot
@@ -68,13 +68,13 @@ local colors = {
 	skip 'lifepillar/vim-gruvbox8',
 	-- low contrast
 	lazy {
-		"2nthony/vitesse.nvim",
-		dependencies = { "tjdevries/colorbuddy.nvim" }
+		'2nthony/vitesse.nvim',
+		dependencies = { 'tjdevries/colorbuddy.nvim' },
 	},
 	-- high constrast
 	lazy 'bluz71/vim-moonfly-colors',
 	lazy 'ntk148v/vim-horizon',
-	lazy "zootedb0t/citruszest.nvim",
+	lazy 'zootedb0t/citruszest.nvim',
 	lazy 'nyoom-engineering/oxocarbon.nvim',
 	lazy 'Shatur/neovim-ayu',
 	-- :set notermguicolors
@@ -85,21 +85,20 @@ local colors = {
 	lazy 'eddyekofo94/gruvbox-flat.nvim',
 	lazy {
 		'npxbr/gruvbox.nvim',
-		dependencies = { 'rktjmp/lush.nvim' }
+		dependencies = { 'rktjmp/lush.nvim' },
 	},
 	-- vscode
 	lazy 'Mofiqul/vscode.nvim',
 	lazy 'LunarVim/darkplus.nvim',
 	-- one dark family
 	lazy 'romgrk/doom-one.vim',
-	lazy { 'joshdick/onedark.vim', branch = "main" },
+	lazy { 'joshdick/onedark.vim', branch = 'main' },
 	lazy 'folke/tokyonight.nvim',
 	lazy {
 		'olimorris/onedarkpro.nvim',
 		dependencies = { 'rktjmp/lush.nvim' },
-		branch = "main"
+		branch = 'main',
 	},
 }
-
 
 return colors

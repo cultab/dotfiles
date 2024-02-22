@@ -2,7 +2,7 @@ local icons = require 'user.icons'
 return {
 	'lukas-reineke/indent-blankline.nvim',
 	config = function()
-		require "ibl".setup {
+		require('ibl').setup {
 			indent = {
 				char = icons.line.left_thin,
 				-- highlight = { "Function", "Label" }
@@ -11,7 +11,7 @@ return {
 				enabled = false,
 				show_start = false,
 				show_end = false,
-				highlight = { "Label" },
+				highlight = { 'Label' },
 			},
 			exclude = {
 				filetypes = {
@@ -31,5 +31,5 @@ return {
 		-- hooks.register(
 		--     hooks.builtin.hide_first_space_indent_level
 		-- )
-	end
+	end,
 }

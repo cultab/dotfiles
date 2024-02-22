@@ -2,7 +2,7 @@
 
 filename=$*
 
-tmp_file=$(mktemp --suffix="$filename" --tmpdir=/tmp/)
+tmp_file=$(mktemp --suffix="$(basename "$filename")" --tmpdir=/tmp/)
 
 sudo cp "$filename" "$tmp_file"
 

@@ -3,19 +3,19 @@ local icons = require 'user.icons'
 return {
 	{
 		'williamboman/mason.nvim',
-		version = "*",
-		cmd = { "Mason" },
+		version = '*',
+		cmd = { 'Mason' },
 		config = function()
-			require 'mason'.setup({
+			require('mason').setup {
 				ui = {
 					icons = {
 						package_installed = icons.misc.circle_check,
 						package_pending = icons.misc.circle_dot,
 						package_uninstalled = icons.misc.dead,
-					}
-				}
-			})
-		end
+					},
+				},
+			}
+		end,
 	},
 	{
 		'williamboman/mason-lspconfig.nvim',

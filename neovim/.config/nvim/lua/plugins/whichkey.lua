@@ -3,10 +3,10 @@ return {
 		'folke/which-key.nvim',
 		opts = {
 			plugins = {
-				spelling = { enabled = true }
+				spelling = { enabled = true },
 			},
 			show_help = false, -- for Noice
-			show_keys = false
-		}
+			show_keys = false,
+		},
 	},
 }

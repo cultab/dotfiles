@@ -2,12 +2,7 @@ return {
 	{
 		'numToStr/Navigator.nvim',
 		version = false,
-		keys = {
-			{ "<M-h>", "<CMD>NavigatorLeft<CR>" },
-			{ "<M-j>", "<CMD>NavigatorDown<CR>" },
-			{ "<M-k>", "<CMD>NavigatorUp<CR>" },
-			{ "<M-l>", "<CMD>NavigatorRight<CR>" },
-		},
+		cmd = { 'NavigatorLeft', 'NavigatorDown', 'NavigatorUp', 'NavigatorRight' },
 		opts = {
 			-- Save modified buffer(s) when moving to mux
 			-- nil - Don't save (default)
@@ -21,7 +16,7 @@ return {
 			-- Multiplexer to use
 			-- 'auto' - Chooses mux based on priority (default)
 			-- table - Custom mux to use
-			mux = 'auto'
-		}
+			mux = 'auto',
+		},
 	},
 }

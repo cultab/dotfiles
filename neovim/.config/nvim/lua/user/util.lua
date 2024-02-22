@@ -34,13 +34,15 @@ end
 -- python like zip iterator
 M.zip = function(...)
 	local args = { ... }
-	return coroutine.wrap(function() zipgen(args) end)
+	return coroutine.wrap(function()
+		zipgen(args)
+	end)
 end
 
 M.to_vim_list = function(tbl)
-	local ret = ""
+	local ret = ''
 	for key, value in pairs(tbl) do
-		ret = ret .. key .. ":" .. value .. ","
+		ret = ret .. key .. ':' .. value .. ','
 	end
 
 	return string.sub(ret, 1, #ret - 1)

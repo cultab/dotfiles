@@ -3,7 +3,7 @@ local M = {}
 local icons = require 'user.icons'
 local sep = {
 	left = '',
-	right = ''
+	right = '',
 }
 -- local sep = {
 --     left = '',
@@ -11,53 +11,53 @@ local sep = {
 -- }
 
 local greek_modemap = {
-	n = "Κανονικό",
-	nt = "Κανονικό-Τερματικό",
-	c = "Εντολής",
-	i = "Εισαγωγής",
-	v = "Επιλογής",
-	V = "Επιλογής-Γραμμή",
-	["^V"] = "Επιλογής-Κουτί",
-	R = "Αντικατάστασης",
-	t = "Τερματικό",
-	niI = "Δε ξέρω βρο είσαι μόνος σου ¯¯\\_(ツ)_/¯¯"
+	n = 'Κανονικό',
+	nt = 'Κανονικό-Τερματικό',
+	c = 'Εντολής',
+	i = 'Εισαγωγής',
+	v = 'Επιλογής',
+	V = 'Επιλογής-Γραμμή',
+	['^V'] = 'Επιλογής-Κουτί',
+	R = 'Αντικατάστασης',
+	t = 'Τερματικό',
+	niI = 'Δε ξέρω βρο είσαι μόνος σου ¯¯\\_(ツ)_/¯¯',
 }
 
 local greek_possesive_modemap = {
-	n = "Κανονικού",
-	nt = "Κανονικού-Τερματικού",
-	c = "Εντολής",
-	i = "Εισαγωγής",
-	v = "Επιλογής",
-	V = "Επιλογής-Γραμμής",
-	["^V"] = "Επιλογής-Κουτιού",
-	R = "Αντικατάστασης",
-	t = "Τερματικού",
-	niI = "Δε ξέρω βρο είσαι μόνος σου ¯¯\\_(ツ)_/¯¯"
+	n = 'Κανονικού',
+	nt = 'Κανονικού-Τερματικού',
+	c = 'Εντολής',
+	i = 'Εισαγωγής',
+	v = 'Επιλογής',
+	V = 'Επιλογής-Γραμμής',
+	['^V'] = 'Επιλογής-Κουτιού',
+	R = 'Αντικατάστασης',
+	t = 'Τερματικού',
+	niI = 'Δε ξέρω βρο είσαι μόνος σου ¯¯\\_(ツ)_/¯¯',
 }
 
 local short_modemap = {
-	n = "N",
-	nt = "N",
-	c = "C",
-	i = "I",
-	v = "V",
-	V = "VL",
-	["^V"] = "VB",
-	R = "R",
-	t = "T",
+	n = 'N',
+	nt = 'N',
+	c = 'C',
+	i = 'I',
+	v = 'V',
+	V = 'VL',
+	['^V'] = 'VB',
+	R = 'R',
+	t = 'T',
 }
 
 local long_modemap = {
-	n = "Normal",
-	nt = "Normal",
-	c = "Command",
-	i = "Insert",
-	v = "Visual",
-	V = "Visual Line",
-	["^V"] = "Visual Block",
-	R = "Replace",
-	t = "Terminal",
+	n = 'Normal',
+	nt = 'Normal',
+	c = 'Command',
+	i = 'Insert',
+	v = 'Visual',
+	V = 'Visual Line',
+	['^V'] = 'Visual Block',
+	R = 'Replace',
+	t = 'Terminal',
 }
 
 local function mode_with_modemap(map)
@@ -71,16 +71,16 @@ local function mode_with_modemap(map)
 	end
 end
 
-local gr_mode    = { mode_with_modemap(greek_modemap), icon = icons.misc.neovim }
+local gr_mode = { mode_with_modemap(greek_modemap), icon = icons.misc.neovim }
 local short_mode = { mode_with_modemap(short_modemap) }
-local long_mode  = { mode_with_modemap(long_modemap) }
+local long_mode = { mode_with_modemap(long_modemap) }
 
-M.config         = {
+M.config = {
 	options = {
-		theme = "auto",
+		theme = 'auto',
 		component_separators = icons.line.short,
 		section_separators = sep,
-		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+		disabled_filetypes = { 'alpha', 'dashboard', 'NvimTree', 'Outline' },
 		globalstatus = true,
 	},
 	sections = {
@@ -96,10 +96,10 @@ M.config         = {
 				sources = { 'nvim_diagnostic' },
 				symbols = {
 					error = icons.diagnostic.error,
-					warn  = icons.diagnostic.warn,
-					info  = icons.diagnostic.info,
-					hint  = icons.diagnostic.hint,
-				}
+					warn = icons.diagnostic.warn,
+					info = icons.diagnostic.info,
+					hint = icons.diagnostic.hint,
+				},
 			},
 		},
 		lualine_x = { 'searchcount' },

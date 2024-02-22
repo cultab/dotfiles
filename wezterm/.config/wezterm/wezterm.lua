@@ -69,6 +69,10 @@ if name:find("Cozette") then
         config.font_size = 19
     end
 elseif name:find("Monaspace") then
+    if WSL() then
+        config.font_size = 12
+    end
+    config.line_height = 1.2
     config.underline_position = '-2px'
     config.font = wezterm.font_with_fallback {
         { family = "Monaspace Neon" }
@@ -101,7 +105,7 @@ elseif name:find("Monaspace") then
                 style = 'Italic',
             },
         },
-        {
+        { -- Radon is italic
             italic = true,
             intensity = 'Half',
             font = wezterm.font {
@@ -110,7 +114,7 @@ elseif name:find("Monaspace") then
                 style = 'Italic',
             },
         },
-        {
+        { -- Radon is italic
             italic = true,
             intensity = 'Normal',
             font = wezterm.font {
@@ -281,20 +285,26 @@ wezterm.on('update-status',
     function(window, pane)
         local host_icon
         if WSL() then
-            -- icon = wezterm.nerdfonts.md_microsoft_windows
             host_icon = wezterm.nerdfonts.dev_windows
         else
             host_icon = wezterm.nerdfonts.linux_void
         end
+        if not host_icon then
+            host_icon = "n/a"
+        end
         window:set_left_status(wezterm.format {
-            { Text = " " .. host_icon .. "  " }
+            { Background = { AnsiColor = "Blue" } },
+            { Foreground = { AnsiColor = "Black" } },
+            { Text = " " .. host_icon .. " SYSTEM " }
         })
         local clock = wezterm.nerdfonts.fa_clock_o
         -- I like my date/time in this style, also: "Wed Mar 3 08:14"
         local date = wezterm.strftime '%a %b %-d %H:%M'
         window:set_right_status(wezterm.format {
-            { Text = clock .. " " },
-            { Text = date },
+            -- { Background = { AnsiColor = "Blue" } },
+            -- { Foreground = { AnsiColor = "Black" } },
+            { Text = " " .. clock .. " " },
+            { Text = date .. " " },
         })
     end)
 

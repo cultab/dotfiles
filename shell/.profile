@@ -100,9 +100,10 @@ PATH_add "$HOME/.local/share/cargo/bin"
 PATH_add "$HOME/.local/share/bob/nvim-bin"
 
 
-eval "$(pyenv init --path)"
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending
 export PATH
 
 export XBPS_DISTDIR="$HOME/repos/void-packages"
+
+# eval "$(pyenv init --path)"

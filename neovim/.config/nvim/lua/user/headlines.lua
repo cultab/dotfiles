@@ -1,8 +1,8 @@
-local call = require "user.util".call
+local call = require('user.util').call
 
 local markdown_like = {
 	query = vim.treesitter.query.parse(
-		"markdown",
+		'markdown',
 		[[
                 (atx_heading [
                     (atx_h1_marker)
@@ -21,24 +21,23 @@ local markdown_like = {
                 (block_quote (paragraph (inline (block_continuation) @quote)))
             ]]
 	),
-	treesitter_language = "markdown",
+	treesitter_language = 'markdown',
 	headline_highlights = call(function()
 		local t = {}
 		for i = 1, 6 do
-			t[i] = "Headline" .. i
+			t[i] = 'Headline' .. i
 		end
 		return t
 	end),
-	codeblock_highlight = "CodeBlock",
-	dash_highlight = "Dash",
-	dash_string = "-",
-	quote_highlight = "Quote",
-	quote_string = "┃",
+	codeblock_highlight = 'CodeBlock',
+	dash_highlight = 'Dash',
+	dash_string = '-',
+	quote_highlight = 'Quote',
+	quote_string = '┃',
 	fat_headlines = false,
-	fat_headline_upper_string = " ", -- "▄",
-	fat_headline_lower_string = " ", -- "▀",
+	fat_headline_upper_string = ' ', -- "▄",
+	fat_headline_lower_string = ' ', -- "▀",
 }
-
 
 -- require "headlines".setup {
 --     quarto = markdown_like,

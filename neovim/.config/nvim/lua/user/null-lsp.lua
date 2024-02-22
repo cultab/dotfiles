@@ -1,6 +1,6 @@
-local null_ls = require("null-ls")
-local on_attach = require 'user.lsp'.on_attach
-null_ls.setup({
+local null_ls = require 'null-ls'
+local on_attach = require('user.lsp').on_attach
+null_ls.setup {
 	sources = {
 		-- disabled{{{
 		-- null_ls.builtins.code_actions.proselint,
@@ -33,18 +33,17 @@ null_ls.setup({
 	on_attach = on_attach,
 	should_attach = function(bufnr)
 		-- disable on void package templates
-		return not vim.api.nvim_buf_get_name(bufnr):match(".*/srcpkgs/.*/template$")
+		return not vim.api.nvim_buf_get_name(bufnr):match '.*/srcpkgs/.*/template$'
 	end,
-})
+}
 
 local mason = require 'user.mason'
 
 local tools = {
-	"shellcheck",
-	"shfmt@v3.7.0",
-	"shellharden",
-	"black"
+	'shellcheck',
+	'shfmt@v3.7.0',
+	'shellharden',
+	'black',
 }
-
 
 mason.ensure_installed(tools)

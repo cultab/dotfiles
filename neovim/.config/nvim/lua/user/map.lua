@@ -1,9 +1,6 @@
 local M = {}
 
-local wk = require "which-key"
-
-
-
+local wk = require 'which-key'
 
 --- @alias mode
 --- | '"n"'  # normal mode
@@ -21,7 +18,6 @@ local wk = require "which-key"
 --- @field noremap boolean?
 --- @field silent boolean?
 --- @field buffer boolean?
-
 
 --- Map a key to a lua function or vimscript snippet also add a description.
 ---
@@ -57,25 +53,25 @@ M.map = setmetatable({}, {
 		--- @param mapping_args mapping
 		return function(mapping_args)
 			-- default to normal mode
-			local temp = mapping_args[3] or "n"
+			local temp = mapping_args[3] or 'n'
 			--- @type mode[]
 			local modes = {}
-			for mode in string.gmatch(temp, ".") do
+			for mode in string.gmatch(temp, '.') do
 				table.insert(modes, mode)
 			end
 
 			--- @type action?
 			local action = mapping_args[1]
 			--- @type string
-			local description = mapping_args[2] or ""
+			local description = mapping_args[2] or ''
 			--- @type boolean
-			local expr = mapping_args["expr"] or false
+			local expr = mapping_args['expr'] or false
 			--- @type boolean
-			local silent = mapping_args["silent"] or true
+			local silent = mapping_args['silent'] or true
 			--- @type boolean
-			local noremap = mapping_args["noremap"] or true
+			local noremap = mapping_args['noremap'] or true
 			--- @type boolean
-			local buffer = mapping_args["buffer"] or false
+			local buffer = mapping_args['buffer'] or false
 
 			if action ~= nil then -- real keymap
 				vim.keymap.set(modes, key, action, {
@@ -90,7 +86,7 @@ M.map = setmetatable({}, {
 				for mode in pairs(modes) do
 					wk.register {
 						{ [key] = { name = description } },
-						{ mode = mode }
+						{ mode = mode },
 					}
 				end
 			end

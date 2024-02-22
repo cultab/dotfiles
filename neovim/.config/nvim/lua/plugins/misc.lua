@@ -1,8 +1,8 @@
 return {
 	{
 		'windwp/nvim-autopairs',
-		event = "InsertEnter",
-		opts = { fast_wrap = {} }
+		event = 'InsertEnter',
+		opts = { fast_wrap = {} },
 	},
 	-- {
 	--     "folke/neodev.nvim",
@@ -10,26 +10,26 @@ return {
 	-- },
 	{
 		'godlygeek/tabular',
-		cmd = "Tabularize"
+		cmd = 'Tabularize',
 	},
 	{
-		"lsvmello/elastictabstops.nvim",
-		cmds = { "ElasticTabstopsEnable", "ElasticTabstopsDisable" },
+		'lsvmello/elastictabstops.nvim',
+		cmds = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
 		config = true,
 	},
 	{
 		'junegunn/vim-easy-align',
-		cmd = "EasyAlign"
+		cmd = 'EasyAlign',
 	},
 	{
 		'machakann/vim-sandwich',
-		event = "InsertEnter",
+		event = 'InsertEnter',
 	},
 	{
 		'numToStr/Comment.nvim',
 		config = function()
-			require("Comment").setup()
-			local ft = require "Comment.ft"
+			require('Comment').setup()
+			local ft = require 'Comment.ft'
 
 			-- // for single line and /* */ for blocks
 			-- in languages that both comment styles
@@ -39,14 +39,14 @@ return {
 				ft.set(lang, { '//%s', '/*%s*/' }).set('conf', '#%s')
 			end
 		end,
-		event = "BufRead"
+		event = 'BufRead',
 	},
 	{
 		'windwp/nvim-ts-autotag',
 		opts = {
-			filetypes = { "html", "xml" },
+			filetypes = { 'html', 'xml' },
 		},
-		ft = { "html", "xml" }
+		ft = { 'html', 'xml' },
 	},
 	{
 		'weilbith/nvim-code-action-menu',
@@ -54,7 +54,7 @@ return {
 	},
 	{
 		'kovetskiy/sxhkd-vim',
-		ft = { "sxhkd" }
+		ft = { 'sxhkd' },
 	},
 	-- {
 	--     "m4xshen/hardtime.nvim",

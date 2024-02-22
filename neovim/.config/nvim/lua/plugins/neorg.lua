@@ -2,42 +2,40 @@ return {
 	{
 		'nvim-neorg/neorg',
 		commit = 'f296a22',
-		dependencies = "nvim-lua/plenary.nvim",
-		ft = "norg",
+		dependencies = 'nvim-lua/plenary.nvim',
+		ft = 'norg',
 		opts = {
 			load = {
-				["core.concealer"] = {
+				['core.concealer'] = {
 					config = {
 						folds = false,
-					}
-				},
-				["core.esupports.metagen"] = {
-					config = {
-						type = "auto",
-					}
-				},
-				["core.completion"] = {
-					config = {
-						engine = "nvim-cmp"
 					},
 				},
-				["core.keybinds"] = {
+				['core.esupports.metagen'] = {
+					config = {
+						type = 'auto',
+					},
+				},
+				['core.completion'] = {
+					config = {
+						engine = 'nvim-cmp',
+					},
+				},
+				['core.keybinds'] = {
 					config = {
 						default_keybinds = true,
-						norg_leader = "<Leader>m"
-					}
+						norg_leader = '<Leader>m',
+					},
 				},
-				["core.dirman"] = {
+				['core.dirman'] = {
 					config = {
 						workspaces = {
-							default = "~/.neorg"
-						}
-					}
+							default = '~/.neorg',
+						},
+					},
 				},
-				["core.export"] = {}
-
-			}
-		}
-	}
-
+				['core.export'] = {},
+			},
+		},
+	},
 }

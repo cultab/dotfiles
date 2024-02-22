@@ -56,31 +56,27 @@ alias gaap='git add --all --patch'
 alias gc='git commit'
 alias gca='git commit --amend'
 alias gcane='git commit --amend --no-edit'
-alias gd='git diff'
 alias gds='git diff --staged'
 alias gdh='git diff HEAD'
+alias gri='git rebase --interactive'
+alias grc='git rebase --continue'
 
 ######
 # ls #
 ######
 
 if command -v lsd > /dev/null 2>&1; then
-    lsd_opts='--group-dirs first --extensionsort'
-    # shellcheck disable=SC2139
-        alias ls="lsd $lsd_opts"
-    # shellcheck disable=SC2139
-        alias ll="lsd $lsd_opts --long"
-    # shellcheck disable=SC2139
-        alias la="lsd $lsd_opts --long --all"
-    # shellcheck disable=SC2139
-        alias lt="lsd $lsd_opts --tree"
+        alias ls="lsd --long"
+        alias ll="lsd --long"
+        alias la="lsd --long --all"
+        alias lt="lsd --tree"
 elif command -v eza > /dev/null 2>&1; then
-	eza_opts='--group-directories-first --modified --group --sort=Extension'
+	eza_opts='--group-directories-first --modified --group --sort=Extension --icons'
     if eza --git > /dev/null 2>&1 ; then
         eza_opts="$eza_opts --git"
     fi
 # shellcheck disable=SC2139
-	alias ls="eza $eza_opts"
+	alias ls="eza $eza_opts --long"
 # shellcheck disable=SC2139
 	alias ll="eza $eza_opts --long"
 # shellcheck disable=SC2139

@@ -7,8 +7,8 @@ local Package = require 'mason-core.package'
 
 M.ensure_installed = function(tools)
 	for _, tool in ipairs(tools) do
-		Registry:on("package:install:failed", function(pkg, _)
-			vim.notify("user/mason_utils: failed to install package: \"" .. pkg.spec.name .. "\"!")
+		Registry:on('package:install:failed', function(pkg, _)
+			vim.notify('user/mason_utils: failed to install package: "' .. pkg.spec.name .. '"!')
 		end)
 		local name, version = Package.Parse(tool)
 
@@ -20,12 +20,12 @@ M.ensure_installed = function(tools)
 		local pkg = Registry.get_package(name)
 
 		if not pkg:is_installed() then
-			vim.notify("Installing " .. name .. "@latest version")
+			vim.notify('Installing ' .. name .. '@latest version')
 			pkg:install()
 			goto continue
 			-- else
 			--     vim.notify(name .. "is installed")
-			vim.notify("Installing " .. name .. "@" .. (version and version or "latest"))
+			vim.notify('Installing ' .. name .. '@' .. (version and version or 'latest'))
 			pkg:install({ version = version } and version or nil)
 			return
 		end
@@ -35,7 +35,7 @@ M.ensure_installed = function(tools)
 				return
 			end
 			if not success then
-				vim.notify("user/lsp error: " .. version_or_err .. " for " .. name)
+				vim.notify('user/lsp error: ' .. version_or_err .. ' for ' .. name)
 				return
 			end
 
@@ -49,13 +49,12 @@ M.ensure_installed = function(tools)
 				return
 			end
 
-			vim.notify("Updating " .. tool .. " to @" .. version)
-			pkg:install({ version = version })
+			vim.notify('Updating ' .. tool .. ' to @' .. version)
+			pkg:install { version = version }
 		end)
 
 		::continue::
 	end
 end
-
 
 return M

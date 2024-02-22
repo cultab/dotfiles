@@ -9,7 +9,7 @@ local icons = require 'user.icons'
 -- vim.g.ts_highlight_lua = true
 -- vim.opt.pumblend = 20 -- pseudo transparency for popup windows
 
-vim.o.foldtext = require 'user.foldfunc'.lua_global_func
+vim.o.foldtext = require('user.foldfunc').lua_global_func
 vim.o.termguicolors = true
 vim.o.laststatus = 3
 
@@ -22,7 +22,7 @@ vim.diagnostic.config {
 		source = 'always',
 		prefix = ' ',
 		scope = 'cursor',
-	}
+	},
 }
 
 local signs = {
@@ -33,8 +33,8 @@ local signs = {
 }
 
 for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+	local hl = 'DiagnosticSign' .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
 end
 
 -- used as separator for windows
@@ -54,29 +54,29 @@ vim.opt.listchars = {
 }
 
 -- HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054"
-vim.wo.colorcolumn = "99999"
+vim.wo.colorcolumn = '99999'
 
 vim.o.number = true
 vim.o.relativenumber = true
 -- vim.o.signcolumn = 'yes:3'
 vim.o.foldmethod = 'expr'
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.o.foldenable = true
 vim.o.foldlevelstart = 99
-vim.o.foldcolumn = "1"
+vim.o.foldcolumn = '1'
 
 vim.o.scrolloff = 1 -- keep lines above and below cursor
 vim.o.sidescroll = 1
 vim.o.showmode = false
 vim.o.showcmd = true
 
-vim.o.background = "dark"
+vim.o.background = 'dark'
 vim.o.cursorline = true -- highlight current line
 
 -- Colorscheme Options
 
 local function scope()
-	local sidebars = { "qf", "vista_kind", "terminal", "packer" }
+	local sidebars = { 'qf', 'vista_kind', 'terminal', 'packer' }
 	local transparent = false
 	local lualine_bold = true
 	local italic_functions = true
@@ -84,7 +84,7 @@ local function scope()
 
 	vim.g.palenight_terminal_italics = true
 	vim.g.solarized_extra_hi_groups = true
-	vim.g.ayucolor = "dark"
+	vim.g.ayucolor = 'dark'
 
 	-- Tokyonight {{{
 	vim.g.tokyonight_transparent = transparent
@@ -101,7 +101,7 @@ local function scope()
 	vim.g.gruvbox_hide_inactive_statusline = hide_inactive_status
 	--}}}
 	-- vscode {{{
-	vim.g.vscode_style = "dark"
+	vim.g.vscode_style = 'dark'
 	vim.g.vscode_italic_comment = 1
 	--}}}
 	-- oxocarbon {{{
@@ -109,7 +109,6 @@ local function scope()
 	-- }}}
 end
 scope()
-
 
 vim.cmd [[
 augroup YankHighlight

@@ -1,5 +1,17 @@
 # Theme definitions.
 
+uniwa:
+  colorscheme: "uniwa"
+
+uniwa-light:
+  colorscheme: "uniwa-light"
+
+uniwa-paper:
+  colorscheme: "uniwa-paper"
+
+uniwa-dark:
+  colorscheme: "uniwa-dark"
+
 solarized:
   colorscheme: solarized
   wezterm: "Solarized Dark - Patched"

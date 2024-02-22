@@ -4,25 +4,26 @@ return {
 	{
 		'lewis6991/gitsigns.nvim',
 		dependencies = { 'nvim-lua/plenary.nvim' },
+		cmd = 'GitSigns',
 		opts = {
 			-- signcolumn = false,
 			numhl = true,
 			signs = {
-				add          = { text = git_sign_icon },
-				change       = { text = git_sign_icon },
-				delete       = { text = git_sign_icon },
-				topdelete    = { text = git_sign_icon },
+				add = { text = git_sign_icon },
+				change = { text = git_sign_icon },
+				delete = { text = git_sign_icon },
+				topdelete = { text = git_sign_icon },
 				changedelete = { text = git_sign_icon },
-				untracked    = { text = git_sign_icon },
+				untracked = { text = git_sign_icon },
 			},
 		},
 	},
 	{
 		'luukvbaal/statuscol.nvim',
-		branch = "0.10",
+		branch = '0.10',
 		config = function()
 			local builtin = require 'statuscol.builtin'
-			require 'statuscol'.setup {
+			require('statuscol').setup {
 				-- setopt = true,
 				relculright = true,
 				clickhandlers = {
@@ -31,8 +32,8 @@ return {
 				segments = {
 					{
 						sign = {
-							name = { ".*" },
-							namespace = { ".*" },
+							name = { '.*' },
+							namespace = { '.*' },
 							-- namespace = { ".*diagnostic.*" },
 							-- name = { "todo%-sign.*" }, -- WARN: escape the dash `-`
 							maxwidth = 1,
@@ -42,29 +43,29 @@ return {
 						},
 					},
 					{
-						text = { builtin.lnumfunc, " " },
+						text = { builtin.lnumfunc, ' ' },
 						colwidth = 1,
-						click = "v:lua.ScLa",
+						click = 'v:lua.ScLa',
 					},
 					{
 						sign = {
-							name = { "GitSigns*" },
-							namespace = { "gitsigns" },
+							name = { 'GitSigns*' },
+							namespace = { 'gitsigns' },
 							colwidth = 1,
 							fillchar = git_sign_icon,
-							fillcharhl = "Nrline"
+							fillcharhl = 'Nrline',
 						},
-						click = "v:lua.ScSa"
+						click = 'v:lua.ScSa',
 					},
 					{
-						text = { builtin.foldfunc, " " },
-						hl = "FoldColumn",
+						text = { builtin.foldfunc, ' ' },
+						hl = 'FoldColumn',
 						wrap = true,
 						colwidth = 1,
-						click = "v:lua.ScFa"
+						click = 'v:lua.ScFa',
 					},
 				},
 			}
-		end
-	}
+		end,
+	},
 }

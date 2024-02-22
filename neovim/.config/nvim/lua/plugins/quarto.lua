@@ -3,11 +3,11 @@
 return {
 	{
 		'quarto-dev/quarto-nvim',
-		ft = "quarto",
+		ft = 'quarto',
 	},
 	{
 		'jmbuhr/otter.nvim',
-		ft = "quarto",
+		ft = 'quarto',
 	},
 	-- { 'quarto-dev/quarto-vim',-- {{{
 	--     ft = 'quarto',

@@ -3,7 +3,7 @@ local icons = require 'user.icons'
 
 return {
 	'romgrk/barbar.nvim',
-	event = "VimEnter",
+	event = 'VimEnter',
 	dependencies = { 'kyazdani42/nvim-web-devicons', opt = false },
 	opts = {
 		-- Enable/disable animations
@@ -30,14 +30,13 @@ return {
 		-- Hide buffers
 		hide = { current = false, inactive = false, visible = false },
 
-
 		icons = {
 			filetype = { enabled = true },
-			separator = { left = icons.line.left_thick, },
+			separator = { left = icons.line.left_thick },
 			button = icons.close,
 			modified = { icons.file.modilied },
 			pinned = { icons.file.pinned },
-			inactive = { separator = { left = icons.line.left_thick } }
+			inactive = { separator = { left = icons.line.left_thick } },
 		},
 
 		-- Default is to insert after current buffer.
@@ -66,6 +65,6 @@ return {
 
 		-- Sets the name of unnamed buffers. By default format is "[Buffer X]"
 		-- where X is the buffer number. But only a static string is accepted here.
-		no_name_title = "Unnamed buf",
-	}
+		no_name_title = 'Unnamed buf',
+	},
 }

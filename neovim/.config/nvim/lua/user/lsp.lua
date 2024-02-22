@@ -1,7 +1,7 @@
 local M = {}
-local utils = require "user.mason_utils"
-local lspconfig = require "lspconfig"
-local toMason = require "mason-lspconfig".get_mappings().lspconfig_to_mason
+local utils = require 'user.mason_utils'
+local lspconfig = require 'lspconfig'
+local toMason = require('mason-lspconfig').get_mappings().lspconfig_to_mason
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -16,32 +16,32 @@ local servers = {
 					pydocstyle = {
 						enabled = true,
 						ignore = {
-							"D101",
-							"D102",
-							"D103",
-							"D105",
-							"D203",
-							"D107",
-							"D100",
-							"D212",
+							'D101',
+							'D102',
+							'D103',
+							'D105',
+							'D203',
+							'D107',
+							'D100',
+							'D212',
 						},
 					},
 					mypy = { enabled = true },
 					pylint = {
 						enabled = false,
 						ignore = {
-							"C0116",
-							"C0114",
-						}
+							'C0116',
+							'C0114',
+						},
 					},
 					jedi_completion = { enabled = true },
 					rope_completion = {
 						enabled = false,
-						eager = true
+						eager = true,
 					},
 					isort = { enabled = true },
-				}
-			}
+				},
+			},
 		},
 	},
 	-- pylyzer = {},
@@ -51,12 +51,12 @@ local servers = {
 	-- before_init = require 'neodev.lsp'.before_init
 	lua_ls = {
 		settings = {
-			workspace = { checkThirdParty = false, },
+			workspace = { checkThirdParty = false },
 			Lua = {
 				hint = { enable = true },
 				diagnostics = { globals = { 'vim' } },
-				runtime = { version = "LuaJIT" },
-			}
+				runtime = { version = 'LuaJIT' },
+			},
 		},
 	},
 	gopls = {
@@ -76,13 +76,13 @@ local servers = {
 					parameterNames = true,
 					rangeVariableTypes = true,
 				},
-			}
+			},
 		},
 	},
-	texlab = { filetypes = { "plaintex", "tex", "rmd", "quarto" }, },
+	texlab = { filetypes = { 'plaintex', 'tex', 'rmd', 'quarto' } },
 	clangd = {
-		capabilities = vim.tbl_deep_extend("force", capabilities, { offsetEncoding = "utf-16" }),
-		filetypes = { "c", "cpp", "cuda" }
+		capabilities = vim.tbl_deep_extend('force', capabilities, { offsetEncoding = 'utf-16' }),
+		filetypes = { 'c', 'cpp', 'cuda' },
 	},
 	-- r_language_server = {},
 	omnisharp = {},
@@ -93,9 +93,17 @@ local servers = {
 			cmd = { 'golangci-lint-langserver' },
 			root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
 			init_options = {
-				command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
-					"--issues-exit-code=1" },
-			}
+				command = {
+					'golangci-lint',
+					'run',
+					'--enable-all',
+					'--disable',
+					'lll',
+					'--out-format',
+					'json',
+					'--issues-exit-code=1',
+				},
+			},
 		},
 	},
 	ruff_lsp = {},
@@ -110,34 +118,34 @@ local servers = {
 -- utils.ensure_installed(mason_packages)
 
 local border = {
-	{ "╭", "FloatBorder" },
-	{ "─", "FloatBorder" },
-	{ "╮", "FloatBorder" },
-	{ "│", "FloatBorder" },
-	{ "╯", "FloatBorder" },
-	{ "─", "FloatBorder" },
-	{ "╰", "FloatBorder" },
-	{ "│", "FloatBorder" },
+	{ '╭', 'FloatBorder' },
+	{ '─', 'FloatBorder' },
+	{ '╮', 'FloatBorder' },
+	{ '│', 'FloatBorder' },
+	{ '╯', 'FloatBorder' },
+	{ '─', 'FloatBorder' },
+	{ '╰', 'FloatBorder' },
+	{ '│', 'FloatBorder' },
 }
 
 -- LSP settings (for overriding per client)
 local handlers = {
-	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+	['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+	['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 }
 
 local on_attach = function()
-	require("lsp_signature").on_attach({
+	require('lsp_signature').on_attach {
 		bind = true,
 		doc_lines = 0,
 		hint_enable = true,
-		hint_prefix = " ", -- TODO: replace with user.icons reference
+		hint_prefix = ' ', -- TODO: replace with user.icons reference
 		handler_opts = {
-			border = "rounded" -- double, rounded, single, shadow, none, or a table of borders
-		}
-	})
+			border = 'rounded', -- double, rounded, single, shadow, none, or a table of borders
+		},
+	}
 
-	require "user.mappings".set_lsp_mappings()
+	require('user.mappings').set_lsp_mappings()
 	vim.lsp.inlay_hint.enable()
 end
 
@@ -149,15 +157,15 @@ for server, extra in pairs(servers) do
 		handlers = handlers,
 	}
 
-	settings = vim.tbl_deep_extend("force", settings, extra)
+	settings = vim.tbl_deep_extend('force', settings, extra)
 	lspconfig[server].setup(settings)
 end
 
 -- Jdtls configuration
 function M.Jdtls_configure()
-	vim.notify_once("jdtls is disabled")
+	vim.notify_once 'jdtls is disabled'
 
-	vim.notify("Tweak jdtls install_path!")
+	vim.notify 'Tweak jdtls install_path!'
 	-- require('jdtls').start_or_attach {
 	--     cmd = { lspinstall_path .. '/jdtls/bin/jdtls',
 	--         '/home/evan/workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t') },
@@ -181,30 +189,32 @@ function M.Jdtls_configure()
 
 	require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
 		local opts = {}
-		pickers.new(opts, {
-			prompt_title    = prompt,
-			finder          = finders.new_table {
-				results = items,
-				entry_maker = function(entry)
-					return {
-						value = entry,
-						display = label_fn(entry),
-						ordinal = label_fn(entry),
-					}
+		pickers
+			.new(opts, {
+				prompt_title = prompt,
+				finder = finders.new_table {
+					results = items,
+					entry_maker = function(entry)
+						return {
+							value = entry,
+							display = label_fn(entry),
+							ordinal = label_fn(entry),
+						}
+					end,
+				},
+				sorter = sorters.get_generic_fuzzy_sorter(),
+				attach_mappings = function(prompt_bufnr)
+					actions.select_default:replace(function()
+						local selection = actions.get_selected_entry(prompt_bufnr)
+						actions.close(prompt_bufnr)
+
+						cb(selection.value)
+					end)
+
+					return true
 				end,
-			},
-			sorter          = sorters.get_generic_fuzzy_sorter(),
-			attach_mappings = function(prompt_bufnr)
-				actions.select_default:replace(function()
-					local selection = actions.get_selected_entry(prompt_bufnr)
-					actions.close(prompt_bufnr)
-
-					cb(selection.value)
-				end)
-
-				return true
-			end,
-		}):find()
+			})
+			:find()
 	end
 end
 
@@ -224,18 +234,18 @@ function Find_python_venv()
 	elseif vim.env.PYENV_VIRTUAL_ENV ~= nil then
 		return vim.env.PYENV_VIRTUAL_ENV
 	else
-		local pipe = io.popen("pipenv --venv 2> /dev/null")
+		local pipe = io.popen 'pipenv --venv 2> /dev/null'
 		if pipe == nil then
-			return ""
+			return ''
 		end
 		local line = pipe:read()
 		if pipe ~= nil then
 			pipe:close()
 		end
-		if line ~= nil and line:find("^/home/") ~= nil then
+		if line ~= nil and line:find '^/home/' ~= nil then
 			return line
 		else
-			return ""
+			return ''
 		end
 	end
 end
@@ -245,12 +255,12 @@ local function get_pyls_plugins()
 	local python_venv = Find_python_venv()
 
 	pylsp_plugins.pydocstyle = {
-		enabled = true
+		enabled = true,
 	}
 
-	if python_venv ~= "" then
+	if python_venv ~= '' then
 		pylsp_plugins.jedi = {
-			environment = python_venv
+			environment = python_venv,
 		}
 	end
 	return pylsp_plugins
@@ -262,13 +272,13 @@ function Pylsp_setup()
 		on_attach = on_attach,
 		settings = {
 			pylsp = {
-				plugins = get_pyls_plugins()
-			}
+				plugins = get_pyls_plugins(),
+			},
 		},
-		capabilities = capabilities
+		capabilities = capabilities,
 	}
 	-- HACK: pretty sure this is an implementation detail :^)
-	require("lspconfig").pylsp.manager.try_add()
+	require('lspconfig').pylsp.manager.try_add()
 end
 
 -- vim.cmd [[

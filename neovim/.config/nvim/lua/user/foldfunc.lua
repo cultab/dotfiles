@@ -36,7 +36,7 @@ function M.foldfunc()
 	after = string.gsub(after, '%-', '%%-')
 
 	-- remove fold markers
-	line = string.gsub(line, '}' .. '}}', '')  -- HACK: split fold markers to trick vim to not see them, when editing this file
+	line = string.gsub(line, '}' .. '}}', '') -- HACK: split fold markers to trick vim to not see them, when editing this file
 	line = string.gsub(line, '{' .. '{{', '')
 
 	-- remove comment string

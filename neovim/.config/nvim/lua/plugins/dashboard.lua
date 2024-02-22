@@ -26,36 +26,35 @@
 -- }
 -- }}}
 --
-local zip = require 'user.util'.zip
+local zip = require('user.util').zip
 local icons = require 'user.icons'
 vim.g.dashboard_default_executive = 'telescope'
 
 function OpenConfig()
 	-- vim.cmd "tabnew $MYVIMRC | tcd %:p:h"
-	local vimrc = vim.fn.expand("$MYVIMRC")
+	local vimrc = vim.fn.expand '$MYVIMRC'
 	vim.cmd.cd(vim.fs.dirname(vimrc))
 	vim.cmd.edit(vimrc) -- HACK: yes twice
 	vim.cmd.edit(vimrc)
 end
 
 local hlgroups = {
-	"DashboardHeader",
-	"DashboardFooter",
-	"DashboardDesc",
-	"DashboardKey",
-	"DashboardIcon",
-	"DashboardShortCut"
+	'DashboardHeader',
+	'DashboardFooter',
+	'DashboardDesc',
+	'DashboardKey',
+	'DashboardIcon',
+	'DashboardShortCut',
 }
 
 local linkgroups = {
-	"Function",
-	"Number",
-	"Identifier",
-	"Operator",
-	"Identifier",
-	"Function",
+	'Function',
+	'Number',
+	'Identifier',
+	'Operator',
+	'Identifier',
+	'Function',
 }
-
 
 function DashboardFallback()
 	-- fallback highlights if missing from the current colorscheme
@@ -96,34 +95,34 @@ return {
 				center = {
 					{
 						icon = icons.file.normal,
-						desc = "New file                         ",
-						key = "SPC n",
-						action = "enew"
+						desc = 'New file                         ',
+						key = 'SPC n',
+						action = 'enew',
 					},
 					{
 						icon = icons.misc.search,
-						desc = "Find file                        ",
-						key = "SPC f",
-						action = "Telescope find_files"
+						desc = 'Find file                        ',
+						key = 'SPC f',
+						action = 'Telescope find_files',
 					},
 					{
 						icon = icons.misc.grep,
-						desc = "Live grep                        ",
-						key = "SPC /",
-						action = "Telescope live_grep"
+						desc = 'Live grep                        ',
+						key = 'SPC /',
+						action = 'Telescope live_grep',
 					},
 					{
 						icon = icons.misc.settings,
-						desc = "Settings                         ",
-						key = "SPC o",
-						action = "lua OpenConfig()"
+						desc = 'Settings                         ',
+						key = 'SPC o',
+						action = 'lua OpenConfig()',
 					},
 					{
 						icon = icons.misc.close,
-						desc = "Exit Neovim                      ",
-						key = "q",
-						action = "q"
-					}
+						desc = 'Exit Neovim                      ',
+						key = 'q',
+						action = 'q',
+					},
 					-- {
 					--     icon = 'test',
 					--     icon_hl = 'group',
@@ -135,7 +134,7 @@ return {
 					-- },
 				},
 				-- footer = {},
-			}
-		}
-	}
+			},
+		},
+	},
 }
