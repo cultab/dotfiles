@@ -54,8 +54,7 @@ local servers = {
 			workspace = { checkThirdParty = false },
 			Lua = {
 				hint = { enable = true },
-				diagnostics = { globals = { 'vim' } },
-				runtime = { version = 'LuaJIT' },
+				-- runtime = { version = 'LuaJIT' },
 			},
 		},
 	},

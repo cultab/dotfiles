@@ -60,8 +60,8 @@ map '<leader>tc' { partial(vim.cmd.Telescope, 'todo-comments'), 'todo [c]omments
 map '<leader>l' { vim.cmd.Lazy, '[l]azy pkg manager' }
 
 map '<leader><space>' { vim.cmd.BufferPick, 'Pick Buffer' }
-map '<leader>f' { telescope.find_files, '[f]ind files' }
-map '<leader>/' { telescope.live_grep, 'Live grep' }
+map '<leader>f' { partial(telescope.find_files, { follow = true, hidden = true }), '[f]ind files' }
+map '<leader>/' { partial(telescope.live_grep, { additional_args = { '--follow' } }), 'Live grep' }
 map '<leader>h' { telescope.help_tags, 'Search [h]elp Tags' }
 map '<leader>n' { require('user.newfile').new_file, '[n]ew file' }
 map '<leader>x' {

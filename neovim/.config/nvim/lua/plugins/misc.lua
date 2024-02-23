@@ -5,8 +5,16 @@ return {
 		opts = { fast_wrap = {} },
 	},
 	{
-	    "folke/neodev.nvim",
-	    opts = {},
+		--[[
+lua= vim.lsp.get_active_clients({ name = "lua_ls" })[1].config.settings.Lua
+--]]
+		'folke/neodev.nvim',
+		opts = {
+			override = function(root_dir, library)
+				library.enabled = true
+				library.plugins = true
+			end,
+		},
 	},
 	{
 		'godlygeek/tabular',
