@@ -1,10 +1,11 @@
 local M = {}
 
+local partial = require('user.util').partial
 local luasnip = require 'luasnip'
+local telescope = require 'telescope.builtin'
 
 -- load my mapping DSL
 local map = require('user.map').map
-local apply = require('user.util').apply
 
 -- easier navigation in normal / visual / operator pending mode
 map 'n' { 'nzz' }
@@ -16,7 +17,7 @@ map '#' { '#zz' }
 map 'S' { 'i<CR><ESC>k$' }
 
 -- This unsets the last search pattern register by hitting ESC
-map '<esc>' { '<cmd>nohlsearch<cr>' }
+map '<esc>' { vim.cmd.nohlsearch }
 
 -- Change text without putting the text into register
 map 'c' { '"_c' }
@@ -29,8 +30,8 @@ map 'x' { '"_x' }
 map 'Q' { '@@' }
 
 map '<leader>=' {
-	apply(require('conform').format, { async = true, lsp_fallback = true }),
-	'Format buffer [Conform]',
+	partial(require('conform').format, { async = true, lsp_fallback = true }),
+	'format buffer [Conform]',
 	'nv',
 }
 
@@ -42,46 +43,46 @@ map 'H' { '^', 'Goto Line Beginning', nil, 'nv' }
 map 'L' { '$', 'Goto Line End', nil, 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
-map '<leader>cc' { require('user.command').run_command, 'Run command' }
-map '<leader>cl' { require('user.command').run_last_command, 'Repeat last command' }
-map '<leader>cr' { require('user.command').run_current_file, 'Run current file' }
+map '<leader>cc' { require('user.command').run_command, 'shell [c]ommand' }
+map '<leader>cl' { require('user.command').run_last_command, 'repeat [l]ast command' }
+map '<leader>cr' { require('user.command').run_current_file, '[r]un current file' }
 
-map '<leader>o' { require('user.configs').config_picker, 'Open config picker' }
+map '<leader>o' { require('user.configs').config_picker, '[o]pen config picker' }
 
-map '<leader>t' { nil, 'Text operations', 'nv' }
-map '<leader>tt' { ':Tabularize<space>/', 'Tabularize', 'v' }
-map '<leader>ta' { '<cmd>EasyAlign<CR>', 'Easy Align', 'v' }
-map '<leader>te' { '<cmd>Telescope emoji<CR>', 'Emoji Picker' }
-map '<leader>tt' { '<cmd>Telescope todo-comments<CR>', 'Todo, Fixme etc. [Telescope]' }
-map '<leader>tk' { '<cmd>Telescope keymaps<CR>', 'Keymaps [Telescope]' }
-map '<leader>tn' { '<cmd>Nerdy<CR>', 'Nerdfonts [Telescope]' }
+map '<leader>t' { nil, '[t]ext/[t]elescope', 'nv' }
+map '<leader>tt' { ':Tabularize<space>/', '[t]abularize', 'v' }
+map '<leader>te' { vim.cmd.EasyAlign, '[e]asy align', 'v' }
+map '<leader>te' { require('telescope').extensions.emoji.emoji, '[e]moji Picker' }
+map '<leader>tk' { telescope.keymaps, '[k]eymaps' }
+map '<leader>tn' { vim.cmd.Nerdy, '[n]erdfont Symbols' }
+map '<leader>tc' { partial(vim.cmd.Telescope, 'todo-comments'), 'todo [c]omments' }
 
-map '<leader>l' { '<cmd>Lazy<CR>', 'Open Lazy' }
+map '<leader>l' { vim.cmd.Lazy, '[l]azy pkg manager' }
 
-map '<leader><space>' { '<cmd>BufferPick<CR>', 'Pick buffer' }
-map '<leader>f' { '<CMD>Telescope find_files<CR>', 'Find files' }
-map '<leader>/' { '<CMD>Telescope live_grep<CR>', 'Live grep' }
-map '<leader>h' { '<CMD>Telescope help_tags<CR>', 'Search help tags' }
-map '<leader>n' { require('user.newfile').new_file, 'New file' }
+map '<leader><space>' { vim.cmd.BufferPick, 'Pick Buffer' }
+map '<leader>f' { telescope.find_files, '[f]ind files' }
+map '<leader>/' { telescope.live_grep, 'Live grep' }
+map '<leader>h' { telescope.help_tags, 'Search [h]elp Tags' }
+map '<leader>n' { require('user.newfile').new_file, '[n]ew file' }
 map '<leader>x' {
 	function()
 		vim.api.nvim_buf_delete(0, {})
 	end,
 	'Delete buffer',
 }
-map '<leader>e' { '<cmd>e .<cr>', 'Open file explorer' }
+map '<leader>e' { partial(vim.cmd.e, '.'), 'Open file [e]xplorer' }
 
-map '<leader>g' { nil, 'Version Control [Git]' }
-map '<leader>gs' { require('gitsigns').stage_hunk, 'Stage hunk' }
-map '<leader>gr' { require('gitsigns').reset_hunk, 'Reset hunk' }
-map '<leader>gR' { require('gitsigns').reset_buffer, 'Reset buffer' }
-map '<leader>gp' { require('gitsigns').preview_hunk, 'Preview hunk' }
-map '<leader>gb' { require('gitsigns').blame_line, 'Blame line' }
+map '<leader>g' { nil, '[g]it' }
+map '<leader>gs' { partial(vim.cmd.Gitsigns, 'stage_hunk'), '[s]tage hunk' }
+map '<leader>gr' { partial(vim.cmd.Gitsigns, 'reset_hunk'), '[r]eset hunk' }
+map '<leader>gR' { partial(vim.cmd.Gitsigns, 'reset_buffer'), '[R]eset buffer' }
+map '<leader>gp' { partial(vim.cmd.Gitsigns, 'preview_hunk'), '[p]review hunk' }
+map '<leader>gb' { partial(vim.cmd.Gitsigns, 'blame_line'), '[b]lame line' }
 
-map '<M-h>' { '<CMD>NavigatorLeft<CR>' }
-map '<M-j>' { '<CMD>NavigatorDown<CR>' }
-map '<M-k>' { '<CMD>NavigatorUp<CR>' }
-map '<M-l>' { '<CMD>NavigatorRight<CR>' }
+map '<M-h>' { vim.cmd.NavigatorLeft }
+map '<M-j>' { vim.cmd.NavigatorDown }
+map '<M-k>' { vim.cmd.NavigatorUp }
+map '<M-l>' { vim.cmd.NavigatorRight }
 
 ---
 --- If any LSP server attached to the current buffer can provide the @server_capability,
@@ -111,21 +112,21 @@ local function if_lsp_else_vim(server_capability, lsp_func, lsp_args, vim_cmd)
 	end
 end
 
-map 'K' { apply(if_lsp_else_vim, 'hoverProvider', vim.lsp.buf.hover, nil, ':normal! K'), 'Hover documentation' }
--- map '<leader>=' { apply(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
--- map '=' { apply(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
+map 'K' { partial(if_lsp_else_vim, 'hoverProvider', vim.lsp.buf.hover, nil, ':normal! K'), 'Hover documentation' }
+-- map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
+-- map '=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
 
 local builtin = require 'telescope.builtin'
-map '[d' { vim.diagnostic.goto_prev, 'Previous diagnostic' }
-map ']d' { vim.diagnostic.goto_next, 'Next diagnostic' }
+map '[d' { vim.diagnostic.goto_prev, 'previous [d]iagnostic' }
+map ']d' { vim.diagnostic.goto_next, 'next [d]iagnostic' }
 map '<leader>d' {
 	function()
 		vim.diagnostic.open_float(nil, { focusable = false })
 	end,
 	'Show line diagnostics',
 }
-map '<leader>q' { builtin.loclist, 'Open loclist' }
-map '<leader>Q' { builtin.quickfix, 'Open qflist' }
+map '<leader>q' { builtin.loclist, 'Open lo[q]list' } -- not actually called lo'q'list :^)
+map '<leader>Q' { builtin.quickfix, 'Open [Q]uickfix' }
 
 function M.set_lsp_mappings()
 	map 'gD' {
@@ -133,19 +134,19 @@ function M.set_lsp_mappings()
 			vim.lsp.buf.declaration()
 			vim.cmd.normal 'zz'
 		end,
-		'Goto declaration [LSP]',
+		'Goto [D]eclaration [LSP]',
 	}
 	map 'gd' {
 		function()
 			vim.lsp.buf.definition()
 			vim.cmd.normal 'zz'
 		end,
-		'Goto definition [LSP]',
+		'Goto [d]efinition [LSP]',
 	}
-	map 'gi' { builtin.lsp_implementations, 'Goto implementation [LSP]' }
-	map 'gr' { builtin.lsp_references, 'Goto references [LSP]' }
-	map '<leader>D' { builtin.lsp_definitions, 'Show type definition [LSP]' }
-	map '<leader>r' { vim.lsp.buf.rename, 'Rename symbol [LSP]' }
+	map 'gi' { builtin.lsp_implementations, 'Goto [i]mplementation [LSP]' }
+	map 'gr' { builtin.lsp_references, 'Goto [r]eferences [LSP]' }
+	map '<leader>D' { builtin.lsp_definitions, 'Show type [d]efinition [LSP]' }
+	map '<leader>r' { vim.lsp.buf.rename, '[r]ename symbol [LSP]' }
 	map '<A-CR>' { vim.lsp.buf.code_action, 'Code Action [LSP]' }
 end
 
@@ -210,7 +211,7 @@ map '<C-e>' {
 }
 
 function M.set_welcome_mappings()
-	map 'q' { '<CMD>q<CR>', 'Quit', 'nv', buffer = true }
+	map 'q' { vim.cmd.q, 'Quit', 'nv', buffer = true }
 	-- local grp = vim.api.nvim_create_augroup("DASH" , {})
 	--
 	-- vim.api.nvim_create_autocmd( "BufLeave" , {

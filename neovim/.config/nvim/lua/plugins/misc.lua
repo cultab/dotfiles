@@ -4,10 +4,10 @@ return {
 		event = 'InsertEnter',
 		opts = { fast_wrap = {} },
 	},
-	-- {
-	--     "folke/neodev.nvim",
-	--     opts = {},
-	-- },
+	{
+	    "folke/neodev.nvim",
+	    opts = {},
+	},
 	{
 		'godlygeek/tabular',
 		cmd = 'Tabularize',

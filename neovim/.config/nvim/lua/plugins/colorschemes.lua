@@ -2,15 +2,6 @@ local skip = function(plugin)
 	return ''
 end
 
--- -- set all colorschemes to not be lazy loaded
--- for _, scheme in ipairs(colors) do
---     if type(scheme) == "string" then
---         scheme = { scheme }
---     end
---     scheme.lazy = false
---     scheme.priority = 1000
--- end
-
 local lazy = function(plug)
 	local plugin = {}
 	if type(plug) == 'string' then
@@ -33,7 +24,6 @@ local colors = {
 		config = function()
 			local cat = require 'catppuccin'
 			cat.setup {
-				-- colorscheme = "neon_latte",
 				transparency = false,
 				integrations = {
 					telescope = true,
@@ -53,7 +43,6 @@ local colors = {
 		'rktjmp/lush.nvim',
 		version = false,
 	},
-	'katawful/kreative',
 	-- prot
 	lazy 'https://gitlab.com/protesilaos/tempus-themes-vim.git',
 	-- first class light

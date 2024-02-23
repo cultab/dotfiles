@@ -20,9 +20,7 @@ end
 
 M.apply = function(func, ...)
 	local args = { ... }
-	return function()
-		func(unpack(args))
-	end
+	return func(unpack(args))
 end
 
 local zipgen = function(args)
