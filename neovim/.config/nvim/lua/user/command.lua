@@ -37,6 +37,33 @@ local function suffix()
 	return ''
 end
 
+--- @class direction
+--- @field new string
+--- @field old string
+--- @field split string
+--- @type direction[]
+local directions = {
+	{
+		new = "right",
+		old = "left",
+		split = "right"
+	},
+	{
+		new = "down",
+		old = "up",
+		split = "bottom"
+	},
+}
+
+do
+	CommandDirection = 1
+end
+
+vim.api.nvim_create_user_command("CommandDirection", function ()
+	CommandDirection = (CommandDirection % 2 + 1)
+end, {desc = "Toggles pane direction for running commands"})
+
+
 local function weztermCli(subcmd)
 	local cli = "wezterm" .. suffix() .. " cli "
 	local pipe = io.popen(cli .. subcmd)
@@ -57,13 +84,14 @@ local function weztermRun(cmd, pane_id)
 end
 
 local function Wezterm(cmd)
-	local pane, err = weztermCli("get-pane-direction right")
+	local direction = directions[CommandDirection]
+	local pane, err = weztermCli("get-pane-direction ".. direction.new)
 	if err ~= nil then
 		notify(err, levels.ERROR)
 	end
 	if not pane then
-		pane = weztermCli("split-pane --right")
-		_, err = weztermCli("activate-pane-direction left")
+		pane = weztermCli("split-pane --" .. direction.split)
+		_, err = weztermCli("activate-pane-direction " .. direction.old)
 		if err ~= nil then
 			notify(err, levels.ERROR)
 		end
@@ -146,7 +174,7 @@ local rules = {
 	["report%.rmd"] = function(_)
 		return "make render"
 	end,
-	["report%.qmd"] = function(_)
+	["%.qmd"] = function(_)
 		return "quarto render"
 	end,
 	[".*%.py"] = function(filepath)
