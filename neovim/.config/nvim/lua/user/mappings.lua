@@ -39,8 +39,8 @@ map '<leader>=' {
 map 'j' { 'gj', nil, 'nv' }
 map 'k' { 'gk', nil, 'nv' }
 
-map 'H' { '^', 'Goto Line Beginning', nil, 'nv' }
-map 'L' { '$', 'Goto Line End', nil, 'nv' }
+map 'H' { 'g^', 'Goto Line Beginning', 'nv' }
+map 'L' { 'g$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
 map '<leader>cc' { require('user.command').run_command, 'shell [c]ommand' }
