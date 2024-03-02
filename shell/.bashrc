@@ -58,3 +58,4 @@ source ~/bin/exports
 alias luamake=/home/evan/repos/lua-language-server/3rd/luamake/luamake
 
 alias nix="NP_LOCATION=/home/evan/repos/vimconf_talk NP_RUNTIME='bwrap' /home/evan/repos/vimconf_talk/nix-portable nix"
+. "/home/evan/.local/share/cargo/env"

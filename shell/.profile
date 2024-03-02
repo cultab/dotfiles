@@ -42,9 +42,8 @@ export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs"
 
 # keychain
-eval "$(keychain --eval --quiet)" # --dir "$XDG_RUNTIME_DIR/keychain")"
+eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
 
-# export PROFILE_SOURCED=1
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # cowfile path for cowsay
@@ -107,3 +106,4 @@ export PATH
 export XBPS_DISTDIR="$HOME/repos/void-packages"
 
 # eval "$(pyenv init --path)"
+. "/home/evan/.local/share/cargo/env"

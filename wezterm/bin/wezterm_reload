@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# pkill -9 wezterm_reload # kys :^)
 pkill inotifywait
 WATCH_PATH="$HOME/dotfiles/wezterm/.config/wezterm"
 DEST_PATH="/mnt/c/Users/evan/.config/wezterm/"

@@ -10,7 +10,7 @@ export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=1000000
 SAVEHIST=1000000
 mkdir -p $(dirname "$HISTFILE")
-HISTORY_IGNORE='(cd *|cd|ls  *|ls|q|qq|qqq|qqqq|qqqqq|qqqqqq*|bg *|bg|fg *|fg|history *|history|clear|exec zsh|gs)'
+HISTORY_IGNORE='(cd|ls *|ls|q|bg|fg|history *|history|clear|exec zsh|gs)'
 
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 # setopt EXTENDED_HISTORY        # Write the history file in the ":start:elapsed;command" format.
@@ -76,7 +76,8 @@ csource() {
     fi
 }
 
-csource ~/.config/zsh/transient_starship_prompt
+# csource ~/.config/zsh/transient_starship_prompt
+eval "$(starship init zsh)"
 # eval $(thefuck --alias)
 
 csource ~/bin/exports
@@ -112,8 +113,8 @@ autoload -U compinit && compinit
 # prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
-    pkill -9 wezterm_reload; wezterm_reload & disown
-    pkill -9 oneterm_reload; oneterm_reload & disown
+	(wezterm_reload &)
+#     pkill -9 oneterm_reload; oneterm_reload & disown
 fi
 
 # zprof
