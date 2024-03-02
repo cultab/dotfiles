@@ -1,9 +1,16 @@
 local M = {}
 
+---Call {func}
+---@param func function
+---@return any?
 M.call = function(func)
 	return func()
 end
 
+---Return the partial application of {func} with {args}
+---@param func fun(...: any): any?
+---@param ... any
+---@return fun(...: any?): any?
 M.partial = function(func, ...)
 	local initial_args = { ... }
 	return function(...)
@@ -18,6 +25,10 @@ M.partial = function(func, ...)
 	end
 end
 
+---Apply arguments to a function
+---@param func function(...: any): any
+---@param ... any
+---@return any?
 M.apply = function(func, ...)
 	local args = { ... }
 	return func(unpack(args))

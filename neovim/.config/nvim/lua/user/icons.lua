@@ -102,6 +102,7 @@ local icons = {
 		left_thin = '▏',
 		left_medium = '▎',
 		left_thick = '▊',
+		right_thin = '▕',
 	},
 	misc = {
 		neovim = ' ',
@@ -122,7 +123,8 @@ local icons = {
 	listchars = {
 		nbsp = '␣',
 		trail = '·',
-		tab = '   ',
+		-- tab = '   ',
+		tab = '▏  ',
 		eol = '↲ ',
 	},
 	file = {

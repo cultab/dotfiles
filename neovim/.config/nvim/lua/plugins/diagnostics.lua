@@ -34,4 +34,8 @@ return {
 	--     event = "DiagnosticChanged",
 	--     config = true,
 	-- },
+	{
+		"soulis-1256/eagle.nvim",
+		opts = {},
+	}
 }

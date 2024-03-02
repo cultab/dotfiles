@@ -20,7 +20,7 @@ M.config_picker = function(opts)
 					{ 'Zoomer Shell', '~/.config/zsh/.zshrc' },
 					{ 'bspwm', '~/.config/bspwm/bspwmrc' },
 					{ 'gitconfig', '~/.config/git/config' },
-					{ 'neovim plugins', '~/.local/share/nvim/lazy', cd = true },
+					{ 'neovim plugins', '~/.local/share/nvim/lazy/.', cd = true },
 					{ 'neovim', '~/.config/nvim/init.lua', cd = true },
 					{ 'starship prompt', '~/.config/starship.toml' },
 					{ 'tmux', '~/.config/tmux/tmux.conf' },

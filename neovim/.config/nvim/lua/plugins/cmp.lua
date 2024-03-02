@@ -1,6 +1,7 @@
 return {
 	{
 		'hrsh7th/nvim-cmp',
+		version = false,
 		config = function()
 			local cmp = require 'cmp'
 			cmp.setup {

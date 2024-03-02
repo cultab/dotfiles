@@ -9,12 +9,7 @@ return {
 lua= vim.lsp.get_active_clients({ name = "lua_ls" })[1].config.settings.Lua
 --]]
 		'folke/neodev.nvim',
-		opts = {
-			override = function(root_dir, library)
-				library.enabled = true
-				library.plugins = true
-			end,
-		},
+		opts = { },
 	},
 	{
 		'godlygeek/tabular',

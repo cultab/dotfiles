@@ -50,7 +50,6 @@ vim.opt.listchars = {
 	nbsp = icons.listchars.nbsp,
 	trail = icons.listchars.trail,
 	tab = icons.listchars.tab,
-	-- eol = "↲ ",
 }
 
 -- HACK: see: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806398054"

@@ -44,11 +44,13 @@ end
 --- @type direction[]
 local directions = {
 	{
+		name = "right side",
 		new = "right",
 		old = "left",
 		split = "right"
 	},
 	{
+		name = "below editor",
 		new = "down",
 		old = "up",
 		split = "bottom"
@@ -59,9 +61,12 @@ do
 	CommandDirection = 1
 end
 
-vim.api.nvim_create_user_command("CommandDirection", function ()
+M.change_split_direction = function ()
 	CommandDirection = (CommandDirection % 2 + 1)
-end, {desc = "Toggles pane direction for running commands"})
+	vim.notify("Changed command direction to ".. directions[CommandDirection].name)
+end
+
+vim.api.nvim_create_user_command("CommandDirection", M.change_split_direction, {desc = "Toggles pane direction for running commands"})
 
 
 local function weztermCli(subcmd)

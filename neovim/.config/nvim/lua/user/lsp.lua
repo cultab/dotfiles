@@ -51,10 +51,13 @@ local servers = {
 	-- before_init = require 'neodev.lsp'.before_init
 	lua_ls = {
 		settings = {
-			workspace = { checkThirdParty = false },
 			Lua = {
 				hint = { enable = true },
-				-- runtime = { version = 'LuaJIT' },
+				diagnostics = { globals = { 'vim' } },
+				runtime = { version = 'LuaJIT' },
+			},
+			workspace = {
+				checkThirdParty = false,
 			},
 		},
 	},

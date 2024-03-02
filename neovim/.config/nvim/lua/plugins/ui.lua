@@ -1,7 +1,7 @@
 return {
 
 	'stevearc/dressing.nvim',
-	{ 'j-hui/fidget.nvim', tag = 'legacy' },
+	{ 'j-hui/fidget.nvim', opts = {} },
 	{
 		'prichrd/netrw.nvim',
 		ft = 'netrw',
