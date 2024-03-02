@@ -11,16 +11,16 @@ xresources:
 nvim:
   type: colorscheme
   path: "~/.config/nvim/lua/user/colorscheme.lua"
-  regex: 'return ".*"'
-  replace: 'return "{}"'
+  regex: "return '.*'"
+  replace: "return '{}'"
   create: true
   cmd: "all_nvim 'colorscheme {}'"
 
 lualine:
   type: colorscheme
   path: "~/.config/nvim/lua/user/colorscheme_statusline.lua"
-  regex: 'return ".*"'
-  replace: 'return "{}"'
+  regex: "return '.*'"
+  replace: "return '{}'"
   create: true
   cmd: "all_nvim 'lua ReloadStatusline(\"{}\")'"
 

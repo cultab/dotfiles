@@ -17,22 +17,20 @@ solarized:
   wezterm: "Solarized Dark - Patched"
 
 tokyonight-night:
-  colorscheme: "tokyonight"
+  colorscheme: "tokyonight_night"
   nvim: "tokyonight-night"
-  xresources: "tokyonight_night"
 
 tokyonight-storm:
-  colorscheme: "tokyonight-storm"
-  xresources: "tokyonight_storm"
+  colorscheme: "tokyonight_storm"
+  nvim: "tokyonight-storm"
 
 tokyonight-moon:
-  colorscheme: "tokyonight-moon"
-  xresources: "tokyonight_moon"
-  xresources: "tokyonight_night"
+  colorscheme: "tokyonight_moon"
+  nvim: "tokyonight-moon"
 
 tokyonight-day:
-  colorscheme: "tokyonight-day"
-  xresources: "tokyonight_day"
+  colorscheme: "tokyonight_day"
+  nvim: "tokyonight-day"
 
 potato:
   colorscheme: "potato"
