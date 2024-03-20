@@ -107,3 +107,5 @@ export XBPS_DISTDIR="$HOME/repos/void-packages"
 
 # eval "$(pyenv init --path)"
 . "/home/evan/.local/share/cargo/env"
+
+if [ -e /home/evan/.nix-profile/etc/profile.d/nix.sh ]; then . /home/evan/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

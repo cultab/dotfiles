@@ -61,12 +61,14 @@ map '<leader>tc' { partial(vim.cmd.Telescope, 'todo-comments'), 'todo [c]omments
 
 map '<leader>l' { vim.cmd.Lazy, '[l]azy pkg manager' }
 
-map '<leader><space>' { vim.cmd.BufferLinePick, 'Pick Buffer' }
+map '<leader><space>' { "<Plug>(cokeline-pick-focus)", 'Pick Buffer' }
+map '<leader>x' { "<Plug>(cokeline-pick-close)", 'Pick Buffer to close' }
+map '<M-c>' { "<cmd>:bd<cr>", '[c]lose buffer' }
+map '<leader>X' { partial(vim.api.nvim_buf_delete, 0, {}), 'e[X]punge current buffer' }
 map '<leader>f' { partial(builtin.find_files, { follow = true, hidden = true }), '[f]ind files' }
 map '<leader>/' { partial(builtin.live_grep, { additional_args = { '--follow' } }), 'g[/]re/p' }
 map '<leader>h' { builtin.help_tags, 'search [h]elp tags' }
 map '<leader>n' { require('user.newfile').new_file, '[n]ew file' }
-map '<leader>x' { partial(vim.api.nvim_buf_delete, 0, {}), 'e[x]punge buffer' }
 map '<leader>u' { vim.cmd.UndotreeToggle, '[u]ndo tree' }
 map '<leader>e' { partial(vim.cmd.e, '.'), '[e]xplore files' }
 
@@ -223,15 +225,15 @@ end
 vim.cmd [[
 " barbar
 " Move to previous/next
-nnoremap <silent>    <A-,> :echo "Try \<leader\>b!"<CR>
-nnoremap <silent>    <A-.> :echo "Try \<leader\>b!!!"<CR>
+" nnoremap <silent>    <A-,> :echo "Try \<leader\>b!"<CR>
+" nnoremap <silent>    <A-.> :echo "Try \<leader\>b!!!"<CR>
 " nnoremap <silent>    <A-,> :BufferPrevious<CR>
 " nnoremap <silent>    <A-.> :BufferNext<CR>
 " Re-order to previous/next
-nnoremap <silent>    <A-[> :BufferMovePrevious<CR>
-nnoremap <silent>    <A-]> :BufferMoveNext<CR>
+" nnoremap <silent>    <A-[> :BufferMovePrevious<CR>
+" nnoremap <silent>    <A-]> :BufferMoveNext<CR>
 " Close buffer
-nnoremap <silent>    <A-c> :BufferClose<CR>
+" nnoremap <silent>    <A-c> :BufferClose<CR>
 
 ]]
 

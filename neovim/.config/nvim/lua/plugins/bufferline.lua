@@ -1,111 +1,188 @@
 local icons = require 'user.icons'
 
+---@alias Buffer table
+---@alias Component table
+
 return {
 	{
-		'akinsho/bufferline.nvim',
-		version = '*',
-		dependencies = 'nvim-tree/nvim-web-devicons',
+		'willothy/nvim-cokeline',
+		dependencies = {
+			'nvim-lua/plenary.nvim', -- Required for v0.4.0+
+			'nvim-tree/nvim-web-devicons',
+		},
+		version = false,
+		event = 'VeryLazy',
 		config = function()
-			local bl = require 'bufferline'
-			bl.setup {
-				options = {
-					-- style_preset = bl.style_preset.default,
-					-- separator_style = "slant",
-					-- numbers = 'none',
-					-- indicator = {
-					-- 	icon = icons.line.left_medium,
-					-- 	style = 'icon',
-					-- },
-					-- buffer_close_icon= icons.close,
-					-- modified_icon =  icons.file.modilied ,
-					-- diagnostics = false,
+			local coke = require 'cokeline'
+			local is_picking_focus = require('cokeline.mappings').is_picking_focus
+			local is_picking_close = require('cokeline.mappings').is_picking_close
+
+			local is_picking = function()
+				return is_picking_close() or is_picking_focus()
+			end
+
+			local get_hex = require('cokeline.hlgroups').get_hl_attr
+
+			local active = get_hex('TabLineSel', 'bg')
+			local inactive = get_hex('PmenuThumb', 'bg')
+
+			local normal = get_hex('Normal', 'fg')
+			local bg = get_hex('Normal', 'bg')
+
+			coke.setup {
+				---@type integer
+				show_if_buffers_are_at_least = 1,
+
+				buffers = {
+					-- A looser version of `filter_valid`, use this function if you still
+					-- want the `cokeline-{switch,focus}-{prev,next}` mappings to work for
+					---@type false | fun(buf: Buffer):boolean
+					filter_visible = function(buffer)
+						return not buffer.is_focused
+					end,
 				},
-				highlights = {
-					buffer_selected = {
-						italic = false,
+				default_hl = {
+					fg = function(buffer)
+						if buffer.is_focused then
+							return bg
+						else
+							return normal
+						end
+					end,
+
+					bg = function(buffer)
+						if buffer.is_focused then
+							return active
+						else
+							return inactive
+						end
+					end,
+
+					-- default: unset.
+					---@type nil | string | function(buffer): string,
+					sp = nil,
+
+					---@type nil | boolean | fun(buf: Buffer):boolean
+					bold = nil,
+					---@type nil | boolean | fun(buf: Buffer):boolean
+					italic = nil,
+					---@type nil | boolean | fun(buf: Buffer):boolean
+					underline = nil,
+					---@type nil | boolean | fun(buf: Buffer):boolean
+					undercurl = nil,
+					---@type nil | boolean | fun(buf: Buffer):boolean
+					strikethrough = nil,
+				},
+
+				-- The highlight group used to fill the tabline space
+				fill_hl = 'TabLineFill',
+
+				---@type Component[]
+				components = {
+					{
+						text = function(buffer)
+							local special_ft = {
+								TelescopePrompt = { name = 'Telescope', icon = icons.misc.term },
+								dashboard = { name = 'Dashboard', icon = icons.misc.dashboard },
+								oil = { name = 'Oil', icon = icons.misc.folder },
+								help = { icon = '󰞋' },
+								DressingInput = { name = 'Prompt', icon = '' },
+							}
+
+							if buffer.is_first then
+								local filename, icon
+								local s = special_ft[vim.bo.filetype]
+								if s ~= nil then
+									filename = s.name
+									icon = s.icon
+								end
+
+								if not filename then
+									filename = vim.fn.expand '%:t' or 'n/a'
+								end
+
+								if not icon then
+									icon = require('nvim-web-devicons').get_icon_by_filetype(vim.bo.filetype) or '[f]'
+								end
+
+								return ' ' .. icon .. ' ' .. filename .. ' ' .. icons.separator.left
+							else
+								return ''
+							end
+						end,
+						fg = bg,
+						bg = active,
 					},
-					numbers_selected = {
-						italic = false,
+					{
+						text = icons.separator.left,
+						fg = function(buffer)
+							if buffer.is_focused then
+								return active
+							else
+								return inactive
+							end
+						end,
+						bg = bg,
 					},
-					pick_selected = {
-						italic = false,
+					{
+						text = function(buffer)
+							if is_picking() then
+								return ' ' .. buffer.pick_letter .. ' '
+							else
+								return ' ' .. buffer.devicon.icon
+							end
+						end,
+						fg = function(buffer)
+							if is_picking() then
+								return vim.g.terminal_color_1
+							else
+								if buffer.is_focused then
+									return bg
+								else
+									return buffer.devicon.color
+								end
+							end
+						end,
+						bold = is_picking(),
 					},
-					pick_visible = {
-						italic = false,
+					{
+						text = function(buffer)
+							return buffer.unique_prefix
+						end,
+						fg = get_hex('Comment', 'fg'),
+						italic = true,
 					},
-					pick = {
-						italic = false,
+					{
+						text = function(buffer)
+							return buffer.filename .. ' '
+						end,
 					},
-				}
+					{
+						text = 'x',
+						on_click = function(_, _, _, _, buffer)
+							buffer:delete()
+						end,
+					},
+					{
+						text = ' ',
+					},
+					{
+						text = icons.separator.right,
+						fg = function(buffer)
+							if buffer.is_focused then
+								return active
+							else
+								return inactive
+							end
+						end,
+						bg = bg,
+					},
+					{
+						text = ' ',
+						bg = bg,
+					},
+				},
 			}
 		end,
 	},
-	-- 'romgrk/barbar.nvim',
-	-- event = 'VimEnter',
-	-- dependencies = { 'kyazdani42/nvim-web-devicons', opt = false },
-	-- init = function ()
-	-- 	vim.g.barbar_auto_setup = false
-	-- end,
-	-- opts = {
-	-- 	-- Enable/disable animations
-	-- 	animation = false,
-	--
-	-- 	-- Enable/disable auto-hiding the tab bar when there is a single buffer
-	-- 	auto_hide = false,
-	--
-	-- 	-- Enable/disable current/total tabpages indicator (top right corner)
-	-- 	tabpages = true,
-	--
-	-- 	-- Enable/disable close button
-	-- 	closable = true,
-	--
-	-- 	-- Enables/disable clickable tabs
-	-- 	--  - left-click: go to buffer
-	-- 	--  - middle-click: delete buffer
-	-- 	clickable = true,
-	--
-	-- 	-- Excludes buffers from the tabline
-	-- 	-- exclude_ft = {},
-	-- 	-- exclude_name = {},
-	--
-	-- 	-- Hide buffers
-	-- 	hide = { current = false, inactive = false, visible = false },
-	--
-	-- 	icons = {
-	-- 		filetype = { enabled = true },
-	-- 		separator = { left = icons.line.left_thick },
-	-- 		button = icons.close,
-	-- 		modified = { icons.file.modilied },
-	-- 		pinned = { icons.file.pinned },
-	-- 		inactive = { separator = { left = icons.line.left_medium } },
-	-- 	},
-	--
-	-- 	-- Default is to insert after current buffer.
-	-- 	insert_at_end = true,
-	-- 	insert_at_start = false,
-	--
-	-- 	-- Sets the maximum padding width with which to surround each tab
-	-- 	maximum_padding = 1,
-	--
-	-- 	-- Sets the minimum padding width with which to surround each tab
-	-- 	minimum_padding = 1,
-	--
-	-- 	-- Sets the maximum buffer name length.
-	-- 	maximum_length = 30,
-	--
-	-- 	-- If set, the letters for each buffer in buffer-pick mode will be
-	-- 	-- assigned based on their name. Otherwise or in case all letters are
-	-- 	-- already assigned, the behavior is to assign letters in order of
-	-- 	-- usability (see order below)
-	-- 	semantic_letters = true,
-	--
-	-- 	-- New buffer letters are assigned in this order. This order is
-	-- 	-- optimal for the qwerty keyboard layout but might need adjustement
-	-- 	-- for other layouts.
-	-- 	letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
-	--
-	-- 	-- Sets the name of unnamed buffers. By default format is "[Buffer X]"
-	-- 	-- where X is the buffer number. But only a static string is accepted here.
-	-- 	no_name_title = 'Unnamed buf',
-	-- },
 }

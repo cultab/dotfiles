@@ -47,13 +47,13 @@ local directions = {
 		name = "right side",
 		new = "right",
 		old = "left",
-		split = "right"
+		split = "right",
 	},
 	{
 		name = "below editor",
 		new = "down",
 		old = "up",
-		split = "bottom"
+		split = "bottom",
 	},
 }
 
@@ -69,6 +69,7 @@ end
 vim.api.nvim_create_user_command("CommandDirection", M.change_split_direction, {desc = "Toggles pane direction for running commands"})
 
 
+-- TODO: support Next/Prev by looking at the tab id
 local function weztermCli(subcmd)
 	local cli = "wezterm" .. suffix() .. " cli "
 	local pipe = io.popen(cli .. subcmd)

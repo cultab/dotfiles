@@ -81,7 +81,53 @@ local lsp_icons = {
 		TypeParameter = '  ',
 	},
 }
+
+local borders = {
+	square = {
+		top_left = '┌',
+		top_right = '┐',
+		bottom_left = '└',
+		bottom_right = '┘',
+		horizontal = '─',
+		vertical = '│',
+	},
+	round = {
+		top_left = '╭',
+		top_right = '╮',
+		bottom_left = '╰',
+		bottom_right = '╯',
+		horizontal = '─',
+		vertical = '│',
+	},
+}
+
+local separators = {
+	triangle = {
+		right = '',
+		left = '',
+	},
+}
+
+local diffs = {
+	outline = {
+		added = ' ',
+		modified = ' ',
+		removed = ' ',
+	},
+	bold = {
+		added = ' ',
+		modified = '  ',
+		removed = ' ',
+	},
+	cozette = {
+		added = ' ',
+		removed = ' ',
+		modified = ' ',
+	},
+}
+
 local icons = {
+	separator = separators.triangle,
 	diagnostic = {
 		error = ' ',
 		warn = ' ',
@@ -119,6 +165,8 @@ local icons = {
 		circle_dot = ' ',
 		circle_check = '󰄳 ',
 		dead = '󰚌 ',
+		folder = '󰉋 ',
+		dashboard = '󰕮 '
 	},
 	listchars = {
 		nbsp = '␣',
@@ -135,42 +183,9 @@ local icons = {
 	git = {
 		branch = ' ',
 	},
-	diff = {
-		outline = {
-			added = ' ',
-			modified = ' ',
-			removed = ' ',
-		},
-		bold = {
-			added = ' ',
-			modified = '  ',
-			removed = ' ',
-		},
-		cozette = {
-			added = ' ',
-			removed = ' ',
-			modilied = ' ',
-		},
-	},
+	diff = diffs.bold,
 	progress = { '██', '▇▇', '▆▆', '▅▅', '▄▄', '▃▃', '▂▂', '▁▁', '  ' },
-	border = {
-		square = {
-			top_left = '┌',
-			top_right = '┐',
-			bottom_left = '└',
-			bottom_right = '┘',
-			horizontal = '─',
-			vertical = '│',
-		},
-		round = {
-			top_left = '╭',
-			top_right = '╮',
-			bottom_left = '╰',
-			bottom_right = '╯',
-			horizontal = '─',
-			vertical = '│',
-		},
-	},
+	border = borders.round,
 	lazy = {
 		cmd = ' ',
 		config = '',
@@ -190,8 +205,7 @@ local icons = {
 		task = '✔ ',
 		list = { '●', '➜', '✭', '‒' },
 	},
+	lsp = lsp_icons.nerd,
 }
-
-icons.lsp = lsp_icons.nerd
 
 return icons
