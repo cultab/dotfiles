@@ -102,7 +102,6 @@ saga:
 
 oxocarbon:
   colorscheme: "oxocarbon"
-  nvim: "oxocarbon-lua"
 
 square ui:
   polybar: "square_modules"
