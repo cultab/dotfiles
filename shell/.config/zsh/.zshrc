@@ -77,7 +77,13 @@ csource() {
 }
 
 # csource ~/.config/zsh/transient_starship_prompt
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
+OHMYPOSH_THEME='emodipt-extend'
+# OHMYPOSH_THEME='bubbles'
+# OHMYPOSH_THEME='star'
+# OHMYPOSH_THEME='the-unnamed'
+#  "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/${OHMYPOSH_THEME}.omp.json"
+eval "$(oh-my-posh init zsh --config "~/.config/ohmyposh/themes/emodipt-extend.omp.json")"
 # eval $(thefuck --alias)
 
 csource ~/bin/exports
