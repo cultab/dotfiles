@@ -83,7 +83,7 @@ OHMYPOSH_THEME='emodipt-extend'
 # OHMYPOSH_THEME='star'
 # OHMYPOSH_THEME='the-unnamed'
 #  "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/${OHMYPOSH_THEME}.omp.json"
-eval "$(oh-my-posh init zsh --config "~/.config/ohmyposh/themes/emodipt-extend.omp.json")"
+# eval "$(oh-my-posh init zsh --config "~/.config/ohmyposh/themes/emodipt-extend.omp.json")"
 # eval $(thefuck --alias)
 
 csource ~/bin/exports
@@ -98,25 +98,29 @@ if [[ ! -f "$HOME/.local/share/miniplug.zsh" ]]; then
         -o $HOME/.local/share/miniplug.zsh
 fi
 
-# Add to zshrc:
+fpath=(~/.local/share/zsh/complete ~/.local/share/miniplug/spwhitt/nix-zsh-completions ~/.local/share/miniplug/sindresorhus/pure/ $fpath)
+
 source "$HOME/.local/share/miniplug.zsh"
 
 # miniplug plugin 'zsh-users/zsh-syntax-highlighting'
-# miniplug plugin 'spwhitt/nix-zsh-completions'
+# miniplug plugin 'spaceship-prompt/spaceship-prompt'
 # miniplug plugin 'se-jaeger/zsh-activate-py-environment'
+miniplug plugin 'spwhitt/nix-zsh-completions'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
 miniplug plugin 'zpm-zsh/colorize'
 miniplug plugin 'zdharma-continuum/fast-syntax-highlighting'
+miniplug plugin 'sindresorhus/pure'
 miniplug load
+
+autoload -U promptinit; promptinit
+prompt pure
 
 fast-theme --quiet XDG:overlay
 
 csource "$HOME/.local/zsh/wezterm.sh"
 
-
-fpath=(~/.local/share/zsh/complete ~/.local/share/miniplug/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
-# prompt_nix_shell_setup "$@"
+prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" ]]; then
 	(wezterm_reload &)
