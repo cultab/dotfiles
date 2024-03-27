@@ -183,7 +183,7 @@ local icons = {
 	git = {
 		branch = ' ',
 	},
-	diff = diffs.bold,
+	diff = diffs.cozette,
 	progress = { '██', '▇▇', '▆▆', '▅▅', '▄▄', '▃▃', '▂▂', '▁▁', '  ' },
 	border = borders.round,
 	lazy = {
@@ -205,7 +205,7 @@ local icons = {
 		task = '✔ ',
 		list = { '●', '➜', '✭', '‒' },
 	},
-	lsp = lsp_icons.nerd,
+	lsp = lsp_icons.cozette,
 }
 
 return icons

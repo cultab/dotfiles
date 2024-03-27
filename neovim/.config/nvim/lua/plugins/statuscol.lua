@@ -22,6 +22,7 @@ return {
 	{
 		'luukvbaal/statuscol.nvim',
 		branch = '0.10',
+		-- enabled = false,
 		config = function()
 			local builtin = require 'statuscol.builtin'
 			require('statuscol').setup {
