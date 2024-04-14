@@ -122,7 +122,7 @@ csource "$HOME/.local/zsh/wezterm.sh"
 autoload -U compinit && compinit
 prompt_nix_shell_setup "$@"
 
-if [[ "$WSL_DISTRO_NAME" ]]; then
+if [[ "$WSL_DISTRO_NAME" && ! $(pgrep wezterm_reload) ]]; then
 	(wezterm_reload &)
 #     pkill -9 oneterm_reload; oneterm_reload & disown
 fi

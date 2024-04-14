@@ -30,7 +30,7 @@ config.ssh_domains = { {
 } }
 
 config.term = "wezterm"
-config.default_domain = "WSL:void" and hostname() == "wsl" or nil
+config.default_domain = "SSH:void" and hostname() == "wsl" or nil
 
 local name
 -- name = "Cozette"
