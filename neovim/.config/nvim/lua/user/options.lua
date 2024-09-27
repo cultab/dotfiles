@@ -33,8 +33,19 @@ vim.opt.undodir:remove('.')
 vim.opt.swapfile = false
 
 -- Misc Settings
-vim.opt.clipboard:prepend { "unnamedplus" }
-if vim.env.WSL then
+if vim.fn.hostname() == "winbox" then
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+      },
+      paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+      },
+    }
+elseif vim.env.WSL then
 	vim.g.clipboard = {
 		name = 'WslClipboard',
 		copy = {
@@ -47,6 +58,8 @@ if vim.env.WSL then
 		},
 		cache_enabled = 0,
 	}
+else
+vim.opt.clipboard:prepend { "unnamedplus" }
 end
 
 vim.opt.updatetime    = 50 -- ms

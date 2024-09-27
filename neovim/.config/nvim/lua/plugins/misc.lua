@@ -59,6 +59,9 @@ lua= vim.lsp.get_active_clients({ name = "lua_ls" })[1].config.settings.Lua
 		'kovetskiy/sxhkd-vim',
 		ft = { 'sxhkd' },
 	},
+	{
+		"ojroques/vim-oscyank",
+	}
 	-- {
 	--     "m4xshen/hardtime.nvim",
 	--     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },

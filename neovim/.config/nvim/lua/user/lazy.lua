@@ -26,7 +26,14 @@ require('lazy').setup {
 		version = '*', -- latest tagged
 		--version = false, -- latest commit
 	},
-	install = {
+	 dev = {
+    ---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
+    path = "~/repos",
+    ---@type string[] plugins that match these patterns will use your local versions instead of being fetched from GitHub
+    patterns = {}, -- For example {"folke"}
+    fallback = false, -- Fallback to git when local plugin doesn't exist
+},
+install = {
 		missing = true,
 		colorscheme = { require 'user.colorscheme' },
 	},

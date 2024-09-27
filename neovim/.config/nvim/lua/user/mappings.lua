@@ -44,10 +44,10 @@ map 'H' { 'g^', 'Goto Line Beginning', 'nv' }
 map 'L' { 'g$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
-map '<leader>cc' { require('user.command').run_command, 'shell [c]ommand' }
-map '<leader>cl' { require('user.command').run_last_command, 'repeat [l]ast command' }
-map '<leader>cr' { require('user.command').run_current_file, '[r]un current file' }
-map '<leader>ct' { require('user.command').change_direction, '[t]oggle pane direction'}
+map '<leader>cc' { require('command').run_command, 'shell [c]ommand' }
+map '<leader>cl' { require('command').run_last_command, 'repeat [l]ast command' }
+map '<leader>cr' { require('command').run_current_file, '[r]un current file' }
+map '<leader>ct' { require('command').change_direction, '[t]oggle pane direction'}
 
 map '<leader>o' { require('user.configs').config_picker, '[o]pen config picker' }
 

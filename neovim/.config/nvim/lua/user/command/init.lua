@@ -164,5 +164,4 @@ M.run_current_file = function()
 	::exit::
 end
 
-M.setup({use = "tmux"})
 return M

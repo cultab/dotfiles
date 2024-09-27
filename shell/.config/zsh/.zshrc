@@ -12,6 +12,7 @@ SAVEHIST=1000000
 mkdir -p $(dirname "$HISTFILE")
 HISTORY_IGNORE='(cd|ls *|ls|q|bg|fg|history *|history|clear|exec zsh|gs)'
 
+setopt INTERACTIVE_COMMENTS      # Use '#' for comments, even in interactive mode
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 # setopt EXTENDED_HISTORY        # Write the history file in the ":start:elapsed;command" format.
 # setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.

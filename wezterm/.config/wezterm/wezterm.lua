@@ -30,15 +30,16 @@ config.ssh_domains = { {
 } }
 
 config.term = "wezterm"
-config.default_domain = "SSH:void" and hostname() == "wsl" or nil
+config.default_domain = hostname() == "winbox" and "SSH:void" or nil
 
 local name
+name = "Hermit"
 -- name = "Cozette"
 -- name = "CozetteHiDpi"
 -- name = "CozetteVector"
 -- name = "Iosevka Term"
 -- name = "Terminus (TTF)"
-name = "Monaspace"
+-- name = "Monaspace"
 
 -- For Cozette
 if name:find("Cozette") then
@@ -256,7 +257,7 @@ wezterm.on("ActivatePaneDirection-down", function(window, pane)
 	conditionalActivatePane(window, pane, "Down", "j")
 end)
 
-if hostname() == "wsl" then
+if hostname() == "winbox" then
 	config.font_dirs = { "C:/Users/evan/.local/share/fonts" }
 	wezterm.on(
 		"format-tab-title",
@@ -279,7 +280,7 @@ end
 wezterm.on("update-status", function(window, pane)
 	local host_icon
 	local h = hostname()
-	if h == "wsl" then
+	if h == "winbox" then
 		host_icon = wezterm.nerdfonts.dev_windows
 	elseif h == "void" then
 		host_icon = wezterm.nerdfonts.linux_void

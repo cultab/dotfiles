@@ -1,6 +1,7 @@
 return {
 	{
-		'numToStr/Navigator.nvim',
+		'cultab/Navigator.nvim',
+		dev = true,
 		version = false,
 		cmd = { 'NavigatorLeft', 'NavigatorDown', 'NavigatorUp', 'NavigatorRight' },
 		opts = {
