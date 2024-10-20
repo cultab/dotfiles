@@ -35,7 +35,7 @@ config.default_domain = hostname() == "winbox" and "SSH:void" or nil
 local name
 name = "Hermit"
 -- name = "Cozette"
--- name = "CozetteHiDpi"
+name = "CozetteHiDpi"
 -- name = "CozetteVector"
 -- name = "Iosevka Term"
 -- name = "Terminus (TTF)"
@@ -63,6 +63,26 @@ if name:find("Cozette") then
 			}),
 		},
 	}
+    -- disable italics and bold :(, :)
+    config.font_rules = {
+        {
+            italic = true,
+            font = wezterm.font {
+                family = name,
+                weight = 'Bold',
+                style = 'Normal',
+            },
+        },
+        {
+            italic = false,
+            intensity = "Bold",
+            font = wezterm.font {
+                family = name,
+                weight = "Regular",
+                style = "Normal",
+            }
+        },
+    }
 
 	-- default to size for normal cozette
 	config.font_size = 6

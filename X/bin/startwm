@@ -50,11 +50,12 @@ xautolock \
 # daemons
 appimaged &
 pipewire &
+pipewire-pulse &
 plank &
 poweralertd &
 
 
-flatpak run com.discordapp.Discord &
+# flatpak run com.discordapp.Discord &
 
 # sys-tray
 blueman-applet &
@@ -63,6 +64,9 @@ udiskie --tray &
 syncthingtray &
 keepassxc &
 megasync &
+
+# HACK: fixes xcursor not using theme
+(lxappearance & sleep 5 && pkill lxappearance) &
 
 # xrandr --output HDMI1 --mode 1920x1080 --right-of LVDS1
 # xrandr --output LVDS1 --mode 1600x900 
