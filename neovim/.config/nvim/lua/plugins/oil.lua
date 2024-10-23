@@ -1,5 +1,6 @@
 return {
 	'stevearc/oil.nvim',
+	cmd = 'Oil',
 	config = function()
 		local oil = require 'oil'
 		oil.setup {

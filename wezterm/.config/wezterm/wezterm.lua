@@ -30,7 +30,7 @@ config.ssh_domains = { {
 } }
 
 config.term = "wezterm"
-config.default_domain = hostname() == "winbox" and "SSH:void" or nil
+config.default_domain = hostname() == "winbox" and "WSL:void" or nil
 
 local name
 name = "Hermit"

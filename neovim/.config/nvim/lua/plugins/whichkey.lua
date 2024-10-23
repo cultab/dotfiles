@@ -2,11 +2,12 @@ return {
 	{
 		'folke/which-key.nvim',
 		opts = {
+			preset = "helix",
 			plugins = {
 				spelling = { enabled = true },
 			},
-			show_help = false, -- for Noice
-			show_keys = false,
+			show_help = true, -- for Noice
+			show_keys = true,
 		},
 	},
 }

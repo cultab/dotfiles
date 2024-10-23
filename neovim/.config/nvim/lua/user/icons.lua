@@ -1,3 +1,5 @@
+local cozette = false
+
 local lsp_icons = {
 	cozette = {
 		Text = '󰉿', --   󰉿
@@ -183,7 +185,7 @@ local icons = {
 	git = {
 		branch = ' ',
 	},
-	diff = diffs.cozette,
+	diff = diffs.bold,
 	progress = { '██', '▇▇', '▆▆', '▅▅', '▄▄', '▃▃', '▂▂', '▁▁', '  ' },
 	border = borders.round,
 	lazy = {
@@ -205,7 +207,12 @@ local icons = {
 		task = '✔ ',
 		list = { '●', '➜', '✭', '‒' },
 	},
-	lsp = lsp_icons.cozette,
+	lsp = lsp_icons.nerd,
 }
+
+if cozette then
+	icons.lsp = lsp_icons.cozette
+	icons.diff = diffs.cozette
+end
 
 return icons

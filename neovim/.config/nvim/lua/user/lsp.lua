@@ -3,47 +3,48 @@ local utils = require 'user.mason_utils'
 local lspconfig = require 'lspconfig'
 local toMason = require('mason-lspconfig').get_mappings().lspconfig_to_mason
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = {}
 
 local servers = {
 	-- jedi_language_server = {},
 	rust_analyzer = {},
 	jedi_language_server = {},
-	pylsp = {
-		settings = {
-			pylsp = {
-				plugins = {
-					pydocstyle = {
-						enabled = true,
-						ignore = {
-							'D101',
-							'D102',
-							'D103',
-							'D105',
-							'D203',
-							'D107',
-							'D100',
-							'D212',
-						},
-					},
-					mypy = { enabled = true },
-					pylint = {
-						enabled = false,
-						ignore = {
-							'C0116',
-							'C0114',
-						},
-					},
-					jedi_completion = { enabled = true },
-					rope_completion = {
-						enabled = false,
-						eager = true,
-					},
-					isort = { enabled = true },
-				},
-			},
-		},
-	},
+	-- pylsp = {
+	-- 	settings = {
+	-- 		pylsp = {
+	-- 			plugins = {
+	-- 				pydocstyle = {
+	-- 					enabled = true,
+	-- 					ignore = {
+	-- 						'D101',
+	-- 						'D102',
+	-- 						'D103',
+	-- 						'D105',
+	-- 						'D203',
+	-- 						'D107',
+	-- 						'D100',
+	-- 						'D212',
+	-- 					},
+	-- 				},
+	-- 				mypy = { enabled = true },
+	-- 				pylint = {
+	-- 					enabled = false,
+	-- 					ignore = {
+	-- 						'C0116',
+	-- 						'C0114',
+	-- 					},
+	-- 				},
+	-- 				jedi_completion = { enabled = true },
+	-- 				rope_completion = {
+	-- 					enabled = false,
+	-- 					eager = true,
+	-- 				},
+	-- 				isort = { enabled = true },
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	-- pylyzer = {},
 	-- tsserver = {
 	--     filetype = { "js", "ts" },
@@ -137,15 +138,15 @@ local handlers = {
 }
 
 local on_attach = function()
-	require('lsp_signature').on_attach {
-		bind = true,
-		doc_lines = 0,
-		hint_enable = true,
-		hint_prefix = ' ', -- TODO: replace with user.icons reference
-		handler_opts = {
-			border = 'rounded', -- double, rounded, single, shadow, none, or a table of borders
-		},
-	}
+	-- require('lsp_signature').on_attach {
+	-- 	bind = true,
+	-- 	doc_lines = 0,
+	-- 	hint_enable = true,
+	-- 	hint_prefix = ' ', -- TODO: replace with user.icons reference
+	-- 	handler_opts = {
+	-- 		border = 'rounded', -- double, rounded, single, shadow, none, or a table of borders
+	-- 	},
+	-- }
 
 	require('user.mappings').set_lsp_mappings()
 	vim.lsp.inlay_hint.enable()

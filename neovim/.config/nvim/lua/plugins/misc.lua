@@ -42,7 +42,7 @@ lua= vim.lsp.get_active_clients({ name = "lua_ls" })[1].config.settings.Lua
 				ft.set(lang, { '//%s', '/*%s*/' }).set('conf', '#%s')
 			end
 		end,
-		event = 'BufRead',
+		keys = { 'gcc', 'gc' }
 	},
 	{
 		'windwp/nvim-ts-autotag',

@@ -9,7 +9,8 @@ local icons = require 'user.icons'
 -- vim.g.ts_highlight_lua = true
 -- vim.opt.pumblend = 20 -- pseudo transparency for popup windows
 
-vim.o.foldtext = require('user.foldfunc').lua_global_func
+-- vim.o.foldtext = require('user.foldfunc').lua_global_func
+vim.o.foldtext = ''
 vim.o.termguicolors = true
 vim.o.laststatus = 3
 

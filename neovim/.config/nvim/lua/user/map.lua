@@ -82,13 +82,9 @@ M.map = setmetatable({}, {
 					buffer = buffer,
 				})
 			else -- which-key group name
-				-- set the mapping for each mode
-				for mode in pairs(modes) do
-					wk.register {
-						{ [key] = { name = description } },
-						{ mode = mode },
-					}
-				end
+				wk.add {
+					{ key, group = description, mode = modes },
+				}
 			end
 		end
 	end,

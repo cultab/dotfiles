@@ -35,7 +35,7 @@ require('lazy').setup {
 },
 install = {
 		missing = true,
-		colorscheme = { require 'user.colorscheme' },
+		-- colorscheme = { require 'user.colorscheme' },
 	},
 	change_detection = {
 		enabled = true,

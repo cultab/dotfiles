@@ -1,8 +1,7 @@
 local M = {}
 
 local partial = require('user.util').partial
-local luasnip = require 'luasnip'
-local builtin = require 'telescope.builtin'
+-- local luasnip = require 'luasnip'
 
 -- load my mapping DSL
 local map = require('user.map').map
@@ -29,11 +28,7 @@ map 'x' { '"_x' }
 --  I never use Ex mode, so re-run macros instead
 map 'Q' { '@@' }
 
-map '<leader>=' {
-	partial(require('conform').format, { async = true, lsp_fallback = true }),
-	'format buffer [Conform]',
-	'nv',
-}
+map '<leader>=' { '<Plug>Format', 'format buffer [Conform]', 'nv' }
 
 -- sane movement through wrapping lines
 -- NOTE: checks v:count so relative jumps still work :^)
@@ -44,33 +39,33 @@ map 'H' { 'g^', 'Goto Line Beginning', 'nv' }
 map 'L' { 'g$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
-map '<leader>cc' { require('command').run_command, 'shell [c]ommand' }
-map '<leader>cl' { require('command').run_last_command, 'repeat [l]ast command' }
-map '<leader>cr' { require('command').run_current_file, '[r]un current file' }
-map '<leader>ct' { require('command').change_direction, '[t]oggle pane direction'}
+map '<leader>cc' { vim.cmd.CommandRun, 'shell [c]ommand' }
+map '<leader>cl' { vim.cmd.CommandLast, 'repeat [l]ast command' }
+map '<leader>cr' { vim.cmd.CommandFile, '[r]un current file' }
+map '<leader>ct' { vim.cmd.CommandChangeDirection, '[t]oggle pane direction' }
 
 map '<leader>o' { require('user.configs').config_picker, '[o]pen config picker' }
 
 map '<leader>t' { nil, '[t]ext/[t]elescope', 'nv' }
 map '<leader>tt' { ':Tabularize<space>/', '[t]abularize', 'v' }
 map '<leader>te' { vim.cmd.EasyAlign, '[e]asy align', 'v' }
-map '<leader>te' { require('telescope').extensions.emoji.emoji, '[e]moji picker' }
-map '<leader>tk' { builtin.keymaps, '[k]eymaps' }
+map '<leader>te' { partial(vim.cmd.Telescope, 'emoji'), '[e]moji picker' }
+map '<leader>tk' { partial(vim.cmd.Telescope, 'keymaps'), '[k]eymaps' }
 map '<leader>tn' { vim.cmd.Nerdy, '[n]erdfont Symbols' }
 map '<leader>tc' { partial(vim.cmd.Telescope, 'todo-comments'), 'todo [c]omments' }
 
 map '<leader>l' { vim.cmd.Lazy, '[l]azy pkg manager' }
 
-map '<leader><space>' { "<Plug>(cokeline-pick-focus)", 'Pick Buffer' }
-map '<leader>x' { "<Plug>(cokeline-pick-close)", 'Pick Buffer to close' }
-map '<M-c>' { "<cmd>:bd<cr>", '[c]lose buffer' }
+map '<leader><space>' { '<Plug>(cokeline-pick-focus)', 'Pick Buffer' }
+map '<leader>x' { '<Plug>(cokeline-pick-close)', 'Pick Buffer to close' }
+map '<M-c>' { vim.cmd.bdelete, '[c]lose buffer' }
 map '<leader>X' { partial(vim.api.nvim_buf_delete, 0, {}), 'e[X]punge current buffer' }
-map '<leader>f' { partial(builtin.find_files, { follow = true, hidden = true }), '[f]ind files' }
-map '<leader>/' { partial(builtin.live_grep, { additional_args = { '--follow' } }), 'g[/]re/p' }
-map '<leader>h' { builtin.help_tags, 'search [h]elp tags' }
+map '<leader>f' { partial(vim.cmd.Telescope, 'find_files', 'follow=true', 'hidden=true'), '[f]ind files' }
+map '<leader>/' { function() require('telescope.builtin').live_grep({ additional_args='--follow' }) end, 'g[/]re/p' }
+map '<leader>h' { partial(vim.cmd.Telescope, 'help_tags'), 'search [h]elp tags' }
 map '<leader>n' { require('user.newfile').new_file, '[n]ew file' }
 map '<leader>u' { vim.cmd.UndotreeToggle, '[u]ndo tree' }
-map '<leader>e' { partial(vim.cmd.e, '.'), '[e]xplore files' }
+map '<leader>e' { vim.cmd.Oil, '[e]xplore files' }
 
 map '<leader>g' { nil, '[g]it' }
 map '<leader>ga' { partial(vim.cmd.Gitsigns, 'stage_hunk'), '[a]dd hunk' }
@@ -79,8 +74,8 @@ map '<leader>gr' { partial(vim.cmd.Gitsigns, 'reset_hunk'), '[r]eset hunk' }
 map '<leader>gR' { partial(vim.cmd.Gitsigns, 'reset_buffer'), '[R]eset buffer' }
 map '<leader>gv' { partial(vim.cmd.Gitsigns, 'preview_hunk'), '[v]iew hunk' }
 map '<leader>gb' { partial(vim.cmd.Gitsigns, 'blame_line'), '[b]lame line' }
-map '<leader>gc' { require('tinygit').smartCommit, '[c]ommit changes' }
-map '<leader>gp' { require('tinygit').push, '[p]ush commits' }
+map '<leader>gc' { function() require('tinygit').smartCommit() end, '[c]ommit changes' }
+map '<leader>gp' { function() require('tinygit').push() end, '[p]ush commits' }
 
 map '<M-h>' { vim.cmd.NavigatorLeft }
 map '<M-j>' { vim.cmd.NavigatorDown }
@@ -125,8 +120,8 @@ map 'K' {
 map '[d' { vim.diagnostic.goto_prev, 'previous [d]iagnostic' }
 map ']d' { vim.diagnostic.goto_next, 'next [d]iagnostic' }
 map '<leader>d' { partial(vim.diagnostic.open_float, nil, { focusable = false }), 'Show line diagnostics' }
-map '<leader>q' { builtin.loclist, 'open lo[q]list' } -- not actually called lo'q'list :^)
-map '<leader>Q' { builtin.quickfix, 'open [Q]uickfix' }
+map '<leader>q' { partial(vim.cmd.Telescope, 'loclist'), 'open lo[q]list' } -- not actually called lo'q'list :^)
+map '<leader>Q' { partial(vim.cmd.Telescope, 'quickfix'), 'open [Q]uickfix' }
 
 function M.set_lsp_mappings()
 	map 'gD' {
@@ -143,9 +138,9 @@ function M.set_lsp_mappings()
 		end,
 		'[g]oto [d]efinition [LSP]',
 	}
-	map 'gi' { builtin.lsp_implementations, '[g]oto [i]mplementation [LSP]' }
-	map 'gr' { builtin.lsp_references, '[g]oto [r]eferences [LSP]' }
-	map '<leader>D' { builtin.lsp_definitions, 'Show type [d]efinition [LSP]' }
+	map 'gi' { partial(vim.cmd.Telescope, 'lsp_implementations'), '[g]oto [i]mplementation [LSP]' }
+	map 'gr' { partial(vim.cmd.Telescope, 'lsp_references'), '[g]oto [r]eferences [LSP]' }
+	map '<leader>D' { partial(vim.cmd.Telescope, 'lsp_definitions'), 'Show type [d]efinition [LSP]' }
 	map '<leader>r' { vim.lsp.buf.rename, '[r]ename symbol [LSP]' }
 	map '<A-CR>' { vim.lsp.buf.code_action, 'Code Action [LSP]' }
 end
@@ -186,29 +181,25 @@ function M.get_cmp_mappings()
 	-- map '<C-u>' { function() if not require("cmp").scroll_docs(-4) then return "<C-u>" end end, "Scroll documentation up", expr = true }
 end
 
-map '<C-n>' {
-	function()
-		luasnip.jump(1)
-	end,
-	'Next snippet node',
-	'is',
-}
-map '<C-p>' {
-	function()
-		luasnip.jump(-1)
-	end,
-	'Prev snippet node',
-	'is',
-}
-map '<C-e>' {
-	function()
-		if luasnip.choice_active() then
-			luasnip.change_choice(1)
-		end
-	end,
-	'Prev snippet node',
-	'is',
-}
+-- map '<C-n>' {
+-- 		partial(luasnip.jump, 1)
+-- 	'Next snippet node',
+-- 	'is',
+-- }
+-- map '<C-p>' {
+-- 		partial(luasnip.jump, -1)
+-- 	'Prev snippet node',
+-- 	'is',
+-- }
+-- map '<C-e>' {
+-- 	function()
+-- 		if luasnip.choice_active() then
+-- 			luasnip.change_choice(1)
+-- 		end
+-- 	end,
+-- 	'Prev snippet node',
+-- 	'is',
+-- }
 
 function M.set_welcome_mappings()
 	map 'q' { vim.cmd.q, '[q]uit', 'nv', buffer = true }

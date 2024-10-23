@@ -1,6 +1,6 @@
-local skip = function(plugin)
-	return ''
-end
+-- local skip = function(plugin)
+-- 	return nil
+-- end
 
 local lazy = function(plug)
 	local plugin = {}
@@ -17,7 +17,10 @@ local lazy = function(plug)
 end
 
 local colors = {
-	lazy { dir = '~/repos/uniwa.nvim' },
+	'tjdevries/colorbuddy.nvim',
+	'rktjmp/lush.nvim',
+	lazy 'diegoulloao/neofusion.nvim',
+	lazy { 'UniWa-Community/uniwa.nvim', dev = true },
 	'rktjmp/shipwright.nvim',
 	lazy {
 		'catppuccin/nvim',
@@ -53,13 +56,10 @@ local colors = {
 	lazy 'shaunsingh/solarized.nvim',
 	lazy 'Reewr/vim-monokai-phoenix',
 	lazy 'cultab/potato-colors',
-	skip 'lifepillar/vim-solarized8',
-	skip 'lifepillar/vim-gruvbox8',
+	-- skip 'lifepillar/vim-solarized8',
+	-- skip 'lifepillar/vim-gruvbox8',
 	-- low contrast
-	lazy {
-		'2nthony/vitesse.nvim',
-		dependencies = { 'tjdevries/colorbuddy.nvim' },
-	},
+	lazy '2nthony/vitesse.nvim',
 	-- high constrast
 	lazy 'bluz71/vim-moonfly-colors',
 	lazy 'ntk148v/vim-horizon',
@@ -74,7 +74,6 @@ local colors = {
 	lazy 'eddyekofo94/gruvbox-flat.nvim',
 	lazy {
 		'npxbr/gruvbox.nvim',
-		dependencies = { 'rktjmp/lush.nvim' },
 	},
 	-- vscode
 	lazy 'Mofiqul/vscode.nvim',
