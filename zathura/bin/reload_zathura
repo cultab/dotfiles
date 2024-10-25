@@ -28,8 +28,10 @@ color3=$(echo "$DB" | grep 'color3:' | cut -f 2 -d ':' | sed 's/\t//')
 background=$(echo "$DB" | grep '\*background:' | cut -f 2 -d ':' | sed 's/\t//')
 foreground=$(echo "$DB" | grep '\*foreground:' | cut -f 2 -d ':' | sed 's/\t//')
 
-rm -f ~/.config/zathura/zathurarc
-cat <<CONF > ~/.config/zathura/zathurarc
+rm -f $XDG_CONFIG_HOME/zathura/zathurarc
+mkdir -p $XDG_CONFIG_HOME/zathura
+cat <<CONF > $XDG_CONFIG_HOME/zathura/zathurarc
+>>>>>>> Stashed changes
 set completion-bg "$background"
 set completion-fg "$foreground"
 set completion-group-bg "$background"
