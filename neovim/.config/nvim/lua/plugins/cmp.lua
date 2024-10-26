@@ -94,34 +94,33 @@ return {
 			cmp.event:on('confirm_done', autopairs.on_confirm_done { map_char = { tex = '' } })
 		end,
 		event = { 'InsertEnter', 'CmdlineEnter' },
-		dependencies = {
-			{ 'saadparwaiz1/cmp_luasnip', lazy = true },
-			{
-				'L3MON4D3/LuaSnip',
-				dependencies = { 'rafamadriz/friendly-snippets' },
-				config = function()
-					require('luasnip.loaders.from_vscode').lazy_load()
-				end,
-			},
-			{ 'hrsh7th/cmp-nvim-lsp', lazy = true },
-			{ 'hrsh7th/cmp-buffer', lazy = true },
-			{ 'hrsh7th/cmp-path', lazy = true },
-			{ 'hrsh7th/cmp-cmdline', lazy = true },
-			{ 'f3fora/cmp-spell', lazy = true },
-			{ 'jc-doyle/cmp-pandoc-references', lazy = true },
-			{ 'kdheepak/cmp-latex-symbols', lazy = true },
-			{ 'andersevenrud/cmp-tmux', lazy = true },
-			{
-				'tamago324/cmp-zsh',
-				lazy = true,
-				opts = {
-					zshrc = true, -- Source the zshrc (adding all custom completions). default: false
-					filetypes = { 'deoledit', 'zsh', 'bash', 'fish', 'sh' }, -- Filetypes to enable cmp_zsh source. default: {"*"}
-				},
-			},
-			{ 'cultab/cmp-conventionalcommits', lazy = true }, -- my fork with less features :^)
+	},
+	{ 'hrsh7th/cmp-nvim-lsp', lazy = true },
+	{ 'hrsh7th/cmp-buffer', lazy = true },
+	{ 'hrsh7th/cmp-path' },
+	{ 'hrsh7th/cmp-cmdline', lazy = true },
+	{ 'f3fora/cmp-spell', lazy = true },
+	{ 'jc-doyle/cmp-pandoc-references', lazy = true },
+	{ 'kdheepak/cmp-latex-symbols', lazy = true },
+	{ 'andersevenrud/cmp-tmux', lazy = true },
+	{
+		'tamago324/cmp-zsh',
+		lazy = true,
+		opts = {
+			zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+			filetypes = { 'deoledit', 'zsh', 'bash', 'fish', 'sh' }, -- Filetypes to enable cmp_zsh source. default: {"*"}
 		},
 	},
+	{ 'cultab/cmp-conventionalcommits', lazy = true }, -- my fork with less features :^)
+	{ 'saadparwaiz1/cmp_luasnip', lazy = true },
+	{
+		'L3MON4D3/LuaSnip',
+		dependencies = { 'rafamadriz/friendly-snippets' },
+		config = function()
+			require('luasnip.loaders.from_vscode').lazy_load()
+		end,
+	},
+
 	{
 		'ray-x/lsp_signature.nvim',
 		version = false,

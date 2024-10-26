@@ -9,40 +9,34 @@ return {
 lua= vim.lsp.get_active_clients({ name = "lua_ls" })[1].config.settings.Lua
 --]]
 		'folke/neodev.nvim',
-		opts = { },
+		opts = {},
 	},
 	{
-		'godlygeek/tabular',
-		cmd = 'Tabularize',
+		'OXY2DEV/helpview.nvim',
+		lazy = false,
 	},
 	{
-		'lsvmello/elastictabstops.nvim',
-		cmds = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
-		config = true,
+		'echasnovski/mini.align',
+		version = '*',
+		opts = {},
 	},
 	{
-		'junegunn/vim-easy-align',
-		cmd = 'EasyAlign',
-	},
-	{
-		'machakann/vim-sandwich',
-		event = 'InsertEnter',
-	},
-	{
-		'numToStr/Comment.nvim',
-		config = function()
-			require('Comment').setup()
-			local ft = require 'Comment.ft'
-
-			-- // for single line and /* */ for blocks
-			-- in languages that both comment styles
-			local langs = { 'c', 'cpp', 'cuda', 'javascript', 'typescript' }
-
-			for _, lang in ipairs(langs) do
-				ft.set(lang, { '//%s', '/*%s*/' }).set('conf', '#%s')
-			end
-		end,
-		keys = { 'gcc', 'gc' }
+		'kylechui/nvim-surround',
+		opts = {
+			keymaps = {
+				-- insert = '<C-g>s',
+				-- insert_line = '<C-g>S',
+				normal = 's',
+				normal_cur = 'ss',
+				normal_line = 'S',
+				normal_cur_line = 'ySS',
+				visual = 'S',
+				visual_line = 'gS',
+				delete = 'ds',
+				change = 'cs',
+				change_line = 'cS',
+			},
+		},
 	},
 	{
 		'windwp/nvim-ts-autotag',
@@ -60,8 +54,8 @@ lua= vim.lsp.get_active_clients({ name = "lua_ls" })[1].config.settings.Lua
 		ft = { 'sxhkd' },
 	},
 	{
-		"ojroques/vim-oscyank",
-	}
+		'ojroques/vim-oscyank',
+	},
 	-- {
 	--     "m4xshen/hardtime.nvim",
 	--     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },

@@ -39,16 +39,16 @@ map 'H' { 'g^', 'Goto Line Beginning', 'nv' }
 map 'L' { 'g$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
-map '<leader>cc' { vim.cmd.CommandRun, 'shell [c]ommand' }
-map '<leader>cl' { vim.cmd.CommandLast, 'repeat [l]ast command' }
-map '<leader>cr' { vim.cmd.CommandFile, '[r]un current file' }
-map '<leader>ct' { vim.cmd.CommandChangeDirection, '[t]oggle pane direction' }
+map '<leader>cc' { partial(vim.cmd.Command, "Run"), 'shell [c]ommand' }
+map '<leader>cl' { partial(vim.cmd.Command, "Last"), 'repeat [l]ast command' }
+map '<leader>cr' { partial(vim.cmd.Command, "File"), '[r]un current file' }
+map '<leader>ct' { partial(vim.cmd.Command, "ChangeDirection"), '[t]oggle pane direction' }
 
 map '<leader>o' { require('user.configs').config_picker, '[o]pen config picker' }
 
 map '<leader>t' { nil, '[t]ext/[t]elescope', 'nv' }
-map '<leader>tt' { ':Tabularize<space>/', '[t]abularize', 'v' }
-map '<leader>te' { vim.cmd.EasyAlign, '[e]asy align', 'v' }
+-- map '<leader>tt' { ':Tabularize<space>/', '[t]abularize', 'v' }
+-- map '<leader>te' { vim.cmd.EasyAlign, '[e]asy align', 'v' }
 map '<leader>te' { partial(vim.cmd.Telescope, 'emoji'), '[e]moji picker' }
 map '<leader>tk' { partial(vim.cmd.Telescope, 'keymaps'), '[k]eymaps' }
 map '<leader>tn' { vim.cmd.Nerdy, '[n]erdfont Symbols' }
@@ -60,7 +60,7 @@ map '<leader><space>' { '<Plug>(cokeline-pick-focus)', 'Pick Buffer' }
 map '<leader>x' { '<Plug>(cokeline-pick-close)', 'Pick Buffer to close' }
 map '<M-c>' { vim.cmd.bdelete, '[c]lose buffer' }
 map '<leader>X' { partial(vim.api.nvim_buf_delete, 0, {}), 'e[X]punge current buffer' }
-map '<leader>f' { partial(vim.cmd.Telescope, 'find_files', 'follow=true', 'hidden=true'), '[f]ind files' }
+map '<leader>f' { partial(vim.cmd.Telescope, 'find_files', 'follow=true', 'hidden=false'), '[f]ind files' }
 map '<leader>/' { function() require('telescope.builtin').live_grep({ additional_args='--follow' }) end, 'g[/]re/p' }
 map '<leader>h' { partial(vim.cmd.Telescope, 'help_tags'), 'search [h]elp tags' }
 map '<leader>n' { require('user.newfile').new_file, '[n]ew file' }

@@ -1,7 +1,27 @@
 return {
 	{
+		'rachartier/tiny-inline-diagnostic.nvim',
+		event = 'VeryLazy', -- Or `LspAttach`
+		config = function()
+			require('tiny-inline-diagnostic').setup {
+				signs = {
+					left = '',
+					right = '',
+					diag = '●',
+					arrow = '    ',
+					up_arrow = '    ',
+					vertical = '│',
+					vertical_end = '└',
+				},
+			}
+
+			vim.diagnostic.config { virtual_text = false }
+		end,
+	},
+	{
 
 		'dgagn/diagflow.nvim',
+		enabled = false,
 		event = 'DiagnosticChanged',
 		opts = {
 			enable = function()
@@ -29,13 +49,4 @@ return {
 			show_borders = true,
 		},
 	},
-	-- {
-	--     "soulis-1256/hoverhints.nvim",
-	--     event = "DiagnosticChanged",
-	--     config = true,
-	-- },
-	{
-		"soulis-1256/eagle.nvim",
-		opts = {},
-	}
 }

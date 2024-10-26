@@ -41,6 +41,9 @@ install = {
 		enabled = true,
 		notify = true,
 	},
+	rocks = {
+		enabled = false,
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
