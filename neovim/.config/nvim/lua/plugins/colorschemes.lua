@@ -11,7 +11,7 @@ local lazy = function(plug)
 	end
 
 	plugin.lazy = true
-	plugin.priority = 1000
+	plugin.cmd = 'LoadColorschemes'
 
 	return plugin
 end
@@ -59,6 +59,7 @@ local colors = {
 	-- skip 'lifepillar/vim-solarized8',
 	-- skip 'lifepillar/vim-gruvbox8',
 	-- low contrast
+	lazy 'oahlen/iceberg.nvim',
 	lazy '2nthony/vitesse.nvim',
 	-- high constrast
 	lazy 'bluz71/vim-moonfly-colors',
@@ -81,7 +82,17 @@ local colors = {
 	-- one dark family
 	lazy 'romgrk/doom-one.vim',
 	lazy { 'joshdick/onedark.vim', branch = 'main' },
-	lazy 'folke/tokyonight.nvim',
+	lazy {
+		'folke/tokyonight.nvim',
+		opts = {
+			-- NOTE: with some fonts, bold is an entirely different looking font, so it can be jarring to see the glyphs change shape
+			on_highlights = function(highlights, _--[[colors]])
+				highlights.GitSignsAdd.bold = true
+				highlights.GitSignsChange.bold = true
+				highlights.GitSignsDelete.bold = true
+			end,
+		},
+	},
 	lazy {
 		'olimorris/onedarkpro.nvim',
 		dependencies = { 'rktjmp/lush.nvim' },

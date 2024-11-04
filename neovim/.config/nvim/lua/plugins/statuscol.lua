@@ -50,6 +50,13 @@ return {
 						click = 'v:lua.ScLa',
 					},
 					{
+						text = { builtin.foldfunc, ' ' },
+						hl = 'FoldColumn',
+						wrap = true,
+						colwidth = 1,
+						click = 'v:lua.ScFa',
+					},
+					{
 						sign = {
 							name = { 'GitSigns*' },
 							namespace = { 'gitsigns' },
@@ -58,13 +65,6 @@ return {
 							fillcharhl = 'Nrline',
 						},
 						click = 'v:lua.ScSa',
-					},
-					{
-						text = { builtin.foldfunc, ' ' },
-						hl = 'FoldColumn',
-						wrap = true,
-						colwidth = 1,
-						click = 'v:lua.ScFa',
 					},
 				},
 			}
