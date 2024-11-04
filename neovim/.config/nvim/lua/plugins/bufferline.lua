@@ -21,9 +21,37 @@ return {
 				return is_picking_close() or is_picking_focus()
 			end
 
+			local fo = vim.api.nvim_create_augroup('cokelinemodechange', { clear = true })
+			vim.api.nvim_create_autocmd('ModeChanged', {
+				group = fo,
+				callback = function()
+					vim.cmd.redrawtabline()
+				end,
+			})
 			local get_hex = require('cokeline.hlgroups').get_hl_attr
 
-			local active = get_hex('TabLineSel', 'bg')
+			local get_active = function()
+				local mode = vim.api.nvim_get_mode().mode
+				print(mode .. ' ' .. math.random())
+				local colors = {
+					n = get_hex('lualine_a_normal', 'bg'),
+					i = get_hex('lualine_a_insert', 'bg'),
+					v = get_hex('lualine_a_visual', 'bg'),
+					V = get_hex('lualine_a_visual', 'bg'),
+					VL = get_hex('lualine_a_visual', 'bg'),
+					[""] = get_hex('lualine_a_visual', 'bg'),
+					c = get_hex('lualine_a_command', 'bg'),
+					R = get_hex('lualine_a_replace', 'bg'),
+					t = get_hex('lualine_a_terminal', 'bg'),
+					fallback = get_hex('TabLineSel', 'bg'),
+				}
+				local color = colors[mode]
+				if not color then
+					color = colors.fallback
+				end
+				return color
+			end
+			-- local active = get_hex('TabLineSel', 'bg')
 			local inactive = get_hex('PmenuThumb', 'bg')
 
 			local normal = get_hex('Normal', 'fg')
@@ -52,7 +80,7 @@ return {
 
 					bg = function(buffer)
 						if buffer.is_focused then
-							return active
+							return get_active()
 						else
 							return inactive
 						end
@@ -111,13 +139,13 @@ return {
 							end
 						end,
 						fg = bg,
-						bg = active,
+						bg = get_active,
 					},
 					{
 						text = icons.separator.left,
 						fg = function(buffer)
 							if buffer.is_focused then
-								return active
+								return get_active()
 							else
 								return inactive
 							end
@@ -170,7 +198,7 @@ return {
 						text = icons.separator.right,
 						fg = function(buffer)
 							if buffer.is_focused then
-								return active
+								return get_active()
 							else
 								return inactive
 							end
