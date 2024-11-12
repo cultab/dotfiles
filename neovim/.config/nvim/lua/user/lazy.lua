@@ -63,7 +63,7 @@ install = {
 				'2html_plugin',
 				'logipat',
 				'rrhelper',
-				-- "spellfile_plugin",
+				"spellfile_plugin",
 				'matchit',
 			},
 		},

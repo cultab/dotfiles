@@ -32,7 +32,7 @@ return {
 
 			local get_active = function()
 				local mode = vim.api.nvim_get_mode().mode
-				print(mode .. ' ' .. math.random())
+				-- print(mode .. ' ' .. math.random())
 				local colors = {
 					n = get_hex('lualine_a_normal', 'bg'),
 					i = get_hex('lualine_a_insert', 'bg'),

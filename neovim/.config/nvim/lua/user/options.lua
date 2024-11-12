@@ -82,6 +82,7 @@ vim.opt.modeline = true
 
 -- language
 vim.opt.spelllang = 'el,en'
+-- vim.opt.spelloptions = 'camel' -- BUG: replaces words with single, accented, letters?
 vim.opt.keymap = 'greek_utf-8'
 vim.opt.iminsert = 0 -- default to english
 
