@@ -1,7 +1,7 @@
 return {
 	'cultab/command.nvim',
 	dev = true,
-	dir = '/home/evan/repos/command.nvim',
+	dir = '~/repos/command.nvim',
 	init = function()
 		vim.g.command = {
 			icon = require('user.icons').misc.term,

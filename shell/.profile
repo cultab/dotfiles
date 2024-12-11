@@ -8,16 +8,16 @@ export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
 
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/home/evan/.config}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/home/evan/.cache}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-/home/evan/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
-if [ -f "/home/evan/.local/share/antidot/env.sh" ]; then
-    . "/home/evan/.local/share/antidot/env.sh";
+if [ -f "$HOME/.local/share/antidot/env.sh" ]; then
+    . "$HOME/.local/share/antidot/env.sh";
 fi
 
-if [ -f "/home/evan/.local/share/antidot/alias.sh" ]; then
-    . "/home/evan/.local/share/antidot/alias.sh";
+if [ -f "$HOME/.local/share/antidot/alias.sh" ]; then
+    . "$HOME/.local/share/antidot/alias.sh";
 fi
 # don't pollute my $HOME plz
 
@@ -103,7 +103,7 @@ export XBPS_DISTDIR="$HOME/repos/void-packages"
 
 # eval "$(pyenv init --path)"
 if [ -f "home/evan/.local/share/cargo/env" ]; then
-	. "/home/evan/.local/share/cargo/env"
+	. "$HOME/.local/share/cargo/env"
 fi
 
-if [ -e /home/evan/.nix-profile/etc/profile.d/nix.sh ]; then . /home/evan/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
