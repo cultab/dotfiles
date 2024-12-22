@@ -9,14 +9,14 @@
 cat pkgs_cargo.md |
     grep '\*' |
     cut -d ' ' -f 2 |
-    xargs cargo install
+    xargs cargo binstall
 ```
 
 # random
 
 * bob-nvim
     neovim version manager
-* starship
+[_] starship
     the GOAT of `$PS1`
 * dua-cli
     disk usage analizer, think windirstat
@@ -39,7 +39,7 @@ cat pkgs_cargo.md |
     `g/re/p` fater alternative
 * bat
     `cat` alternative
-[*] choose
+* choose
     `cut` alternative
 [_] hck
     `cut` alternative
@@ -52,11 +52,11 @@ cat pkgs_cargo.md |
 
 # ls but with colors
 
-* eza
+[_] eza
     formerly exa
 * lsd
     also has icons (supported by cozette <3)
-* natls
+[_] natls
 
 # misc
 
