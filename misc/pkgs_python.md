@@ -7,7 +7,7 @@
 # install
 
 ```sh
-cat python_pkgs.md |
+cat pkgs_python.md |
     grep '\*' |
     cut -d ' ' -f 2 |
     xargs pipx install

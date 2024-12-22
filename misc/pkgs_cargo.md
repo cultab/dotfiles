@@ -6,7 +6,7 @@
 
 
 ```sh
-cat cargo_pkgs.md |
+cat pkgs_cargo.md |
     grep '\*' |
     cut -d ' ' -f 2 |
     xargs cargo install

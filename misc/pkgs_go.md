@@ -6,7 +6,7 @@
 
 
 ```sh
-cat go_pkgs.md |
+cat pkgs_go.md |
     grep '\*' |
     cut -d ' ' -f 2 |
     xargs -I go install github.com/{}
