@@ -13,6 +13,10 @@ return {
 					vertical = '│',
 					vertical_end = '└',
 				},
+				options = {
+					-- multilines = true,
+					overwrite_events = { "DiagnosticChanged" },
+				},
 			}
 
 			vim.diagnostic.config { virtual_text = false }
