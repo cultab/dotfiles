@@ -21,3 +21,5 @@ cat pkgs_python.md |
     youtube downloader
 * tldr
     `man` but quick
+* gitlint
+    checks commit messages for style

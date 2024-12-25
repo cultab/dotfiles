@@ -4,20 +4,17 @@ return {
 		require('lint').linters_by_ft = {
 			-- cpp       = { 'clang-tidy' },
 			gitcommit = { 'gitlint' },
-			-- go = { 'golangcilint' },
+			go = { 'golangcilint' },
 			sh = { 'shellcheck' },
 			bash = { 'shellcheck' },
-			css = { 'stylelint' },
 			zsh = { 'zsh' },
 			make = { 'checkmake' },
 			dockerfile = { 'hadolint' },
 		}
 		-- vim.print("plugin/nvim-lint: ensure_installed:", mason_packages)
 		require('user.mason_utils').ensure_installed {
-			-- "gitlint",
-			-- 'golangci-lint',
+			'golangci-lint',
 			'shellcheck',
-			'stylelint',
 			'checkmake',
 			'hadolint',
 		}
