@@ -16,6 +16,8 @@ install fzf and pkg manager specific extras for xinst
 clone xinst and install
 
 
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+
 install neovim from bob which needs cargo iirc,
 see if they provide binaries?
 what about arm tho? add a fallback to compile?
