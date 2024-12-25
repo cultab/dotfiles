@@ -3,8 +3,8 @@ set -o errexit   # abort on nonzero exitstatus
 # set -o nounset   # abort on unbound variable
 # set -o pipefail  # don't hide errors within pipes
 
-CUR_STEP=0
-NUM_STEP=10
+CUR_STEP=1
+NUM_STEP=12
 
 COLOR_RED='\033[1;31m'
 COLOR_GREEN='\033[1;32m'
@@ -181,5 +181,12 @@ done
 step Install neovim
 
 try 'installing neovim' "$HOME/.cargo/bin/bob use stable"
+
+# TODO:
+# step Generate ssh key for github
+# ask if we want to generate w/ gum
+# ask for email w/ gum
+# ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/github
+# save to ~/.ssh/github
 
 exec zsh -l
