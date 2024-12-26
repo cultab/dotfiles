@@ -1,7 +1,6 @@
 #!/bin/sh
 set -o errexit   # abort on nonzero exitstatus
 # set -o nounset   # abort on unbound variable
-# set -o pipefail  # don't hide errors within pipes
 
 CUR_STEP=1
 NUM_STEP=12
@@ -12,18 +11,8 @@ COLOR_BLUE='\033[1;34m'
 COLOR_YELLOW='\033[1;33m'
 COLOR_RESET='\033[m'
 
-DRY_RUN() {
-	DRY=-n
-	fake() {
-		# info faking command: $(printf '\t%s\n' "$*")
-		printf '%bfaking command%b `%s`\n' "$COLOR_GREEN" "$COLOR_RESET" "$*"
-	}
-}
-
-# DRY_RUN
-
 try_cd() {
-	if ! cd $1; then
+	if ! cd "$1"; then
 		error Failed to cd into "$1"
 	fi
 	info pwd: "$(pwd)"
@@ -33,10 +22,6 @@ try() {
 	action=$1
 	shift
 	command="$*"
-	# if [ $DRY ]; then
-		# printf '%bfaking command%b `%s`..\n' "$COLOR_GREEN" "$COLOR_RESET" "$command"
-		# return
-	# fi
 	if ! $command; then
 		error 'Failed to' "$action"
 	fi
