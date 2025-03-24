@@ -15,6 +15,11 @@ COLOR_BLUE='\033[1;34m'
 COLOR_YELLOW='\033[1;33m'
 COLOR_RESET='\033[m'
 
+FAILED_AT=$(cat /tmp/failed_step || true)
+if [ -z "$FAILED_AT" ]; then
+	FAILED_AT=0
+fi
+
 try_cd() {
 	if ! cd "$1"; then
 		error Failed to cd into "$1"
@@ -23,11 +28,17 @@ try_cd() {
 }
 
 try() {
+	if [ "$CUR_STEP" -le "$FAILED_AT" ]; then
+		info "Skipping step.."
+		return
+	fi
 	action=$1
 	shift
 	command="$*"
 	if ! $command; then
-		error 'Failed to' "$action"
+		echo "write???"
+		echo "$((CUR_STEP - 1))" > /tmp/failed_step
+		error 'Failed' "$action"
 	fi
 }
 
@@ -56,30 +67,31 @@ case $distro in
 	Void*)
 		info 'chose' xbps
 		pkg_install () {
-			xbps-install -yv "$@"
+			sudo xbps-install -yv "$@"
 		}
 		pkg_update () {
-			xbps-install -Syuv
+			sudo xbps-install -Syuv
 		}
 		;;
-	Debian*)
+	Debian*|Ubuntu*)
 		info 'chose' apt
 		pkg_install() {
-			apt-get install -y --no-install-recommends "$@"
+			sudo apt-get install -y --no-install-recommends "$@"
 		}
 		pkg_update() {
-			apt-get update -y && apt-get upgrade -y
+			sudo apt-get update -y && sudo apt-get upgrade -y
 		}
 		;;
 	*)
-		error "Uknown distro '$distro'"
+		error "Unknown distro '$distro'"
 esac
 
 step "Updating"
-try 'update system' pkg_update
+try 'updating system' pkg_update
 
 step "Installing important packages"
-try 'install pkgs' pkg_install git stow make golang fzf cargo pipx zsh curl keychain man
+try 'installing pkgs' pkg_install git stow make golang fzf pipx zsh curl keychain man
+# cargo
 
 step "Cloning repos"
 
@@ -87,16 +99,16 @@ info 'change dir to' '$HOME'
 try_cd "$HOME"
 
 info 'git clone' dotfiles
-try 'clone dotfiles repo' git clone 'https://github.com/cultab/dotfiles'
+try 'cloning dotfiles repo' echo git clone 'https://github.com/cultab/dotfiles'
 
 info 'create' "~/repos"
 try 'creating repos directory' mkdir -p "$HOME/repos"
 
 (
 try_cd ~/repos
-try 'clone Navigator' git clone 'https://github.com/cultab/Navigator.nvim'
-try 'clone command.nvim' git clone 'https://github.com/cultab/command.nvim'
-try 'clone uniwa.nvim' git clone 'https://github.com/uniwa-community/uniwa.nvim'
+try 'cloning Navigator' git clone 'https://github.com/cultab/Navigator.nvim'
+try 'cloning command.nvim' git clone 'https://github.com/cultab/command.nvim'
+try 'cloning uniwa.nvim' git clone 'https://github.com/uniwa-community/uniwa.nvim'
 )
 
 step "Stow dotfiles"
@@ -109,14 +121,14 @@ info cd in dotfiles
 (
 try_cd ~/dotfiles
 info remove problematic file # FIXME: just remove from repo
-try 'remove problematic file' rm -f ~/dotfiles/scripts/bin/dwm_bar.sh
+try 'removing problematic file' rm -f ~/dotfiles/scripts/bin/dwm_bar.sh
 
 info stow files
-try 'stow dotfiles' stow git ssh neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
+try 'stowing dotfiles' stow git ssh neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
 )
 
 info change shell to zsh
-try 'change shell to zsh' chsh -s /usr/bin/zsh "$USER"
+try 'changing shell to zsh' chsh -s /usr/bin/zsh "$USER"
 
 step Run themr
 
@@ -126,7 +138,7 @@ try_cd ~/repos
 try 'clone themr' git clone 'https://github.com/cultab/themr'
 try_cd themr
 try 'make' make
-try 'make install' make install
+try 'make install' sudo make install
 info 'setting theme to' tokyonight-night
 try 'setting themr themr' themr tokyonight-night
 )
@@ -134,9 +146,9 @@ try 'setting themr themr' themr tokyonight-night
 step Install xinst
 (
 try_cd ~/repos
-try 'clone xinst' git clone 'https://github.com/cultab/xinst'
+try 'cloning xinst' git clone 'https://github.com/cultab/xinst'
 try_cd xinst
-try 'installing xinst' make install
+try 'installing xinst' sudo make install
 )
 
 step Install cargo packages
@@ -178,4 +190,5 @@ try 'installing neovim' "$HOME/.cargo/bin/bob use stable"
 # ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/github
 # save to ~/.ssh/github
 
+rm /tmp/failed_step
 exec zsh -l
