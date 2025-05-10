@@ -96,6 +96,9 @@ fi
 
 alias grep='grep --color=auto'
 alias term_test='dd if=/dev/urandom | base64 | lolcat'
+alias et='TERM=xterm-256color et'
+alias ssh='echo "maybe use EternalTerminal (et)?";ssh'
+alias mosh='echo "please use EternalTerminal (et)?";ssh'
 
 #alias mpiall="mpirun --use-hwthread-cpus"
 #alias mpirf="mpirun --oversubscribe"

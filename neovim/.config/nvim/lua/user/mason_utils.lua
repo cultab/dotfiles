@@ -30,28 +30,28 @@ M.ensure_installed = function(tools)
 			return
 		end
 
-		pkg:get_installed_version(function(success, version_or_err)
-			if not version then
-				return
-			end
-			if not success then
-				vim.notify('user/lsp error: ' .. version_or_err .. ' for ' .. name)
-				return
-			end
-
-			local is_pinned_version = version == version_or_err
-			-- vim.notify(name .. ": " .. (version and version or "nil") .. "|" ..  version_or_err)
-			--
-			if is_pinned_version then
-				-- vim.notify(name .. "@" .. installed_version .. " already installed")
-				-- vim.notify(name .. "@" .. installed_version .. " already installed")
-				-- vim.notify(name .. "@" .. version_or_err .. " already installed")
-				return
-			end
-
-			vim.notify('Updating ' .. tool .. ' to @' .. version)
-			pkg:install { version = version }
-		end)
+		-- pkg:get_installed_version(function(success, version_or_err)
+		-- 	if not version then
+		-- 		return
+		-- 	end
+		-- 	if not success then
+		-- 		vim.notify('user/lsp error: ' .. version_or_err .. ' for ' .. name)
+		-- 		return
+		-- 	end
+		--
+		-- 	local is_pinned_version = version == version_or_err
+		-- 	-- vim.notify(name .. ": " .. (version and version or "nil") .. "|" ..  version_or_err)
+		-- 	--
+		-- 	if is_pinned_version then
+		-- 		-- vim.notify(name .. "@" .. installed_version .. " already installed")
+		-- 		-- vim.notify(name .. "@" .. installed_version .. " already installed")
+		-- 		-- vim.notify(name .. "@" .. version_or_err .. " already installed")
+		-- 		return
+		-- 	end
+		--
+		-- 	vim.notify('Updating ' .. tool .. ' to @' .. version)
+		-- 	pkg:install { version = version }
+		-- end)
 
 		::continue::
 	end

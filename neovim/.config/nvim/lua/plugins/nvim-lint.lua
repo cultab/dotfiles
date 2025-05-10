@@ -10,6 +10,7 @@ return {
 			zsh = { 'zsh' },
 			make = { 'checkmake' },
 			dockerfile = { 'hadolint' },
+			rust = { 'ruff' },
 		}
 		-- vim.print("plugin/nvim-lint: ensure_installed:", mason_packages)
 		require('user.mason_utils').ensure_installed {
@@ -17,6 +18,7 @@ return {
 			'shellcheck',
 			'checkmake',
 			'hadolint',
+			'ruff',
 		}
 
 		vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged', 'InsertLeave', 'BufWritePost' }, {
@@ -26,5 +28,5 @@ return {
 			end,
 		})
 	end,
-	event = 'VeryLazy'
+	event = 'VeryLazy',
 }

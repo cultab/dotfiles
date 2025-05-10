@@ -128,4 +128,9 @@ if [[ "$WSL_DISTRO_NAME" && ! $(pgrep wezterm_reload) ]]; then
 #     pkill -9 oneterm_reload; oneterm_reload & disown
 fi
 
+if command nitch 2>&1 > /dev/null; then
+	nitch
+fi
+
+
 # zprof
