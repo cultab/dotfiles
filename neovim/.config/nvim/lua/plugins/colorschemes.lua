@@ -20,7 +20,7 @@ local colors = {
 	'tjdevries/colorbuddy.nvim',
 	'rktjmp/lush.nvim',
 	lazy 'diegoulloao/neofusion.nvim',
-	lazy { 'UniWa-Community/uniwa.nvim', dev = true },
+	lazy { 'UniWa-Community/uniwa.nvim', dev = false },
 	'rktjmp/shipwright.nvim',
 	lazy {
 		'catppuccin/nvim',

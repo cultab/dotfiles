@@ -1,7 +1,8 @@
 return {
 	{
 		'cultab/Navigator.nvim',
-		dev = true,
+		enable = false,
+		-- dev = true,
 		version = false,
 		cmd = { 'NavigatorLeft', 'NavigatorDown', 'NavigatorUp', 'NavigatorRight' },
 		opts = {

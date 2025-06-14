@@ -77,10 +77,10 @@ map '<leader>gb' { partial(vim.cmd.Gitsigns, 'blame_line'), '[b]lame line' }
 map '<leader>gc' { function() require('tinygit').smartCommit() end, '[c]ommit changes' }
 map '<leader>gp' { function() require('tinygit').push() end, '[p]ush commits' }
 
-map '<M-h>' { vim.cmd.NavigatorLeft }
-map '<M-j>' { vim.cmd.NavigatorDown }
-map '<M-k>' { vim.cmd.NavigatorUp }
-map '<M-l>' { vim.cmd.NavigatorRight }
+map '<M-h>' { vim.cmd.SmartCursorMoveLeft }
+map '<M-j>' { vim.cmd.SmartCursorMoveDown }
+map '<M-k>' { vim.cmd.SmartCursorMoveUp }
+map '<M-l>' { vim.cmd.SmartCursorMoveRight }
 
 ---
 --- If any LSP server attached to the current buffer can provide the @server_capability,
@@ -93,8 +93,10 @@ map '<M-l>' { vim.cmd.NavigatorRight }
 local function if_capability_else_fallback(server_capability, lsp_func, lsp_args, vim_cmd)
 	local clients = vim.lsp.get_clients { bufn = 0 }
 	local capabillity_supported = false
+	local name = ""
 	for _, client in ipairs(clients) do
 		if client.server_capabilities[server_capability] and client.name ~= 'null-ls' then
+			name = client.name
 			capabillity_supported = true
 			break
 		end
@@ -104,21 +106,19 @@ local function if_capability_else_fallback(server_capability, lsp_func, lsp_args
 		if type(lsp_args) == 'table' then
 			lsp_args = unpack(lsp_args)
 		end
+		vim.notify("lsp: " .. name)
 		lsp_func(lsp_args)
 	else
+		vim.notify("vim: " .. vim_cmd)
 		vim.cmd(vim.api.nvim_replace_termcodes(vim_cmd, true, false, true))
 	end
 end
 
-map 'K' {
-	partial(if_capability_else_fallback, 'hoverProvider', vim.lsp.buf.hover, nil, ':normal! K'),
-	'Hover documentation',
-}
 -- map '<leader>=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.format, { async = true }, ":normal gg=G<C-o>"), "Format buffer", 'n' }
 -- map '=' { partial(if_lsp_else_vim, "documentFormattingProvider", vim.lsp.buf.range_formatting, { async = true }, "="), "Format buffer", 'v' }
 
-map '[d' { vim.diagnostic.goto_prev, 'previous [d]iagnostic' }
-map ']d' { vim.diagnostic.goto_next, 'next [d]iagnostic' }
+map '[d' { partial(vim.diagnostic.jump, { count = -1 }), 'previous [d]iagnostic' }
+map ']d' { partial(vim.diagnostic.jump, { count = 1 }), 'next [d]iagnostic' }
 map '<leader>d' { partial(vim.diagnostic.open_float, nil, { focusable = false }), 'Show line diagnostics' }
 map '<leader>q' { partial(vim.cmd.Telescope, 'loclist'), 'open lo[q]list' } -- not actually called lo'q'list :^)
 map '<leader>Q' { partial(vim.cmd.Telescope, 'quickfix'), 'open [Q]uickfix' }

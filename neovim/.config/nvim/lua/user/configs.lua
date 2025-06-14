@@ -27,6 +27,9 @@ M.config_picker = function(opts)
 					{ 'themr', '~/.config/themr/themes.yaml', cd = true },
 					{ 'wezterm', '~/.config/wezterm/wezterm.lua' },
 					{ 'xresources', '~/.config/xrdb/Xresources.xdefaults', cd = true },
+					{ 'startwm', '~/bin/startwm' },
+					{ 'ghostty', '~/.config/ghostty/config' },
+					{ 'picom', '~/.config/picom.conf' },
 				},
 				entry_maker = function(entry)
 					return {

@@ -109,7 +109,6 @@ local servers = {
 			},
 		},
 	},
-	ruff_lsp = {},
 }
 
 -- local mason_packages = {}
