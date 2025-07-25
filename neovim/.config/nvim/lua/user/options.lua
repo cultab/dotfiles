@@ -96,6 +96,7 @@ vim.opt.completeopt = 'menu,menuone,noselect' -- ,noinsert,longest"
 vim.opt.formatoptions = vim.opt.formatoptions - 'a' - 't' + 'q' - 'o' + 'r' + 'n' + 'j' - '2'
 
 vim.opt.autoread = true
+vim.opt.timeoutlen = 100
 
 local ____no = 1
 
