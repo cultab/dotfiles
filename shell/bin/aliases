@@ -47,7 +47,7 @@ alias pidgin="pidgin --config=$XDG_DATA_HOME/purple"
 # git #
 #######
 
-alias gs='git status'
+alias gs='git status --short'
 alias gcl='git clone'
 alias ga='git add'
 alias gaa='git add --all'

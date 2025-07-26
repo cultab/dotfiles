@@ -10,6 +10,21 @@
 [gui]
 	recentrepo = /home/evan/repos/dwm
 
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = -version:refname
+
+[column]
+	ui = auto
+
+[push]
+	autoSetupRemote = true
+
+[status]
+	branch = true
+
 [pull]
 	rebase = true
 
@@ -18,6 +33,8 @@
 
 [diff]
     colorMoved = plain
+	algorithm = histogram
+
 
 [interactive]
     diffFilter = delta --color-only --features=interactive --diff-so-fancy
@@ -47,6 +64,10 @@
     line-numbers-right-style = blue
     whitespace-error-style = 22 reverse
 
+[maintenance]
+	auto = true
+	strategy = incremental
+
 [merge]
 	tool = nvim
     conflictstyle = diff3
@@ -55,7 +76,12 @@
     prompt = false
 
 
-[mergetool "nvim"]
-	cmd = nvim -d -c \"wincmd l\" -c \"norm ]c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+
 [alias]
-	permission-reset = !git diff -p -R --no-ext-diff --no-color --diff-filter=M | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply
+	graph = log --all --graph --decorate --oneline
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	ignore = "!gi() { local IFS=','; curl -sL https://www.toptal.com/developers/gitignore/api/\""$*"\"; }; if [ \""$*"\" = '' ]; then echo 'USAGE: git ignore <language>'; exit 1; fi; gi"
+	permission-reset = "!git diff -p -R --no-ext-diff --no-color --diff-filter=M | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply"
+
+[mergetool "nvim"]
+	cmd = "nvim -d -c \"wincmd l\" -c \"norm ]c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\""
