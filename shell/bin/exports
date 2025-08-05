@@ -3,7 +3,7 @@ export BROWSER="vivaldi-stable"
 export EDITOR="nvim"
 LS_COLORS="$LS_COLORS:ow=01;33"
 export FZF_DEFAULT_COMMAND="fd"
-export TERMINAL="st -e tmux"
+export TERMINAL="wezterm"
 
 # man colors
 #                                     prompt     underline

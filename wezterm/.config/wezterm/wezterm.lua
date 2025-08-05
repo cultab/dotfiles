@@ -46,8 +46,8 @@ local name
 -- name = "CozetteVector"
 -- name = "Iosevka Term"
 -- name = "Terminus (TTF)"
--- name = "Monaspace"
-name = "Fira Code"
+name = "Monaspace"
+-- name = "Fira Code"
 
 -- For Cozette
 if name:find("Cozette") then
