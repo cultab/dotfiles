@@ -93,7 +93,8 @@ PATH_add "$GOPATH/bin"
 PATH_add "/opt/quarto/bin"
 PATH_add "$HOME/.local/share/cargo/bin"
 PATH_add "$HOME/.local/share/bob/nvim-bin"
-
+PATH_add "$HOME/.bun/bin"
+PATH_add "/mnt/c/Program Files/WezTerm/"
 
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending

@@ -35,6 +35,9 @@ bindkey -e
 
 LS_COLORS=$(dircolors)
 
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+source <(carapace _carapace)
+
 zstyle :compinstall filename '/home/evan/.zshrc'
 zstyle ':completion:*' group-name ''
 # zstyle ':autocomplete:*' groups 'always'
@@ -58,6 +61,8 @@ bindkey "^X"    edit-command-line
 # delete now works
 bindkey "^[[3~" delete-char
 bindkey " "     magic-space
+bindkey '\e'    send-break
+
 
 # bindkey -M vicmd 'k' history-beginning-search-backward
 # bindkey -M vicmd 'j' history-beginning-search-forward
@@ -78,14 +83,6 @@ csource() {
 }
 
 # csource ~/.config/zsh/transient_starship_prompt
-# eval "$(starship init zsh)"
-OHMYPOSH_THEME='emodipt-extend'
-# OHMYPOSH_THEME='bubbles'
-# OHMYPOSH_THEME='star'
-# OHMYPOSH_THEME='the-unnamed'
-#  "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/${OHMYPOSH_THEME}.omp.json"
-# eval "$(oh-my-posh init zsh --config "~/.config/ohmyposh/themes/emodipt-extend.omp.json")"
-# eval $(thefuck --alias)
 
 csource ~/bin/exports
 csource ~/bin/aliases
@@ -106,7 +103,7 @@ source "$HOME/.local/share/miniplug.zsh"
 # miniplug plugin 'zsh-users/zsh-syntax-highlighting'
 # miniplug plugin 'spaceship-prompt/spaceship-prompt'
 # miniplug plugin 'se-jaeger/zsh-activate-py-environment'
-miniplug plugin 'spwhitt/nix-zsh-completions'
+# miniplug plugin 'spwhitt/nix-zsh-completions'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
 miniplug plugin 'zpm-zsh/colorize'
 miniplug plugin 'zdharma-continuum/fast-syntax-highlighting'
@@ -120,17 +117,23 @@ fast-theme --quiet XDG:overlay
 
 csource "$HOME/.local/zsh/wezterm.sh"
 
-autoload -U compinit && compinit
-prompt_nix_shell_setup "$@"
 
 if [[ "$WSL_DISTRO_NAME" && ! $(pgrep wezterm_reload) ]]; then
 	(wezterm_reload &)
 #     pkill -9 oneterm_reload; oneterm_reload & disown
 fi
 
-if command nitch 2>&1 > /dev/null; then
+if command catnap 2>&1 > /dev/null; then
+    catnap -d none
+elif command nitch 2>&1 > /dev/null; then
 	nitch
 fi
+
+# bun completions
+[ -s "/home/evan/.bun/_bun" ] && source "/home/evan/.bun/_bun"
+
+autoload -U compinit && compinit
+# prompt_nix_shell_setup "$@"
 
 
 # zprof
