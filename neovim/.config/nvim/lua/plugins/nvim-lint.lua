@@ -12,8 +12,9 @@ return {
 			dockerfile = { 'hadolint' },
 			rust = { 'ruff' },
 		}
-		-- vim.print("plugin/nvim-lint: ensure_installed:", mason_packages)
+
 		require('user.mason_utils').ensure_installed {
+			'gitlint',
 			'golangci-lint',
 			'shellcheck',
 			'checkmake',
@@ -21,6 +22,8 @@ return {
 			'ruff',
 		}
 
+    -- commitlint
+    -- nixpkgs-fmt
 		vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged', 'InsertLeave', 'BufWritePost' }, {
 			callback = function()
 				require('lint').try_lint()

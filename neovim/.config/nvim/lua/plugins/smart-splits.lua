@@ -1,5 +1,6 @@
 return {
 	'mrjones2014/smart-splits.nvim',
+	dev = false,
 	opts = {
 		-- Ignored buffer types (only while resizing)
 		ignored_buftypes = {
@@ -78,6 +79,6 @@ return {
 		-- when the current pane is at the edge of the zellij tab/window
 		zellij_move_focus_or_tab = false,
 		-- default logging level, one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
-		log_level = 'info',
+		log_level = 'trace',
 	},
 }

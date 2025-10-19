@@ -9,6 +9,10 @@ return {
 				toml = { 'taplo' },
 				css = { 'stylelint' },
 			},
+			format_on_save = {
+				lsp_format = 'fallback',
+				timeout_ms = 500,
+			},
 		}
 		require('user.mason_utils').ensure_installed {
 			'stylua',

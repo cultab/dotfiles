@@ -24,19 +24,14 @@ vim.diagnostic.config {
 		prefix = ' ',
 		scope = 'cursor',
 	},
+	signs = {text = {
+		[vim.diagnostic.severity.ERROR] = icons.diagnostic.error,
+		[vim.diagnostic.severity.WARN] = icons.diagnostic.warn,
+		[vim.diagnostic.severity.INFO] = icons.diagnostic.info,
+		[vim.diagnostic.severity.HINT] = icons.diagnostic.hint,
+	}}
 }
 
-local signs = {
-	Error = icons.diagnostic.error,
-	Warn = icons.diagnostic.warn,
-	Hint = icons.diagnostic.hint,
-	Info = icons.diagnostic.info,
-}
-
-for type, icon in pairs(signs) do
-	local hl = 'DiagnosticSign' .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
-end
 
 -- used as separator for windows
 

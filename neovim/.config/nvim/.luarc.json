@@ -1,10 +1,3 @@
 {
-    "workspace.library": [
-        "/home/evan/.local/share/nvim/site/pack/packer/start/neodev.nvim/types/stable",
-        "/home/evan/.local/share/bob/v0.9.0/nvim-linux64/share/nvim/runtime/lua",
-        "/home/evan/dotfiles/neovim/.config/nvim/lua",
-        "${3rd}/luv/library"
-    ],
-    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "runtime.version": "LuaJIT"
 }

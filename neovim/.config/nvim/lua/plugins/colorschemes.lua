@@ -2,7 +2,7 @@
 -- 	return nil
 -- end
 
-local lazy = function(plug)
+local function lazy(plug)
 	local plugin = {}
 	if type(plug) == 'string' then
 		table.insert(plugin, plug)
@@ -22,7 +22,7 @@ local colors = {
 	lazy 'diegoulloao/neofusion.nvim',
 	lazy { 'UniWa-Community/uniwa.nvim', dev = false },
 	'rktjmp/shipwright.nvim',
-	lazy {
+	{
 		'catppuccin/nvim',
 		config = function()
 			local cat = require 'catppuccin'
