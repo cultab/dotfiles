@@ -12,8 +12,8 @@ local wk = require 'which-key'
 
 --- @class mapping
 --- @field [1] action # action
---- @field [2] string # mapping description
---- @field [3] mode   # mode
+--- @field [2] string? # mapping description
+--- @field [3] mode?  # mode
 --- @field expr boolean?
 --- @field noremap boolean?
 --- @field silent boolean?

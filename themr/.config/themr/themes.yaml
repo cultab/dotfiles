@@ -66,10 +66,6 @@ everforest:
 gruvbox-flat:
   colorscheme: "gruvbox-flat"
 
-# neon_latte:
-#   colorscheme: "neon_latte"
-#   lualine: "catppuccin"
-
 catppuccin:
   wezterm: "Catppuccin Mocha"
   colorscheme: "catppuccin"
@@ -102,6 +98,10 @@ saga:
 
 oxocarbon:
   colorscheme: "oxocarbon"
+
+horizon:
+  colorscheme: "horizon"
+  wezterm: 'Horizon Dark (base16)'
 
 square ui:
   polybar: "square_modules"

@@ -296,7 +296,7 @@ if hostname() == "winbox" then
 		end
 	)
 end
-
+local scheme = wezterm.color.get_builtin_schemes()[config.color_scheme]
 wezterm.on("update-status", function(window, pane)
 	local host_icon
 	local h = hostname()
@@ -312,7 +312,7 @@ wezterm.on("update-status", function(window, pane)
 	end
 	window:set_left_status(wezterm.format({
 		{ Background = { AnsiColor = "Blue" } },
-		{ Foreground = { AnsiColor = "Black" } },
+		{ Foreground = { Color = scheme.background } },
 		{ Text = " " .. host_icon .. " SYSTEM " },
 	}))
 	local clock = wezterm.nerdfonts.fa_clock_o

@@ -51,8 +51,9 @@ return {
 				end
 				return color
 			end
-			-- local active = get_hex('TabLineSel', 'bg')
-			local inactive = get_hex('PmenuThumb', 'bg')
+			-- local inactive = get_hex('Pmenu', 'bg')
+			-- local inactive = get_hex('ColorColumn', 'bg')
+			local inactive = get_hex('lualine_b_normal', 'bg')
 
 			local normal = get_hex('Normal', 'fg')
 			local bg = get_hex('Normal', 'bg')

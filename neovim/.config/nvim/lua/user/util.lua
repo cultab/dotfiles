@@ -3,7 +3,7 @@ local M = {}
 ---Call {func}
 ---@param func function
 ---@return any?
-M.call = function(func)
+function M.call(func)
 	return func()
 end
 
@@ -11,7 +11,7 @@ end
 ---@param func fun(...: any): any?
 ---@param ... any
 ---@return fun(...: any?): any?
-M.partial = function(func, ...)
+function M.partial(func, ...)
 	local initial_args = { ... }
 	return function(...)
 		local more_args = { ... }
@@ -29,12 +29,12 @@ end
 ---@param func function(...: any): any
 ---@param ... any
 ---@return any?
-M.apply = function(func, ...)
+function M.apply(func, ...)
 	local args = { ... }
 	return func(unpack(args))
 end
 
-local zipgen = function(args)
+local function zipgen(args)
 	-- find minimum
 	local min = #args[1]
 	for i = 2, #args, 1 do
@@ -55,14 +55,14 @@ local zipgen = function(args)
 end
 
 -- python like zip iterator
-M.zip = function(...)
+function M.zip(...)
 	local args = { ... }
 	return coroutine.wrap(function()
 		zipgen(args)
 	end)
 end
 
-M.to_vim_list = function(tbl)
+function M.to_vim_list(tbl)
 	local ret = ''
 	for key, value in pairs(tbl) do
 		ret = ret .. key .. ':' .. value .. ','

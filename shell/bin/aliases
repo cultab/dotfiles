@@ -3,13 +3,15 @@
 alias startx='startx -- -ardelay 250 -arinterval 25'
 
 # if neovim is installed alias it
-if command -v nvim > /dev/null 2>&1; then
-    alias vim='nvim --listen /tmp/nvim-$RANDOM' # HACK: RANDOM only actually exists in zsh and bash
+if command -v nvim >/dev/null 2>&1; then
+  alias vim='nvim --listen /tmp/nvim-$RANDOM' # HACK: RANDOM only actually exists in zsh and bash
 fi
 
-if command -v bat > /dev/null 2>&1; then
-    alias cat='bat -p'
-    alias bat='bat -p'
+alias lazy='NVIM_APPNAME=lazyvim nvim'
+
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat -p'
+  alias bat='bat -p'
 fi
 
 # shortcuts
@@ -18,7 +20,7 @@ alias notes='vim $HOME/notes.norg'
 alias wtf='netbsd-wtf -o'
 alias coomit='git commit'
 # shellcheck disable=SC2139
-alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' < /proc/meminfo)k --vm-keep -m 1"
+alias stress_mem="stress --vm-bytes $(awk '/MemAvailable/{printf "%d\n", $2 * 0.9;}' </proc/meminfo)k --vm-keep -m 1"
 alias psg='ps aux | grep'
 alias open='xdg-open'
 alias vimdiff='vim -d'
@@ -65,34 +67,33 @@ alias grc='git rebase --continue'
 # ls #
 ######
 
-if command -v lsd > /dev/null 2>&1; then
-        alias ls="lsd --long"
-        alias ll="lsd --long"
-        alias la="lsd --long --all"
-        alias lt="lsd --tree"
-elif command -v eza > /dev/null 2>&1; then
-	eza_opts='--group-directories-first --modified --group --sort=Extension --icons'
-    if eza --git > /dev/null 2>&1 ; then
-        eza_opts="$eza_opts --git"
-    fi
-# shellcheck disable=SC2139
-	alias ls="eza $eza_opts --long"
-# shellcheck disable=SC2139
-	alias ll="eza $eza_opts --long"
-# shellcheck disable=SC2139
-	alias la="eza $eza_opts --all"
-# shellcheck disable=SC2139
-	alias lt="eza $eza_opts --tree"
+if command -v lsd >/dev/null 2>&1; then
+  alias ls="lsd --long"
+  alias ll="lsd --long"
+  alias la="lsd --long --all"
+  alias lt="lsd --tree"
+elif command -v eza >/dev/null 2>&1; then
+  eza_opts='--group-directories-first --modified --group --sort=Extension --icons'
+  if eza --git >/dev/null 2>&1; then
+    eza_opts="$eza_opts --git"
+  fi
+  # shellcheck disable=SC2139
+  alias ls="eza $eza_opts --long"
+  # shellcheck disable=SC2139
+  alias ll="eza $eza_opts --long"
+  # shellcheck disable=SC2139
+  alias la="eza $eza_opts --all"
+  # shellcheck disable=SC2139
+  alias lt="eza $eza_opts --tree"
 else
-    ls_opts='--color=auto -h'
-    # shellcheck disable=SC2139
-    alias ls="ls $ls_opts"
-    # shellcheck disable=SC2139
-    alias ll="ls -l $ls_opts"
-    # shellcheck disable=SC2139
-    alias la="ls -la $ls_opts"
+  ls_opts='--color=auto -h'
+  # shellcheck disable=SC2139
+  alias ls="ls $ls_opts"
+  # shellcheck disable=SC2139
+  alias ll="ls -l $ls_opts"
+  # shellcheck disable=SC2139
+  alias la="ls -la $ls_opts"
 fi
-
 
 alias grep='grep --color=auto'
 alias term_test='dd if=/dev/urandom | base64 | lolcat'

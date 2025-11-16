@@ -88,6 +88,7 @@ vim.opt.iminsert = 0 -- default to english
 
 vim.opt.virtualedit = 'block'
 
+vim.opt.diffopt = 'internal,filler,closeoff,linematch:60'
 -- Assume .h files are c headers instead of cpp
 vim.g.c_syntax_for_h = true
 
@@ -98,7 +99,6 @@ vim.opt.formatoptions = vim.opt.formatoptions - 'a' - 't' + 'q' - 'o' + 'r' + 'n
 vim.opt.autoread = true
 vim.opt.timeoutlen = 100
 
-local ____no = 1
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -133,14 +133,19 @@ autocmd('BufEnter', {
 
 autocmd('TermOpen', {
 	pattern = '*',
-	command = 'nnoremap <buffer> <Esc> :ToggleTermToggleAll<CR>',
+	command = 'tnoremap <buffer> <Esc> <c-\\><c-n>',
 	group = fo,
 })
 
-autocmd('TermOpen', {
-	pattern = '*',
-	command = 'tnoremap <buffer> <Esc> <c-\\><c-n>',
+autocmd('FileType', {
+	pattern = 'help',
+	command = 'wincmd L',
 	group = fo,
+})
+
+autocmd('VimResized', {
+	command = 'wincmd =',
+	group = misc,
 })
 
 local ns = augroup('newSauce', {})

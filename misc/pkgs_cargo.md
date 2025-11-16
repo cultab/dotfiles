@@ -22,6 +22,8 @@ cat pkgs_cargo.md |
     disk usage analizer, think windirstat
 * pyenv-python
     faster `pyenv` shim
+* television
+    telescope outside vim (aka fzf)
 
 
 
@@ -36,7 +38,7 @@ cat pkgs_cargo.md |
 * git-delta
     `diff` alternative
 * ripgrep
-    `g/re/p` fater alternative
+    `g/re/p` faster alternative
 * bat
     `cat` alternative
 * choose
@@ -61,7 +63,7 @@ cat pkgs_cargo.md |
 # misc
 
 * just
-    🚀 just a command runner, `make` alternative
+    just a command runner, `make` alternative
 
 # maybe
 

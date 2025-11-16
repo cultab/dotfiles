@@ -1,6 +1,6 @@
 local M = {}
 
-M.config_picker = function(opts)
+function M.config_picker(opts)
 	-- only require on actual use?
 	local pickers = require 'telescope.pickers'
 	local finders = require 'telescope.finders'
@@ -25,7 +25,7 @@ M.config_picker = function(opts)
 					{ 'starship prompt', '~/.config/starship.toml' },
 					{ 'tmux', '~/.config/tmux/tmux.conf' },
 					{ 'themr', '~/.config/themr/themes.yaml', cd = true },
-					{ 'wezterm', '~/.config/wezterm/wezterm.lua' },
+					{ 'wezterm', '~/.config/wezterm/wezterm.lua', cd = true },
 					{ 'xresources', '~/.config/xrdb/Xresources.xdefaults', cd = true },
 					{ 'startwm', '~/bin/startwm' },
 					{ 'ghostty', '~/.config/ghostty/config' },

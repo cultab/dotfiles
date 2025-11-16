@@ -19,7 +19,7 @@ Registry:on('package:install:success', function(pkg, _)
 	notify('installed package: "' .. pkg.spec.name .. '"!', vim.log.levels.ERROR)
 end)
 
-M.ensure_installed = function(tools)
+function M.ensure_installed(tools)
 	for _, tool in ipairs(tools) do
 		local name, version = Package.Parse(tool)
 

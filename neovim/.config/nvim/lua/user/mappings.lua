@@ -40,7 +40,7 @@ map 'L' { 'g$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
 map '<leader>cc' { partial(vim.cmd.Command, "Run"), 'shell [c]ommand' }
-map '<leader>cl' { partial(vim.cmd.Command, "Last"), 'repeat [l]ast command' }
+map '<leader>cl' { partial(vim.cmd.Command, "Repeat"), 'repeat [l]ast command' }
 map '<leader>cr' { partial(vim.cmd.Command, "File"), '[r]un current file' }
 map '<leader>ct' { partial(vim.cmd.Command, "ChangeDirection"), '[t]oggle pane direction' }
 

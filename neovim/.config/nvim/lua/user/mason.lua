@@ -3,7 +3,7 @@ local M = {}
 local Registry = require 'mason-registry'
 local Package = require 'mason-core.package'
 
-M.ensure_installed = function(tools)
+function M.ensure_installed(tools)
 	for _, tool in ipairs(tools) do
 		local name, version = Package.Parse(tool)
 
