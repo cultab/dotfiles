@@ -72,6 +72,8 @@ case $distro in
 		pkg_update () {
 			sudo xbps-install -Syuv
 		}
+		pkg_update
+
 		;;
 	Debian*|Ubuntu*)
 		info 'chose' apt
@@ -81,18 +83,42 @@ case $distro in
 		pkg_update() {
 			sudo apt-get update -y && sudo apt-get upgrade -y
 		}
+		pkg_update
 		;;
 	*)
 		error "Unknown distro '$distro'"
 esac
 
+
 step "Updating"
 try 'updating system' pkg_update
 
 step "Installing important packages"
-try 'installing pkgs' pkg_install git stow make golang fzf pipx zsh curl keychain man
-# cargo
 
+try 'installing pkgs' pkg_install git stow make fzf zsh curl keychain man rustup gcc carapace
+
+case $distro in
+	Void*)
+		pkg_install () {
+			sudo xbps-install -yv "$@"
+		}
+		pkg_update () {
+			sudo xbps-install -Syuv
+		}
+		try 'installing pkgs' pkg_install go python3-pipx python3-devel
+		;;
+	Debian*|Ubuntu*)
+		pkg_install() {
+			sudo apt-get install -y --no-install-recommends "$@"
+		}
+		pkg_update() {
+			sudo apt-get update -y && sudo apt-get upgrade -y
+		}
+		try 'installing pkgs' pkg_install golang pipx
+		;;
+	*)
+		error "Unknown distro '$distro'"
+esac
 step "Cloning repos"
 
 info 'change dir to' '$HOME'
@@ -113,9 +139,10 @@ try 'cloning uniwa.nvim' git clone 'https://github.com/uniwa-community/uniwa.nvi
 
 step "Stow dotfiles"
 
-info backing up default .bashrc and .profile
-mv -f ~/.bashrc ~/.bashrc_pre_dotfile_deploy || true
-mv -f ~/.profile ~/.profile_pre_dotfile_deploy || true
+# info backing up default .bashrc and .profile
+mkdir ~/backup
+mv -f ~/.bashrc ~/backup/dotbashrc || true
+mv -f ~/.profile ~/backup/dotprofile|| true
 
 info cd in dotfiles
 (
@@ -128,7 +155,7 @@ try 'stowing dotfiles' stow git ssh neovim themr wezterm X shell lsd zathura bat
 )
 
 info change shell to zsh
-try 'changing shell to zsh' chsh -s /usr/bin/zsh "$USER"
+try 'changing shell to zsh' sudo chsh -s /usr/bin/zsh "$USER"
 
 step Run themr
 
@@ -151,8 +178,13 @@ try_cd xinst
 try 'installing xinst' sudo make install
 )
 
+step "Rustup"
+try "rustup initialization" echo 1 | rustup-init
+try "rustup default toolchain" rustup default stable
+
 step Install cargo packages
 
+PATH="$PATH:$HOME/.cargo/bin"
 info installing cargo-binstall
 try 'cargo installing cargo-binstall' cargo install cargo-binstall
 
@@ -183,12 +215,17 @@ step Install neovim
 
 try 'installing neovim' "$HOME/.cargo/bin/bob use stable"
 
-# TODO:
-# step Generate ssh key for github
-# ask if we want to generate w/ gum
-# ask for email w/ gum
-# ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/github
-# save to ~/.ssh/github
+
+step Generate new ssh key
+choice=$(gum choose yes no --header="Generate new ssh key?")
+
+case $choice in
+	y*)
+		ssh-keygen -t ed25519 -C "rroarck@gmail.com" -f ~/.ssh/github
+		;;
+	*)
+		;;
+esac
 
 rm /tmp/failed_step
 exec zsh -l

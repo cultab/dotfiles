@@ -40,6 +40,7 @@ export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs"
+export GHCUP_USE_XDG_DIRS="1"
 
 # keychain
 eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
@@ -89,9 +90,7 @@ PATH_add "$PYENV_ROOT/bin"
 PATH_add "/usr/local/cuda/bin"
 PATH_add "/opt/microchip/xc16/v2.00/bin"
 PATH_add "$HOME/.local/share/neovim/bin"
-PATH_add "$GOPATH/bin"
 PATH_add "/opt/quarto/bin"
-PATH_add "$HOME/.local/share/cargo/bin"
 PATH_add "$HOME/.local/share/bob/nvim-bin"
 PATH_add "$HOME/.bun/bin"
 PATH_add "/mnt/c/Program Files/WezTerm/"
@@ -104,8 +103,9 @@ export PATH
 export XBPS_DISTDIR="$HOME/repos/void-packages"
 
 # eval "$(pyenv init --path)"
-if [ -f "home/evan/.local/share/cargo/env" ]; then
-	. "$HOME/.local/share/cargo/env"
-fi
+[ -f $HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
+[ -f $HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+[ -f "$HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
+[ -f "$HOME/.local/share/ghcup/env" ] && . "$HOME/.local/share/ghcup/env" # ghcup-env

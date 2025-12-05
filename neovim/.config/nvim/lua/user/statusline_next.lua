@@ -75,6 +75,15 @@ local gr_mode = { mode_with_modemap(greek_modemap), icon = icons.misc.neovim }
 local short_mode = { mode_with_modemap(short_modemap), icon = icons.misc.vim }
 local long_mode = { mode_with_modemap(long_modemap) }
 
+
+local lint_progress = function()
+  local linters = require("lint").get_running()
+  if #linters == 0 then
+      return "󰦕"
+  end
+  return "󱉶 " .. table.concat(linters, ", ")
+end
+
 M.config = {
 	options = {
 		theme = 'auto',
@@ -89,6 +98,7 @@ M.config = {
 		lualine_b = { 'branch', 'diff' },
 		lualine_c = { 'man', 'mason', 'lazy', 'quickfix' },
 		-- right sections
+		lualine_x = { lint_progress, 'searchcount' },
 		lualine_y = {
 			'filetype',
 			{
@@ -102,7 +112,6 @@ M.config = {
 				},
 			},
 		},
-		lualine_x = { 'searchcount' },
 		lualine_z = { 'progress', 'location' },
 	},
 	tabline = {},

@@ -39,10 +39,10 @@ map 'H' { 'g^', 'Goto Line Beginning', 'nv' }
 map 'L' { 'g$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
-map '<leader>cc' { partial(vim.cmd.Command, "Run"), 'shell [c]ommand' }
-map '<leader>cl' { partial(vim.cmd.Command, "Repeat"), 'repeat [l]ast command' }
-map '<leader>cr' { partial(vim.cmd.Command, "File"), '[r]un current file' }
-map '<leader>ct' { partial(vim.cmd.Command, "ChangeDirection"), '[t]oggle pane direction' }
+map '<leader>cc' { partial(vim.cmd.Command, 'Run'), 'shell [c]ommand' }
+map '<leader>cl' { partial(vim.cmd.Command, 'Last'), 'repeat [l]ast command' }
+map '<leader>cr' { partial(vim.cmd.Command, 'CurrentFile'), '[r]un current file' }
+map '<leader>ct' { partial(vim.cmd.Command, 'ChangeDirection'), '[t]oggle pane direction' }
 
 map '<leader>o' { require('user.configs').config_picker, '[o]pen config picker' }
 
@@ -60,12 +60,18 @@ map '<leader><space>' { '<Plug>(cokeline-pick-focus)', 'Pick Buffer' }
 map '<leader>x' { '<Plug>(cokeline-pick-close)', 'Pick Buffer to close' }
 map '<M-c>' { vim.cmd.bdelete, '[c]lose buffer' }
 map '<leader>X' { partial(vim.api.nvim_buf_delete, 0, {}), 'e[X]punge current buffer' }
-map '<leader>f' { partial(vim.cmd.Telescope, 'find_files', 'follow=true', 'hidden=false'), '[f]ind files' }
-map '<leader>/' { function() require('telescope.builtin').live_grep({ additional_args='--follow' }) end, 'g[/]re/p' }
-map '<leader>h' { partial(vim.cmd.Telescope, 'help_tags'), 'search [h]elp tags' }
+map '<leader>/' {
+	function()
+		require('telescope.builtin').live_grep { additional_args = '--follow' }
+	end,
+	'g[/]re/p',
+}
 map '<leader>n' { require('user.newfile').new_file, '[n]ew file' }
 map '<leader>u' { vim.cmd.UndotreeToggle, '[u]ndo tree' }
 map '<leader>e' { vim.cmd.Oil, '[e]xplore files' }
+map '<leader>f' { nil, '[f]ind' }
+map '<leader>ff' { partial(vim.cmd.Telescope, 'find_files', 'follow=true', 'hidden=false'), '[f]ind [f]iles' }
+map '<leader>fh' { partial(vim.cmd.Telescope, 'help_tags'), '[h]elp tags' }
 
 map '<leader>g' { nil, '[g]it' }
 map '<leader>ga' { partial(vim.cmd.Gitsigns, 'stage_hunk'), '[a]dd hunk' }
@@ -74,8 +80,18 @@ map '<leader>gr' { partial(vim.cmd.Gitsigns, 'reset_hunk'), '[r]eset hunk' }
 map '<leader>gR' { partial(vim.cmd.Gitsigns, 'reset_buffer'), '[R]eset buffer' }
 map '<leader>gv' { partial(vim.cmd.Gitsigns, 'preview_hunk'), '[v]iew hunk' }
 map '<leader>gb' { partial(vim.cmd.Gitsigns, 'blame_line'), '[b]lame line' }
-map '<leader>gc' { function() require('tinygit').smartCommit() end, '[c]ommit changes' }
-map '<leader>gp' { function() require('tinygit').push() end, '[p]ush commits' }
+map '<leader>gc' {
+	function()
+		require('tinygit').smartCommit()
+	end,
+	'[c]ommit changes',
+}
+map '<leader>gp' {
+	function()
+		require('tinygit').push()
+	end,
+	'[p]ush commits',
+}
 
 map '<M-h>' { vim.cmd.SmartCursorMoveLeft }
 map '<M-j>' { vim.cmd.SmartCursorMoveDown }
@@ -93,7 +109,7 @@ map '<M-l>' { vim.cmd.SmartCursorMoveRight }
 local function if_capability_else_fallback(server_capability, lsp_func, lsp_args, vim_cmd)
 	local clients = vim.lsp.get_clients { bufn = 0 }
 	local capabillity_supported = false
-	local name = ""
+	local name = ''
 	for _, client in ipairs(clients) do
 		if client.server_capabilities[server_capability] and client.name ~= 'null-ls' then
 			name = client.name
@@ -106,10 +122,10 @@ local function if_capability_else_fallback(server_capability, lsp_func, lsp_args
 		if type(lsp_args) == 'table' then
 			lsp_args = unpack(lsp_args)
 		end
-		vim.notify("lsp: " .. name)
+		vim.notify('lsp: ' .. name)
 		lsp_func(lsp_args)
 	else
-		vim.notify("vim: " .. vim_cmd)
+		vim.notify('vim: ' .. vim_cmd)
 		vim.cmd(vim.api.nvim_replace_termcodes(vim_cmd, true, false, true))
 	end
 end

@@ -54,7 +54,7 @@ end
 	-- 	},
 	-- 	cache_enabled = 0,
 	-- }
-if vim.env.SSH_TTY then
+-- if vim.env.SSH_TTY then
 	vim.g.clipboard = {
 		name = 'OSC 52',
 		copy = {
@@ -66,7 +66,7 @@ if vim.env.SSH_TTY then
 			['*'] = paste,
 		},
 	}
-end
+-- end
 vim.opt.clipboard:prepend { 'unnamedplus' }
 
 vim.opt.updatetime = 50 -- ms
@@ -97,7 +97,7 @@ vim.opt.completeopt = 'menu,menuone,noselect' -- ,noinsert,longest"
 vim.opt.formatoptions = vim.opt.formatoptions - 'a' - 't' + 'q' - 'o' + 'r' + 'n' + 'j' - '2'
 
 vim.opt.autoread = true
-vim.opt.timeoutlen = 100
+vim.opt.timeoutlen = 1000 -- default is 1000
 
 
 local augroup = vim.api.nvim_create_augroup

@@ -11,6 +11,7 @@ return {
 			make = { 'checkmake' },
 			dockerfile = { 'hadolint' },
 			rust = { 'ruff' },
+			-- haskell = { 'hlint' },
 		}
 
 		require('user.mason_utils').ensure_installed {
@@ -19,11 +20,11 @@ return {
 			'shellcheck',
 			'checkmake',
 			'hadolint',
-			'ruff',
+			--'ruff',
 		}
 
-    -- commitlint
-    -- nixpkgs-fmt
+		-- commitlint
+		-- nixpkgs-fmt
 		vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged', 'InsertLeave', 'BufWritePost' }, {
 			callback = function()
 				require('lint').try_lint()

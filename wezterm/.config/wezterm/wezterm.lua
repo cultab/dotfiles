@@ -30,16 +30,24 @@ config.ssh_domains = { {
 } }
 
 config.term = "wezterm"
-config.default_domain = hostname() == "winbox" and "WSL:void" or nil
+
+if hostname() == "winbox" then
+	config.default_domain = "WSL:void"
+end
+
+if hostname() == "abyss" then
+	config.default_prog = { "distrobox", "enter", "tartarus" }
+end
 
 local name
-name = "Hermit"
+-- name = "Hermit"
 -- name = "Cozette"
-name = "CozetteHiDpi"
+-- name = "CozetteHiDpi"
 -- name = "CozetteVector"
 -- name = "Iosevka Term"
 -- name = "Terminus (TTF)"
 -- name = "Monaspace"
+name = "Fira Code"
 
 -- For Cozette
 if name:find("Cozette") then
@@ -63,26 +71,26 @@ if name:find("Cozette") then
 			}),
 		},
 	}
-    -- disable italics and bold :(, :)
-    config.font_rules = {
-        {
-            italic = true,
-            font = wezterm.font {
-                family = name,
-                weight = 'Bold',
-                style = 'Normal',
-            },
-        },
-        {
-            italic = false,
-            intensity = "Bold",
-            font = wezterm.font {
-                family = name,
-                weight = "Regular",
-                style = "Normal",
-            }
-        },
-    }
+	-- disable italics and bold :(, :)
+	config.font_rules = {
+		{
+			italic = true,
+			font = wezterm.font({
+				family = name,
+				weight = "Bold",
+				style = "Normal",
+			}),
+		},
+		{
+			italic = false,
+			intensity = "Bold",
+			font = wezterm.font({
+				family = name,
+				weight = "Regular",
+				style = "Normal",
+			}),
+		},
+	}
 
 	-- default to size for normal cozette
 	config.font_size = 6
@@ -155,7 +163,7 @@ end
 
 -- enable_tab_bar = false
 config.use_fancy_tab_bar = false
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+-- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = {
 	left = 2,
 	right = 2,
@@ -306,6 +314,8 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = wezterm.nerdfonts.linux_void
 	elseif h == "pop-os" then
 		host_icon = wezterm.nerdfonts.linux_pop_os
+	elseif h == "abyss" then
+		host_icon = wezterm.nerdfonts.linux_fedora
 	end
 	if not host_icon then
 		host_icon = "n/a"
@@ -313,7 +323,7 @@ wezterm.on("update-status", function(window, pane)
 	window:set_left_status(wezterm.format({
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = " " .. host_icon .. " SYSTEM " },
+		{ Text = " " .. host_icon .. " " .. h .. " " },
 	}))
 	local clock = wezterm.nerdfonts.fa_clock_o
 	-- I like my date/time in this style, also: "Wed Mar 3 08:14"

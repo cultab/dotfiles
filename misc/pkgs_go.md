@@ -16,4 +16,6 @@ cat pkgs_go.md |
     like moreutils' `vipe`, edit pipelines
 * maaslalani/nap@main
     snippets manager
+* charmbracelet/gum
+    fzf like picker, glamorous shell scripts
 
