@@ -60,10 +60,10 @@ vim.o.foldenable = true
 vim.o.foldlevelstart = 99
 vim.o.foldcolumn = '1'
 
-vim.o.scrolloff = 1 -- keep lines above and below cursor
+vim.o.scrolloff = 6 -- keep lines above and below cursor
 vim.o.sidescroll = 1
 vim.o.showmode = false
-vim.o.showcmd = true
+vim.o.showcmd = false
 
 vim.o.background = 'dark'
 vim.o.cursorline = true -- highlight current line

@@ -61,7 +61,7 @@ poweralertd &
 blueman-applet &
 nm-applet &
 udiskie --tray &
-syncthingtray &
+syncthingtray --wait &
 keepassxc &
 megasync &
 

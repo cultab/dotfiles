@@ -101,9 +101,9 @@ if name:find("Cozette") then
 		config.font_size = 19
 	end
 elseif name:find("Monaspace") then
-	if hostname() ~= "void" then
-		config.font_size = 12
-	end
+	-- if hostname() ~= "void" then
+	config.font_size = 12
+	-- end
 	config.line_height = 1.2
 	config.underline_position = "-2px"
 	config.font = wezterm.font_with_fallback({

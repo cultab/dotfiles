@@ -95,6 +95,8 @@ PATH_add "$HOME/.local/share/bob/nvim-bin"
 PATH_add "$HOME/.bun/bin"
 PATH_add "/mnt/c/Program Files/WezTerm/"
 PATH_add "$HOME/.bun/bin:$PATH"
+PATH_add "$HOME/.local/share/AppImage"
+
 
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending

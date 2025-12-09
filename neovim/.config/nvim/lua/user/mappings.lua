@@ -32,11 +32,11 @@ map '<leader>=' { '<Plug>Format', 'format buffer [Conform]', 'nv' }
 
 -- sane movement through wrapping lines
 -- NOTE: checks v:count so relative jumps still work :^)
-map 'j' { 'v:count == 0 ? "gj" : "j"', nil, 'nv', expr = true }
+map 'j' { 'v:count == 0 ? "gj" : "j"', nil, 'nv', expr = true, silent = false }
 map 'k' { 'v:count == 0 ? "gk" : "k"', nil, 'nv', expr = true }
 
-map 'H' { 'g^', 'Goto Line Beginning', 'nv' }
-map 'L' { 'g$', 'Goto Line End', 'nv' }
+map 'H' { '0', 'Goto Line Beginning', 'nv' }
+map 'L' { '$', 'Goto Line End', 'nv' }
 
 map '<leader>c' { nil, 'Run command' }
 map '<leader>cc' { partial(vim.cmd.Command, 'Run'), 'shell [c]ommand' }

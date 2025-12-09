@@ -1,3 +1,4 @@
+local map = require 'user.map'.map
 vim.opt.expandtab = true -- spaces
 vim.opt.tabstop = 4 -- tab size is 4
 vim.opt.softtabstop = 4 -- expanded size is 4
@@ -13,15 +14,16 @@ local function keymap(mode, lhs, rhs, desc)
 end
 -- haskell-language-server relies heavily on codeLenses,
 -- so auto-refresh (see advanced configuration) is enabled by default
-keymap('n', '<leader>hl', vim.lsp.codelens.run, '[h]askel code[l]ens')
+map 'n' { nil, '[h]askell' }
+keymap('n', '<leader>hl', vim.lsp.codelens.run, 'code[l]ens')
 -- Hoogle search for the type signature of the definition under the cursor
-keymap('n', '<leader>hs', ht.hoogle.hoogle_signature, '[h]askel hoogle [s]ignature')
+keymap('n', '<leader>hs', ht.hoogle.hoogle_signature, 'hoogle [s]ignature')
 -- Evaluate all code snippets
-keymap('n', '<leader>he', ht.lsp.buf_eval_all, '[h]askel [e]val')
+keymap('n', '<leader>he', ht.lsp.buf_eval_all, '[e]val')
 -- Toggle a GHCi repl for the current package
-keymap('n', '<leader>hr', ht.repl.toggle, '[h]askel [r]epl')
+keymap('n', '<leader>hr', ht.repl.toggle, '[r]epl')
 -- Toggle a GHCi repl for the current buffer
 keymap('n', '<leader>hb', function()
 	ht.repl.toggle(vim.api.nvim_buf_get_name(0))
 end, '[h]askel [b]uffer repl')
-keymap('n', '<leader>hq', ht.repl.quit, '[h]askel repl [q]uit')
+keymap('n', '<leader>hq', ht.repl.quit, 'repl [q]uit')
