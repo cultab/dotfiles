@@ -4,8 +4,6 @@
 # export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 mkdir -p "$HOME/.cache/run"
 export XDG_RUNTIME_DIR="$HOME"/.cache/run
-export XDG_DATA_HOME="$HOME"/.local/share
-export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -41,9 +39,6 @@ export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs"
 export GHCUP_USE_XDG_DIRS="1"
-
-# keychain
-eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -96,7 +91,8 @@ PATH_add "$HOME/.bun/bin"
 PATH_add "/mnt/c/Program Files/WezTerm/"
 PATH_add "$HOME/.bun/bin:$PATH"
 PATH_add "$HOME/.local/share/AppImage"
-
+PATH_add "/home/linuxbrew/.linuxbrew/bin"
+PATH_add "/home/linuxbrew/.linuxbrew/sbin"
 
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending
@@ -104,6 +100,8 @@ export PATH
 
 export XBPS_DISTDIR="$HOME/repos/void-packages"
 
+# keychain
+eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
 # eval "$(pyenv init --path)"
 [ -f $HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
 [ -f $HOME/.cargo/env" ] && . "$HOME/.cargo/env"

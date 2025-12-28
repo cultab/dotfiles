@@ -36,7 +36,7 @@ if hostname() == "winbox" then
 end
 
 if hostname() == "abyss" then
-	config.default_prog = { "distrobox", "enter", "tartarus" }
+	config.default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" }
 end
 
 local name
@@ -44,9 +44,9 @@ local name
 -- name = "Cozette"
 -- name = "CozetteHiDpi"
 -- name = "CozetteVector"
--- name = "Iosevka Term"
+name = "Iosevka Term"
 -- name = "Terminus (TTF)"
-name = "Monaspace"
+-- name = "Monaspace"
 -- name = "Fira Code"
 
 -- For Cozette

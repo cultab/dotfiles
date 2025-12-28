@@ -2,7 +2,8 @@ return {
 	{
 		'nvim-treesitter/nvim-treesitter',
 		build = ':TSUpdate',
-		version = false,
+		lazy = false,
+		branch = master,
 		config = function()
 			require('nvim-treesitter.configs').setup {
 				-- ensure_installed = "all", -- one of "all"  or a list of languages

@@ -5,6 +5,8 @@ set -o errexit   # abort on nonzero exitstatus
 #todo
 # rustup from source if not up to date
 # remember successful steps
+# packages for each distro
+#	add homebrew
 
 CUR_STEP=1
 NUM_STEP=12
@@ -58,7 +60,7 @@ error() {
 	exit 1
 }
 
-step "Choosing package manager"
+step "Installing packages"
 
 info "Detecting distro.."
 distro=$(grep '^NAME=' /etc/os-release | cut -d '"' -f 2)
@@ -72,8 +74,8 @@ case $distro in
 		pkg_update () {
 			sudo xbps-install -Syuv
 		}
-		pkg_update
-
+		try 'updating system' pkg_update
+		try 'installing packages' pkg_install git stow make fzf zsh curl keychain man    rustup gcc carapace procs sd bat python3-pipx python3-devel go               dua-cli                dust    bottom choose lsd just gum trash-cli tldr
 		;;
 	Debian*|Ubuntu*)
 		info 'chose' apt
@@ -83,45 +85,27 @@ case $distro in
 		pkg_update() {
 			sudo apt-get update -y && sudo apt-get upgrade -y
 		}
-		pkg_update
+		try 'updating system' pkg_update
+		try 'installing packages' pkg_install git stow make fzf zsh curl keychain man    rustup gcc carapace procs sd bat         pipx               golang git-delta                        du-dust               lsd just gum trash-cli     
 		;;
-	*)
-		error "Unknown distro '$distro'"
-esac
-
-
-step "Updating"
-try 'updating system' pkg_update
-
-step "Installing important packages"
-
-try 'installing pkgs' pkg_install git stow make fzf zsh curl keychain man rustup gcc carapace
-
-case $distro in
-	Void*)
-		pkg_install () {
-			sudo xbps-install -yv "$@"
-		}
-		pkg_update () {
-			sudo xbps-install -Syuv
-		}
-		try 'installing pkgs' pkg_install go python3-pipx python3-devel
-		;;
-	Debian*|Ubuntu*)
+	Bazzite*)
+		info 'chose' brew
 		pkg_install() {
-			sudo apt-get install -y --no-install-recommends "$@"
+			brew install "$@"
 		}
 		pkg_update() {
-			sudo apt-get update -y && sudo apt-get upgrade -y
+			brew update
 		}
-		try 'installing pkgs' pkg_install golang pipx
+		try 'updating system' pkg_update
+		try 'installing packages' pkg_install git stow make fzf zsh curl keychain mandoc rustup gcc carapace procs sd bat         pipx               golang git-delta dua-cli bob television dust    bottom choose lsd just gum trash-cli tealdeer
 		;;
 	*)
 		error "Unknown distro '$distro'"
 esac
+
 step "Cloning repos"
 
-info 'change dir to' '$HOME'
+info 'change dir to' "$$HOME"
 try_cd "$HOME"
 
 info 'git clone' dotfiles
@@ -138,60 +122,91 @@ try 'cloning uniwa.nvim' git clone 'https://github.com/uniwa-community/uniwa.nvi
 )
 
 step "Stow dotfiles"
-
-# info backing up default .bashrc and .profile
-mkdir ~/backup
-mv -f ~/.bashrc ~/backup/dotbashrc || true
-mv -f ~/.profile ~/backup/dotprofile|| true
-
-info cd in dotfiles
 (
-try_cd ~/dotfiles
-info remove problematic file # FIXME: just remove from repo
-try 'removing problematic file' rm -f ~/dotfiles/scripts/bin/dwm_bar.sh
+	# info backing up default .bashrc and .profile
+	mkdir -p ~/backup
+	mv -f ~/.bashrc ~/backup/dotbashrc || true
+	mv -f ~/.profile ~/backup/dotprofile|| true
 
-info stow files
-try 'stowing dotfiles' stow git ssh neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
+	info cd in dotfiles
+	(
+		try_cd ~/dotfiles
+		info remove problematic file # FIXME: just remove from repo
+		try 'removing problematic file' rm -f ~/dotfiles/scripts/bin/dwm_bar.sh
+
+		info stow files
+		try 'stowing dotfiles' stow git ssh neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
+	)
+
+	info change shell to zsh
+	if [ $distro != Bazzite ]; then
+		try 'changing shell to zsh' sudo chsh -s /usr/bin/zsh "$USER"
+	fi
+
 )
 
-info change shell to zsh
-try 'changing shell to zsh' sudo chsh -s /usr/bin/zsh "$USER"
-
 step Run themr
-
 (
-info installing: themr
-try_cd ~/repos
-try 'clone themr' git clone 'https://github.com/cultab/themr'
-try_cd themr
-try 'make' make
-try 'make install' sudo make install
-info 'setting theme to' tokyonight-night
-try 'setting themr themr' themr tokyonight-night
+	info installing: themr
+	try_cd ~/repos
+	try 'clone themr' git clone 'https://github.com/cultab/themr'
+	try_cd themr
+	try 'make' make
+	try 'make install' sudo make install
+	info 'setting theme to' tokyonight-night
+	try 'setting themr themr' themr tokyonight-night
 )
 
 step Install xinst
 (
-try_cd ~/repos
-try 'cloning xinst' git clone 'https://github.com/cultab/xinst'
-try_cd xinst
-try 'installing xinst' sudo make install
+	try_cd ~/repos
+	try 'cloning xinst' git clone 'https://github.com/cultab/xinst'
+	try_cd xinst
+	try 'installing xinst' sudo make install
 )
 
+export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+
 step "Rustup"
-try "rustup initialization" echo 1 | rustup-init
-try "rustup default toolchain" rustup default stable
+(
+	true
+	#try "rustup initialization" echo 1 | rustup-init
+	#try "rustup default toolchain" rustup default stable
+)
 
 step Install cargo packages
 
-PATH="$PATH:$HOME/.cargo/bin"
+try "update $$PATH" . "$CARGO_HOME/env"
 info installing cargo-binstall
-try 'cargo installing cargo-binstall' cargo install cargo-binstall
+
 
 cargo_pkgs=$(grep '\*' < ~/dotfiles/misc/pkgs_cargo.md | cut -d ' ' -f 2 | tr '\n' ' ')
 
 info "packages with cargo-binstall:" "$cargo_pkgs"
 for pkg in $cargo_pkgs; do
+	case $pkg in
+		bob-nvim)
+			bin=bob
+			;;
+		dua-cli)
+			bin=dua
+			;;
+		git-delta)
+			bin=delta
+			;;
+		du-dust)
+			;;
+		ripgrep)
+			bin=rg
+			;;
+		*)      bin=$pkg
+			;;
+	esac
+	if [ $(command -v $bin) ]; then
+		info skipping "package $pkg as $bin exists in" '$PATH'
+		continue
+	fi
 	try "installing $pkg with cargo-binstall" cargo binstall -y "$pkg"
 done
 
@@ -200,6 +215,12 @@ go_pkgs=$(grep '\*' < ~/dotfiles/misc/pkgs_go.md | cut -d ' ' -f 2 | tr '\n' ' '
 
 info "packages:" "$go_pkgs"
 for pkg in $go_pkgs; do
+	bin=$(echo $pkg | sed  -nE 's/.*\/([a-z]*)@.*/\1/p')
+	if [ $(command -v $bin) ]; then
+		info skipping "package $pkg as $bin exists in" '$PATH'
+		continue
+	fi
+	echo $pkg
 	try "installing $pkg with go install" go install "github.com/${pkg}"	
 done
 
@@ -208,12 +229,24 @@ pip_pkgs=$(grep '\*' < ~/dotfiles/misc/pkgs_python.md | cut -d ' ' -f 2 | tr '\n
 
 info "packages:" "$pip_pkgs"
 for pkg in $pip_pkgs; do
+	case $pkg in
+		trash-cli)
+			bin=trash
+			;;
+		*)
+			bin=$pkg
+			;;
+	esac
+	if [ $(command -v $bin) ]; then
+		info skipping "package $pkg as $bin exists in" '$PATH'
+		continue
+	fi
 	try "installing $pkg with pipx" pipx install "$pkg"
 done
 
 step Install neovim
 
-try 'installing neovim' "$HOME/.cargo/bin/bob use stable"
+try 'installing neovim' "bob use stable"
 
 
 step Generate new ssh key
