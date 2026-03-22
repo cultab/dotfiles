@@ -1,9 +1,9 @@
 local M = {}
 local utils = require 'user.mason_utils'
-local lspconfig = require 'lspconfig'
+-- local lspconfig = require 'lspconfig'
 local toMason = require('mason-lspconfig').get_mappings().lspconfig_to_package
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- local capabilities = {}
 
 local servers = {
@@ -55,9 +55,9 @@ local servers = {
 				hint = { enable = true },
 				diagnostics = { globals = { 'vim' } },
 				runtime = { version = 'LuaJIT' },
-			},
-			workspace = {
-				checkThirdParty = false,
+				workspace = {
+					checkThirdParty = false,
+				},
 			},
 		},
 	},
@@ -83,7 +83,7 @@ local servers = {
 	},
 	-- texlab = { filetypes = { 'plaintex', 'tex', 'rmd', 'quarto' } },
 	clangd = {
-		capabilities = vim.tbl_deep_extend('force', capabilities, { offsetEncoding = 'utf-16' }),
+		-- capabilities = vim.tbl_deep_extend('force', capabilities, { offsetEncoding = 'utf-16' }),
 		filetypes = { 'c', 'cpp', 'cuda' },
 	},
 	-- omnisharp = {},
@@ -92,7 +92,7 @@ local servers = {
 	golangci_lint_ls = {
 		default_config = {
 			cmd = { 'golangci-lint-langserver' },
-			root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
+			root_markers = { '.git', 'go.mod' },
 			init_options = {
 				command = {
 					'golangci-lint',
@@ -128,11 +128,16 @@ local border = {
 	{ '│', 'FloatBorder' },
 }
 
--- LSP settings (for overriding per client)
-local handlers = {
-	['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-	['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
-}
+local hover = vim.lsp.buf.hover
+
+vim.lsp.buf.hover = function()
+	return hover { border = border }
+end
+
+local sig_help = vim.lsp.buf.signature_help
+vim.lsp.buf.signature_help = function()
+	return sig_help { border = border }
+end
 
 local on_attach = function()
 	-- require('lsp_signature').on_attach {
@@ -154,11 +159,11 @@ for server, extra in pairs(servers) do
 	local settings = {
 		on_attach = on_attach,
 		capabilities = capabilities,
-		handlers = handlers,
 	}
 
 	settings = vim.tbl_deep_extend('force', settings, extra)
-	lspconfig[server].setup(settings)
+	vim.lsp.config(server, settings)
+	vim.lsp.enable(server)
 end
 
 return M

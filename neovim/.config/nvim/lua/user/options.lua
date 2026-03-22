@@ -70,7 +70,6 @@ end
 vim.opt.clipboard:prepend { 'unnamedplus' }
 
 vim.opt.updatetime = 50 -- ms
-
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = 'screen'

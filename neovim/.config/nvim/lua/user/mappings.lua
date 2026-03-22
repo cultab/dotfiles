@@ -72,6 +72,7 @@ map '<leader>e' { vim.cmd.Oil, '[e]xplore files' }
 map '<leader>f' { nil, '[f]ind' }
 map '<leader>ff' { partial(vim.cmd.Telescope, 'find_files', 'follow=true', 'hidden=false'), '[f]ind [f]iles' }
 map '<leader>fh' { partial(vim.cmd.Telescope, 'help_tags'), '[h]elp tags' }
+map '<leader>fk' { partial(vim.cmd.Telescope, 'keymaps'), '[k]eymaps' }
 
 map '<leader>g' { nil, '[g]it' }
 map '<leader>ga' { partial(vim.cmd.Gitsigns, 'stage_hunk'), '[a]dd hunk' }
@@ -168,31 +169,31 @@ local has_words_before = function()
 end
 
 function M.get_cmp_mappings()
-	local cmp = require 'cmp'
-	return {
-		['<C-u>'] = cmp.mapping.scroll_docs(-4),
-		['<C-d>'] = cmp.mapping.scroll_docs(4),
-		['<Tab>'] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				if #cmp.get_entries() == 1 then
-					cmp.confirm { select = true }
-				else
-					cmp.select_next_item()
-				end
-			elseif has_words_before() then
-				cmp.complete()
-				if #cmp.get_entries() == 1 then
-					cmp.confirm { select = true }
-				end
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping.select_prev_item(),
-		-- ['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm { select = false },
-	}
+	-- local cmp = require 'cmp'
+	-- return {
+	-- 	['<C-u>'] = cmp.mapping.scroll_docs(-4),
+	-- 	['<C-d>'] = cmp.mapping.scroll_docs(4),
+	-- 	['<Tab>'] = cmp.mapping(function(fallback)
+	-- 		if cmp.visible() then
+	-- 			if #cmp.get_entries() == 1 then
+	-- 				cmp.confirm { select = true }
+	-- 			else
+	-- 				cmp.select_next_item()
+	-- 			end
+	-- 		elseif has_words_before() then
+	-- 			cmp.complete()
+	-- 			if #cmp.get_entries() == 1 then
+	-- 				cmp.confirm { select = true }
+	-- 			end
+	-- 		else
+	-- 			fallback()
+	-- 		end
+	-- 	end, { 'i', 's' }),
+	-- 	['<S-Tab>'] = cmp.mapping.select_prev_item(),
+	-- 	-- ['<C-Space>'] = cmp.mapping.complete(),
+	-- 	['<C-e>'] = cmp.mapping.abort(),
+	-- 	['<CR>'] = cmp.mapping.confirm { select = false },
+	-- }
 	-- map '<C-d>' { function() if not require("cmp").scroll_docs(4) then return "<C-d>" end end, "Scroll documentation down", expr = true }
 	-- map '<C-u>' { function() if not require("cmp").scroll_docs(-4) then return "<C-u>" end end, "Scroll documentation up", expr = true }
 end

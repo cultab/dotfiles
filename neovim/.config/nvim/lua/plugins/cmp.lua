@@ -1,6 +1,69 @@
 return {
 	{
+		'saghen/blink.cmp',
+		-- enabled = false,
+		lazy = false, -- lazy loading handled internally
+		version = '*',
+
+		dependencies = {
+			'rafamadriz/friendly-snippets',
+		},
+
+		opts = {
+			keymap = {
+				preset = 'default',
+				['<Tab>'] = { 'select_next' },
+				['<S-Tab>'] = { 'select_prev' },
+				['<CR>'] = { 'accept', 'fallback' },
+				['<C-u>'] = { 'scroll_signature_up', 'fallback' },
+				['<C-d>'] = { 'scroll_signature_down', 'fallback' },
+			},
+
+			completion = {
+				list = {
+					selection = {
+						preselect = true,
+						auto_insert = true,
+					},
+				},
+
+				menu = {
+					border = 'rounded',
+				},
+
+				documentation = {
+					auto_show = true,
+					window = {
+						border = 'rounded',
+					},
+				},
+			},
+
+			signature = {
+				enabled = true,
+				window = {
+					border = 'rounded',
+					show_documentation = true,
+				},
+			},
+			sources = {
+				-- add lazydev to your completion providers
+				default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+				providers = {
+					lazydev = {
+						name = 'LazyDev',
+						module = 'lazydev.integrations.blink',
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
+					},
+				},
+			},
+		},
+	},
+
+	{
 		'hrsh7th/nvim-cmp',
+		enabled = false,
 		version = false,
 		config = function()
 			local cmp = require 'cmp'
@@ -24,6 +87,7 @@ return {
 				},
 				mapping = require('user.mappings').get_cmp_mappings(),
 				sources = cmp.config.sources {
+					{ name = 'lazydev' },
 					{ name = 'luasnip' },
 					{ name = 'nvim_lsp' },
 					{ name = 'buffer', keyword_length = 2, max_item_count = 5 }, -- keep spam to a mininum
@@ -39,6 +103,7 @@ return {
 						symbol_map = require('user.icons').lsp,
 						mode = 'symbol_text',
 						menu = {
+							lazydev = '[LazyDev]',
 							luasnip = '[Snippet]',
 							otter = '[Otter]',
 							conventionalcommits = '[git]',
@@ -94,25 +159,27 @@ return {
 			cmp.event:on('confirm_done', autopairs.on_confirm_done { map_char = { tex = '' } })
 		end,
 		event = { 'InsertEnter', 'CmdlineEnter' },
-	},
-	{ 'hrsh7th/cmp-nvim-lsp' },
-	{ 'hrsh7th/cmp-buffer' },
-	{ 'hrsh7th/cmp-path' },
-	{ 'hrsh7th/cmp-cmdline' },
-	{ 'f3fora/cmp-spell' },
-	{ 'jc-doyle/cmp-pandoc-references' },
-	{ 'kdheepak/cmp-latex-symbols' },
-	{ 'andersevenrud/cmp-tmux' },
-	{
-		'tamago324/cmp-zsh',
-		lazy = true,
-		opts = {
-			zshrc = true, -- Source the zshrc (adding all custom completions). default: false
-			filetypes = { 'deoledit', 'zsh', 'bash', 'fish', 'sh' }, -- Filetypes to enable cmp_zsh source. default: {"*"}
+		dependencies = {
+			{ 'hrsh7th/cmp-nvim-lsp' },
+			{ 'hrsh7th/cmp-buffer' },
+			{ 'hrsh7th/cmp-path' },
+			{ 'hrsh7th/cmp-cmdline' },
+			{ 'f3fora/cmp-spell' },
+			{ 'jc-doyle/cmp-pandoc-references' },
+			{ 'kdheepak/cmp-latex-symbols' },
+			{ 'andersevenrud/cmp-tmux' },
+			{
+				'tamago324/cmp-zsh',
+				lazy = true,
+				opts = {
+					zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+					filetypes = { 'deoledit', 'zsh', 'bash', 'fish', 'sh' }, -- Filetypes to enable cmp_zsh source. default: {"*"}
+				},
+			},
+			{ 'cultab/cmp-conventionalcommits', lazy = true }, -- my fork with less features :^)
+			{ 'saadparwaiz1/cmp_luasnip', lazy = true },
 		},
 	},
-	{ 'cultab/cmp-conventionalcommits', lazy = true }, -- my fork with less features :^)
-	{ 'saadparwaiz1/cmp_luasnip', lazy = true },
 	{
 		'L3MON4D3/LuaSnip',
 		dependencies = { 'rafamadriz/friendly-snippets' },
@@ -121,13 +188,13 @@ return {
 		end,
 	},
 
-	{
-		'ray-x/lsp_signature.nvim',
-		version = false,
-		event = 'VeryLazy',
-		opts = {},
-		config = function(_, opts)
-			require('lsp_signature').setup(opts)
-		end,
-	},
+	-- {
+	-- 	'ray-x/lsp_signature.nvim',
+	-- 	version = false,
+	-- 	event = 'VeryLazy',
+	-- 	opts = {},
+	-- 	config = function(_, opts)
+	-- 		require('lsp_signature').setup(opts)
+	-- 	end,
+	-- },
 }
