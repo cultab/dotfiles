@@ -78,6 +78,11 @@ term_env_var:
   regex: 'export TERMINAL=.*'
   replace: 'export TERMINAL="{}"'
 
+qbit:
+  type: colorscheme
+  path: ~/.config/qBittorrent/qBittorrent.conf
+  regex: 'General\\CustomUIThemePath=.*'
+  replace: 'General\CustomUIThemePath=/home/evan/.config/qBittorrent/colors/{}.qbtheme'
 
 # lightline:
 #   path: "~/.config/nvim/init.vim"

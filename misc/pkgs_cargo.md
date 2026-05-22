@@ -24,6 +24,8 @@ cat pkgs_cargo.md |
     faster `pyenv` shim
 * television
     telescope outside vim (aka fzf)
+* iris-cli
+    download folder organizer
 
 
 

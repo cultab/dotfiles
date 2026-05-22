@@ -57,7 +57,6 @@ local colors = {
 	lazy 'Reewr/vim-monokai-phoenix',
 	lazy 'cultab/potato-colors',
 	-- skip 'lifepillar/vim-solarized8',
-	-- skip 'lifepillar/vim-gruvbox8',
 	-- low contrast
 	lazy 'oahlen/iceberg.nvim',
 	lazy '2nthony/vitesse.nvim',
@@ -73,9 +72,9 @@ local colors = {
 	lazy 'deviantfero/wpgtk.vim',
 	-- gruvbox
 	lazy 'eddyekofo94/gruvbox-flat.nvim',
-	lazy {
-		'npxbr/gruvbox.nvim',
-	},
+	lazy { 'ellisonleao/gruvbox.nvim', opts = { transparent_mode = true } },
+	-- skip 'lifepillar/vim-gruvbox8',
+	-- lazy 'npxbr/gruvbox.nvim',
 	-- vscode
 	lazy 'Mofiqul/vscode.nvim',
 	lazy 'LunarVim/darkplus.nvim',
@@ -86,7 +85,10 @@ local colors = {
 		'folke/tokyonight.nvim',
 		opts = {
 			-- NOTE: with some fonts, bold is an entirely different looking font, so it can be jarring to see the glyphs change shape
-			on_highlights = function(highlights, _--[[colors]])
+			on_highlights = function(
+				highlights,
+				_ --[[colors]]
+			)
 				highlights.GitSignsAdd.bold = true
 				highlights.GitSignsChange.bold = true
 				highlights.GitSignsDelete.bold = true

@@ -48,10 +48,20 @@ font-family-italic = Monaspace Radon
 font-family-bold-italic = Monaspace Radon
 
 link-url
+link-previews = true
 window-decoration = server
 window-theme = ghostty
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
+
+command = /home/linuxbrew/.linuxbrew/bin/zsh -l
+shell-integration = zsh
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = notify
+notify-on-command-finish-after = 10s
+
+
+
 
 keybind = ctrl+s>z=toggle_split_zoom
 keybind = ctrl+s>\=new_split:right

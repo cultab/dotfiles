@@ -1,16 +1,19 @@
-local wezterm = require("wezterm")
+local wezterm = require("wezterm") ---@type Wezterm
 local act = wezterm.action
 
 M = {}
 
 M.get_user_vars = function(pane)
-	if pane["user_vars"] ~= nil then
+	if pane.user_vars ~= nil then
 		return pane.user_vars
-	elseif pane["get_user_vars"] ~= nil then
+	elseif pane.get_user_vars ~= nil then
 		return pane:get_user_vars()
 	end
 end
 
+---comment
+---@param pane TabInformation|MuxTab
+---@return string
 M.get_proc_name = function(pane)
 	local name = M.get_user_vars(pane)["WEZTERM_PROG"]
 
@@ -19,7 +22,7 @@ M.get_proc_name = function(pane)
 	end
 
 	-- get argv[0] only
-	return string.gsub(name, " .*", "")
+	return (string.gsub(name, " .*", ""))
 end
 
 M.isViProcess = function(pane, _)
@@ -35,6 +38,19 @@ M.isViProcess = function(pane, _)
 		end
 	end
 	return false
+end
+
+---returns wezterm's config dir, respecting XDG_CONFIG_HOME and falling back to HOME/.config
+---@return string
+function M.get_config_dir()
+	local dir = os.getenv("XDG_CONFIG_HOME")
+	if dir then
+		return dir .. "/wezterm"
+	end
+
+	local home = os.getenv("HOME")
+	dir = home .. "/.config"
+	return dir .. "/wezterm"
 end
 
 M.conditionalActivatePane = function(window, pane, pane_direction, vim_direction)

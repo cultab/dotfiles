@@ -24,14 +24,15 @@ vim.diagnostic.config {
 		prefix = ' ',
 		scope = 'cursor',
 	},
-	signs = {text = {
-		[vim.diagnostic.severity.ERROR] = icons.diagnostic.error,
-		[vim.diagnostic.severity.WARN] = icons.diagnostic.warn,
-		[vim.diagnostic.severity.INFO] = icons.diagnostic.info,
-		[vim.diagnostic.severity.HINT] = icons.diagnostic.hint,
-	}}
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = icons.diagnostic.error,
+			[vim.diagnostic.severity.WARN] = icons.diagnostic.warn,
+			[vim.diagnostic.severity.INFO] = icons.diagnostic.info,
+			[vim.diagnostic.severity.HINT] = icons.diagnostic.hint,
+		},
+	},
 }
-
 
 -- used as separator for windows
 
@@ -60,6 +61,23 @@ vim.o.foldenable = true
 vim.o.foldlevelstart = 99
 vim.o.foldcolumn = '1'
 
+vim.api.nvim_create_autocmd('LspAttach', {
+	group = vim.api.nvim_create_augroup('lsp_attach_config', { clear = true }),
+	desc = 'Setup on LspAttach',
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if not client or not client.attached_buffers then
+			return
+		end
+		if client:supports_method 'textDocument/foldingRange' then
+			local win = vim.api.nvim_get_current_win()
+			vim.wo[win][0].foldmethod = 'expr'
+			vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+			-- vim.wo[win][0].foldtext = "v:lua.vim.lsp.foldtext()"
+		end
+	end,
+})
+
 vim.o.scrolloff = 6 -- keep lines above and below cursor
 vim.o.sidescroll = 1
 vim.o.showmode = false
@@ -68,6 +86,9 @@ vim.o.showcmd = false
 vim.o.background = 'dark'
 vim.o.cursorline = true -- highlight current line
 
+if not vim.g.vscode then
+	require('vim._core.ui2').enable()
+end
 -- Colorscheme Options
 
 local function scope()

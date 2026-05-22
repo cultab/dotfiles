@@ -3,9 +3,6 @@ local utils = require 'user.mason_utils'
 -- local lspconfig = require 'lspconfig'
 local toMason = require('mason-lspconfig').get_mappings().lspconfig_to_package
 
--- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
--- local capabilities = {}
-
 local servers = {
 	rust_analyzer = {},
 	jedi_language_server = {},
@@ -152,13 +149,14 @@ local on_attach = function()
 
 	require('user.mappings').set_lsp_mappings()
 	vim.lsp.inlay_hint.enable()
+	vim.lsp.codelens.enable()
 end
+
 
 -- setup all servers
 for server, extra in pairs(servers) do
 	local settings = {
 		on_attach = on_attach,
-		capabilities = capabilities,
 	}
 
 	settings = vim.tbl_deep_extend('force', settings, extra)

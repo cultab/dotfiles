@@ -26,9 +26,9 @@ alias open='xdg-open'
 alias vimdiff='vim -d'
 
 # add extra options
-alias cp='cp -iv'
-alias mv='mv -iv'
-alias rm='rm -iv'
+alias cp='cp -v'
+alias mv='mv -v'
+alias rm='rm -v'
 alias q='exit'
 alias unmountusb='udiskie-umount -d -a'
 alias gradle='gradle --console rich'
@@ -49,8 +49,10 @@ alias pidgin="pidgin --config=$XDG_DATA_HOME/purple"
 # git #
 #######
 
+gcl() {
+  git clone "$*"
+}
 alias gs='git status'
-alias gcl='git clone'
 alias ga='git add'
 alias gaa='git add --all'
 alias gap='git add --patch'
@@ -105,6 +107,13 @@ alias term_test='dd if=/dev/urandom | base64 | lolcat'
 alias et='TERM=xterm-256color et'
 alias ssh='echo "maybe use EternalTerminal (et)?";ssh'
 alias mosh='echo "please use EternalTerminal (et)?";ssh'
+
+if command -v bat >/dev/null 2>&1; then
+  if [ "$SHELL" = "zsh" ]; then
+    # global alias.  (won't work in bash)
+    alias -g --  --help='--help 2>&1 | bat -l help -p --color=auto'
+  fi
+fi
 
 #alias mpiall="mpirun --use-hwthread-cpus"
 #alias mpirf="mpirun --oversubscribe"

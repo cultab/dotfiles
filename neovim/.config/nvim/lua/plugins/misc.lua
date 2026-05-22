@@ -13,6 +13,7 @@ return {
 				vim.env.VIMRUNTIME,
 				-- Load luvit types when the `vim.uv` word is found
 				{ path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+				{ path = 'wezterm-types', mods = { 'wezterm' } },
 			},
 		},
 	},
@@ -42,6 +43,9 @@ return {
 	},
 	{
 		'ojroques/vim-oscyank',
+	},
+	{
+		'DrKJeff16/wezterm-types',
 	},
 	-- {
 	--     "m4xshen/hardtime.nvim",

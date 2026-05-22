@@ -170,8 +170,7 @@ export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 
 step "Rustup"
 (
-	true
-	#try "rustup initialization" echo 1 | rustup-init
+	try "rustup initialization" echo 1 | rustup-init
 	#try "rustup default toolchain" rustup default stable
 )
 
@@ -193,17 +192,21 @@ for pkg in $cargo_pkgs; do
 			bin=dua
 			;;
 		git-delta)
-			bin=delta
+			bin='delta'
 			;;
 		du-dust)
+			bin=dust
 			;;
 		ripgrep)
 			bin=rg
 			;;
+		iris-cli)
+			bin=iris
+			;;
 		*)      bin=$pkg
 			;;
 	esac
-	if [ $(command -v $bin) ]; then
+	if [ "$(command -v "$bin")" ]; then
 		info skipping "package $pkg as $bin exists in" '$PATH'
 		continue
 	fi
@@ -216,11 +219,10 @@ go_pkgs=$(grep '\*' < ~/dotfiles/misc/pkgs_go.md | cut -d ' ' -f 2 | tr '\n' ' '
 info "packages:" "$go_pkgs"
 for pkg in $go_pkgs; do
 	bin=$(echo $pkg | sed  -nE 's/.*\/([a-z]*)@.*/\1/p')
-	if [ $(command -v $bin) ]; then
-		info skipping "package $pkg as $bin exists in" '$PATH'
+	if [ "$(command -v "$bin")" ]; then
+		info skipping "package $pkg as $bin exists in PATH"
 		continue
 	fi
-	echo $pkg
 	try "installing $pkg with go install" go install "github.com/${pkg}"	
 done
 

@@ -2,8 +2,7 @@
 
 # XDG
 # export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-mkdir -p "$HOME/.cache/run"
-export XDG_RUNTIME_DIR="$HOME"/.cache/run
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -101,7 +100,7 @@ export PATH
 export XBPS_DISTDIR="$HOME/repos/void-packages"
 
 # keychain
-eval "$(keychain --eval --quiet --dir "$XDG_RUNTIME_DIR/keychain")"
+eval "$(keychain --eval --quiet --dir "$HOME/.cache/keychain")"
 # eval "$(pyenv init --path)"
 [ -f $HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
 [ -f $HOME/.cargo/env" ] && . "$HOME/.cargo/env"
