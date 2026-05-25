@@ -32,6 +32,7 @@ config.color_scheme = require("colorscheme")
 -- 	username = "evan",
 -- } }
 
+
 config.term = "wezterm"
 
 if hostname() == "winbox" then
@@ -45,6 +46,7 @@ end
 
 if hostname() == "C-5CG54917G7" then
 	config.default_domain = "SSHMUX:devpc"
+	config.default_prog = { 'powershell.exe' }
 end
 
 local name
