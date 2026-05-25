@@ -49,8 +49,11 @@ function M.get_config_dir()
 	end
 
 	local home = os.getenv("HOME")
-	dir = home .. "/.config"
-	return dir .. "/wezterm"
+	if home then
+	     dir = home .. "/.config"
+	     return dir .. "/wezterm"
+        end
+        return "C:/Users/katsandr/.config/wezterm"
 end
 
 M.conditionalActivatePane = function(window, pane, pane_direction, vim_direction)
