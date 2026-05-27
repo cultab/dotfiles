@@ -1,7 +1,15 @@
 local wezterm = require("wezterm") ---@type Wezterm
 local act = wezterm.action
+local mux = wezterm.mux
 
 M = {}
+
+-- Equivalent to POSIX basename(3)
+-- Given "/foo/bar" returns "bar"
+-- Given "c:\\foo\\bar" returns "bar"
+function M.basename(s)
+	return string.gsub(s, "(.*[/\\])(.*)", "%2")
+end
 
 M.get_user_vars = function(pane)
 	if pane.user_vars ~= nil then
@@ -11,6 +19,34 @@ M.get_user_vars = function(pane)
 	end
 end
 
+M.get_tab_name = function(tab)
+	local title = tab.tab_title
+	if title and #title > 0 then
+		return title
+	end
+
+	-- https://wezfurlong.org/wezterm/config/lua/pane/index.html
+	local pane_info = tab.active_pane
+	local cwd = pane_info.current_working_dir
+
+	-- cwd is nil if I pull up the Debug Overlay for example
+	if cwd == nil then
+		-- assume process is also nil
+		return "N/A"
+	end
+
+	-- https://wezfurlong.org/wezterm/config/lua/wezterm.mux/get_pane.html
+	local pane = mux.get_pane(pane_info.pane_id)
+	-- https://wezfurlong.org/wezterm/config/lua/pane/get_foreground_process_info.html
+	local process_info = pane:get_foreground_process_info()
+    if process_info ~= nil then
+	    local process_name = process_info.executable
+	    process_name = M.basename(process_name)
+		return process_name
+    end
+
+	return M.get_proc_name(tab.active_pane)
+end
 ---comment
 ---@param pane TabInformation|MuxTab
 ---@return string
@@ -26,6 +62,10 @@ M.get_proc_name = function(pane)
 end
 
 M.isViProcess = function(pane, _)
+	-- HACK: workaround for workvim not having Navigator.nvim
+	if true then
+		return false
+	end
 	local patterns = {
 		"n?vim",
 		"git", -- from `git commit`

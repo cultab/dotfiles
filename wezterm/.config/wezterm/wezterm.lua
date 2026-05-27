@@ -230,35 +230,56 @@ local function fixed_width(str, n)
 
 	return wezterm.truncate_right(wezterm.pad_right((" "):rep(mid) .. str, n), n)
 end
+-- "Black", "White"  "Silver" }
+local colors = { "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Grey", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
+
+local GHhash = function(str)
+	-- https://gist.github.com/scheler/26a942d34fb5576a68c111b05ac3fabe
+	-- also try https://github.com/lancelijade/qqwry.lua/blob/master/crc32.lua
+	-- https://wezfurlong.org/wezterm/config/files.html#making-your-own-lua-modules
+	local h = 5381
+	wezterm.log_info("str:" .. str)
+	for c in str:gmatch(".") do
+		h = ((h << 5) + h) + string.byte(c)
+	end
+
+	return h
+end
 
 wezterm.on(
 	"format-tab-title",
 	-- function(tab, tabs, panes, config, hover, max_width)
 	function(tab, _, _, _, _, _)
-		local proc_name = get_proc_name(tab.active_pane)
+		-- local proc_name = get_proc_name(tab.active_pane)
+		local proc_name = require('utils').get_tab_name(tab)
 
 		if proc_name == "" or proc_name == nil then
 			proc_name = "shell"
 		end
 
+		
+		local idx = GHhash(proc_name) % (#colors - 1)
+		local tab_color = colors[idx]
+		wezterm.log_info("procname " .. proc_name .. " tabcolor" .. tab_color .. "|" .. idx)
 		local format = {}
 		if tab.is_active then
 			format = {
 				{ Background = { Color = scheme.background } },
-				{ Foreground = { AnsiColor = "Blue" } },
+				{ Foreground = { AnsiColor = tab_color } },
 				{ Text = LEFT_SEPARATOR },
 				{ Foreground = { Color = scheme.background } },
-				{ Background = { AnsiColor = "Blue" } },
+				{ Background = { AnsiColor = tab_color } },
 				{
 					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, 7),
 				},
 				{ Background = { Color = scheme.background } },
-				{ Foreground = { AnsiColor = "Blue" } },
+				{ Foreground = { AnsiColor = tab_color } },
 				{ Text = RIGHT_SEPARATOR },
 			}
 		else
 			format = {
 				{ Background = { Color = scheme.background } },
+				{ Foreground = { AnsiColor = tab_color } },
 				{ Text = " " },
 				{
 					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, 7),
@@ -292,7 +313,7 @@ wezterm.on("update-status", function(window, pane)
 	local tabs = window:mux_window():tabs()
 	local mid_width = 0
 	for idx, tab in ipairs(tabs) do
-		-- title lenght of 9 plus 2 padding chars around the title
+		-- HACK: title lenght of 9 plus 2 padding chars around the title
 		-- title is 9 because the proc name is fixed to 7 + 1 ':' and the tab index (which shouldn't increase past 9 lol)
 		mid_width = mid_width + 9 + 2
 	end
@@ -324,13 +345,6 @@ wezterm.on("update-status", function(window, pane)
 		{ Text = " " .. clock .. " " },
 	}))
 end)
-
--- Equivalent to POSIX basename(3)
--- Given "/foo/bar" returns "bar"
--- Given "c:\\foo\\bar" returns "bar"
-local function basename(s)
-	return string.gsub(s, "(.*[/\\])(.*)", "%2")
-end
 
 config.disable_default_key_bindings = true
 config.leader = {
