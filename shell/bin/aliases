@@ -5,6 +5,7 @@ alias startx='startx -- -ardelay 250 -arinterval 25'
 # if neovim is installed alias it
 if command -v nvim >/dev/null 2>&1; then
   alias vim='nvim --listen /tmp/nvim-$RANDOM' # HACK: RANDOM only actually exists in zsh and bash
+  alias workvim='NVIM_APPNAME=workvim nvim'
 fi
 
 alias lazy='NVIM_APPNAME=lazyvim nvim'
