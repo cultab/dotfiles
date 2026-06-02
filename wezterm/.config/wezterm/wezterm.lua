@@ -32,7 +32,6 @@ config.color_scheme = require("colorscheme")
 -- 	username = "evan",
 -- } }
 
-
 config.term = "wezterm"
 
 if hostname() == "winbox" then
@@ -117,7 +116,7 @@ elseif name:find("Monaspace") then
 	-- if hostname() ~= "void" then
 	config.font_size = 12
 	-- end
-	config.line_height = 1.2
+	config.line_height = 1.4
 	config.underline_position = "-2px"
 	config.font = wezterm.font_with_fallback({
 		{ family = "Monaspace Neon" },
@@ -238,7 +237,7 @@ local GHhash = function(str)
 	-- also try https://github.com/lancelijade/qqwry.lua/blob/master/crc32.lua
 	-- https://wezfurlong.org/wezterm/config/files.html#making-your-own-lua-modules
 	local h = 5381
-	wezterm.log_info("str:" .. str)
+	-- wezterm.log_info("str:" .. str)
 	for c in str:gmatch(".") do
 		h = ((h << 5) + h) + string.byte(c)
 	end
@@ -260,7 +259,7 @@ wezterm.on(
 		
 		local idx = GHhash(proc_name) % (#colors - 1)
 		local tab_color = colors[idx]
-		wezterm.log_info("procname " .. proc_name .. " tabcolor" .. tab_color .. "|" .. idx)
+		-- wezterm.log_info("procname " .. proc_name .. " tabcolor" .. tab_color .. "|" .. idx)
 		local format = {}
 		if tab.is_active then
 			format = {
