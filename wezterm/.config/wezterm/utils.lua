@@ -7,48 +7,58 @@ M = {}
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
 -- Given "c:\\foo\\bar" returns "bar"
+---@param s string
+---@return string
 function M.basename(s)
-	return string.gsub(s, "(.*[/\\])(.*)", "%2")
+	return (string.gsub(s, "(.*[/\\])(.*)", "%2"))
 end
 
+---Reads user vars from either a PaneInformation snapshot (has the `user_vars`
+---field) or a live Pane object (has the `get_user_vars()` method).
+---@param pane PaneInformation|Pane
+---@return table<string, string>
 M.get_user_vars = function(pane)
 	if pane.user_vars ~= nil then
 		return pane.user_vars
 	elseif pane.get_user_vars ~= nil then
 		return pane:get_user_vars()
 	end
+	return {}
 end
 
+---Resolves a display name for a tab: an explicit tab title if set, otherwise the
+---basename of the active pane's foreground process, falling back to WEZTERM_PROG.
+---@param tab TabInformation
+---@return string
 M.get_tab_name = function(tab)
 	local title = tab.tab_title
 	if title and #title > 0 then
 		return title
 	end
 
-	-- https://wezfurlong.org/wezterm/config/lua/pane/index.html
+	-- https://wezterm.org/config/lua/PaneInformation.html
 	local pane_info = tab.active_pane
-	local cwd = pane_info.current_working_dir
 
-	-- cwd is nil if I pull up the Debug Overlay for example
-	if cwd == nil then
-		-- assume process is also nil
+	-- current_working_dir is nil if I pull up the Debug Overlay for example
+	if pane_info.current_working_dir == nil then
+		-- assume the process is also nil
 		return "N/A"
 	end
 
-	-- https://wezfurlong.org/wezterm/config/lua/wezterm.mux/get_pane.html
+	-- https://wezterm.org/config/lua/wezterm.mux/get_pane.html
 	local pane = mux.get_pane(pane_info.pane_id)
-	-- https://wezfurlong.org/wezterm/config/lua/pane/get_foreground_process_info.html
-	local process_info = pane:get_foreground_process_info()
-    if process_info ~= nil then
-	    local process_name = process_info.executable
-	    process_name = M.basename(process_name)
-		return process_name
-    end
+	if pane ~= nil then
+		-- https://wezterm.org/config/lua/pane/get_foreground_process_info.html
+		local process_info = pane:get_foreground_process_info()
+		if process_info ~= nil then
+			return M.basename(process_info.executable)
+		end
+	end
 
-	return M.get_proc_name(tab.active_pane)
+	return M.get_proc_name(pane_info)
 end
----comment
----@param pane TabInformation|MuxTab
+
+---@param pane PaneInformation|Pane
 ---@return string
 M.get_proc_name = function(pane)
 	local name = M.get_user_vars(pane)["WEZTERM_PROG"]

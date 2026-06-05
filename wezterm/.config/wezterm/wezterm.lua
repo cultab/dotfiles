@@ -32,6 +32,15 @@ config.color_scheme = require("colorscheme")
 -- 	username = "evan",
 -- } }
 
+config.ssh_domains = {
+	{
+		name = "devpc",
+		remote_address = "devpc",
+   		 local_echo_threshold_ms = 20,
+	},
+}
+
+
 config.term = "wezterm"
 
 if hostname() == "winbox" then
@@ -44,7 +53,7 @@ if hostname() == "abyss" then
 end
 
 if hostname() == "C-5CG54917G7" then
-	config.default_domain = "SSHMUX:devpc"
+	config.default_domain = "devpc"
 	config.default_prog = { 'powershell.exe' }
 end
 
@@ -304,7 +313,19 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = "n/a"
 	end
 
-	local pretty_host = " " .. host_icon .. " " .. h
+	local pretty_host = " " .. host_icon
+	local workspace = window:mux_window():get_workspace()
+	local title = window:mux_window():get_title()
+
+	-- If the window title looks like a host (e.g. "user@host" set explicitly via
+	-- OSC when ssh'd into a remote), show that host instead of the workspace name.
+	local label = workspace
+	if title and #title > 0 then
+		local host = title:match("@([%w%.%-]+)")
+		if host then
+			label = host
+		end
+	end
 
 	local tabs = window:mux_window():tabs()
 	local mid_width = 0
@@ -315,12 +336,12 @@ wezterm.on("update-status", function(window, pane)
 	end
 
 	local tab_width = window:active_tab():get_size().cols
-	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host
+	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #label
 
 	window:set_left_status(wezterm.format({
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = pretty_host },
+		{ Text = pretty_host .. " " .. label },
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = "Blue" } },
 		{ Text = RIGHT_SEPARATOR },

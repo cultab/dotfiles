@@ -66,7 +66,7 @@ module.exports = {
         selectionInactiveBackground: '#312f44',
 
         background: "#24283b",
-        foreground "#c0caf5",
+        foreground: "#c0caf5",
 
         black: "#1d202f",
         red: "#f7768e",
