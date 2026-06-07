@@ -12,7 +12,7 @@ return {
 		{ 'xiyaowong/telescope-emoji.nvim' },
 		{ '2kabhishek/nerdy.nvim', cmd = 'Nerdy' },
 		{ 'nvim-lua/popup.nvim' },
-		{ 'nvim-lua/plenary.nvim' },
+		-- { 'nvim-lua/plenary.nvim' },
 	},
 	config = function()
 		local actions = require 'telescope.actions'

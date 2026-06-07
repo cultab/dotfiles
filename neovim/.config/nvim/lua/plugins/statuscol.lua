@@ -4,7 +4,7 @@ local user_command = vim.api.nvim_create_user_command
 return {
 	{
 		'lewis6991/gitsigns.nvim',
-		dependencies = { 'nvim-lua/plenary.nvim' },
+		-- dependencies = { 'nvim-lua/plenary.nvim' },
 		-- cmd = 'VeryLazy',
 		opts = {
 			-- signcolumn = false,

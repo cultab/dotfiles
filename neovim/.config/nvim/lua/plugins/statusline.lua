@@ -1,6 +1,6 @@
 function ReloadStatusline(theme)
 	-- vim.print("called")
-	require('plenary.reload').reload_module('lualine', true)
+	-- require('plenary.reload').reload_module('lualine', true)
 	local statusline_config = {}
 	if theme == 'darkplus' or theme == 'vscode' then
 		statusline_config = require('user.statusline_vscode').config

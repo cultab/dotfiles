@@ -1,10 +1,8 @@
 require 'user.options'
 require 'user.visual'
 
-if not vim.g.vscode then
-	require 'user.lazy'
-	require 'user.lsp'
-end
+require 'user.lazy'
+require 'user.lsp'
 
 vim.cmd.colorscheme(require 'user.colorscheme')
 

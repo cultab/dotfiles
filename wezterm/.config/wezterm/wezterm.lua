@@ -116,7 +116,7 @@ elseif name:find("Monaspace") then
 	-- if hostname() ~= "void" then
 	config.font_size = 12
 	-- end
-	config.line_height = 1.4
+	config.line_height = 1.1
 	config.underline_position = "-2px"
 	config.font = wezterm.font_with_fallback({
 		{ family = "Monaspace Neon" },
@@ -190,9 +190,6 @@ config.window_padding = {
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
 
--- config.mux_output_parser_coalesce_delay_ms = 3
-config.front_end = "WebGpu"
-config.webgpu_power_preference = "HighPerformance"
 config.max_fps = 144
 
 local scheme = wezterm.color.get_builtin_schemes()[config.color_scheme]

@@ -7,7 +7,7 @@ return {
 	{
 		'willothy/nvim-cokeline',
 		dependencies = {
-			'nvim-lua/plenary.nvim', -- Required for v0.4.0+
+			-- 'nvim-lua/plenary.nvim', -- Required for v0.4.0+
 			'nvim-tree/nvim-web-devicons',
 		},
 		version = false,
