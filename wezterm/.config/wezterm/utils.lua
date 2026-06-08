@@ -90,7 +90,7 @@ M.isViProcess = function(pane, _)
 	return false
 end
 
----returns wezterm's config dir, respecting XDG_CONFIG_HOME and falling back to HOME/.config
+---returns wezterm's config dir, respecting XDG_CONFIG_HOME and falling back to HOME/.config (Linux/macOS) or %USERPROFILE%/.config (Windows)
 ---@return string
 function M.get_config_dir()
 	local dir = os.getenv("XDG_CONFIG_HOME")
@@ -100,10 +100,19 @@ function M.get_config_dir()
 
 	local home = os.getenv("HOME")
 	if home then
-	     dir = home .. "/.config"
-	     return dir .. "/wezterm"
-        end
-        return "C:/Users/katsandr/.config/wezterm"
+		dir = home .. "/.config"
+		return dir .. "/wezterm"
+	end
+
+	-- Try Windows fallback
+	local userprofile = os.getenv("USERPROFILE")
+	if userprofile then
+		dir = userprofile .. "\\.config"
+		return dir .. "\\wezterm"
+	end
+
+	-- Last resort: current directory
+	return ".wezterm"
 end
 
 M.conditionalActivatePane = function(window, pane, pane_direction, vim_direction)
