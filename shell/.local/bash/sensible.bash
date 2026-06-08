@@ -78,6 +78,8 @@ HISTTIMEFORMAT='%F %T '
 # Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
+bind '"\C-p": history-search-backward'
+bind '"\C-n": history-search-forward'
 bind '"\e[C": forward-char'
 bind '"\e[D": backward-char'
 

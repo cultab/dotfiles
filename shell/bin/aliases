@@ -8,12 +8,8 @@ if command -v nvim >/dev/null 2>&1; then
   alias workvim='NVIM_APPNAME=workvim nvim'
 fi
 
-alias lazy='NVIM_APPNAME=lazyvim nvim'
 
-if command -v bat >/dev/null 2>&1; then
-  alias cat='bat -p'
-  alias bat='bat -p'
-fi
+alias lazy='NVIM_APPNAME=lazyvim nvim'
 
 # shortcuts
 alias todo='vim $HOME/.todo.txt/todo.txt'
@@ -50,9 +46,10 @@ alias pidgin="pidgin --config=$XDG_DATA_HOME/purple"
 # git #
 #######
 
-gcl() {
-  git clone "$*"
-}
+# gcl() {
+#   git clone "$*"
+# }
+
 alias gs='git status'
 alias ga='git add'
 alias gaa='git add --all'
@@ -94,7 +91,7 @@ elif command -v eza >/dev/null 2>&1; then
   # shellcheck disable=SC2139
   alias lt="eza $eza_opts --tree"
 else
-  ls_opts='--color=auto -h --hyperlink auto'
+  ls_opts='--color=auto -h'
   # shellcheck disable=SC2139
   alias ls="ls $ls_opts"
   # shellcheck disable=SC2139
@@ -106,8 +103,18 @@ fi
 alias grep='grep --color=auto'
 alias term_test='dd if=/dev/urandom | base64 | lolcat'
 alias et='TERM=xterm-256color et'
-alias ssh='echo "maybe use EternalTerminal (et)?";ssh'
+# alias ssh='echo "maybe use EternalTerminal (et)?";ssh'
 alias mosh='echo "please use EternalTerminal (et)?";ssh'
+
+
+BATARGS="--paging never --italic-text always --plain"
+if command -v batcat >/dev/null 2>&1; then
+  alias cat="batcat $BATARGS"
+  alias bat="batcat $BATARGS"
+elif command -v bat >/dev/null 2>&1; then
+	alias bat="bat $BATARGS"
+  alias cat="bat $BATARGS"
+fi
 
 if command -v bat >/dev/null 2>&1; then
   if [ "$SHELL" = "zsh" ]; then
@@ -118,3 +125,4 @@ fi
 
 #alias mpiall="mpirun --use-hwthread-cpus"
 #alias mpirf="mpirun --oversubscribe"
+

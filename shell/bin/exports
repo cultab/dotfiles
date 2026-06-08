@@ -1,6 +1,13 @@
 #!/bin/sh
 export BROWSER="vivaldi-stable"
 export EDITOR="nvim"
+if [ $VSCODE_SHELL_INTEGRATION ]; then
+	echo 'Running in vscode terminal, setting $EDITOR to plain vim'
+	EDITOR='vim'
+	unalias vim
+fi
+
+
 LS_COLORS="$LS_COLORS:ow=01;33"
 export FZF_DEFAULT_COMMAND="fd"
 export TERMINAL="wezterm"
