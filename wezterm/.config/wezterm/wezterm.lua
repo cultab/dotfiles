@@ -62,9 +62,9 @@ local name
 -- name = "Cozette"
 -- name = "CozetteHiDpi"
 -- name = "CozetteVector"
--- name = "Iosevka Term"
+name = "Iosevka Term"
 -- name = "Terminus (TTF)"
-name = "Monaspace"
+-- name = "Monaspace"
 -- name = "Fira Code"
 -- name = "Monocraft"
 
@@ -317,15 +317,13 @@ wezterm.on("update-status", function(window, pane)
 	local workspace = window:mux_window():get_workspace()
 	local title = window:mux_window():get_title()
 
-	-- If the window title looks like a host (e.g. "user@host" set explicitly via
-	-- OSC when ssh'd into a remote), show that host instead of the workspace name.
-	local label = workspace
+	-- If the window title looks like a host (e.g. "(host):~" set explicitly via
+	-- OSC when ssh'd into a remote), show it dimmed next to the workspace name.
+	local host
 	if title and #title > 0 then
-		local host = title:match("@([%w%.%-]+)")
-		if host then
-			label = host
-		end
+		host = title:match("^%(([%w%.%-]+)%)")
 	end
+	local host_suffix = host and (" " .. host) or ""
 
 	local tabs = window:mux_window():tabs()
 	local mid_width = 0
@@ -336,18 +334,27 @@ wezterm.on("update-status", function(window, pane)
 	end
 
 	local tab_width = window:active_tab():get_size().cols
-	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #label
+	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #workspace - #host_suffix
 
-	window:set_left_status(wezterm.format({
+	local left_cells = {
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = pretty_host .. " " .. label },
+		{ Text = pretty_host .. " " .. workspace },
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = "Blue" } },
 		{ Text = RIGHT_SEPARATOR },
-		{ Background = { Color = scheme.background } },
-		{ Text = wezterm.pad_left(" ", max_left) },
-	}))
+	}
+	if host then
+		table.insert(left_cells, { Background = { Color = scheme.background } })
+		table.insert(left_cells, { Foreground = { Color = scheme.foreground } })
+		table.insert(left_cells, { Attribute = { Intensity = "Half" } })
+		table.insert(left_cells, { Text = host_suffix })
+		table.insert(left_cells, { Attribute = { Intensity = "Normal" } })
+	end
+	table.insert(left_cells, { Background = { Color = scheme.background } })
+	table.insert(left_cells, { Text = wezterm.pad_left(" ", max_left) })
+
+	window:set_left_status(wezterm.format(left_cells))
 
 	local clock = wezterm.nerdfonts.fa_clock_o
 	-- I like my date/time in this style, also: "Wed Mar 3 08:14"
@@ -375,9 +382,21 @@ config.keys = {
 	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
 	{ key = "d", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
-	{ key = "s", mods = "LEADER", action = act.ShowLauncher },
+	{ key = "s", mods = "LEADER", action = act.ShowLauncherArgs{ flags = "FUZZY|DOMAINS|WORKSPACES" } },
 	{ key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
 	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+	{
+		key = "r",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = "Rename workspace:",
+			action = wezterm.action_callback(function(window, _, line)
+				if line and line ~= "" then
+					wezterm.mux.rename_workspace(window:mux_window():get_workspace(), line)
+				end
+			end),
+		}),
+	},
 	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
 	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
 	{ key = "h", mods = "ALT", action = act.EmitEvent("ActivatePaneDirection-left") },
