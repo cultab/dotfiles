@@ -20,11 +20,11 @@ config.window_close_confirmation = "NeverPrompt"
 config.color_scheme_dirs = { "~/.config/wezterm/colors" }
 config.color_scheme = require("colorscheme")
 
--- config.wsl_domains = { {
--- 	name = "WSL:void",
--- 	distribution = "void",
--- 	default_cwd = "~",
--- } }
+config.wsl_domains = { {
+	name = "Local Ubuntu",
+	distribution = "Ubuntu",
+	default_cwd = "~",
+} }
 
 -- config.ssh_domains = { {
 -- 	name = "SSH:void",
@@ -36,7 +36,7 @@ config.ssh_domains = {
 	{
 		name = "devpc",
 		remote_address = "devpc",
-   		 local_echo_threshold_ms = 20,
+		local_echo_threshold_ms = 200,
 	},
 }
 
@@ -57,6 +57,7 @@ if hostname() == "C-5CG54917G7" then
 	config.default_prog = { 'powershell.exe' }
 end
 
+local extra_space = ""
 local name
 -- name = "Hermit"
 -- name = "Cozette"
@@ -68,10 +69,11 @@ name = "Iosevka Term"
 -- name = "Fira Code"
 -- name = "Monocraft"
 
+if name:find("Iosevka") then
+	extra_space = " "
+end
 -- For Cozette
-if name:find("Iosevka.*") then
-	config.font_size = 12
-elseif name:find("Cozette") then
+if name:find("Cozette") then
 	config.font = wezterm.font_with_fallback({
 		{ family = name, assume_emoji_presentation = true },
 		{ family = name },
@@ -199,7 +201,7 @@ config.window_padding = {
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
 
-config.max_fps = 144
+-- config.max_fps = 144
 
 local scheme = wezterm.color.get_builtin_schemes()[config.color_scheme]
 if not scheme then
@@ -313,7 +315,7 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = "n/a"
 	end
 
-	local pretty_host = " " .. host_icon
+	local pretty_host = " " .. host_icon .. extra_space
 	local workspace = window:mux_window():get_workspace()
 	local title = window:mux_window():get_title()
 
@@ -366,7 +368,7 @@ wezterm.on("update-status", function(window, pane)
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
 		{ Text = date },
-		{ Text = " " .. clock .. " " },
+		{ Text = " " .. clock .. " " .. extra_space },
 	}))
 end)
 
@@ -424,52 +426,22 @@ config.mouse_bindings = {
 	},
 }
 
-config.hyperlink_rules = {
-	-- Linkify things that look like URLs and the host has a TLD name.
-	-- Compiled-in default. Used if you don't specify any hyperlink_rules.
-	{
-		regex = "\\b\\w+://[\\w.-]+\\.[a-z]{2,15}\\S*\\b",
-		format = "$0",
-	},
+config.hyperlink_rules = wezterm.default_hyperlink_rules() 
 
-	-- linkify email addresses
-	-- Compiled-in default. Used if you don't specify any hyperlink_rules.
-	{
-		regex = [[\b\w+@[\w-]+(\.[\w-]+)+\b]],
-		format = "mailto:$0",
-	},
-
-	-- file:// URI
-	-- Compiled-in default. Used if you don't specify any hyperlink_rules.
-	{
-		regex = [[\bfile://\S*\b]],
-		format = "$0",
-	},
-
-	-- Linkify things that look like URLs with numeric addresses as hosts.
-	-- E.g. http://127.0.0.1:8000 for a local development server,
-	-- or http://192.168.1.1 for the web interface of many routers.
-	{
+-- Linkify things that look like URLs with numeric addresses as hosts.
+-- E.g. http://127.0.0.1:8000 for a local development server,
+-- or http://192.168.1.1 for the web interface of many routers.
+table.insert(config.hyperlink_rules, {
 		regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
 		format = "$0",
-	},
+})
 
-	-- -- Make task numbers clickable
-	-- -- The first matched regex group is captured in $1.
-	-- {
-	--     regex = [[\b[tT](\d+)\b]],
-	--     format = 'https://example.com/tasks/?t=$1',
-	-- },
-	--
-	-- -- Make username/project paths clickable. This implies paths like the following are for GitHub.
-	-- -- ( "nvim-treesitter/nvim-treesitter" | wbthomason/packer.nvim | wez/wezterm | "wez/wezterm.git" )
-	-- -- As long as a full URL hyperlink regex exists above this it should not match a full URL to
-	-- -- GitHub or GitLab / BitBucket (i.e. https://gitlab.com/user/project.git is still a whole clickable URL)
-	{
-		regex = [[["' /]([\w\d]{1}[-\w\d]*)/([\w\d]{1}[\.\-\w\d]*)["' ]{1}]],
-		format = "https://www.github.com/$1/$2",
-	},
-}
+-- Make task numbers clickable
+-- The first matched regex group is captured in $1.
+-- table.insert(config.hyperlink_rules, {
+-- 	    regex = [[\b[tT](\d+)\b]],
+-- 	    format = 'https://example.com/tasks/?t=$1',
+-- })
 
 wezterm.on("ActivatePaneDirection-right", function(window, pane)
 	conditionalActivatePane(window, pane, "Right", "l")
