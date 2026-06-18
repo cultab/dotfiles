@@ -45,16 +45,6 @@ M.get_tab_name = function(tab)
 		return "N/A"
 	end
 
-	-- https://wezterm.org/config/lua/wezterm.mux/get_pane.html
-	local pane = mux.get_pane(pane_info.pane_id)
-	if pane ~= nil then
-		-- https://wezterm.org/config/lua/pane/get_foreground_process_info.html
-		local process_info = pane:get_foreground_process_info()
-		if process_info ~= nil then
-			return M.basename(process_info.executable)
-		end
-	end
-
 	return M.get_proc_name(pane_info)
 end
 
@@ -64,7 +54,7 @@ M.get_proc_name = function(pane)
 	local name = M.get_user_vars(pane)["WEZTERM_PROG"]
 
 	if not name then
-		return ""
+		return "..."
 	end
 
 	-- get argv[0] only
