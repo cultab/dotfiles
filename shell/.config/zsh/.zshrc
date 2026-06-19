@@ -123,6 +123,10 @@ if [[ "$WSL_DISTRO_NAME" && ! $(pgrep wezterm_reload) ]]; then
 #     pkill -9 oneterm_reload; oneterm_reload & disown
 fi
 
+if [[ -f ~/.internalrc ]]; then
+	source ~/.internalrc
+fi
+
 if command -v catnap 2>&1 > /dev/null; then
     catnap -d none
 elif command -v nitch 2>&1 > /dev/null; then

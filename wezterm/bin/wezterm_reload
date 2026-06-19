@@ -1,7 +1,7 @@
 #!/bin/sh
 
 WATCH_PATH="$HOME/dotfiles/wezterm/.config/wezterm"
-DEST_PATH="/mnt/c/Users/evan/.config/wezterm/"
+DEST_PATH="/mnt/c/Users/$USER/.config/wezterm/"
 
 inotifywait -r -m "$WATCH_PATH" 2> /dev/null | while read -r dir event file; do
 	if [ "$event" = "MODIFY" ]; then
