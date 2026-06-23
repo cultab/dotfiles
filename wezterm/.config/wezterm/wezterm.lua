@@ -54,6 +54,7 @@ end
 if hostname() == "C-5CG54917G7" then
 	config.default_domain = "devpc"
 	config.default_prog = { "powershell.exe" }
+	config.scrollback_lines = 10000
 end
 
 local extra_space = ""
@@ -448,6 +449,8 @@ table.insert(config.hyperlink_rules, {
 		regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
 		format = "$0",
 })
+
+config = require("internal").clickable_testbed(config)
 
 -- Make task numbers clickable
 -- The first matched regex group is captured in $1.
