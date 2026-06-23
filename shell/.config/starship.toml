@@ -144,7 +144,7 @@ disabled = true
 
 [rust]
 symbol = ""
-disabled = false
+disabled = true
 
 [singularity]
 disabled = true

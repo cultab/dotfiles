@@ -9,7 +9,7 @@ fi
 
 
 LS_COLORS="$LS_COLORS:ow=01;33"
-export FZF_DEFAULT_COMMAND="fd"
+export FZF_DEFAULT_COMMAND="fdfind"
 export TERMINAL="wezterm"
 
 # man colors

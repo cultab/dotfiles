@@ -46,7 +46,17 @@ source ~/bin/exports
 # simulate a login shell and show everything that is done (except in areas where stderr is redirected with zsh) along with the name of the file currently being interpreted.
 #PS4='+$BASH_SOURCE> ' BASH_XTRACEFD=7 bash -xl 7>&2
 
+# automagically enter venvs
+auto_sauce() {
+	if [[ -z $VIRTUAL_ENV ]]; then
+		if [[ -f .venv/bin/activate ]] then
+			source .venv/bin/activate
+		fi
+	fi
+}
 # eval "$(~/.local/bin/agent shell-integration bash)"
+# keep .bash_history always up to date
+PROMPT_COMMAND="history -a; auto_sauce; $PROMPT_COMMAND"
 
 if [[ -f ~/.internalrc ]]; then
 	source ~/.internalrc

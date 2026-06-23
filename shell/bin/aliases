@@ -13,7 +13,7 @@ alias lazy='NVIM_APPNAME=lazyvim nvim'
 
 # shortcuts
 alias todo='vim $HOME/.todo.txt/todo.txt'
-alias notes='vim $HOME/notes.norg'
+alias notes='vim $HOME/notes.md'
 alias wtf='netbsd-wtf -o'
 alias coomit='git commit'
 # shellcheck disable=SC2139
@@ -68,13 +68,13 @@ alias grc='git rebase --continue'
 ######
 
 if command -v lsd >/dev/null 2>&1; then
-  lsd_opts="--long --hyperlink auto"
+  lsd_opts="--hyperlink auto"
   # shellcheck disable=SC2139
   alias ls="lsd $lsd_opts"
   # shellcheck disable=SC2139
-  alias ll="lsd $lsd_opts"
+  alias ll="lsd $lsd_opts --long"
   # shellcheck disable=SC2139
-  alias la="lsd $lsd_opts --all"
+  alias la="lsd $lsd_opts --long --almost-all"
   # shellcheck disable=SC2139
   alias lt="lsd $lsd_opts --tree"
 elif command -v eza >/dev/null 2>&1; then
@@ -83,7 +83,7 @@ elif command -v eza >/dev/null 2>&1; then
     eza_opts="$eza_opts --git"
   fi
   # shellcheck disable=SC2139
-  alias ls="eza $eza_opts --long"
+  alias ls="eza $eza_opts "
   # shellcheck disable=SC2139
   alias ll="eza $eza_opts --long"
   # shellcheck disable=SC2139
