@@ -2,7 +2,7 @@
 set -o errexit   # abort on nonzero exitstatus
 # set -o nounset   # abort on unbound variable
 
-#todo
+# todo
 # rustup from source if not up to date
 # remember successful steps
 # packages for each distro
