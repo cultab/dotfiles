@@ -222,7 +222,7 @@ local RIGHT_SEPARATOR = wezterm.nerdfonts.ple_right_half_circle_thick
 
 config.tab_bar_style = {
 	new_tab = "",
-	new_tab_hover = "bold",
+	new_tab_hover = "",
 }
 
 config.colors = {
@@ -290,6 +290,7 @@ wezterm.on(
 				{ Background = { Color = scheme.background } },
 				{ Foreground = { AnsiColor = tab_color } },
 				{ Attribute = { Intensity = "Bold" } },
+				{ Attribute = { Italic = false } },
 				{ Text = " " },
 				{
 					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, MAX_WIDTH),
@@ -372,17 +373,24 @@ wezterm.on("update-status", function(window, pane)
 
 	window:set_left_status(wezterm.format(left_cells))
 
-	local clock = wezterm.nerdfonts.fa_clock_o
-	-- I like my date/time in this style, also: "Wed Mar 3 08:14"
-	local date = wezterm.strftime("%a %b %-d %H:%M")
+
+	local bat_icon = wezterm.nerdfonts.md_battery_70 .. " "
+	if not bat_icon then
+		bat_icon = ' '
+	end
+	local dir = pane:get_current_working_dir()
+
+	local bat = ''
+	for _, b in ipairs(wezterm.battery_info()) do
+		bat = bat_icon .. string.format('%.0f%%', b.state_of_charge * 100)
+	end
 	window:set_right_status(wezterm.format({
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = "Blue" } },
 		{ Text = LEFT_SEPARATOR },
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = date },
-		{ Text = " " .. clock .. " " .. extra_space },
+		{ Text = bat .. extra_space .. '   ' },
 	}))
 end)
 
@@ -450,14 +458,14 @@ table.insert(config.hyperlink_rules, {
 		format = "$0",
 })
 
-config = require("internal").clickable_testbed(config)
+-- examples: RFC822 RFC-2324 rfc-422
+table.insert(config.hyperlink_rules, {
+	regex = [[(RFC|rfc|Rfc)-?([0-9]{1,5})]],
+	format = "https://datatracker.ietf.org/doc/html/rfc$2",
+	-- format = "https://www.rfcreader.com/#rfc$2"
+})
 
--- Make task numbers clickable
--- The first matched regex group is captured in $1.
--- table.insert(config.hyperlink_rules, {
--- 	    regex = [[\b[tT](\d+)\b]],
--- 	    format = 'https://example.com/tasks/?t=$1',
--- })
+config = require("internal").clickable_testbed(config)
 
 wezterm.on("ActivatePaneDirection-right", function(window, pane)
 	conditionalActivatePane(window, pane, "Right", "l")
