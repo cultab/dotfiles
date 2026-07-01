@@ -1,0 +1,2 @@
+# complete basename of external commands
+complete -c vimw
