@@ -1,165 +1,163 @@
-# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = '$all$fill$cmd_duration$line_break$character'
+[bun]
+format = "via [$symbol]($style)"
 
-[username]
-show_always = true
-
-[hostname]
-ssh_only = false
-ssh_symbol = ""
-
-[character]
-#symbol cache :) = "❯ "
-success_symbol = "[ε](bold green)"
-error_symbol = "[α](bold red)"
-vicmd_symbol = "[v](bold blue)"
-# use_symbol_for_status = true
-
-[battery]
-full_symbol = "󰁹 "
-charging_symbol = "󰂄 "
-discharging_symbol = "󰂃 "
-
-[fill]
-symbol = " "
-
-[cmd_duration]
-show_milliseconds = true
-
-[aws]
-disabled = true
-
-# [conda]
-# symbol = "  "
-
-[cmake]
-disabled = true
-
-[crystal]
-disabled = true
+[buf]
+format = "with [$symbol]($style)"
 
 [c]
-symbol = " "
-disabled = false
+format = "via [$symbol($name)]($style)"
+
+[cmake]
+format = "via [$symbol]($style)"
+
+[cobol]
+format = "via [$symbol]($style)"
+
+[cpp]
+format = "via [$symbol($name)]($style)"
+
+[crystal]
+format = "via [$symbol]($style)"
+
+[daml]
+format = "via [$symbol]($style)"
 
 [dart]
-disabled = true
+format = "via [$symbol]($style)"
 
-[directory]
-# read_only = "󰌾 "
-
-[docker_context]
-disabled = true
-symbol = "  "
+[deno]
+format = "via [$symbol]($style)"
 
 [dotnet]
-disabled = true
+format = "[$symbol(🎯 $tfm )]($style)"
 
 [elixir]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [elm]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [erlang]
-disabled = true
+format = 'via [$symbol]($style)'
+
+[fennel]
+format = 'via [$symbol]($style)'
+
+[fortran]
+format = 'via [$symbol]($style)'
+
+[gleam]
+format = 'via [$symbol]($style)'
 
 [golang]
-symbol = " "
+format = 'via [$symbol]($style)'
 
-[gcloud]
-disabled = true
+[gradle]
+format = 'via [$symbol]($style)'
 
-[git_branch]
-# symbol = "󰘬 "
+[haskell]
+format = 'via [$symbol]($style)'
 
-[git_metrics]
-disabled = false
-
-[git_status]
-# conflicted = '='
-# ahead = ''
-# behind = ''
-# diverged = ' '
-# up_to_date = ''
-untracked = '?'
-stashed = '\$'
-modified = '!'
-# staged = ' '
-# renamed = '»' 
-# deleted = ' '
-# typechanged = ''
-# windows_starship = '/mnt/c/something'
+[haxe]
+format = 'via [$symbol]($style)'
 
 [helm]
-disabled = true
+format = 'via [$symbol]($style)'
+
+[java]
+format = 'via [$symbol]($style)'
 
 [julia]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [kotlin]
-disabled = true
-
-[kubernetes]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [lua]
-symbol = " "
+format = 'via [$symbol]($style)'
 
-[memory_usage]
-# symbol = "󰍛 "
-disabled = false
+[maven]
+format = 'via [$symbol]($style)'
 
-[nix_shell]
-symbol = "  "
+[meson]
+format = 'via [$symbol]($style)'
 
-# [nodejs]
-# symbol = "  "
+[mojo]
+format = 'with [$symbol]($style)'
+
+[nim]
+format = 'via [$symbol]($style)'
+
+[nodejs]
+format = 'via [$symbol]($style)'
 
 [ocaml]
-disabled = true
+format = 'via [$symbol(\($switch_indicator$switch_name\) )]($style)'
 
-[openstack]
-disabled = true
+[odin]
+format = 'via [$symbol]($style)'
 
-# [package]
-# symbol = "󰏗 "
+[opa]
+format = 'via [$symbol]($style)'
 
 [perl]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [php]
-disabled = true
+format = 'via [$symbol]($style)'
+
+[pixi]
+format = 'via [$symbol($environment )]($style)'
+
+[pulumi]
+format = 'via [$symbol$stack]($style)'
 
 [purescript]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [python]
-symbol = "󰌠 "
+format = 'via [$symbol]($style)'
+
+[quarto]
+format = 'via [$symbol]($style)'
+
+[raku]
+format = 'via [$symbol]($style)'
+
+[red]
+format = 'via [$symbol]($style)'
+
+[rlang]
+format = 'via [$symbol]($style)'
 
 [ruby]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [rust]
-symbol = ""
-disabled = true
-
-[singularity]
-disabled = true
+format = 'via [$symbol]($style)'
 
 [scala]
-disabled = true
+format = 'via [$symbol]($style)'
+
+[solidity]
+format = 'via [$symbol]($style)'
 
 [swift]
-disabled = true
+format = 'via [$symbol]($style)'
 
-[terraform]
-disabled = true
+[typst]
+format = 'via [$symbol]($style)'
 
 [vagrant]
-disabled = true
+format = 'via [$symbol]($style)'
+
+[vlang]
+format = 'via [$symbol]($style)'
+
+[xmake]
+format = "via [$symbol]($style)"
 
 [zig]
-disabled = false
+format = 'via [$symbol]($style)'

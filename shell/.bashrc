@@ -54,9 +54,10 @@ auto_sauce() {
 		fi
 	fi
 }
+export HISTFILESIZE=
 # eval "$(~/.local/bin/agent shell-integration bash)"
 # keep .bash_history always up to date
-PROMPT_COMMAND="history -a; auto_sauce; $PROMPT_COMMAND"
+PROMPT_COMMAND+=";auto_sauce"
 
 if [[ -f ~/.internalrc ]]; then
 	source ~/.internalrc
