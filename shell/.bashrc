@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/workbin:$PATH"
 
 # If not running interactively, don't do anything more
 if [[ $- != *i* ]]; then
