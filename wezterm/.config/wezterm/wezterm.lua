@@ -57,136 +57,13 @@ if hostname() == "C-5CG54917G7" then
 	config.scrollback_lines = 10000
 end
 
-local extra_space = ""
-local name
--- name = "Hermit"
--- name = "Cozette"
--- name = "CozetteHiDpi"
--- name = "CozetteVector"
-name = "Iosevka Term"
--- name = "Terminus (TTF)"
--- name = "Monaspace"
--- name = "Fira Code"
--- name = "Monocraft"
+-- extra space for fonts like Iosevka
+local SPACE = ""
 
-if name:find("Iosevka") then
-	extra_space = " "
-end
--- For Cozette
-if name:find("Iosevka.*") then
-	config.font_size = 12
-end
-
-if name:find("Cozette") then
-	config.font = wezterm.font_with_fallback({
-		{ family = name, assume_emoji_presentation = true },
-		{ family = name },
-	})
-	config.custom_block_glyphs = false
-
-	config.underline_thickness = "2px"
-	config.underline_position = "-2px"
-
-	-- disable italics :(
-	config.font_rules = {
-		{
-			italic = true,
-			font = wezterm.font({
-				family = name,
-				weight = "Bold",
-				style = "Normal",
-			}),
-		},
-	}
-	-- disable italics and bold :(, :)
-	config.font_rules = {
-		{
-			italic = true,
-			font = wezterm.font({
-				family = name,
-				weight = "Bold",
-				style = "Normal",
-			}),
-		},
-		{
-			italic = false,
-			intensity = "Bold",
-			font = wezterm.font({
-				family = name,
-				weight = "Regular",
-				style = "Normal",
-			}),
-		},
-	}
-
-	-- default to size for normal cozette
-	config.font_size = 6
-	if name:find(".*HiDpi") then
-		wezterm.log_info("HiDpi")
-		config.font_size = 12
-	elseif name:find(".*Vector") then
-		config.font_size = 9 -- or 19
-	end
-elseif name:find("Monaspace") then
-	-- if hostname() ~= "void" then
-	config.font_size = 12
-	-- end
-	config.line_height = 1.1
-	config.underline_position = "-2px"
-	config.font = wezterm.font_with_fallback({
-		{ family = "Monaspace Neon" },
-	})
-	config.font_rules = {
-		{ -- Xenon is dim
-			italic = false,
-			intensity = "Half",
-			font = wezterm.font({
-				family = "Monaspace Xenon",
-				weight = "Light",
-				style = "Normal",
-			}),
-		},
-		{ -- Argon is bold
-			italic = false,
-			intensity = "Bold",
-			font = wezterm.font({
-				family = "Monaspace Argon",
-				weight = "Bold",
-				style = "Normal",
-			}),
-		},
-		{ -- Radon is italic
-			intensity = "Bold",
-			italic = true,
-			font = wezterm.font({
-				family = "Monaspace Radon",
-				weight = "Bold",
-				style = "Italic",
-			}),
-		},
-		{ -- Radon is italic
-			italic = true,
-			intensity = "Half",
-			font = wezterm.font({
-				family = "Monaspace Radon",
-				weight = "Light",
-				style = "Italic",
-			}),
-		},
-		{ -- Radon is italic
-			italic = true,
-			intensity = "Normal",
-			font = wezterm.font({
-				family = "Monaspace Radon",
-				style = "Normal",
-			}),
-		},
-	}
-else
-	config.font = wezterm.font_with_fallback({
-		{ family = name },
-	})
-end
+local font
+-- name = "Hermit" name = "Cozette" name = "CozetteHiDpi" name = "CozetteVector" name = "Terminus (TTF)" name = "Monaspace" name = "Fira Code" name = "Monocraft"
+font = "Iosevka Term"
+config = require("fonts").set_font(config, font)
 
 -- enable_tab_bar = false
 config.use_fancy_tab_bar = false
@@ -204,8 +81,6 @@ config.window_padding = {
 
 config.adjust_window_size_when_changing_font_size = false
 config.warn_about_missing_glyphs = false
-
--- config.max_fps = 144
 
 local scheme = wezterm.color.get_builtin_schemes()[config.color_scheme]
 if not scheme then
@@ -242,7 +117,8 @@ local function fixed_width(str, n)
 	return wezterm.truncate_right(wezterm.pad_right((" "):rep(mid) .. str, n), n)
 end
 -- "Black", "White"  "Silver" }
-local colors = { "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
+local colors =
+	{ "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
 -- local colors = { "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
 
 local GHhash = function(str)
@@ -254,7 +130,6 @@ local GHhash = function(str)
 		h = ((h << 5) + h) + string.byte(c)
 	end
 
-	wezterm.log_info("hash out", h)
 	return h
 end
 
@@ -331,7 +206,7 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = "n/a"
 	end
 
-	local pretty_host = " " .. host_icon .. extra_space
+	local pretty_host = " " .. host_icon .. SPACE
 	local workspace = window:mux_window():get_workspace()
 	local title = window:mux_window():get_title()
 
@@ -373,16 +248,18 @@ wezterm.on("update-status", function(window, pane)
 
 	window:set_left_status(wezterm.format(left_cells))
 
-
-	local bat_icon = wezterm.nerdfonts.md_battery_70 .. " "
-	if not bat_icon then
-		bat_icon = ' '
+	local function bat_icon(b)
+		local pct = math.floor(b.state_of_charge * 100 + 0.5)
+		local rounded = math.max(10, math.min(100, math.floor((pct + 5) / 10) * 10))
+		local key = (b.state == "Charging" and "md_battery_charging_" or "md_battery_") .. rounded
+		return wezterm.nerdfonts[key] or wezterm.nerdfonts.md_battery_10
 	end
+
 	local dir = pane:get_current_working_dir()
 
-	local bat = ''
+	local bat = ""
 	for _, b in ipairs(wezterm.battery_info()) do
-		bat = bat_icon .. string.format('%.0f%%', b.state_of_charge * 100)
+		bat = bat_icon(b) .. " " .. string.format("%.0f%%", b.state_of_charge * 100)
 	end
 	window:set_right_status(wezterm.format({
 		{ Background = { Color = scheme.background } },
@@ -390,7 +267,7 @@ wezterm.on("update-status", function(window, pane)
 		{ Text = LEFT_SEPARATOR },
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = bat .. extra_space .. '   ' },
+		{ Text = bat .. SPACE .. "   " },
 	}))
 end)
 
@@ -406,7 +283,7 @@ config.keys = {
 	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
 	{ key = "d", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
-	{ key = "s", mods = "LEADER", action = act.ShowLauncherArgs{ flags = "FUZZY|DOMAINS|WORKSPACES" } },
+	{ key = "s", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|DOMAINS|WORKSPACES" }) },
 	{ key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
 	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 	{
@@ -446,16 +323,29 @@ config.mouse_bindings = {
 		action = act.SelectTextAtMouseCursor("SemanticZone"),
 		mods = "NONE",
 	},
+	-- Slower scroll up/down (3 lines instead of Page Up/Down)
+	{
+		event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+		mods = "NONE",
+		action = wezterm.action.ScrollByLine(-2),
+		alt_screen = false,
+	},
+	{
+		event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+		mods = "NONE",
+		action = wezterm.action.ScrollByLine(2),
+		alt_screen = false,
+	},
 }
 
-config.hyperlink_rules = wezterm.default_hyperlink_rules() 
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
 -- Linkify things that look like URLs with numeric addresses as hosts.
 -- E.g. http://127.0.0.1:8000 for a local development server,
 -- or http://192.168.1.1 for the web interface of many routers.
 table.insert(config.hyperlink_rules, {
-		regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
-		format = "$0",
+	regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
+	format = "$0",
 })
 
 -- examples: RFC822 RFC-2324 rfc-422
@@ -465,7 +355,10 @@ table.insert(config.hyperlink_rules, {
 	-- format = "https://www.rfcreader.com/#rfc$2"
 })
 
-config = require("internal").clickable_testbed(config)
+local ok, mod = pcall(require, "internal")
+if ok then
+	config = mod.clickable_testbed(config)
+end
 
 wezterm.on("ActivatePaneDirection-right", function(window, pane)
 	conditionalActivatePane(window, pane, "Right", "l")
