@@ -12,13 +12,11 @@ local fonts = {
 
 M.set_font = function(config, name)
 	if name:find("Iosevka") then
+		config.font_size = 12
 		SPACE = " "
 	end
-	-- For Cozette
-	if name:find("Iosevka.*") then
-		config.font_size = 12
-	end
 
+	-- For Cozette
 	if name:find("Cozette") then
 		config.font = wezterm.font_with_fallback({
 			{ family = name, assume_emoji_presentation = true },

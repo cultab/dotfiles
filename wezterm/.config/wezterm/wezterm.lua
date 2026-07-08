@@ -6,6 +6,7 @@ local conditionalActivatePane = require("utils").conditionalActivatePane
 
 -- This table will hold the configuration.
 local config = {} ---@type Config
+SPACE = ""
 
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
@@ -58,7 +59,6 @@ if hostname == "C-5CG54917G7" then
 end
 
 -- extra space for fonts like Iosevka
-local SPACE = ""
 
 -- name = "Hermit"
 -- name = "Cozette"
@@ -248,12 +248,12 @@ wezterm.on("update-status", function(window, pane)
 	end
 
 	local tab_width = window:active_tab():get_size().cols
-	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #host_suffix
+	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #host_suffix - #workspace
 
 	local left_cells = {
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = pretty_host },
+		{ Text = pretty_host .. " " .. workspace },
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = "Blue" } },
 		{ Text = RIGHT_SEPARATOR },
