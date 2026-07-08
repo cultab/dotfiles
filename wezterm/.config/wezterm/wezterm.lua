@@ -1,7 +1,6 @@
 local wezterm = require("wezterm") ---@type Wezterm
 local act = wezterm.action
 
-local hostname = wezterm.hostname
 local utils = require("utils")
 local conditionalActivatePane = require("utils").conditionalActivatePane
 
@@ -21,7 +20,7 @@ config.color_scheme_dirs = { "~/.config/wezterm/colors" }
 config.color_scheme = require("colorscheme")
 
 config.wsl_domains = { {
-	name = "Local Ubuntu",
+	name = "WSL Ubuntu",
 	distribution = "Ubuntu",
 	default_cwd = "~",
 } }
@@ -42,16 +41,17 @@ config.ssh_domains = {
 
 config.term = "wezterm"
 
-if hostname() == "winbox" then
+local hostname = wezterm.hostname()
+if hostname == "winbox" then
 	config.default_domain = "WSL:void"
 	config.font_dirs = { "C:/Users/evan/.local/share/fonts" }
 end
 
-if hostname() == "abyss" then
+if hostname == "abyss" then
 	config.default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" }
 end
 
-if hostname() == "C-5CG54917G7" then
+if hostname == "C-5CG54917G7" then
 	config.default_domain = "devpc"
 	config.default_prog = { "powershell.exe" }
 	config.scrollback_lines = 10000
@@ -60,10 +60,17 @@ end
 -- extra space for fonts like Iosevka
 local SPACE = ""
 
-local font
--- name = "Hermit" name = "Cozette" name = "CozetteHiDpi" name = "CozetteVector" name = "Terminus (TTF)" name = "Monaspace" name = "Fira Code" name = "Monocraft"
+-- name = "Hermit"
+-- name = "Cozette"
+-- name = "CozetteHiDpi"
+-- name = "CozetteVector"
 font = "Iosevka Term"
+-- name = "Terminus (TTF)"
+-- name = "Monaspace"
+-- name = "Fira Code"
+-- name = "Monocraft"
 config = require("fonts").set_font(config, font)
+
 
 -- enable_tab_bar = false
 config.use_fancy_tab_bar = false
@@ -133,6 +140,11 @@ local GHhash = function(str)
 	return h
 end
 
+local icons = {
+	Full = "fullicon",
+	Charging = "charge bolt"
+}
+
 wezterm.on(
 	"format-tab-title",
 	-- function(tab, tabs, panes, config, hover, max_width)
@@ -192,15 +204,25 @@ MAX_WIDTH = 11
 
 wezterm.on("update-status", function(window, pane)
 	local host_icon
-	local h = hostname()
+	local hostname
+	local h = utils.get_user_vars(pane)["WEZTERM_HOST"]
+	if not h then
+		h = wezterm.hostname()
+	end
+	host_name = h
 	if h == "winbox" or h == "C-5CG54917G7" then
 		host_icon = wezterm.nerdfonts.dev_windows
+		host_name = "win"
 	elseif h == "void" then
 		host_icon = wezterm.nerdfonts.linux_void
 	elseif h == "pop-os" then
 		host_icon = wezterm.nerdfonts.linux_pop_os
 	elseif h == "abyss" then
 		host_icon = wezterm.nerdfonts.linux_fedora
+	end
+	if h:find("bakatsandr1") then
+		host_icon = wezterm.nerdfonts.linux_ubuntu
+		host_name = "devpc"
 	end
 	if not host_icon then
 		host_icon = "n/a"
@@ -226,16 +248,17 @@ wezterm.on("update-status", function(window, pane)
 	end
 
 	local tab_width = window:active_tab():get_size().cols
-	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #workspace - #host_suffix
+	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #host_suffix
 
 	local left_cells = {
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = pretty_host .. " " .. workspace },
+		{ Text = pretty_host },
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = "Blue" } },
 		{ Text = RIGHT_SEPARATOR },
 	}
+
 	if host then
 		table.insert(left_cells, { Background = { Color = scheme.background } })
 		table.insert(left_cells, { Foreground = { Color = scheme.foreground } })
@@ -268,6 +291,7 @@ wezterm.on("update-status", function(window, pane)
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
 		{ Text = bat .. SPACE .. "   " },
+		{ Text = "@"..host_name .. " "},
 	}))
 end)
 

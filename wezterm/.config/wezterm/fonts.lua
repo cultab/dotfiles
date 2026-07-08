@@ -2,6 +2,7 @@ local wezterm = require("wezterm") ---@type Wezterm
 
 local M = {}
 
+-- TODO: use this
 local fonts = {
 	cozette = {
 		{ family = "CozetteHiDpi" },
