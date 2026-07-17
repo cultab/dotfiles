@@ -297,9 +297,10 @@ wezterm.on("update-status", function(window, pane)
 	}))
 end)
 
+
 config.launch_menu = {}
 
-for use, port in pairs { srmcp = 8787, dunno = 8790 } do
+for use, port in pairs { srmcp = 8787, srchat = 8790 } do
 	table.insert(config.launch_menu, {
 		label = "Port forward " .. port .. " for " .. use,
 		domain = { DomainName = 'local' }, -- the local domain
