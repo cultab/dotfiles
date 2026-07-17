@@ -1,0 +1,4 @@
+git:
+  pagers:
+    - pager: diff-so-fancy
+    - externalDiffCommand: ~/bin/color_words.sh

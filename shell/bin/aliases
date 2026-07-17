@@ -63,6 +63,16 @@ alias gdh='git diff HEAD'
 alias gri='git rebase --interactive'
 alias grc='git rebase --continue'
 
+wt() {
+    if [ $# -eq 0 ]; then
+		echo "Usage: wt <branch-name>"
+		echo "  Creates a new worktree at ../<repo>_<branch-name> with a new branch <branch-name>"
+		return 1
+    fi
+    local dir="../$(basename "$(git rev-parse --show-toplevel)")_$1"
+    git worktree add -b "$1" "$dir" && cd "$dir"
+}
+
 ######
 # ls #
 ######
@@ -107,13 +117,13 @@ alias et='TERM=xterm-256color et'
 alias mosh='echo "please use EternalTerminal (et)?";ssh'
 
 
-BATARGS="--paging never --italic-text always --plain"
+BATARGS="--paging never --italic-text always --plain --theme ansi"
 if command -v batcat >/dev/null 2>&1; then
   alias cat="batcat $BATARGS"
   alias bat="batcat $BATARGS"
 elif command -v bat >/dev/null 2>&1; then
 	alias bat="bat $BATARGS"
-  alias cat="bat $BATARGS"
+	alias cat="bat $BATARGS"
 fi
 
 if command -v bat >/dev/null 2>&1; then
