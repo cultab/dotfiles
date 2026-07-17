@@ -274,8 +274,10 @@ wezterm.on("update-status", function(window, pane)
 	local function bat_icon(b)
 		local pct = math.floor(b.state_of_charge * 100 + 0.5)
 		local rounded = math.max(10, math.min(100, math.floor((pct + 5) / 10) * 10))
-		local key = (b.state == "Charging" and "md_battery_charging_" or "md_battery_") .. rounded
-		return wezterm.nerdfonts[key] or wezterm.nerdfonts.md_battery_10
+		-- HACK: when "Full" force key to "_nil+rounded" which does not exist as an icon, falling back to md_battery
+		-- FIXME: just use 2 icons for Full = no icon, Charging = bolt, Discharing = down arrow
+		local key = (b.state == "Charging" and "md_battery_charging_" or b.state == "Full" and "_nil" or "md_battery_") .. rounded
+		return wezterm.nerdfonts[key] or wezterm.nerdfonts.md_battery
 	end
 
 	local dir = pane:get_current_working_dir()
@@ -295,33 +297,55 @@ wezterm.on("update-status", function(window, pane)
 	}))
 end)
 
+config.launch_menu = {}
+
+for use, port in pairs { srmcp = 8787, dunno = 8790 } do
+	table.insert(config.launch_menu, {
+		label = "Port forward " .. port .. " for " .. use,
+		domain = { DomainName = 'local' }, -- the local domain
+		args = {
+			'ssh',
+			'-L',
+			port .. ':localhost:' .. port,
+			'devpc', -- hardcoded hostname
+		},
+	})
+end
+
+
+
 config.disable_default_key_bindings = true
 config.leader = {
 	key = "s",
 	mods = "CTRL",
 	timeout_milliseconds = 1000,
 }
+
 config.keys = {
-	{ key = "\\", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
-	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
-	{ key = "d", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
-	{ key = "s", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|DOMAINS|WORKSPACES" }) },
-	{ key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
-	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 	{
 		key = "r",
 		mods = "LEADER",
-		action = act.PromptInputLine({
+		action = act.PromptInputLine{
 			description = "Rename workspace:",
 			action = wezterm.action_callback(function(window, _, line)
 				if line and line ~= "" then
 					wezterm.mux.rename_workspace(window:mux_window():get_workspace(), line)
 				end
 			end),
-		}),
+		},
 	},
+	{ key = "\\", mods = "LEADER",      action = act.SplitPane({ direction = "Right" }) },
+	{ key = "|", mods = "LEADER|SHIFT", action = act.SplitPane({ direction = "Left" }) },
+	{ key = "-", mods = "LEADER",       action = act.SplitPane({ direction = "Down"}) },
+	{ key = "_", mods = "LEADER|SHIFT", action = act.SplitPane({ direction = "Up"}) },
+	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
+	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+	{ key = "d", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
+	{ key = "s", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|DOMAINS|WORKSPACES|LAUNCH_MENU_ITEMS" }) },
+	{ key = "s", mods = "LEADER|CTRL", action = act.ActivateCopyMode },
+	{ key = "/", mods = "LEADER", action = act.Search "CurrentSelectionOrEmptyString" },
+	{ key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
+	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
 	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
 	{ key = "h", mods = "ALT", action = act.EmitEvent("ActivatePaneDirection-left") },
@@ -332,7 +356,6 @@ config.keys = {
 	{ key = "j", mods = "ALT|SHIFT", action = act.AdjustPaneSize({ "Down", 4 }) },
 	{ key = "k", mods = "ALT|SHIFT", action = act.AdjustPaneSize({ "Up", 4 }) },
 	{ key = "l", mods = "ALT|SHIFT", action = act.AdjustPaneSize({ "Right", 4 }) },
-	{ key = "s", mods = "LEADER|CTRL", action = act.ActivateCopyMode },
 	{ key = "=", mods = "CTRL", action = act.IncreaseFontSize },
 	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
 	{ key = "0", mods = "CTRL", action = act.ResetFontSize },
