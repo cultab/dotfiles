@@ -47,7 +47,7 @@ font-family-bold = Monaspace Argon
 font-family-italic = Monaspace Radon
 font-family-bold-italic = Monaspace Radon
 
-link-url
+link-url = true
 link-previews = true
 window-decoration = server
 window-theme = ghostty

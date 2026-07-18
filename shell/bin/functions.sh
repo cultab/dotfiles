@@ -1,7 +1,7 @@
 #!/bin/sh
 
 google () {
-    if [ -z $* ]; then
+    if [ -z "$*" ]; then
         echo "google: missing query"
         return
     fi
@@ -29,7 +29,7 @@ hist () {
     }
 
 mkcd () {
-    mkdir "$1" && cd "$1" || exit
+    mkdir -p "$1" && cd "$1" || return
 }
 
 project () {
@@ -37,7 +37,7 @@ project () {
     echo "Created project folder $1.."
     cp -r ~/Documents/template/* "./$1"
     echo "Copied template files.."
-    cd "$1" || exit
+    cd "$1" || return
     echo "cd'ed into $1"
     git init
     echo "Initialized git repo"
@@ -109,13 +109,13 @@ ssh_display() {
 
 ssh_unset_display() {
     if [ "$SSH_CLIENT" ] ; then
-        echo "Found ssh client, unsetting $$DISPLAY."
+        echo "Found ssh client, unsetting \$DISPLAY."
         unset DISPLAY
     fi
 }
 
 vimw() {
-    if prog=$(which "$*"); then
+    if prog=$(command -v "$*"); then
         vim "$prog"
     else
         echo "$prog"

@@ -28,7 +28,7 @@ fi
 if [ -d /usr/share/doc/fzf/ ]; then
 	if [ -d /usr/share/doc/fzf/examples/ ]; then
 		source /usr/share/doc/fzf/examples/key-bindings.bash
-	elif [ -d /usr/share/doc/fzf/examples/ ]; then
+	elif [ -d /usr/share/doc/fzf/ ]; then
 		source /usr/share/doc/fzf/key-bindings.bash
 	fi
 fi
@@ -48,7 +48,7 @@ source ~/bin/exports
 # automagically enter venvs
 auto_sauce() {
 	if [[ -z $VIRTUAL_ENV ]]; then
-		if [[ -f .venv/bin/activate ]] then
+		if [[ -f .venv/bin/activate ]]; then
 			source .venv/bin/activate
 		fi
 	fi

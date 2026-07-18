@@ -111,7 +111,7 @@ try_cd "$HOME"
 info 'git clone' dotfiles
 try 'cloning dotfiles repo' echo git clone 'https://github.com/cultab/dotfiles'
 
-info 'create' "~/repos"
+info 'create' "$HOME/repos"
 try 'creating repos directory' mkdir -p "$HOME/repos"
 
 (
@@ -139,7 +139,7 @@ step "Stow dotfiles"
 	)
 
 	info change shell to zsh
-	if [ $distro != Bazzite ]; then
+	if [ "$distro" != Bazzite ]; then
 		try 'changing shell to zsh' sudo chsh -s /usr/bin/zsh "$USER"
 	fi
 
@@ -176,7 +176,7 @@ step "Rustup"
 
 step Install cargo packages
 
-try "update $$PATH" . "$CARGO_HOME/env"
+try "update \$PATH" . "$CARGO_HOME/env"
 info installing cargo-binstall
 
 
@@ -218,7 +218,7 @@ go_pkgs=$(grep '\*' < ~/dotfiles/misc/pkgs_go.md | cut -d ' ' -f 2 | tr '\n' ' '
 
 info "packages:" "$go_pkgs"
 for pkg in $go_pkgs; do
-	bin=$(echo $pkg | sed  -nE 's/.*\/([a-z]*)@.*/\1/p')
+	bin=$(echo "$pkg" | sed  -nE 's/.*\/([a-z]*)@.*/\1/p')
 	if [ "$(command -v "$bin")" ]; then
 		info skipping "package $pkg as $bin exists in PATH"
 		continue
@@ -239,7 +239,7 @@ for pkg in $pip_pkgs; do
 			bin=$pkg
 			;;
 	esac
-	if [ $(command -v $bin) ]; then
+	if [ -n "$(command -v "$bin")" ]; then
 		info skipping "package $pkg as $bin exists in" '$PATH'
 		continue
 	fi

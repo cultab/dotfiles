@@ -58,7 +58,6 @@ PATH_add() {
 # add stuff to $PATH
 PATH_add ~/bin
 PATH_add ~/Appimages
-PATH_add ./
 PATH_add "$HOME/.local/share/applications"
 PATH_add "$HOME/.local/bin"
 PATH_add "$GOPATH/bin"
@@ -89,7 +88,6 @@ PATH_add "/opt/quarto/bin"
 PATH_add "$HOME/.local/share/bob/nvim-bin"
 PATH_add "$HOME/.bun/bin"
 PATH_add "/mnt/c/Program Files/WezTerm/"
-PATH_add "$HOME/.bun/bin:$PATH"
 PATH_add "$HOME/.local/share/AppImage"
 PATH_add "/home/linuxbrew/.linuxbrew/bin"
 PATH_add "/home/linuxbrew/.linuxbrew/sbin"
@@ -103,8 +101,8 @@ export XBPS_DISTDIR="$HOME/repos/void-packages"
 # keychain
 eval "$(keychain --eval --quiet --dir "$HOME/.cache/keychain")"
 # eval "$(pyenv init --path)"
-[ -f $HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
-[ -f $HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 
 [ -f "$HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
