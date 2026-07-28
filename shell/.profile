@@ -93,6 +93,7 @@ PATH_add "/mnt/c/Program Files/WezTerm/"
 PATH_add "$HOME/.local/share/AppImage"
 PATH_add "/home/linuxbrew/.linuxbrew/bin"
 PATH_add "/home/linuxbrew/.linuxbrew/sbin"
+PATH_add "$HOME/.local/share/cargo/bin"
 
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending

@@ -75,6 +75,10 @@ catppuccin-light:
   wezterm: "Catppuccin Latte"
   colorscheme: "catppuccin-latte"
 
+catppuccin-light:
+  nvim: "catppuccin-latte"
+  colorscheme: "Catppuccin Latte"
+
 wpg:
   colorscheme: "wpg"
   nvim: "onedark"

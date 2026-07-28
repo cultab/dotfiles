@@ -56,9 +56,9 @@ if hostname == "abyss" then
 	config.default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" }
 end
 
-if hostname == "C-5CG54917G7" then
+if hostname == "L-5CG54917G7" then
 	config.default_domain = "devpc"
-	config.default_prog = { "powershell.exe" }
+	-- config.default_prog = { "powershell.exe" }
 	config.scrollback_lines = 10000
 end
 
@@ -77,13 +77,14 @@ config = require("fonts").set_font(config, font)
 
 
 -- enable_tab_bar = false
+config.enable_wayland = false
 config.use_fancy_tab_bar = false
 -- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = {
-	left = 2,
-	right = 2,
-	top = 2,
-	bottom = 2,
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
 }
 -- config.freetype_load_flags = "DEFAULT"
 

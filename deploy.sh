@@ -85,7 +85,8 @@ case $distro in
 			sudo apt-get update -y && sudo apt-get upgrade -y
 		}
 		try 'updating system' pkg_update
-		try 'installing packages' pkg_install git stow make fzf zsh curl keychain man    rustup gcc carapace procs sd bat         pipx               golang git-delta                        du-dust               lsd just gum trash-cli
+		try 'installing packages' pkg_install git stow make fzf zsh curl keychain man    rustup gcc sd bat         pipx               golang git-delta                        lsd just trash-cli     
+		# missing: carapace procs sd bat du-dust gum
 		;;
 	Bazzite*)
 		info 'chose' brew
@@ -123,9 +124,9 @@ try 'cloning uniwa.nvim' git clone 'https://github.com/uniwa-community/uniwa.nvi
 step "Stow dotfiles"
 (
 	# info backing up default .bashrc and .profile
-	mkdir -p ~/backup
-	mv -f ~/.bashrc ~/backup/dotbashrc || true
-	mv -f ~/.profile ~/backup/dotprofile|| true
+	try mkdir -p ~/backup
+	try mv -f ~/.bashrc ~/backup/dotbashrc || true
+	try mv -f ~/.profile ~/backup/dotprofile|| true
 
 	info cd in dotfiles
 	(
@@ -134,7 +135,7 @@ step "Stow dotfiles"
 		try 'removing problematic file' rm -f ~/dotfiles/scripts/bin/dwm_bar.sh
 
 		info stow files
-		try 'stowing dotfiles' stow git ssh neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
+		try 'stowing dotfiles' stow git neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
 	)
 
 	info change shell to zsh
@@ -144,7 +145,7 @@ step "Stow dotfiles"
 
 )
 
-step Run themr
+step "Run themr"
 (
 	info installing: themr
 	try_cd ~/repos
@@ -156,7 +157,7 @@ step Run themr
 	try 'setting themr themr' themr tokyonight-night
 )
 
-step Install xinst
+step "Install xinst"
 (
 	try_cd ~/repos
 	try 'cloning xinst' git clone 'https://github.com/cultab/xinst'
@@ -169,14 +170,18 @@ export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 
 step "Rustup"
 (
-	try "rustup initialization" echo 1 | rustup-init
-	#try "rustup default toolchain" rustup default stable
+	if command -v rustup-init; then
+		try "rustup initialization" echo 1 | rustup-init
+	else
+		try "rustup default toolchain" rustup default stable
+	fi
 )
 
 step Install cargo packages
 
-try "update \$PATH" . "$CARGO_HOME/env"
+#try "update $$PATH" . "$CARGO_HOME/env"
 info installing cargo-binstall
+#try "install binstall" cargo install cargo-binstall
 
 
 cargo_pkgs=$(grep '\*' < ~/dotfiles/misc/pkgs_cargo.md | cut -d ' ' -f 2 | tr '\n' ' ')
@@ -249,6 +254,18 @@ step Install neovim
 
 try 'installing neovim' "bob use stable"
 
+step Stow ssh
+choice=$(gum choose yes no --header="Generate new ssh key?")
+
+case $choice in
+	y*)
+		try_cd ~/dotfiles
+		info stow ssh
+		try 'stowing ssh' ssh
+		;;
+	*)
+		;;
+esac
 
 step Generate new ssh key
 choice=$(gum choose yes no --header="Generate new ssh key?")
