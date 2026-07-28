@@ -171,7 +171,7 @@ wezterm.on(
 				{ Foreground = { Color = scheme.background } },
 				{ Background = { AnsiColor = tab_color } },
 				{
-					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, MAX_WIDTH),
+					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, TAB_WIDTH),
 				},
 				{ Background = { Color = scheme.background } },
 				{ Foreground = { AnsiColor = tab_color } },
@@ -185,7 +185,7 @@ wezterm.on(
 				{ Attribute = { Italic = false } },
 				{ Text = " " },
 				{
-					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, MAX_WIDTH),
+					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, TAB_WIDTH),
 				},
 				{ Text = " " },
 			}
@@ -195,7 +195,7 @@ wezterm.on(
 				{ Foreground = { AnsiColor = tab_color } },
 				{ Text = " " },
 				{
-					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, MAX_WIDTH),
+					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, TAB_WIDTH),
 				},
 				{ Text = " " },
 			}
@@ -205,7 +205,13 @@ wezterm.on(
 	end
 )
 
-MAX_WIDTH = 11
+TAB_WIDTH = 19
+
+-- WezTerm truncates the whole rendered tab title (separators included) to
+-- config.tab_max_width regardless of our own fixed_width padding above, so
+-- it must be at least: 1 (left separator) + 2 ("N:") + TAB_WIDTH (padded
+-- name) + 1 (right separator), or the name/right border get cut off.
+config.tab_max_width = TAB_WIDTH + 8
 
 wezterm.on("update-status", function(window, pane)
 	local host_icon
@@ -215,6 +221,7 @@ wezterm.on("update-status", function(window, pane)
 		h = wezterm.hostname()
 	end
 	host_name = h
+	-- IDEA: turn into function that returns an obj with hostname and icon, also use icon for tabs
 	if h == "winbox" or h == "C-5CG54917G7" then
 		host_icon = wezterm.nerdfonts.dev_windows
 		host_name = "win"
@@ -224,10 +231,12 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = wezterm.nerdfonts.linux_pop_os
 	elseif h == "abyss" then
 		host_icon = wezterm.nerdfonts.linux_fedora
-	end
-	if h:find("bakatsandr1") then
+	elseif h:find("bakatsandr1") then
 		host_icon = wezterm.nerdfonts.linux_ubuntu
 		host_name = "devpc"
+	elseif h == "L-5CG54917G7" then
+		host_icon = wezterm.nerdfonts.linux_ubuntu
+		host_name = "laptop"
 	end
 	if not host_icon then
 		host_icon = "n/a"
@@ -248,8 +257,8 @@ wezterm.on("update-status", function(window, pane)
 	local tabs = window:mux_window():tabs()
 	local mid_width = 0
 	for idx, tab in ipairs(tabs) do
-		-- HACK: title is MAX_WIDTH + 2 for idx + ':' (the idx shouldn't increase past 9 lol) + 2 for the padding
-		mid_width = mid_width + MAX_WIDTH + 5
+		-- HACK: title is TAB_WIDTH + 2 for idx + ':' (the idx shouldn't increase past 9 lol) + 2 for the padding
+		mid_width = mid_width + TAB_WIDTH + 5
 	end
 
 	local tab_width = window:active_tab():get_size().cols
@@ -336,6 +345,18 @@ config.keys = {
 			action = wezterm.action_callback(function(window, _, line)
 				if line and line ~= "" then
 					wezterm.mux.rename_workspace(window:mux_window():get_workspace(), line)
+				end
+			end),
+		},
+	},
+	{
+		key = "t",
+		mods = "LEADER",
+		action = act.PromptInputLine{
+			description = "Rename tab:",
+			action = wezterm.action_callback(function(window, _, line)
+				if line and line ~= "" then
+					window:active_tab():set_title(line)
 				end
 			end),
 		},
@@ -427,3 +448,4 @@ wezterm.on("ActivatePaneDirection-down", function(window, pane)
 end)
 
 return config
+
