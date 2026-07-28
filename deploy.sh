@@ -1,6 +1,6 @@
 #!/bin/sh
 set -o errexit   # abort on nonzero exitstatus
-# set -o nounset   # abort on unbound variable
+set -o nounset   # abort on unbound variable
 
 # todo
 # rustup from source if not up to date
@@ -38,7 +38,6 @@ try() {
 	shift
 	command="$*"
 	if ! $command; then
-		echo "write???"
 		echo "$((CUR_STEP - 1))" > /tmp/failed_step
 		error 'Failed' "$action"
 	fi
@@ -86,7 +85,7 @@ case $distro in
 			sudo apt-get update -y && sudo apt-get upgrade -y
 		}
 		try 'updating system' pkg_update
-		try 'installing packages' pkg_install git stow make fzf zsh curl keychain man    rustup gcc carapace procs sd bat         pipx               golang git-delta                        du-dust               lsd just gum trash-cli     
+		try 'installing packages' pkg_install git stow make fzf zsh curl keychain man    rustup gcc carapace procs sd bat         pipx               golang git-delta                        du-dust               lsd just gum trash-cli
 		;;
 	Bazzite*)
 		info 'chose' brew
@@ -223,7 +222,7 @@ for pkg in $go_pkgs; do
 		info skipping "package $pkg as $bin exists in PATH"
 		continue
 	fi
-	try "installing $pkg with go install" go install "github.com/${pkg}"	
+	try "installing $pkg with go install" go install "github.com/${pkg}"
 done
 
 step Install pip packages

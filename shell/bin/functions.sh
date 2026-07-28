@@ -118,7 +118,7 @@ vimw() {
     if prog=$(command -v "$*"); then
         vim "$prog"
     else
-        echo "$prog"
+        echo "$prog?"
     fi
 }
 

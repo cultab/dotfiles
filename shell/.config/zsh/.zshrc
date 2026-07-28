@@ -4,7 +4,7 @@ compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 autoload -Uz edit-command-line;
 zle -N edit-command-line
 
-zmodload zsh/zpty
+# zmodload zsh/zpty
 # zmodload zsh/zprof
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=1000000
@@ -52,21 +52,21 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 # "ss" [UP ARROW] -> "ssh -p22 some.domain.xyz"
 # incremental search
-bindkey "\e[A"  history-beginning-search-backward
-bindkey "\e[B"  history-beginning-search-forward
-bindkey "^P"    history-beginning-search-backward
-bindkey "^N"    history-beginning-search-forward
-bindkey "^[[Z"  reverse-menu-complete
-bindkey "^X"    edit-command-line
-# delete now works
-bindkey "^[[3~" delete-char
-bindkey " "     magic-space
-bindkey '\e'    send-break
+ bindkey "\e[A"  history-beginning-search-backward
+ bindkey "\e[B"  history-beginning-search-forward
+ bindkey "^P"    history-beginning-search-backward
+ bindkey "^N"    history-beginning-search-forward
+ bindkey "^[[Z"  reverse-menu-complete
+ bindkey "^X"    edit-command-line
+ # delete now works
+ bindkey "^[[3~" delete-char
+ bindkey " "     magic-space
+ bindkey '\e'    send-break
 
 
-# bindkey -M vicmd 'k' history-beginning-search-backward
-# bindkey -M vicmd 'j' history-beginning-search-forward
-# disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
+ bindkey -M vicmd 'k' history-beginning-search-backward
+ bindkey -M vicmd 'j' history-beginning-search-forward
+ disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
 export TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S'
 
 setopt noclobber                 # Don't overwrite existing file when redirecting output
@@ -115,6 +115,10 @@ prompt pure
 
 fast-theme --quiet XDG:overlay
 
+# WEZTERM_SHELL_SKIP_ALL=1
+WEZTERM_SHELL_SKIP_SEMANTIC_ZONES=1
+WEZTERM_SHELL_SKIP_CWD=1
+# WEZTERM_SHELL_SKIP_USER_VARS=1
 csource "$HOME/.local/zsh/wezterm.sh"
 
 

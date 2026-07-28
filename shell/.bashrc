@@ -56,7 +56,7 @@ auto_sauce() {
 export HISTFILESIZE=
 # eval "$(~/.local/bin/agent shell-integration bash)"
 # keep .bash_history always up to date
-PROMPT_COMMAND+=";auto_sauce"
+PROMPT_COMMAND="auto_sauce;$PROMPT_COMMAND"
 
 if [[ -f ~/.internalrc ]]; then
 	source ~/.internalrc
@@ -65,4 +65,5 @@ fi
 if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
   tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
 fi
+
 

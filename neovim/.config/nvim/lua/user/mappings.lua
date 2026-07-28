@@ -6,6 +6,9 @@ local partial = require('user.util').partial
 -- load my mapping DSL
 local map = require('user.map').map
 
+-- LEADER
+vim.g.mapleader = ' '
+
 -- easier navigation in normal / visual / operator pending mode
 map 'n' { 'nzz' }
 map 'N' { 'Nzz' }
@@ -229,40 +232,13 @@ function M.set_welcome_mappings()
 	-- })
 end
 
--- TODO: in lua or remove entirely
-vim.cmd [[
-" barbar
-" Move to previous/next
-" nnoremap <silent>    <A-,> :echo "Try \<leader\>b!"<CR>
-" nnoremap <silent>    <A-.> :echo "Try \<leader\>b!!!"<CR>
-" nnoremap <silent>    <A-,> :BufferPrevious<CR>
-" nnoremap <silent>    <A-.> :BufferNext<CR>
-" Re-order to previous/next
-" nnoremap <silent>    <A-[> :BufferMovePrevious<CR>
-" nnoremap <silent>    <A-]> :BufferMoveNext<CR>
-" Close buffer
-" nnoremap <silent>    <A-c> :BufferClose<CR>
 
-]]
+-- aberrations
+vim.keymap.set('ca', 'Q', 'q')
+vim.keymap.set('ca', 'W', 'w')
+vim.keymap.set('ca', 'Wq', 'wq')
+vim.keymap.set('ca', 'WQ', 'wq')
+vim.keymap.set('ca', 'Wa', 'wa')
+vim.keymap.set('ca', 'WA', 'wa')
 
--- from the good ol' init.vim
--- it's mostly vim-compatible
--- so it stays here for now
--- TODO: in lua
-vim.cmd [[
-" so much more convenient
-map <space> <leader>
-]]
-
--- TODO: in lua
-vim.cmd [[
-" sometimes I get off the shift key too slowly, ~~maybe don't do it then?~~,
-" HA abbr to the rescue
-cabbr Q q
-cabbr W w
-cabbr Wq wq
-cabbr WQ wq
-cabbr Wa wa
-cabbr WA wa
-]]
 return M

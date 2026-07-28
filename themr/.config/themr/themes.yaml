@@ -69,7 +69,11 @@ gruvbox-flat:
 catppuccin:
   wezterm: "Catppuccin Mocha"
   qbit: "catppuccin-mocha"
-  colorscheme: "catppuccin"
+  colorscheme: "catppuccin-mocha"
+
+catppuccin-light:
+  wezterm: "Catppuccin Latte"
+  colorscheme: "catppuccin-latte"
 
 wpg:
   colorscheme: "wpg"

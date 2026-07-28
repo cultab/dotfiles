@@ -9,7 +9,12 @@ export EDITOR="nvim"
 
 
 LS_COLORS="$LS_COLORS:ow=01;33"
-export FZF_DEFAULT_COMMAND="fdfind"
+if command -v fd 2>&1 > /dev/null; then
+	export FZF_DEFAULT_COMMAND="fd"
+elif command -v fdfind 2>&1 > /dev/null; then
+	export FZF_DEFAULT_COMMAND="fdfind"
+fi
+
 export TERMINAL="wezterm"
 
 # man colors

@@ -117,7 +117,7 @@ alias et='TERM=xterm-256color et'
 alias mosh='echo "please use EternalTerminal (et)?";ssh'
 
 
-BATARGS="--paging never --italic-text always --plain --theme ansi"
+BATARGS="--paging never --plain --theme ansi"
 if command -v batcat >/dev/null 2>&1; then
   alias cat="batcat $BATARGS"
   alias bat="batcat $BATARGS"

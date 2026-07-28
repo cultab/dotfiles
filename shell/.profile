@@ -39,7 +39,9 @@ export USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
 export IPFS_PATH="$XDG_DATA_HOME/ipfs"
 export GHCUP_USE_XDG_DIRS="1"
 
+
 export _JAVA_AWT_WM_NONREPARENTING=1
+export HOMEBREW_NO_ENV_HINTS=1
 
 # cowfile path for cowsay
 export COWPATH="$COWPATH:$HOME/.local/share/cowsay"
@@ -107,3 +109,4 @@ eval "$(keychain --eval --quiet --dir "$HOME/.cache/keychain")"
 
 [ -f "$HOME/.local/share/cargo/env" ] && . "$HOME/.local/share/cargo/env"
 [ -f "$HOME/.local/share/ghcup/env" ] && . "$HOME/.local/share/ghcup/env" # ghcup-env
+

@@ -34,6 +34,10 @@ config.wsl_domains = { {
 
 config.ssh_domains = {
 	{
+		name = "vps",
+		remote_address = "vps"
+	},
+	{
 		name = "devpc",
 		remote_address = "devpc",
 		local_echo_threshold_ms = 200,
@@ -60,15 +64,15 @@ end
 
 -- extra space for fonts like Iosevka
 
--- name = "Hermit"
--- name = "Cozette"
--- name = "CozetteHiDpi"
--- name = "CozetteVector"
-font = "Iosevka Term"
--- name = "Terminus (TTF)"
--- name = "Monaspace"
--- name = "Fira Code"
--- name = "Monocraft"
+-- font = "Hermit"
+font = "Cozette"
+-- font = "CozetteHiDpi"
+-- font = "CozetteVector"
+-- font = "Iosevka Term"
+-- font = "Terminus (TTF)"
+-- font = "Monaspace"
+-- font = "Fira Code"
+-- font = "Monocraft"
 config = require("fonts").set_font(config, font)
 
 
