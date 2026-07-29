@@ -57,7 +57,7 @@ if hostname == "abyss" then
 end
 
 if hostname == "L-5CG54917G7" then
-	config.default_domain = "devpc"
+	-- config.default_domain = "devpc"
 	-- config.default_prog = { "powershell.exe" }
 	config.scrollback_lines = 10000
 end
@@ -147,7 +147,7 @@ end
 
 local icons = {
 	Full = "fullicon",
-	Charging = "charge bolt"
+	Charging = "charge bolt",
 }
 
 wezterm.on(
@@ -290,7 +290,8 @@ wezterm.on("update-status", function(window, pane)
 		local rounded = math.max(10, math.min(100, math.floor((pct + 5) / 10) * 10))
 		-- HACK: when "Full" force key to "_nil+rounded" which does not exist as an icon, falling back to md_battery
 		-- FIXME: just use 2 icons for Full = no icon, Charging = bolt, Discharing = down arrow
-		local key = (b.state == "Charging" and "md_battery_charging_" or b.state == "Full" and "_nil" or "md_battery_") .. rounded
+		local key = (b.state == "Charging" and "md_battery_charging_" or b.state == "Full" and "_nil" or "md_battery_")
+			.. rounded
 		return wezterm.nerdfonts[key] or wezterm.nerdfonts.md_battery
 	end
 
@@ -300,34 +301,41 @@ wezterm.on("update-status", function(window, pane)
 	for _, b in ipairs(wezterm.battery_info()) do
 		bat = bat_icon(b) .. " " .. string.format("%.0f%%", b.state_of_charge * 100)
 	end
-	window:set_right_status(wezterm.format({
+
+	local meta = pane:get_metadata() or {}
+	local tardy = "ok"
+	if meta.is_tardy then
+		local secs = meta.since_last_response_ms / 1000.0
+		tardy = string.format("%5.1fs⏳", secs)
+		window:set_right_status()
+	end
+	local right_status = {
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = "Blue" } },
 		{ Text = LEFT_SEPARATOR },
 		{ Background = { AnsiColor = "Blue" } },
 		{ Foreground = { Color = scheme.background } },
-		{ Text = bat .. SPACE .. "   " },
-		{ Text = "@"..host_name .. " "},
-	}))
+		{ Text = bat .. SPACE },
+		{ Text = tardy .. SPACE },
+		{ Text = "@" .. host_name .. " " },
+	}
+	window:set_right_status(wezterm.format(right_status))
 end)
-
 
 config.launch_menu = {}
 
-for use, port in pairs { srmcp = 8787, srchat = 8790 } do
+for use, port in pairs({ srmcp = 8787, srchat = 8790 }) do
 	table.insert(config.launch_menu, {
 		label = "Port forward " .. port .. " for " .. use,
-		domain = { DomainName = 'local' }, -- the local domain
+		domain = { DomainName = "local" }, -- the local domain
 		args = {
-			'ssh',
-			'-L',
-			port .. ':localhost:' .. port,
-			'devpc', -- hardcoded hostname
+			"ssh",
+			"-L",
+			port .. ":localhost:" .. port,
+			"devpc", -- hardcoded hostname
 		},
 	})
 end
-
-
 
 config.disable_default_key_bindings = true
 config.leader = {
@@ -340,37 +348,41 @@ config.keys = {
 	{
 		key = "r",
 		mods = "LEADER",
-		action = act.PromptInputLine{
+		action = act.PromptInputLine({
 			description = "Rename workspace:",
 			action = wezterm.action_callback(function(window, _, line)
 				if line and line ~= "" then
 					wezterm.mux.rename_workspace(window:mux_window():get_workspace(), line)
 				end
 			end),
-		},
+		}),
 	},
 	{
 		key = "t",
 		mods = "LEADER",
-		action = act.PromptInputLine{
+		action = act.PromptInputLine({
 			description = "Rename tab:",
 			action = wezterm.action_callback(function(window, _, line)
 				if line and line ~= "" then
 					window:active_tab():set_title(line)
 				end
 			end),
-		},
+		}),
 	},
-	{ key = "\\", mods = "LEADER",      action = act.SplitPane({ direction = "Right" }) },
+	{ key = "\\", mods = "LEADER", action = act.SplitPane({ direction = "Right" }) },
 	{ key = "|", mods = "LEADER|SHIFT", action = act.SplitPane({ direction = "Left" }) },
-	{ key = "-", mods = "LEADER",       action = act.SplitPane({ direction = "Down"}) },
-	{ key = "_", mods = "LEADER|SHIFT", action = act.SplitPane({ direction = "Up"}) },
+	{ key = "-", mods = "LEADER", action = act.SplitPane({ direction = "Down" }) },
+	{ key = "_", mods = "LEADER|SHIFT", action = act.SplitPane({ direction = "Up" }) },
 	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
 	{ key = "d", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
-	{ key = "s", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|DOMAINS|WORKSPACES|LAUNCH_MENU_ITEMS" }) },
+	{
+		key = "s",
+		mods = "LEADER",
+		action = act.ShowLauncherArgs({ flags = "FUZZY|DOMAINS|WORKSPACES|LAUNCH_MENU_ITEMS" }),
+	},
 	{ key = "s", mods = "LEADER|CTRL", action = act.ActivateCopyMode },
-	{ key = "/", mods = "LEADER", action = act.Search "CurrentSelectionOrEmptyString" },
+	{ key = "/", mods = "LEADER", action = act.Search("CurrentSelectionOrEmptyString") },
 	{ key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
 	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
@@ -448,4 +460,3 @@ wezterm.on("ActivatePaneDirection-down", function(window, pane)
 end)
 
 return config
-

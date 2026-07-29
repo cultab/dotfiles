@@ -33,6 +33,14 @@ setopt extendedglob
 setopt globdots # complete (dot).files
 bindkey -e
 
+if [ -d /usr/share/doc/fzf/ ]; then
+	if [ -d /usr/share/doc/fzf/examples/ ]; then
+		source /usr/share/doc/fzf/examples/key-bindings.zsh
+	elif [ -d /usr/share/doc/fzf/examples/ ]; then
+		source /usr/share/doc/fzf/key-bindings.zsh
+	fi
+fi
+
 LS_COLORS=$(dircolors)
 
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
