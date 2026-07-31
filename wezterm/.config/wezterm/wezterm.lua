@@ -44,7 +44,7 @@ config.ssh_domains = {
 	},
 }
 
-config.term = "wezterm"
+config.term = "xterm"
 
 local hostname = wezterm.hostname()
 if hostname == "winbox" then
@@ -65,10 +65,10 @@ end
 -- extra space for fonts like Iosevka
 
 -- font = "Hermit"
-font = "Cozette"
+-- font = "Cozette"
 -- font = "CozetteHiDpi"
 -- font = "CozetteVector"
--- font = "Iosevka Term"
+font = "Iosevka Term"
 -- font = "Terminus (TTF)"
 -- font = "Monaspace"
 -- font = "Fira Code"
@@ -76,8 +76,8 @@ font = "Cozette"
 config = require("fonts").set_font(config, font)
 
 
--- enable_tab_bar = false
-config.enable_wayland = false
+-- config.enable_tab_bar = true
+config.enable_wayland = true
 config.use_fancy_tab_bar = false
 -- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = {
@@ -88,7 +88,7 @@ config.window_padding = {
 }
 -- config.freetype_load_flags = "DEFAULT"
 
--- allow_square_glyphs_to_overflow_width = "Never",
+-- config.allow_square_glyphs_to_overflow_width = "Never"
 -- cell_width = 1.1,
 
 config.adjust_window_size_when_changing_font_size = false
@@ -131,17 +131,21 @@ end
 -- "Black", "White"  "Silver" }
 local colors =
 	{ "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
+local force_colors = {
+	laptop = "Blue",
+	devpc = "Maroon",
+}
 -- local colors = { "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
 
 local GHhash = function(str)
 	-- https://gist.github.com/scheler/26a942d34fb5576a68c111b05ac3fabe
 	-- also try https://github.com/lancelijade/qqwry.lua/blob/master/crc32.lua
 	local h = 5381
-	-- wezterm.log_info("str:" .. str)
 	for c in str:gmatch(".") do
 		h = ((h << 5) + h) + string.byte(c)
 	end
 
+	-- wezterm.log_info("str: '" .. str .. "' hash: " .. h)
 	return h
 end
 
@@ -215,7 +219,6 @@ config.tab_max_width = TAB_WIDTH + 8
 
 wezterm.on("update-status", function(window, pane)
 	local host_icon
-	local hostname
 	local h = utils.get_user_vars(pane)["WEZTERM_HOST"]
 	if not h then
 		h = wezterm.hostname()
@@ -242,17 +245,21 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = "n/a"
 	end
 
+
+	-- local idx = (GHhash(host_name) % #colors) + 1
+	local status_color = force_colors[host_name]
+
 	local pretty_host = " " .. host_icon .. SPACE
 	local workspace = window:mux_window():get_workspace()
-	local title = window:mux_window():get_title()
+	local title = " " .. window:mux_window():get_title()
+	title = wezterm.truncate_right(title, 24)
 
+	-- wezterm.log_info("title:" .. title .. ":elitit length:" .. #title)
+	-- title = wezterm.pad_right(title, 50)
+	-- wezterm.log_info("title:" .. title .. ":elitit length:" .. #title)
+	
 	-- If the window title looks like a host (e.g. "(host):~" set explicitly via
 	-- OSC when ssh'd into a remote), show it dimmed next to the workspace name.
-	local host
-	if title and #title > 0 then
-		host = title:match("^%(([%w%.%-]+)%)")
-	end
-	local host_suffix = host and (" " .. host) or ""
 
 	local tabs = window:mux_window():tabs()
 	local mid_width = 0
@@ -262,24 +269,22 @@ wezterm.on("update-status", function(window, pane)
 	end
 
 	local tab_width = window:active_tab():get_size().cols
-	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #host_suffix - #workspace
+	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #workspace - #title
 
 	local left_cells = {
-		{ Background = { AnsiColor = "Blue" } },
+		{ Background = { AnsiColor = status_color } },
 		{ Foreground = { Color = scheme.background } },
 		{ Text = pretty_host .. " " .. workspace },
 		{ Background = { Color = scheme.background } },
-		{ Foreground = { AnsiColor = "Blue" } },
+		{ Foreground = { AnsiColor = status_color } },
 		{ Text = RIGHT_SEPARATOR },
 	}
 
-	if host then
-		table.insert(left_cells, { Background = { Color = scheme.background } })
-		table.insert(left_cells, { Foreground = { Color = scheme.foreground } })
-		table.insert(left_cells, { Attribute = { Intensity = "Half" } })
-		table.insert(left_cells, { Text = host_suffix })
-		table.insert(left_cells, { Attribute = { Intensity = "Normal" } })
-	end
+	table.insert(left_cells, { Background = { Color = scheme.background } })
+	table.insert(left_cells, { Foreground = { Color = scheme.foreground } })
+	table.insert(left_cells, { Attribute = { Intensity = "Half" } })
+	table.insert(left_cells, { Text =  title })
+	table.insert(left_cells, { Attribute = { Intensity = "Normal" } })
 	table.insert(left_cells, { Background = { Color = scheme.background } })
 	table.insert(left_cells, { Text = wezterm.pad_left(" ", max_left) })
 
@@ -307,13 +312,12 @@ wezterm.on("update-status", function(window, pane)
 	if meta.is_tardy then
 		local secs = meta.since_last_response_ms / 1000.0
 		tardy = string.format("%5.1fs⏳", secs)
-		window:set_right_status()
 	end
 	local right_status = {
 		{ Background = { Color = scheme.background } },
-		{ Foreground = { AnsiColor = "Blue" } },
+		{ Foreground = { AnsiColor = status_color } },
 		{ Text = LEFT_SEPARATOR },
-		{ Background = { AnsiColor = "Blue" } },
+		{ Background = { AnsiColor = status_color } },
 		{ Foreground = { Color = scheme.background } },
 		{ Text = bat .. SPACE },
 		{ Text = tardy .. SPACE },
