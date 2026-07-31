@@ -79,22 +79,11 @@ export TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S'
 
 setopt noclobber                 # Don't overwrite existing file when redirecting output
 
-# conditional source
-# if file exists source it
-csource() {
-    if [[ -f "$1" ]]; then
-        source "$1"
-    else
-        echo "Didn't source: $1"
-        echo "As it is missing."
-    fi
-}
-
 # csource ~/.config/zsh/transient_starship_prompt
 
-csource ~/bin/exports
-csource ~/bin/aliases
-csource ~/bin/functions.sh
+source ~/bin/exports
+source ~/bin/aliases
+source ~/bin/functions.sh
 
 
 if [[ ! -f "$HOME/.local/share/miniplug.zsh" ]]; then

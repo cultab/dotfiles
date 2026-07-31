@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# conditional source
+# if file exists source it
+csource() {
+    if [ -f "$1" ]; then
+        . "$1"
+    else
+        echo "Didn't source: $1"
+        echo "As it is missing."
+    fi
+}
+
 google () {
     if [ -z "$*" ]; then
         echo "google: missing query"
