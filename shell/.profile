@@ -94,7 +94,8 @@ PATH_add "$HOME/.local/share/AppImage"
 PATH_add "/home/linuxbrew/.linuxbrew/bin"
 PATH_add "/home/linuxbrew/.linuxbrew/sbin"
 PATH_add "$HOME/.local/share/cargo/bin"
-
+export BUN_INSTALL="$HOME/.bun" 
+PATH_add "$BUN_INSTALL/bin"
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending
 export PATH
