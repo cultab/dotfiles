@@ -46,13 +46,15 @@ font-family = Monaspace Neon
 font-family-bold = Monaspace Argon
 font-family-italic = Monaspace Radon
 font-family-bold-italic = Monaspace Radon
+adjust-cell-height = 20%
 
 link-url = true
 link-previews = true
 window-decoration = server
 window-theme = ghostty
 
-theme = Catppuccin Mocha
+# theme = Catppuccin Mocha
+config-file = ?auto/theme.ghostty
 
 command = /home/linuxbrew/.linuxbrew/bin/zsh -l
 shell-integration = zsh
