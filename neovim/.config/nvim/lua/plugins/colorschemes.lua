@@ -18,6 +18,7 @@ end
 
 local colors = {
 	'tjdevries/colorbuddy.nvim',
+	'0x96f-org/0x96f.nvim',
 	'rktjmp/lush.nvim',
 	lazy 'diegoulloao/neofusion.nvim',
 	lazy { 'UniWa-Community/uniwa.nvim', dev = false },
