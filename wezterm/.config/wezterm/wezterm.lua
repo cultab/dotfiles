@@ -70,7 +70,7 @@ end
 -- font = "CozetteVector"
 font = "Iosevka Term"
 -- font = "Terminus (TTF)"
--- font = "Monaspace"
+font = "Monaspace"
 -- font = "Fira Code"
 -- font = "Monocraft"
 config = require("fonts").set_font(config, font)
@@ -132,6 +132,8 @@ end
 local colors =
 	{ "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
 local force_colors = {
+	default = "Yellow",
+	abyss = "Teal",
 	laptop = "Blue",
 	devpc = "Maroon",
 }
@@ -247,7 +249,7 @@ wezterm.on("update-status", function(window, pane)
 
 
 	-- local idx = (GHhash(host_name) % #colors) + 1
-	local status_color = force_colors[host_name]
+	local status_color = force_colors[host_name] or force_colors.default
 
 	local pretty_host = " " .. host_icon .. SPACE
 	local workspace = window:mux_window():get_workspace()
@@ -278,15 +280,15 @@ wezterm.on("update-status", function(window, pane)
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = status_color } },
 		{ Text = RIGHT_SEPARATOR },
+		{ Background = { Color = scheme.background } },
+		{ Foreground = { Color = scheme.foreground } },
+		{ Attribute = { Intensity = "Half" } },
+		{ Text =  title },
+		{ Attribute = { Intensity = "Normal" } },
+		{ Background = { Color = scheme.background } },
+		{ Text = wezterm.pad_left(" ", max_left) },
 	}
 
-	table.insert(left_cells, { Background = { Color = scheme.background } })
-	table.insert(left_cells, { Foreground = { Color = scheme.foreground } })
-	table.insert(left_cells, { Attribute = { Intensity = "Half" } })
-	table.insert(left_cells, { Text =  title })
-	table.insert(left_cells, { Attribute = { Intensity = "Normal" } })
-	table.insert(left_cells, { Background = { Color = scheme.background } })
-	table.insert(left_cells, { Text = wezterm.pad_left(" ", max_left) })
 
 	window:set_left_status(wezterm.format(left_cells))
 
@@ -313,6 +315,8 @@ wezterm.on("update-status", function(window, pane)
 		local secs = meta.since_last_response_ms / 1000.0
 		tardy = string.format("%5.1fs⏳", secs)
 	end
+	-- wezterm.log_info("scheme bg" .. scheme.background)
+	-- wezterm.log_info("status" .. status_color)
 	local right_status = {
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = status_color } },

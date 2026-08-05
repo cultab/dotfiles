@@ -37,6 +37,13 @@ wezterm:
   replace: 'return "{}"'
   create: true
 
+ghostty:
+  type: colorscheme
+  path: "~/.config/ghostty/auto/theme.ghostty"
+  regex: 'theme = .*'
+  replace: 'theme = {}'
+  create: true
+
 sxhkd:
   type: terminal
   path: "~/.config/sxhkd/sxhkdrc"

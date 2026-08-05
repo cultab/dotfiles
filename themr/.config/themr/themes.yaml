@@ -75,10 +75,6 @@ catppuccin-light:
   wezterm: "Catppuccin Latte"
   colorscheme: "catppuccin-latte"
 
-catppuccin-light:
-  nvim: "catppuccin-latte"
-  colorscheme: "Catppuccin Latte"
-
 wpg:
   colorscheme: "wpg"
   nvim: "onedark"
@@ -90,6 +86,9 @@ darkplus:
 vscode:
   colorscheme: "darkplus"
   nvim: "vscode"
+
+0x96f:
+  colorscheme: 0x96f
 
 ayu-mirage:
   colorscheme: "ayu-mirage"
