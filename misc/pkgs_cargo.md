@@ -26,6 +26,8 @@ cat pkgs_cargo.md |
     telescope outside vim (aka fzf)
 * iris-cli
     download folder organizer
+* rura
+    interactive TUI scratchpad for building shell pipelines, think `play`
 
 
 
