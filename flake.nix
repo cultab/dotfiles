@@ -12,7 +12,7 @@
       src = pkgs.fetchFromGitHub {
         owner = "cultab";
         repo = "themr";
-        rev = "v${version}";
+        rev = "ecf4a5b852dca00de69f3cee9f71606ddd123268";
         hash = "sha256-QrbRHaPmAqyyTzbLpqwOK5nEAPpk3Bksnx3yK9uNoyY=";
       };
       vendorHash = "sha256-ZxEIQdTJwVPX9DCmSp2NfyQVaXo+xlIMZUSjHDZHGo8=";
