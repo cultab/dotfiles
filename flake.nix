@@ -73,6 +73,7 @@
       type = "app";
       program = "${pkgs.writeShellScript "themr-setup" ''
         ${pkgs.nix}/bin/nix profile install .#
+        stow themr
         themr catppuccin-light
       ''}";
     };
