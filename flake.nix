@@ -6,6 +6,19 @@
   outputs = { nixpkgs, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    themrPkg = pkgs.buildGoModule rec {
+      pname = "themr";
+      version = "0.2.5";
+      src = pkgs.fetchFromGitHub {
+        owner = "cultab";
+        repo = "themr";
+        rev = "v${version}";
+        hash = "sha256-QrbRHaPmAqyyTzbLpqwOK5nEAPpk3Bksnx3yK9uNoyY=";
+      };
+      vendorHash = "sha256-ZxEIQdTJwVPX9DCmSp2NfyQVaXo+xlIMZUSjHDZHGo8=";
+      ldflags = [ "-s" "-w" "-X=main.Version=${version}" ];
+      meta.mainProgram = "themr";
+    };
   in {
     packages.${system}.default = pkgs.buildEnv {
       name = "my-packages";
@@ -47,7 +60,21 @@
         yt-dlp
         neovim # installed via `bob use stable` in deploy.sh
         python3
+        tree-sitter
+        themrPkg
+        # nvim-colorscheme # handled by `themr catppuccin-light`
       ];
+    };
+
+    # ships ~/.config/nvim/lua/user/colorscheme.lua
+    # packages.${system}.nvim-colorscheme = pkgs.writeTextDir ".config/nvim/lua/user/colorscheme.lua" ''return "default"'';
+
+    apps.${system}.setup = {
+      type = "app";
+      program = "${pkgs.writeShellScript "themr-setup" ''
+        ${pkgs.nix}/bin/nix profile install .#
+        themr catppuccin-light
+      ''}";
     };
   };
 }
