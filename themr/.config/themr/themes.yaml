@@ -73,6 +73,7 @@ catppuccin:
 
 catppuccin-light:
   wezterm: "Catppuccin Latte"
+  ghostty: "Catppuccin Latte"
   colorscheme: "catppuccin-latte"
 
 wpg:
