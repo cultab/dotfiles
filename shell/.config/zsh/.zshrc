@@ -33,6 +33,8 @@ setopt extendedglob
 setopt globdots # complete (dot).files
 bindkey -e
 
+# HACK: fzf and carapace have a bad interaction, causing spaces to be added after path completions, see: https://github.com/Aloxaf/fzf-tab/issues/503
+ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;&|/'
 if [ -d /usr/share/doc/fzf/ ]; then
 	if [ -d /usr/share/doc/fzf/examples/ ]; then
 		source /usr/share/doc/fzf/examples/key-bindings.zsh

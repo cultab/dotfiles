@@ -15,8 +15,8 @@ eval "$(starship init bash)"
 # IMPORTANT: starship goes before sensible.bash
 
 # source sensible bash
-if [ -f ~/.local/bash/sensible.bash ]; then
-	source ~/.local/bash/sensible.bash
+if [ -f ~/.local/share/bash/sensible.bash ]; then
+	source ~/.local/share/bash/sensible.bash
 fi
 
 # Use bash-completion, if available
@@ -53,10 +53,10 @@ auto_sauce() {
 		fi
 	fi
 }
+# PROMPT_COMMAND="$PROMPT_COMMAND;auto_sauce"
 export HISTFILESIZE=
 # eval "$(~/.local/bin/agent shell-integration bash)"
 # keep .bash_history always up to date
-PROMPT_COMMAND="auto_sauce;$PROMPT_COMMAND"
 
 if [[ -f ~/.internalrc ]]; then
 	source ~/.internalrc
@@ -67,3 +67,5 @@ if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
 fi
 
 
+
+. "$HOME/.local/share/../bin/env"

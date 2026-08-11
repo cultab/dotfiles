@@ -1,6 +1,7 @@
 # NEW
 
-1. install fprintd
+1. install fprintd (maybe also libpam-fprintd)
+
 
 2. create udev rule for device with ID from lsusb:
 in file {number}-fprintd-{whatever}.rules

@@ -36,7 +36,7 @@ alias nix="nix --extra-experimental-features 'nix-command flakes'"
 
 # don't pollute my $HOME :)
 # shellcheck disable=SC2139
-alias wget='wget --hsts-file="$XDG_DATA_HOME/wget-hsts"'
+alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 # shellcheck disable=SC2139
 alias gdb="gdb -n -x $XDG_CONFIG_HOME/gdb/init"
 # shellcheck disable=SC2139

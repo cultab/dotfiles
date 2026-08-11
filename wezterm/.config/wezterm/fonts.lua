@@ -12,7 +12,8 @@ local fonts = {
 
 M.set_font = function(config, name)
 	if name:find("Iosevka") then
-		config.font_size = 12
+		config.font_size = 10
+		config.line_height = 1.2
 		SPACE = " "
 	end
 
