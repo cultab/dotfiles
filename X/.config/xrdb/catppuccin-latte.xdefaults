@@ -1,0 +1,24 @@
+/* catppuccin latte */
+
+#define basebg #eff1f5
+#define basefg #4c4f69
+
+#define base00 #5c5f77
+#define base01 #d20f39
+#define base02 #40a02b
+#define base03 #df8e1d
+#define base04 #1e66f5
+#define base05 #ea76cb
+#define base06 #179299
+#define base07 #acb0be
+#define base08 #6c6f85
+#define base09 #d20f39
+#define base0A #40a02b
+#define base0B #df8e1d
+#define base0C #1e66f5
+#define base0D #ea76cb
+#define base0E #179299
+#define base0F #bcc0cc
+
+#define basecc #dc8a78
+#define basesb base0A
