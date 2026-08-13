@@ -27,5 +27,5 @@ shell/.config/zsh/.zcompdump
 
 ssh/.ssh/*
 
-dunst/.config/dunst/dunstrc
+bspwm/.config/dunst/dunstrc
 

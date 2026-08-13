@@ -135,7 +135,7 @@ step "Stow dotfiles"
 		try 'removing problematic file' rm -f ~/dotfiles/scripts/bin/dwm_bar.sh
 
 		info stow files
-		try 'stowing dotfiles' stow git neovim themr wezterm X shell lsd zathura bat sxhkd scripts isort
+		try 'stowing dotfiles' stow git neovim themr wezterm X shell lsd zathura bat bspwm scripts isort
 	)
 
 	info change shell to zsh
