@@ -47,9 +47,14 @@ st.font:  Monaspace Neon:size=11
 ! extra colors for polybar, if defined, use them instead
 #ifdef basepb
 polybar.background: basepb
+#else
+polybar.background: basebg
 #endif
+
 #ifdef basepf
 polybar.foreground: basepf
+#else
+polybar.foreground: basefg
 #endif
 
 dmenu.selbackground: basesb

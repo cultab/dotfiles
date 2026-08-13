@@ -2,6 +2,7 @@
 
 # XDG
 # export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS"
 
@@ -44,7 +45,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export HOMEBREW_NO_ENV_HINTS=1
 
 # cowfile path for cowsay
-export COWPATH="$COWPATH:$HOME/.local/share/cowsay"
+export COWPATH="${COWPATH:-/usr/share/cowsay/cows}:$HOME/.local/share/cowsay"
 
 PATH_EXTRA=""
 

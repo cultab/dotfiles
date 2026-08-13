@@ -1,11 +1,11 @@
 #!/bin/sh
 
-SEARCH_URL='https://startpage.com/sp/search?query='
-# SEARCH_URL='https://www.google.com/search?q='
+# SEARCH_URL='https://startpage.com/sp/search?query='
+SEARCH_URL='https://www.google.com/search?q='
 QUERY=$(dmenu -p "Search:" "$@" < /dev/null)
 
 if [ ! "$QUERY" ]; then
-    notify-send -a surf 'No Query' 'No query given!'
+    notify-send -a "$0" 'No Query' 'No query given!'
     exit 0
 fi
 
@@ -16,5 +16,6 @@ if ! echo "$QUERY" | grep '\.'; then
 fi
 
 if [ -n "$QUERY" ]; then
-  surf -e "$(tabbed -d -c -s surf -e)" "${QUERY}" 2> /dev/null
+    "$BROWSER" "${QUERY}"
+    # surf -e "$(tabbed -d -c -s surf -e)" "${QUERY}" 2> /dev/null
 fi

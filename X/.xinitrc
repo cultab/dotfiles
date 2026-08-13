@@ -14,7 +14,14 @@ fi
 
 export ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
 
-dbus-launch --exit-with-x11 > ~/.dbus-address
-. ~/.dbus-address
+
+# rm -f ~/.dbus-address
+# dbus-launch --exit-with-x11 > ~/.dbus-address
+# . ~/.dbus-address
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+export DBUS_SESSION_BUS_ADDRESS
+# export DBUS_SESSION_BUS_PID
+# export DBUS_SESSION_BUS_WINDOWID
+
 
 exec startwm

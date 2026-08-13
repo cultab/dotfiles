@@ -6,8 +6,9 @@ csource() {
     if [ -f "$1" ]; then
         . "$1"
     else
-        echo "Didn't source: $1"
-        echo "As it is missing."
+        true
+        # echo "Didn't source: $1"
+        # echo "As it is missing."
     fi
 }
 

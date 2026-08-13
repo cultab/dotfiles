@@ -77,7 +77,7 @@ config = require("fonts").set_font(config, font)
 
 
 -- config.enable_tab_bar = true
-config.enable_wayland = true
+-- config.enable_wayland = false
 config.use_fancy_tab_bar = false
 -- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = {
