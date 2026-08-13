@@ -5,9 +5,27 @@ MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
 
 # bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
 
-bspc wm --reorder-monitors HDMI1 LVDS1
-bspc monitor HDMI1 --reset-desktops I II III IV V VI
-bspc monitor LVDS1 --reset-desktops I II III IV V VI
+# bspc wm --reorder-monitors HDMI1 LVDS1
+# bspc monitor HDMI1 --reset-desktops I II III IV V VI
+# bspc monitor LVDS1 --reset-desktops I II III IV V VI
+
+if [ "$(hostname)" = "L-5CG54917G7" ]; then
+    xrandr --output DP-1-8 --primary
+    xrandr --output DP-1-1 --left-of DP-1-8
+    xrandr --output eDP-1 --right-of DP-1-8
+
+    bspc wm --reorder-monitors DP-1-1 DP-1-8 eDP-1
+    bspc monitor DP-1-1 --reset-desktops
+    bspc monitor eDP-1 --reset-desktops
+    bspc monitor DP-1-8 --reset-desktops I II III IV V VI
+    bspc monitor DP-1-8 --swap '^1'
+else
+    bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
+
+    # bspc wm --reorder-monitors HDMI1 LVDS1
+    # bspc monitor HDMI1 --reset-desktops I II III IV V VI
+    # bspc monitor LVDS1 --reset-desktops I II III IV V VI
+fi
 
 # ignore DISCORD
 bspc config ignore_ewmh_focus true
@@ -36,15 +54,17 @@ bspc config focus_follows_pointer true
 bspc rule -a Zathura state=tiled
 bspc rule -a Surf    state=tiled
 
-bspc rule -a Vivaldi-stable desktop='^1'
+bspc rule -a "$BROWSER"     desktop='^1'
 bspc rule -a discord        desktop='^5'
+bspc rule -a FFPWA-01KYW5VBPSDK1AKPVQ5Z8Y7GES desktop='^5' # teams
+bspc rule -a FFPWA-01KYW5DZYND8A7HHQNYA47M2C9 desktop='^4' # outlook
 bspc rule -a kdeconnect.app desktop='^6' state=floating
 
 bspc rule -a MEGAsync            state=floating
 bspc rule -a Barrier             state=floating #desktop='^6' 
 bspc rule -a Pavucontrol         state=floating
 bspc rule -a Blueman-manager     state=floating
-bspc rule -a KeePassXC:keepassxc state=floating
+bspc rule -a KeePassXC:keepassxc state=floating desktop='^6'
 
 bspc rule -a activate-linux           layer=above
 bspc rule --add "Polybar tray window" layer=above border=on # does it work?

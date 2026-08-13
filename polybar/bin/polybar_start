@@ -14,10 +14,14 @@ for If in $(ip addr | grep "^[0-9]" | cut -d ':' -f 2 | sed "s/\s*//g"); do
     esac
 done
 
-if type "xrandr"; then
-    for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-      MONITOR=$m polybar --reload mybar -c ~/.config/polybar/config.ini &
-    done
+echo ===============
+
+if command -v "xrandr"; then
+    PRIMARY=$(xrandr --query | grep " connected.*primary" | cut -d" " -f1)
+    MONITOR=$PRIMARY polybar --reload mybar -c ~/.config/polybar/config.ini &
+    # for m in $(xrandr --query | grep " connected" | grep -v 'primary' | cut -d" " -f1); do
+    #     MONITOR=$m polybar --reload sidebar -c ~/.config/polybar/config.ini &
+    # done
 else
     polybar --reload mybar &
 fi

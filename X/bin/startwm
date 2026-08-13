@@ -48,6 +48,9 @@ xautolock \
 
 
 # daemons
+eval $(gnome-keyring-daemon)
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
 appimaged &
 pipewire &
 pipewire-pulse &
@@ -58,6 +61,7 @@ poweralertd &
 # flatpak run com.discordapp.Discord &
 
 # sys-tray
+/opt/zscaler/bin/ZSTray &
 blueman-applet &
 nm-applet &
 udiskie --tray &
@@ -68,10 +72,15 @@ megasync &
 # HACK: fixes xcursor not using theme
 (lxappearance & sleep 5 && pkill lxappearance) &
 
+firefox &
+firefoxpwa site launch 01KYW5DZYND8A7HHQNYA47M2C9 &
+firefoxpwa site launch 01KYW5VBPSDK1AKPVQ5Z8Y7GES &
+auth.sh &
+
 # xrandr --output HDMI1 --mode 1920x1080 --right-of LVDS1
 # xrandr --output LVDS1 --mode 1600x900 
 ~/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
-pgrep -x polybar > /dev/null || polybar_start &
+pgrep -x polybar > /dev/null || sleep 5 && polybar_start &
 
 exec bspwm

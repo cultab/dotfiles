@@ -8,11 +8,10 @@ super + Return
 	# st -t 'Simple terminal' -e tmux
 
 super + ctrl + Return
-	# wezterm
 	st -t 'Simple terminal' -e scroll
 
 super + shift + {w, d}
-    {vivaldi-stable,pcmanfm}
+    {"$BROWSER", sh -c 'open .'}
 
 # program launcher
 super + @space
@@ -119,6 +118,8 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
+super + alt + l
+	xautolock -locknow
 #
 # preselect
 #
