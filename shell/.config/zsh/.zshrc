@@ -118,7 +118,7 @@ fast-theme --quiet XDG:overlay
 WEZTERM_SHELL_SKIP_SEMANTIC_ZONES=1
 WEZTERM_SHELL_SKIP_CWD=1
 # WEZTERM_SHELL_SKIP_USER_VARS=1
-csource "$HOME/.local/zsh/wezterm.sh"
+csource "$HOME/.local/share/zsh/wezterm.sh"
 
 
 if [[ "$WSL_DISTRO_NAME" && ! $(pgrep wezterm_reload) ]]; then

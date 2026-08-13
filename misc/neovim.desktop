@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Neovim
+Comment=Edit text in the console
+Exec=wezterm -e nvim %F
+Icon=vim
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;Development;
+Keywords=text;editor;console;vim;nvim;
+MimeType=text/plain;

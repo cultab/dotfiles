@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# HACK: use first result as default monitor
-MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
 
 # bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
 
@@ -9,22 +7,31 @@ MONITOR=$(xrandr | grep ' connected' | head -1 | cut -d ' ' -f1)
 # bspc monitor HDMI1 --reset-desktops I II III IV V VI
 # bspc monitor LVDS1 --reset-desktops I II III IV V VI
 
-if [ "$(hostname)" = "L-5CG54917G7" ]; then
-    xrandr --output DP-1-8 --primary
-    xrandr --output DP-1-1 --left-of DP-1-8
-    xrandr --output eDP-1 --right-of DP-1-8
+MONITOR=$(xrandr | grep ' connected' | cut -d ' ' -f1)
 
-    bspc wm --reorder-monitors DP-1-1 DP-1-8 eDP-1
-    bspc monitor DP-1-1 --reset-desktops
-    bspc monitor eDP-1 --reset-desktops
-    bspc monitor DP-1-8 --reset-desktops I II III IV V VI
-    bspc monitor DP-1-8 --swap '^1'
-else
+if [ $(echo "$MONITOR" | wc -l) = "1" ]; then
+    echo one
     bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
+    bspc monitor "$MONITOR" --swap '^1'
+    xrandr --output "$MONITOR" --primary
+    polybar_start
+else
+    if [ "$(hostname)" = "L-5CG54917G7" ]; then
+        xrandr --output DP-1-8 --primary
+        xrandr --output DP-1-1 --left-of DP-1-8
+        xrandr --output eDP-1 --right-of DP-1-8
 
-    # bspc wm --reorder-monitors HDMI1 LVDS1
-    # bspc monitor HDMI1 --reset-desktops I II III IV V VI
-    # bspc monitor LVDS1 --reset-desktops I II III IV V VI
+        bspc wm --reorder-monitors DP-1-1 DP-1-8 eDP-1
+        bspc monitor DP-1-1 --reset-desktops
+        bspc monitor eDP-1 --reset-desktops
+        bspc monitor DP-1-8 --reset-desktops I II III IV V VI
+        bspc monitor DP-1-8 --swap '^1'
+    else
+
+        bspc wm --reorder-monitors HDMI1 LVDS1
+        bspc monitor HDMI1 --reset-desktops I II III IV V VI
+        bspc monitor LVDS1 --reset-desktops I II III IV V VI
+    fi
 fi
 
 # ignore DISCORD
