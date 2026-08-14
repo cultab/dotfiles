@@ -62,13 +62,14 @@ bspc rule -a "$BROWSER"     desktop='^1'
 bspc rule -a discord        desktop='^5'
 bspc rule -a FFPWA-01KYW5VBPSDK1AKPVQ5Z8Y7GES desktop='^5' # teams
 bspc rule -a FFPWA-01KYW5DZYND8A7HHQNYA47M2C9 desktop='^4' # outlook
-bspc rule -a kdeconnect.app desktop='^6' state=floating
 
 bspc rule -a MEGAsync            state=floating
-bspc rule -a Barrier             state=floating #desktop='^6' 
 bspc rule -a Pavucontrol         state=floating
 bspc rule -a Blueman-manager     state=floating
 bspc rule -a KeePassXC:keepassxc state=floating desktop='^6'
+bspc rule -a Barrier             state=floating desktop='^6'
+bspc rule -a kdeconnect.app      state=floating desktop='^6'
+bspc rule -a ZSTray              state=floating desktop='^6'
 
 bspc rule -a activate-linux           layer=above
 bspc rule --add "Polybar tray window" layer=above border=on # does it work?
@@ -84,7 +85,7 @@ bspc rule -a Plank manage=on border=off locked=on focus=off follow=off
 
 # Started here rather than from startwm so that it also comes back after a
 # config reload, and after the monitor layout above has been applied.
-quickshell_start
+# quickshell_start
 
 notify-send -a bspwm "Reloaded" "bspwm config"
 

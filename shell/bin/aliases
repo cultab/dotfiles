@@ -8,8 +8,8 @@ if command -v nvim >/dev/null 2>&1; then
   alias workvim='NVIM_APPNAME=workvim nvim'
 fi
 
-alias pwa_outlook='firefoxpwa site launch 01KYW5DZYND8A7HHQNYA47M2C9'
-alias pwa_teams='firefoxpwa site launch 01KYW5VBPSDK1AKPVQ5Z8Y7GES'
+alias outlook_pwa='firefoxpwa site launch 01KYW5DZYND8A7HHQNYA47M2C9'
+alias teams_pwa='firefoxpwa site launch 01KYW5VBPSDK1AKPVQ5Z8Y7GES'
 
 
 alias lazy='NVIM_APPNAME=lazyvim nvim'
