@@ -54,12 +54,14 @@ end
 
 if hostname == "abyss" then
 	config.default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" }
+	font = "Monaspace"
 end
 
 if hostname == "L-5CG54917G7" then
 	-- config.default_domain = "devpc"
 	-- config.default_prog = { "powershell.exe" }
 	config.scrollback_lines = 10000
+	font = "Iosevka Term"
 end
 
 -- extra space for fonts like Iosevka
@@ -68,9 +70,8 @@ end
 -- font = "Cozette"
 -- font = "CozetteHiDpi"
 -- font = "CozetteVector"
-font = "Iosevka Term"
 -- font = "Terminus (TTF)"
-font = "Monaspace"
+-- font = "Monaspace"
 -- font = "Fira Code"
 -- font = "Monocraft"
 config = require("fonts").set_font(config, font)

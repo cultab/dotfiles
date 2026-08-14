@@ -1,0 +1,12 @@
+#!/bin/sh
+# Launches the quickshell bar, which replaced both of polybar's bars.
+# Safe to run repeatedly: --no-duplicate makes a second instance exit.
+
+# Quickshell comes from nix, so its Qt looks for GL drivers under
+# /run/opengl-driver which does not exist outside NixOS. The bar does not need
+# hardware acceleration, so render it on the CPU instead of failing on GLX.
+export QT_QUICK_BACKEND=software
+
+pkill -x quickshell
+
+exec "$HOME/.nix-profile/bin/quickshell" --daemonize --no-duplicate

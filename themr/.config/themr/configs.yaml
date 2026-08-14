@@ -30,6 +30,12 @@ polybar:
   replace: 'include-file = ./{}.ini'
   cmd: "bspc config top_padding 0"
 
+# quickshell watches its own files, so rewriting this reloads the bar.
+quickshell:
+  path: "~/.config/quickshell/Style.qml"
+  regex:   '.*property string variant: .* // themr:quickshell #'
+  replace: '    readonly property string variant: "{}" // themr:quickshell #'
+
 wezterm:
   type: colorscheme
   path: "~/.config/wezterm/colorscheme.lua"

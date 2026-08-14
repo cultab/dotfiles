@@ -1,5 +1,4 @@
 #!/bin/sh
-polybar-msg -p "$(pgrep -f 'polybar --reload traybar')" cmd toggle
-# raise window again..
-xdo raise -a polybar-traybar_LVDS1
-xdo raise -a "Polybar tray window"
+# Shows or hides quickshell's tray panel. Named after polybar's traybar, which
+# it replaced, so existing bindings keep working.
+qs ipc call tray toggle

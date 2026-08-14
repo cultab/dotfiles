@@ -97,6 +97,7 @@ PATH_add "/home/linuxbrew/.linuxbrew/sbin"
 PATH_add "$HOME/.local/share/cargo/bin"
 export BUN_INSTALL="$HOME/.bun" 
 PATH_add "$BUN_INSTALL/bin"
+PATH_add "$HOME/.nix-profile/bin"
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending
 export PATH

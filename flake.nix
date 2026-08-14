@@ -2,10 +2,15 @@
   description = "All programs from dotfiles/deploy.sh, installed declaratively with Nix";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  # The bspwm bar runs on quickshell, which needs Qt 6.6+ and so cannot come
+  # from this distro. Deliberately not following our nixpkgs: upstream pins the
+  # Qt it builds against, and overriding that means a rebuild on every bump.
+  inputs.quickshell.url = "github:quickshell-mirror/quickshell";
 
-  outputs = { nixpkgs, ... }: let
+  outputs = { nixpkgs, quickshell, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    quickshellPkg = quickshell.packages.${system}.default;
     themrPkg = pkgs.buildGoModule rec {
       pname = "themr";
       version = "0.2.5";
@@ -20,50 +25,57 @@
       meta.mainProgram = "themr";
     };
   in {
-    packages.${system}.default = pkgs.buildEnv {
-      name = "my-packages";
-      paths = with pkgs; [
-        # deploy.sh brew branch (Bazzite)
-        git
-        stow
-        gnumake # make
-        fzf
-        zsh
-        curl
-        keychain
-        mandoc
-        rustup
-        gcc
-        carapace
-        procs
-        sd
-        bat
-        pipx
-        go # golang
-        delta # git-delta
-        dua # dua-cli
-        bob-nvim # bob, neovim version manager
-        television
-        dust # du-dust
-        bottom
-        choose
-        lsd
-        just
-        gum
-        trash-cli
-        tealdeer # tldr
+    packages.${system} = {
+      default = pkgs.buildEnv {
+        name = "my-packages";
+        paths = with pkgs; [
+          # deploy.sh brew branch (Bazzite)
+          git
+          stow
+          gnumake # make
+          fzf
+          zsh
+          curl
+          keychain
+          mandoc
+          rustup
+          gcc
+          carapace
+          procs
+          sd
+          bat
+          pipx
+          go # golang
+          delta # git-delta
+          dua # dua-cli
+          bob-nvim # bob, neovim version manager
+          television
+          dust # du-dust
+          bottom
+          choose
+          lsd
+          just
+          gum
+          trash-cli
+          tealdeer # tldr
 
-        # deploy.sh cargo / go / pip extras
-        ripgrep
-        nap
-        rura
-        yt-dlp
-        neovim # installed via `bob use stable` in deploy.sh
-        python3
-        tree-sitter
-        themrPkg
-        # nvim-colorscheme # handled by `themr catppuccin-light`
-      ];
+          # deploy.sh cargo / go / pip extras
+          ripgrep
+          nap
+          rura
+          yt-dlp
+          neovim # installed via `bob use stable` in deploy.sh
+          python3
+          tree-sitter
+          themrPkg
+          # nvim-colorscheme # handled by `themr catppuccin-light`
+        ];
+      };
+
+      # Kept out of the env above and installed on its own with
+      # `nix profile install ~/dotfiles#quickshell`, since only the bspwm/X11
+      # machines want a Qt shell, and it is the one package built from source.
+      quickshell = quickshellPkg;
     };
 
     # ships ~/.config/nvim/lua/user/colorscheme.lua

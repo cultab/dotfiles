@@ -114,6 +114,7 @@ horizon:
 
 square ui:
   polybar: "square_modules"
+  quickshell: "square"
   picom: 0
   bspwm-single_monocle: true
   bspwm-window_gap: 4
@@ -122,6 +123,7 @@ square ui:
 
 round ui:
   polybar: "round_transparent_modules"
+  quickshell: "round"
   picom: 15
   bspwm-single_monocle: false
   bspwm-window_gap: 16

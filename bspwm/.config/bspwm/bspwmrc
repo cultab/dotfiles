@@ -10,24 +10,21 @@
 MONITOR=$(xrandr | grep ' connected' | cut -d ' ' -f1)
 
 if [ $(echo "$MONITOR" | wc -l) = "1" ]; then
-    echo one
     bspc monitor "$MONITOR" --reset-desktops I II III IV V VI
     bspc monitor "$MONITOR" --swap '^1'
     xrandr --output "$MONITOR" --primary
-    polybar_start
 else
     if [ "$(hostname)" = "L-5CG54917G7" ]; then
         xrandr --output DP-1-8 --primary
         xrandr --output DP-1-1 --left-of DP-1-8
         xrandr --output eDP-1 --right-of DP-1-8
 
-        bspc wm --reorder-monitors DP-1-1 DP-1-8 eDP-1
-        bspc monitor DP-1-1 --reset-desktops
-        bspc monitor eDP-1 --reset-desktops
+        bspc wm --reorder-monitors 'DP-1-1 DP-1-8 eDP-1'
+        # bspc monitor DP-1-1 --reset-desktops
+        # bspc monitor eDP-1 --reset-desktops
         bspc monitor DP-1-8 --reset-desktops I II III IV V VI
         bspc monitor DP-1-8 --swap '^1'
     else
-
         bspc wm --reorder-monitors HDMI1 LVDS1
         bspc monitor HDMI1 --reset-desktops I II III IV V VI
         bspc monitor LVDS1 --reset-desktops I II III IV V VI
@@ -84,6 +81,10 @@ if pgrep xfce4 > /dev/null; then
     bspc config top_padding 21
 fi
 bspc rule -a Plank manage=on border=off locked=on focus=off follow=off
+
+# Started here rather than from startwm so that it also comes back after a
+# config reload, and after the monitor layout above has been applied.
+quickshell_start
 
 notify-send -a bspwm "Reloaded" "bspwm config"
 

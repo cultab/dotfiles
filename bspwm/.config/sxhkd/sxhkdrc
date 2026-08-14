@@ -51,7 +51,8 @@ super + Escape
 #
 
 # quit/restart bspwm
-super + shift + {q,r}
+# Escape rather than q: the Keychron never sends q while super+shift are held.
+super + shift + {Escape,r}
 	bspc {quit,wm -r}
 
 # close and kill

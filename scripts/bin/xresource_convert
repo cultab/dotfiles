@@ -6,6 +6,7 @@ fi
 
 if [ ! -f "$1" ]; then
     echo "$1 is not a valid file"
+    exit 1
 fi
 
 while IFS= read -r line
