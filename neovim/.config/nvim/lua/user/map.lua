@@ -1,6 +1,6 @@
 local M = {}
 
-local wk = require 'which-key'
+-- local wk = require 'which-key'
 
 --- @alias mode
 --- | '"n"'  # normal mode
@@ -81,10 +81,10 @@ M.map = setmetatable({}, {
 					noremap = noremap,
 					buffer = buffer,
 				})
-			else -- which-key group name
-				wk.add {
-					{ key, group = description, mode = modes },
-				}
+			-- else -- which-key group name
+			-- 	wk.add {
+			-- 		{ key, group = description, mode = modes },
+			-- 	}
 			end
 		end
 	end,

@@ -165,12 +165,6 @@ function M.set_lsp_mappings()
 	map '<A-CR>' { vim.lsp.buf.code_action, 'Code Action [LSP]' }
 end
 
-local has_words_before = function()
-	unpack = unpack or table.unpack
-	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-end
-
 function M.get_cmp_mappings()
 	-- local cmp = require 'cmp'
 	-- return {
@@ -231,7 +225,6 @@ function M.set_welcome_mappings()
 	--     command = "bdelete",
 	-- })
 end
-
 
 -- aberrations
 vim.keymap.set('ca', 'Q', 'q')
