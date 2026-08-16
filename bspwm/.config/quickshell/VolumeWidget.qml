@@ -20,7 +20,7 @@ BarModule {
             return;
 
         const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
-        root.sink.audio.volume = Math.max(0, Math.min(1, root.sink.audio.volume + step));
+        root.sink.audio.volume = Math.max(0, Math.min(1.5, root.sink.audio.volume + step));
     }
 
     PwObjectTracker {
