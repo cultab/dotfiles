@@ -86,6 +86,12 @@ local servers = {
 	-- omnisharp = {},
 	asm_lsp = {},
 	r_language_server = {},
+	-- qmlls = {},
+	['qml-language-server'] = {
+		cmd = { 'qml-language-server' },
+		filetypes = { 'qml' },
+		root_markers = { { 'qmldir', 'shell.qml' }, '.git' },
+	},
 	golangci_lint_ls = {
 		default_config = {
 			cmd = { 'golangci-lint-langserver' },
@@ -151,7 +157,6 @@ local on_attach = function()
 	vim.lsp.inlay_hint.enable()
 	vim.lsp.codelens.enable()
 end
-
 
 -- setup all servers
 for server, extra in pairs(servers) do

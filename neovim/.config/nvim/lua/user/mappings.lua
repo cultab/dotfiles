@@ -54,7 +54,7 @@ map '<leader>t' { nil, '[t]ext/[t]elescope', 'nv' }
 -- map '<leader>te' { vim.cmd.EasyAlign, '[e]asy align', 'v' }
 map '<leader>te' { partial(vim.cmd.Telescope, 'emoji'), '[e]moji picker' }
 map '<leader>tk' { partial(vim.cmd.Telescope, 'keymaps'), '[k]eymaps' }
-map '<leader>tn' { vim.cmd.Nerdy, '[n]erdfont Symbols' }
+map '<leader>tn' { partial(vim.cmd.Telescope, 'nerdy'), '[n]erdfont Symbols' }
 map '<leader>tc' { partial(vim.cmd.Telescope, 'todo-comments'), 'todo [c]omments' }
 
 map '<leader>l' { vim.cmd.Lazy, '[l]azy pkg manager' }
