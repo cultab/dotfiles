@@ -14,7 +14,7 @@ super + shift + {w, d}
     {"$BROWSER", sh -c 'open .'}
 
 # program launcher
-super + @space
+super + space
 	dmenu_run -c
 
 # change theme
@@ -30,7 +30,7 @@ Print
 	dmenu_scrot -c
 
 super + shift + g
-	st -e bg-choose
+	$TERMINAL -e bg-choose
 
 XF86Audio{Mute,RaiseVolume,LowerVolume}
     amixer -q set Master {toggle,5%+,5%-}; \
@@ -43,19 +43,22 @@ XF86MonBrightness{Up,Down}
 	xbacklight {-inc,-dec} 10
 
 # make sxhkd reload its configuration files:
-super + Escape
+super + r
 	pkill -USR1 -x sxhkd && notify-send -a bspwm 'Reloaded' 'sxhkd config'
+
+# lock screen
+super + Escape
+	xautolock -locknow
 
 #
 # bspwm hotkeys
 #
 
 # quit/restart bspwm
-# Escape rather than q: the Keychron never sends q while super+shift are held.
 super + shift + {Escape,r}
 	bspc {quit,wm -r}
 
-# close and kill
+# close/kill
 super + {_,shift + }c
 	bspc node -{c,k}
 
@@ -63,9 +66,9 @@ super + {_,shift + }c
 super + m
 	bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
+# # send the newest marked node to the newest preselected node
+# super + y
+# 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
 # super + g
@@ -82,8 +85,13 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
+# super + ctrl + {m,x,y,z}
+# 	bspc node -g {marked,locked,sticky,private}; \
+#     notify-send -a bspwm 'Toggle flag' "{m,x,y,z}"
+super + ctrl + s
+	bspc node -g sticky; \
+
+notify-send -a bspwm 'Toggle flag' "sticky"
 
 #
 # focus/swap
@@ -119,8 +127,6 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-super + alt + l
-	xautolock -locknow
 #
 # preselect
 #
@@ -147,13 +153,13 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+# super + alt + {h,j,k,l}
+# 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+# super + alt + shift + {h,j,k,l}
+# 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+# super + {Left,Down,Up,Right}
+# 	bspc node -v {-20 0,0 20,0 -20,20 0}
