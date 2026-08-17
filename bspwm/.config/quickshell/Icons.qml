@@ -22,9 +22,10 @@ Singleton {
     readonly property string volumeHigh: String.fromCodePoint(0xf028)
     readonly property string volumeMuted: String.fromCodePoint(0xf0581)
 
+    readonly property string fullscreen: String.fromCodePoint(0xf50c)
+    // readonly property string tiling: String.fromCodePoint(0xeb56)
+    readonly property string tiling: String.fromCodePoint(0xf056e)
+
     readonly property var batteryRamp: [0xf244, 0xf243, 0xf242, 0xf241, 0xf240].map(code => String.fromCodePoint(code))
     readonly property var chargingRamp: [0xf243, 0xf242, 0xf241, 0xf240].map(code => String.fromCodePoint(code))
 }
-
-
-

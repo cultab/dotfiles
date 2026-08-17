@@ -27,8 +27,8 @@ Singleton {
     // bar; square ones have the bar itself behind them.
     readonly property real moduleOpacity: 0.75
     readonly property color moduleBackground: root.round
-        ? Qt.rgba(Theme.background.r, Theme.background.g, Theme.background.b, root.moduleOpacity)
-        : "transparent"
+    ? Qt.rgba(Theme.background.r, Theme.background.g, Theme.background.b, root.moduleOpacity)
+    : "transparent"
 
     // Square modules carry their accent as a background with the content knocked
     // out of it; round ones share a translucent pill and tint the content instead.

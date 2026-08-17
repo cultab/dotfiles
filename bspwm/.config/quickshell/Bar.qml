@@ -35,6 +35,8 @@ Scope {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: Style.moduleSpacing
 
+                    Layout {}
+
                     Workspaces {
                         monitor: bar.modelData.name
                     }
