@@ -98,6 +98,8 @@ PATH_add "$HOME/.local/share/cargo/bin"
 export BUN_INSTALL="$HOME/.bun" 
 PATH_add "$BUN_INSTALL/bin"
 PATH_add "$HOME/.nix-profile/bin"
+PATH_add "$HOME/.opencode/bin"
+PATH_add "$HOME/.nimble/bin"
 
 PATH="$PATH_EXTRA${PATH:+:${PATH}}"   # prepending
 export PATH
