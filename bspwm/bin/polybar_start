@@ -26,6 +26,7 @@ else
     polybar --reload mybar &
 fi
 
+pkill -f 'polybar --reload traybar'
 polybar --reload traybar -c ~/.config/polybar/traybar.ini &
 pid=$!
 sh -c "sleep 5; polybar-msg -p $pid cmd hide" &
