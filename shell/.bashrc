@@ -54,6 +54,7 @@ auto_sauce() {
 	fi
 }
 # PROMPT_COMMAND="$PROMPT_COMMAND;auto_sauce"
+export HISTFILE="$HOME/.bash_history"
 export HISTFILESIZE=
 # eval "$(~/.local/bin/agent shell-integration bash)"
 # keep .bash_history always up to date
