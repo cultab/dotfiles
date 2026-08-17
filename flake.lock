@@ -1,0 +1,61 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1786599213,
+        "narHash": "sha256-yNJd40f11EzXBjSByCB7IPpeFFAdeoSKKM67dGkfFoU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0e251e24a4f24e036a084b6b4b2d2491af4167f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1768127708,
+        "narHash": "sha256-1Sm77VfZh3mU0F5OqKABNLWxOuDeHIlcFjsXeeiPazs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ffbc9f8cbaacfb331b6017d5a5abb21a492c9a38",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1785704021,
+        "narHash": "sha256-eQtczKMAS4ItlB4pr1B3MqBZiyRVl2nkqNdtyRSQMa8=",
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "rev": "28771c7c74b42e20afca0b1b63980cb46515537c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "quickshell": "quickshell"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

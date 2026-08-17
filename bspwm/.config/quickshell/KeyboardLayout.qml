@@ -13,13 +13,11 @@ Singleton {
         id: queryProc
 
         running: true
-        command: ["setxkbmap", "-query"]
+        command: ["xkblayout-state", "print", "%s"]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                const match = /^layout:\s*(.+)$/m.exec(this.text);
-                if (match)
-                    root.layout = match[1].trim();
+                root.layout = this.text
             }
         }
     }

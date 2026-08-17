@@ -30,6 +30,8 @@ Scope {
 
                 Row {
                     anchors.left: parent.left
+                    anchors.right: clockWidget.left
+                    anchors.rightMargin: Style.moduleSpacing
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: Style.moduleSpacing
 
@@ -41,6 +43,7 @@ Scope {
                 }
 
                 ClockWidget {
+                    id: clockWidget
                     anchors.centerIn: parent
                 }
 

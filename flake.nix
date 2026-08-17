@@ -75,7 +75,10 @@
       # Kept out of the env above and installed on its own with
       # `nix profile install ~/dotfiles#quickshell`, since only the bspwm/X11
       # machines want a Qt shell, and it is the one package built from source.
-      quickshell = quickshellPkg;
+      quickshell = pkgs.buildEnv {
+        name = "quickshell-env";
+        paths = [ quickshellPkg pkgs.xkblayout-state ];
+      };
     };
 
     # ships ~/.config/nvim/lua/user/colorscheme.lua
