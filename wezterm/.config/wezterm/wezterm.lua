@@ -47,6 +47,7 @@ config.ssh_domains = {
 config.term = "xterm"
 
 local hostname = wezterm.hostname()
+local font = nil
 if hostname == "winbox" then
 	config.default_domain = "WSL:void"
 	config.font_dirs = { "C:/Users/evan/.local/share/fonts" }
@@ -64,6 +65,9 @@ if hostname == "L-5CG54917G7" then
 	font = "Iosevka Term"
 end
 
+if font == nil then
+	font = 'Iosevka'
+end
 -- extra space for fonts like Iosevka
 
 -- font = "Hermit"
