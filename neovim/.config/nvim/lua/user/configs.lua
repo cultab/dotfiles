@@ -30,6 +30,7 @@ function M.config_picker(opts)
 					{ 'startwm', '~/bin/startwm' },
 					{ 'ghostty', '~/.config/ghostty/config' },
 					{ 'picom', '~/.config/picom.conf' },
+					{ 'quickshell', '~/.config/quickshell/Bar.qml', cd = true}
 				},
 				entry_maker = function(entry)
 					return {
