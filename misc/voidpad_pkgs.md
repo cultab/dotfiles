@@ -1,9 +1,4 @@
-nvim
-clangd
-python
-acpi event thingy
-tlp power management
-starship prompt
-exa or lsd, now eza
-bluetooth (check gentoo wiki)
-
+- acpi event thingy
+- tlp power management
+- bluetooth (check gentoo wiki)
+- dump_runtime_dir, creates XDG_RUNTIME_DIR on login
