@@ -5,7 +5,9 @@ BarModule {
 
     emphasized: false
 
-    onClicked: Tray.toggle()
+    onClicked: {
+        Tray.toggle()
+    }
 
     BarIcon {
         color: root.contentColor

@@ -68,10 +68,20 @@ Scope {
                     TrayToggle {}
                 }
             }
+
+            // hack to bar sits just over bspwm's root window
             Process {
                 id: lowerProc
                 running: true
-                command: ["xdo", "lower", "-p", Quickshell.processId]
+                command: ["sh", "-c", `xdo lower -p ${Quickshell.processId};
+                                       xdo lower -N Bspwm`]
+            }
+
+            Timer {
+                id: lowerTimer
+
+                interval: 1000 * 30 // every 30 seconds
+                onTriggered: lowerProc.running = true
             }
         }
     }
