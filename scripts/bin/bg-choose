@@ -1,7 +1,8 @@
 #!/bin/sh
-feh --bg-scale "$(
+wallpaper="$(
     fd '.*' ~/Pictures/wallpapers/ |
     fzf --preview-window=down:0% \
         --preview 'feh --bg-scale --no-fehbg {}'
 )"
+feh --bg-scale "$wallpaper" --bg-scale "$wallpaper"
 #fd '.*' ~/Pictures/wallpapers/ | fzf --preview-window=down:0% --preview 'feh --bg-fill {}'
