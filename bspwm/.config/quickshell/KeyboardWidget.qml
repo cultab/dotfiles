@@ -1,7 +1,17 @@
+import Quickshell
+import Quickshell.Io
 import QtQuick
 
 BarModule {
     id: root
+
+    onClicked: toggleProc.running = true
+
+    Process {
+        id: toggleProc
+
+        command: ["xkblayout-state", "set", "+1"]
+    }
 
     visible: KeyboardLayout.layout !== ""
     accent: Theme.dark

@@ -10,8 +10,8 @@ Singleton {
     // monitor name -> [{ name, focused, occupied, urgent }]
     property var desktops: ({})
     property string focusedMonitor: ""
-    // assume default layout is tiled
-    property string layout: "tiled"
+    // assume default layout is monocle
+    property string layout: "monocle"
 
     readonly property var desktopLabels: ({
             "I": { text: "web", icon: Icons.globe },
@@ -69,6 +69,12 @@ Singleton {
             root.layout = layout
         }
     }
+
+	Process {
+		id: layoutToggle
+
+		command: ["bspc", "desktop", "-l", "next"]
+	}
 
     Process {
         id: reportProc

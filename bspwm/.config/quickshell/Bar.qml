@@ -1,3 +1,4 @@
+import Quickshell.Io
 import Quickshell
 import QtQuick
 
@@ -35,7 +36,7 @@ Scope {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: Style.moduleSpacing
 
-                    Layout {}
+                    LayoutWidget {}
 
                     Workspaces {
                         monitor: bar.modelData.name
@@ -66,6 +67,11 @@ Scope {
 
                     TrayToggle {}
                 }
+            }
+            Process {
+                id: lowerProc
+                running: true
+                command: ["xdo", "lower", "-p", Quickshell.processId]
             }
         }
     }

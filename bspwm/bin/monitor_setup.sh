@@ -24,6 +24,7 @@ case "$setup" in
         bspc wm --reorder-monitors 'VGA1 LVDS1'
         bspc monitor VGA1 --reset-desktops I II III IV V VI
         bspc monitor VGA1 --swap '^1'
+        bspc config -m LVDS1 top_padding 0
         ;;
     at_work)
         xrandr --output DP-1-8 --primary
