@@ -82,9 +82,9 @@ config = require("fonts").set_font(config, font)
 
 
 -- config.enable_tab_bar = true
--- config.enable_wayland = false
+config.enable_wayland = true
 config.use_fancy_tab_bar = false
--- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = {
 	left = 0,
 	right = 0,
@@ -156,22 +156,13 @@ local GHhash = function(str)
 	return h
 end
 
-local icons = {
-	Full = "fullicon",
-	Charging = "charge bolt",
-}
-
 wezterm.on(
 	"format-tab-title",
 	-- function(tab, tabs, panes, config, hover, max_width)
 	function(tab, _, _, _, hover, _)
-		local proc_name = require("utils").get_tab_name(tab)
+		local tab_name = require("utils").get_tab_name(tab)
 
-		if not proc_name or proc_name == "" then
-			proc_name = "shell"
-		end
-
-		local idx = (GHhash(proc_name) % #colors) + 1
+		local idx = (GHhash(tab_name) % #colors) + 1
 		local tab_color = colors[idx]
 		local format = {}
 		if tab.is_active then
@@ -182,7 +173,7 @@ wezterm.on(
 				{ Foreground = { Color = scheme.background } },
 				{ Background = { AnsiColor = tab_color } },
 				{
-					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, TAB_WIDTH),
+					Text = tab.tab_index + 1 .. ": " .. tab_name,
 				},
 				{ Background = { Color = scheme.background } },
 				{ Foreground = { AnsiColor = tab_color } },
@@ -196,7 +187,7 @@ wezterm.on(
 				{ Attribute = { Italic = false } },
 				{ Text = " " },
 				{
-					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, TAB_WIDTH),
+					Text = tab.tab_index + 1 .. ": " .. tab_name,
 				},
 				{ Text = " " },
 			}
@@ -206,7 +197,7 @@ wezterm.on(
 				{ Foreground = { AnsiColor = tab_color } },
 				{ Text = " " },
 				{
-					Text = tab.tab_index + 1 .. ":" .. fixed_width(proc_name, TAB_WIDTH),
+					Text = tab.tab_index + 1 .. ": " .. tab_name,
 				},
 				{ Text = " " },
 			}
@@ -232,7 +223,7 @@ wezterm.on("update-status", function(window, pane)
 	end
 	host_name = h
 	-- IDEA: turn into function that returns an obj with hostname and icon, also use icon for tabs
-	if h == "winbox" or h == "C-5CG54917G7" then
+	if h == "winbox" then
 		host_icon = wezterm.nerdfonts.dev_windows
 		host_name = "win"
 	elseif h == "void" then
@@ -272,10 +263,14 @@ wezterm.on("update-status", function(window, pane)
 	local mid_width = 0
 	for idx, tab in ipairs(tabs) do
 		-- HACK: title is TAB_WIDTH + 2 for idx + ':' (the idx shouldn't increase past 9 lol) + 2 for the padding
-		mid_width = mid_width + TAB_WIDTH + 5
+		local tab_name = require("utils").get_tab_name(tab)
+
+		wezterm.log_info("proc name" .. tab_name)
+		mid_width = mid_width + #tab_name + 5
 	end
 
 	local tab_width = window:active_tab():get_size().cols
+	wezterm.log_info("midwidth: " .. mid_width)
 	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #workspace - #title
 
 	local left_cells = {

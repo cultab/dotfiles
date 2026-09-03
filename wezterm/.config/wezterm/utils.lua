@@ -28,7 +28,7 @@ end
 
 ---Resolves a display name for a tab: an explicit tab title if set, otherwise the
 ---basename of the active pane's foreground process, falling back to WEZTERM_PROG.
----@param tab TabInformation
+---@param tab TabInformation | MuxTab
 ---@return string
 M.get_tab_name = function(tab)
 	local title = tab.tab_title
@@ -37,13 +37,20 @@ M.get_tab_name = function(tab)
 	end
 
 	-- https://wezterm.org/config/lua/PaneInformation.html
-	local pane_info = tab.active_pane
+	local pane_info
+	pane_info = tab.active_pane
+	if type(pane_info) == "function" then
+		pane_info = tab:active_pane()
+	end
+	-- if not pane_info then
+	-- 	return "N/A"
+	-- end
 
 	-- current_working_dir is nil if I pull up the Debug Overlay for example
-	if pane_info.current_working_dir == nil then
-		-- assume the process is also nil
-		return "N/A"
-	end
+	-- if pane_info.current_working_dir == nil then
+	-- 	-- assume the process is also nil
+	-- 	return "N/A"
+	-- end
 
 	return M.get_proc_name(pane_info)
 end
@@ -55,6 +62,9 @@ M.get_proc_name = function(pane)
 
 	if not name then
 		return "..."
+	end
+	if name == "" then
+		return "shell"
 	end
 
 	-- get argv[0] only
