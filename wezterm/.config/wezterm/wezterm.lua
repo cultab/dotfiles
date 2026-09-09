@@ -240,35 +240,28 @@ wezterm.on("update-status", function(window, pane)
 		host_icon = "n/a"
 	end
 
-
-	-- local idx = (GHhash(host_name) % #colors) + 1
 	local status_color = force_colors[host_name] or force_colors.default
 
 	local pretty_host = " " .. host_icon .. SPACE
 	local workspace = window:mux_window():get_workspace()
-	local title = " " .. window:mux_window():get_title()
-	title = wezterm.truncate_right(title, 24)
-
-	-- wezterm.log_info("title:" .. title .. ":elitit length:" .. #title)
-	-- title = wezterm.pad_right(title, 50)
-	-- wezterm.log_info("title:" .. title .. ":elitit length:" .. #title)
-	
-	-- If the window title looks like a host (e.g. "(host):~" set explicitly via
-	-- OSC when ssh'd into a remote), show it dimmed next to the workspace name.
 
 	local tabs = window:mux_window():tabs()
 	local mid_width = 0
 	for idx, tab in ipairs(tabs) do
-		-- HACK: title is TAB_WIDTH + 2 for idx + ':' (the idx shouldn't increase past 9 lol) + 2 for the padding
-		local tab_name = require("utils").get_tab_name(tab)
+		local tab_name = utils.get_tab_name(tab)
 
-		wezterm.log_info("proc name" .. tab_name)
-		mid_width = mid_width + #tab_name + 5
+		-- +5 is the rendering around the name: a separator/space on each side
+		-- plus "N: " (the idx shouldn't increase past 9 lol)
+		-- column_width, not #: tab names can hold wide/multi-byte glyphs
+		mid_width = mid_width + wezterm.column_width(tab_name) + 5
 	end
 
 	local tab_width = window:active_tab():get_size().cols
 	wezterm.log_info("midwidth: " .. mid_width)
-	local max_left = (tab_width / 2 - mid_width / 2) - #pretty_host - #workspace - #title
+	local max_left = (tab_width / 2 - mid_width / 2)
+		- wezterm.column_width(pretty_host)
+		- wezterm.column_width(workspace)
+		-- - wezterm.column_width(title)
 
 	local left_cells = {
 		{ Background = { AnsiColor = status_color } },
@@ -277,12 +270,6 @@ wezterm.on("update-status", function(window, pane)
 		{ Background = { Color = scheme.background } },
 		{ Foreground = { AnsiColor = status_color } },
 		{ Text = RIGHT_SEPARATOR },
-		{ Background = { Color = scheme.background } },
-		{ Foreground = { Color = scheme.foreground } },
-		{ Attribute = { Intensity = "Half" } },
-		{ Text =  title },
-		{ Attribute = { Intensity = "Normal" } },
-		{ Background = { Color = scheme.background } },
 		{ Text = wezterm.pad_left(" ", max_left) },
 	}
 
