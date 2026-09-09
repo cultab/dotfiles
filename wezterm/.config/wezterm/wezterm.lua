@@ -353,9 +353,9 @@ config.keys = {
 		key = "t",
 		mods = "LEADER",
 		action = act.PromptInputLine({
-			description = "Rename tab:",
+			description = "Rename tab (empty to clear):",
 			action = wezterm.action_callback(function(window, _, line)
-				if line and line ~= "" then
+				if line then
 					window:active_tab():set_title(line)
 				end
 			end),
@@ -395,6 +395,22 @@ config.keys = {
 	{ key = "u", mods = "ALT", action = act.ScrollToPrompt(-1) },
 	{ key = "d", mods = "ALT", action = act.ScrollToPrompt(1) },
 }
+
+for i = 1, 10 do
+	if i == 10 then
+		key = 0
+	else
+		key = i
+	end
+  -- CTRL+ALT + number to activate that tab
+  table.insert(config.keys, {
+    key = tostring(key),
+    mods = 'LEADER',
+    action = act.ActivateTab(i - 1),
+  })
+end
+
+
 config.mouse_bindings = {
 	{
 		event = { Down = { streak = 3, button = "Left" } },
