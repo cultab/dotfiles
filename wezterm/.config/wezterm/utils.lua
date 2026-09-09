@@ -26,6 +26,20 @@ M.get_user_vars = function(pane)
 	return {}
 end
 
+---Reads the title from either a PaneInformation snapshot (has the `title` field)
+---or a live Pane object (has the `get_title()` method). This is the same title
+---the left status bar shows.
+---@param pane PaneInformation|Pane
+---@return string?
+M.get_pane_title = function(pane)
+	if pane.title ~= nil then
+		return pane.title
+	elseif pane.get_title ~= nil then
+		return pane:get_title()
+	end
+	return nil
+end
+
 ---Resolves a display name for a tab: an explicit tab title if set, otherwise the
 ---basename of the active pane's foreground process, falling back to WEZTERM_PROG.
 ---@param tab TabInformation | MuxTab
@@ -55,15 +69,29 @@ M.get_tab_name = function(tab)
 	return M.get_proc_name(pane_info)
 end
 
+---Strips `--listen <socket>` out of a command string. nvim is launched with one
+---and the socket path is pure noise in a tab name.
+---@param s string
+---@return string
+local function strip_listen_socket(s)
+	return (s:gsub("%s+%-%-listen[%s=]+%S+", ""))
+end
+
 ---@param pane PaneInformation|Pane
 ---@return string
 M.get_proc_name = function(pane)
-	local name = M.get_user_vars(pane)["WEZTERM_PROG"]
+	local name = "" -- M.get_user_vars(pane)["WEZTERM_PROG"]
 
 	if not name then
 		return "..."
 	end
 	if name == "" then
+		-- sitting at the prompt: the pane title is more useful than "shell",
+		-- but it is shell-set so it can be arbitrarily long
+		local title = M.get_pane_title(pane)
+		if title and #title > 0 then
+			return wezterm.truncate_right(strip_listen_socket(title), 24)
+		end
 		return "shell"
 	end
 

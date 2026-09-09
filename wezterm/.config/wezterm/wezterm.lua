@@ -207,13 +207,10 @@ wezterm.on(
 	end
 )
 
-TAB_WIDTH = 19
-
 -- WezTerm truncates the whole rendered tab title (separators included) to
--- config.tab_max_width regardless of our own fixed_width padding above, so
--- it must be at least: 1 (left separator) + 2 ("N:") + TAB_WIDTH (padded
--- name) + 1 (right separator), or the name/right border get cut off.
-config.tab_max_width = TAB_WIDTH + 8
+-- config.tab_max_width, which defaults to 16; keep it high enough that names
+-- are never cut off.
+config.tab_max_width = 255
 
 wezterm.on("update-status", function(window, pane)
 	local host_icon
