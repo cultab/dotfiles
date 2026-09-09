@@ -2,7 +2,7 @@ local wezterm = require("wezterm") ---@type Wezterm
 local act = wezterm.action
 
 local utils = require("utils")
-local conditionalActivatePane = require("utils").conditionalActivatePane
+local conditionalActivatePane = utils.conditionalActivatePane
 
 -- This table will hold the configuration.
 local config = {} ---@type Config
@@ -125,14 +125,6 @@ config.colors = {
 	},
 }
 
----returns str padded and truncated to be exactly n chars long
----@param str string
----@param n integer
-local function fixed_width(str, n)
-	local mid = math.floor(((n + 0) / 2) - #str / 2)
-
-	return wezterm.truncate_right(wezterm.pad_right((" "):rep(mid) .. str, n), n)
-end
 -- "Black", "White"  "Silver" }
 local colors =
 	{ "Maroon", "Green", "Olive", "Navy", "Purple", "Teal", "Red", "Lime", "Yellow", "Blue", "Fuchsia", "Aqua" }
@@ -160,7 +152,7 @@ wezterm.on(
 	"format-tab-title",
 	-- function(tab, tabs, panes, config, hover, max_width)
 	function(tab, _, _, _, hover, _)
-		local tab_name = require("utils").get_tab_name(tab)
+		local tab_name = utils.get_tab_name(tab)
 
 		local idx = (GHhash(tab_name) % #colors) + 1
 		local tab_color = colors[idx]
