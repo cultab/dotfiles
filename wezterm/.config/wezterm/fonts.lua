@@ -15,6 +15,29 @@ M.set_font = function(config, name)
 		config.font_size = 12
 		config.line_height = 1.2
 		SPACE = " "
+
+		-- The default rules reach for Iosevka's Thin faces for dim text; Light is
+		-- the mildest weight that still reads as dim.
+		config.font_rules = {
+			{
+				intensity = "Half",
+				italic = false,
+				font = wezterm.font({
+					family = name,
+					weight = "Light",
+					style = "Normal",
+				}),
+			},
+			{
+				intensity = "Half",
+				italic = true,
+				font = wezterm.font({
+					family = name,
+					weight = "Light",
+					style = "Italic",
+				}),
+			},
+		}
 	end
 
 	-- For Cozette

@@ -80,7 +80,8 @@ end
 ---@param pane PaneInformation|Pane
 ---@return string
 M.get_proc_name = function(pane)
-	local name = "" -- M.get_user_vars(pane)["WEZTERM_PROG"]
+	local name = "" 
+	-- local name = M.get_user_vars(pane)["WEZTERM_PROG"]
 
 	if not name then
 		return "..."
@@ -90,7 +91,8 @@ M.get_proc_name = function(pane)
 		-- but it is shell-set so it can be arbitrarily long
 		local title = M.get_pane_title(pane)
 		if title and #title > 0 then
-			return wezterm.truncate_right(strip_listen_socket(title), 24)
+			-- truncated just enough so cursors animated titles stops being annoying
+			return wezterm.truncate_right(strip_listen_socket(title), 26)
 		end
 		return "shell"
 	end
