@@ -33,6 +33,8 @@ setopt extendedglob
 setopt globdots # complete (dot).files
 bindkey -e
 
+# remove / from wordchars so backwards word delete works nicely on paths
+WORDCHARS=${WORDCHARS/\/}
 # HACK: fzf and carapace have a bad interaction, causing spaces to be added after path completions, see: https://github.com/Aloxaf/fzf-tab/issues/503
 ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;&|/'
 if [ -d /usr/share/doc/fzf/ ]; then

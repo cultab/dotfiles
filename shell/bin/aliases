@@ -129,6 +129,14 @@ elif command -v bat >/dev/null 2>&1; then
 	alias cat="bat $BATARGS"
 fi
 
+if ! command -v fd >/dev/null 2>&1; then
+  if command -v fd-find >/dev/null 2>&1; then
+    alias fd='fd-find'
+  elif command -v fdfind >/dev/null 2>&1; then
+    alias fd='fdfind'
+  fi
+fi
+
 if command -v bat >/dev/null 2>&1; then
   if [ "$SHELL" = "zsh" ]; then
     # global alias.  (won't work in bash)
