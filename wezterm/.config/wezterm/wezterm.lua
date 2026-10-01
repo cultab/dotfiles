@@ -84,7 +84,7 @@ config = require("fonts").set_font(config, font)
 -- config.enable_tab_bar = true
 config.enable_wayland = true
 config.use_fancy_tab_bar = false
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.window_decorations = "NONE"
 config.window_padding = {
 	left = 0,
 	right = 0,
@@ -139,6 +139,9 @@ local force_colors = {
 local GHhash = function(str)
 	-- https://gist.github.com/scheler/26a942d34fb5576a68c111b05ac3fabe
 	-- also try https://github.com/lancelijade/qqwry.lua/blob/master/crc32.lua
+
+	-- HACK: truncated just enough so cursor's animated titles stops being annoying
+	str = wezterm.truncate_right(str, 26)
 	local h = 5381
 	for c in str:gmatch(".") do
 		h = ((h << 5) + h) + string.byte(c)
@@ -248,12 +251,16 @@ wezterm.on("update-status", function(window, pane)
 		mid_width = mid_width + wezterm.column_width(tab_name) + 5
 	end
 
+	-- wezterm.log_info("a: ", wezterm.column_width(pretty_host))
+	-- wezterm.log_info("b: ", wezterm.column_width(workspace))
 	local tab_width = window:active_tab():get_size().cols
-	wezterm.log_info("midwidth: " .. mid_width)
-	local max_left = (tab_width / 2 - mid_width / 2)
+	-- wezterm.log_info("midwidth: " .. mid_width)
+	local max_left = (tab_width - mid_width) / 2
 		- wezterm.column_width(pretty_host)
 		- wezterm.column_width(workspace)
 		-- - wezterm.column_width(title)
+	
+		max_left = math.max(0, max_left)
 
 	local left_cells = {
 		{ Background = { AnsiColor = status_color } },
@@ -369,8 +376,8 @@ config.keys = {
 	{ key = "/", mods = "LEADER", action = act.Search("CurrentSelectionOrEmptyString") },
 	{ key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
 	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
-	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
-	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
+	{ key = "n", mods = "ALT", action = act.ActivateTabRelative(1) },
+	{ key = "p", mods = "ALT", action = act.ActivateTabRelative(-1) },
 	{ key = "h", mods = "ALT", action = act.EmitEvent("ActivatePaneDirection-left") },
 	{ key = "j", mods = "ALT", action = act.EmitEvent("ActivatePaneDirection-down") },
 	{ key = "k", mods = "ALT", action = act.EmitEvent("ActivatePaneDirection-up") },
@@ -394,10 +401,9 @@ for i = 1, 10 do
 	else
 		key = i
 	end
-  -- CTRL+ALT + number to activate that tab
   table.insert(config.keys, {
     key = tostring(key),
-    mods = 'LEADER',
+    mods = 'ALT',
     action = act.ActivateTab(i - 1),
   })
 end

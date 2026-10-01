@@ -45,7 +45,11 @@ end
 ---@param tab TabInformation | MuxTab
 ---@return string
 M.get_tab_name = function(tab)
+	-- TabInformation carries `tab_title` as a field; MuxTab only has get_title()
 	local title = tab.tab_title
+	if title == nil and tab.get_title ~= nil then
+		title = tab:get_title()
+	end
 	if title and #title > 0 then
 		return title
 	end
@@ -77,6 +81,33 @@ local function strip_listen_socket(s)
 	return (s:gsub("%s+%-%-listen[%s=]+%S+", ""))
 end
 
+---Fish-style path shortening: abbreviates intermediate dirs, except the first,
+---to their first letter (keeping the dot of dot-dirs) when there are 2 or more
+---of them.
+---Given "~/ws/something/else" returns "~/ws/s/else".
+---Anything that doesn't look like a bare path is returned unchanged.
+---@param s string
+---@return string
+function M.shorten_path(s)
+	if not s:match("^[~/]") or s:find("%s") then
+		return s
+	end
+	local parts = {}
+	for p in s:gmatch("[^/]+") do
+		table.insert(parts, p)
+	end
+	-- "~" is kept as-is; for absolute paths the root is implicit
+	local first = parts[1] == "~" and 2 or 1
+	if #parts - first < 2 then
+		return s
+	end
+	for i = first + 1, #parts - 1 do
+		parts[i] = parts[i]:match("^%.?" .. utf8.charpattern) or parts[i]
+	end
+	local prefix = s:sub(1, 1) == "/" and "/" or ""
+	return prefix .. table.concat(parts, "/")
+end
+
 ---@param pane PaneInformation|Pane
 ---@return string
 M.get_proc_name = function(pane)
@@ -91,8 +122,7 @@ M.get_proc_name = function(pane)
 		-- but it is shell-set so it can be arbitrarily long
 		local title = M.get_pane_title(pane)
 		if title and #title > 0 then
-			-- truncated just enough so cursors animated titles stops being annoying
-			return wezterm.truncate_right(strip_listen_socket(title), 26)
+			return wezterm.truncate_right(M.shorten_path(strip_listen_socket(title)), 100)
 		end
 		return "shell"
 	end
