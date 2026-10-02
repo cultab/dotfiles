@@ -80,18 +80,8 @@ wt() {
 # ls #
 ######
 
-if command -v lsd >/dev/null 2>&1; then
-  lsd_opts="--hyperlink auto"
-  # shellcheck disable=SC2139
-  alias ls="lsd $lsd_opts"
-  # shellcheck disable=SC2139
-  alias ll="lsd $lsd_opts --long"
-  # shellcheck disable=SC2139
-  alias la="lsd $lsd_opts --long --almost-all"
-  # shellcheck disable=SC2139
-  alias lt="lsd $lsd_opts --tree"
-elif command -v eza >/dev/null 2>&1; then
-  eza_opts='--group-directories-first --modified --group --sort=Extension --icons'
+if command -v eza >/dev/null 2>&1; then
+  eza_opts='--group-directories-first --modified --group --sort=Extension --icons always'
   if eza --git >/dev/null 2>&1; then
     eza_opts="$eza_opts --git"
   fi
@@ -103,6 +93,16 @@ elif command -v eza >/dev/null 2>&1; then
   alias la="eza $eza_opts --all"
   # shellcheck disable=SC2139
   alias lt="eza $eza_opts --tree"
+elif command -v lsd >/dev/null 2>&1; then
+  lsd_opts="--hyperlink auto"
+  # shellcheck disable=SC2139
+  alias ls="lsd $lsd_opts"
+  # shellcheck disable=SC2139
+  alias ll="lsd $lsd_opts --long"
+  # shellcheck disable=SC2139
+  alias la="lsd $lsd_opts --long --almost-all"
+  # shellcheck disable=SC2139
+  alias lt="lsd $lsd_opts --tree"
 else
   ls_opts='--color=auto -h'
   # shellcheck disable=SC2139
@@ -144,6 +144,7 @@ if command -v bat >/dev/null 2>&1; then
   fi
 fi
 
+alias avante='NVIM_APPNAME=nvim-avante nvim -c "lua vim.defer_fn(function() require(\"avante.api\").zen_mode() end, 100)"'
 #alias mpiall="mpirun --use-hwthread-cpus"
 #alias mpirf="mpirun --oversubscribe"
 

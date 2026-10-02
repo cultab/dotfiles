@@ -1,0 +1,5 @@
+#!/bin/sh
+# wrap command so cron can send "html" email with monospace fonts
+echo "<pre style='font-family: monospace;'>"
+"@$"
+echo '</pre>'

@@ -1,4 +1,36 @@
 git:
   pagers:
-    - pager: diff-so-fancy
+    - pager: delta --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --light
     - externalDiffCommand: ~/bin/color_words.sh
+    # - pager: diff-so-fancy
+gui:
+  nerdFontsVersion: "3"
+theme:
+  activeBorderColor:
+    - '#7287fd'
+    - bold
+  inactiveBorderColor:
+    - '#6c6f85'
+  searchingActiveBorderColor:
+    - '#df8e1d'
+  optionsTextColor:
+    - '#1e66f5'
+  selectedLineBgColor:
+    - '#ccd0da'
+  inactiveViewSelectedLineBgColor:
+    - '#9ca0b0'
+  cherryPickedCommitFgColor:
+    - '#7287fd'
+  cherryPickedCommitBgColor:
+    - '#bcc0cc'
+  markedBaseCommitFgColor:
+    - '#1e66f5'
+  markedBaseCommitBgColor:
+    - '#df8e1d'
+  unstagedChangesColor:
+    - '#d20f39'
+  defaultFgColor:
+    - '#4c4f69'
+
+authorColors:
+  '*': '#7287fd'

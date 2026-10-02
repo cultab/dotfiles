@@ -1,4 +1,11 @@
 #!/usr/bin/zsh
+
+
+# if [ -v $CURSOR_AGENT ]; then
+# 	echo 'not sourcing entire .zshrc'
+# 	return
+# fi
+
 autoload -Uz compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 autoload -Uz edit-command-line;
@@ -64,24 +71,32 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 # "ss" [UP ARROW] -> "ssh -p22 some.domain.xyz"
 # incremental search
- bindkey "\e[A"  history-beginning-search-backward
- bindkey "\e[B"  history-beginning-search-forward
- bindkey "^P"    history-beginning-search-backward
- bindkey "^N"    history-beginning-search-forward
- bindkey "^[[Z"  reverse-menu-complete
- bindkey "^X"    edit-command-line
- # delete now works
- bindkey "^[[3~" delete-char
- bindkey " "     magic-space
- bindkey '\e'    send-break
+bindkey "\e[A"  history-beginning-search-backward
+bindkey "\e[B"  history-beginning-search-forward
+bindkey "^P"    history-beginning-search-backward
+bindkey "^N"    history-beginning-search-forward
+bindkey "^[[Z"  reverse-menu-complete
+bindkey "^X"    edit-command-line
+# delete now works
+bindkey "^[[3~" delete-char
+bindkey " "     magic-space
+bindkey '\e'    send-break
 
 
- bindkey -M vicmd 'k' history-beginning-search-backward
- bindkey -M vicmd 'j' history-beginning-search-forward
- disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
+bindkey -M vicmd 'k' history-beginning-search-backward
+bindkey -M vicmd 'j' history-beginning-search-forward
+disable -r time       # disable shell reserved word alias time='time -p ' # -p for POSIX output
 export TIMEFMT=$'real\t%*E\nuser\t%*U\nsys\t%*S'
 
 setopt noclobber                 # Don't overwrite existing file when redirecting output
+
+# conditional source
+# if file exists source it
+csource() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+    fi
+}
 
 # csource ~/.config/zsh/transient_starship_prompt
 
