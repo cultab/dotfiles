@@ -122,7 +122,7 @@ M.get_proc_name = function(pane)
 		-- but it is shell-set so it can be arbitrarily long
 		local title = M.get_pane_title(pane)
 		if title and #title > 0 then
-			return wezterm.truncate_right(M.shorten_path(strip_listen_socket(title)), 100)
+			return wezterm.truncate_right(M.shorten_path(strip_listen_socket(title)), 27)
 		end
 		return "shell"
 	end
