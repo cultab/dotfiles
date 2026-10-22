@@ -20,11 +20,63 @@ config.window_close_confirmation = "NeverPrompt"
 config.color_scheme_dirs = { "~/.config/wezterm/colors" }
 config.color_scheme = require("colorscheme")
 
-config.wsl_domains = { {
-	name = "WSL Ubuntu",
-	distribution = "Ubuntu",
-	default_cwd = "~",
-} }
+local hostname = wezterm.hostname()
+
+---@class host
+---@field name string
+---@field icon string
+---@field config table?
+---@field font string?
+
+---@type table<string, host>
+local hosts = {
+	abyss = {
+		name = "abyss",
+		icon = wezterm.nerdfonts.linux_fedora,
+		config = {
+			default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" },
+		},
+		font = "Iosevka Term",
+	},
+	winbox = {
+		name = "winbox",
+		icon = wezterm.nerdfonts.dev_windows,
+		config = {
+			default_domain = "WSL:void",
+			font_dirs = { "C:/Users/evan/.local/share/fonts" },
+		},
+	},
+	["L-5CG54917G7"] = {
+		name = "laptop",
+		icon = wezterm.nerdfonts.linux_ubuntu,
+		config = {
+			scrollback_lines = 10000,
+		},
+		font = "Iosevka Term",
+	},
+	["bakatsandr1"] = {
+		name = "devpc",
+		icon = wezterm.nerdfonts.linux_ubuntu,
+	},
+}
+
+setmetatable(hosts, {
+	__index = function(_, name)
+		return {
+			name = name,
+			icon = wezterm.nerdfonts.cod_terminal_linux,
+			font = "Iosevka Term",
+		}
+	end,
+})
+
+local host = hosts[hostname]
+
+-- config.wsl_domains = { {
+-- 	name = "WSL Ubuntu",
+-- 	distribution = "Ubuntu",
+-- 	default_cwd = "~",
+-- } }
 
 -- config.ssh_domains = { {
 -- 	name = "SSH:void",
@@ -35,7 +87,7 @@ config.wsl_domains = { {
 config.ssh_domains = {
 	{
 		name = "vps",
-		remote_address = "vps"
+		remote_address = "vps",
 	},
 	{
 		name = "devpc",
@@ -46,31 +98,6 @@ config.ssh_domains = {
 
 config.term = "xterm"
 
-local font = ""
-local hostname = wezterm.hostname()
-local font = nil
-if hostname == "winbox" then
-	config.default_domain = "WSL:void"
-	config.font_dirs = { "C:/Users/evan/.local/share/fonts" }
-end
-
-if hostname == "abyss" then
-	config.default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" }
-	font = "Iosevka Term"
-end
-
-if hostname == "L-5CG54917G7" then
-	-- config.default_domain = "devpc"
-	-- config.default_prog = { "powershell.exe" }
-	config.scrollback_lines = 10000
-	font = "Iosevka Term"
-end
-
-if font == nil then
-	font = 'Iosevka'
-end
--- extra space for fonts like Iosevka
-
 -- font = "Hermit"
 -- font = "Cozette"
 -- font = "CozetteHiDpi"
@@ -79,8 +106,7 @@ end
 -- font = "Monaspace"
 -- font = "Fira Code"
 -- font = "Monocraft"
-config = require("fonts").set_font(config, font)
-
+config = require("fonts").set_font(config, host.font)
 
 -- config.enable_tab_bar = true
 config.enable_wayland = true
@@ -209,32 +235,12 @@ wezterm.on(
 config.tab_max_width = 255
 
 wezterm.on("update-status", function(window, pane)
-	local host_icon
 	local h = utils.get_user_vars(pane)["WEZTERM_HOST"]
 	if not h then
 		h = wezterm.hostname()
 	end
-	host_name = h
-	-- IDEA: turn into function that returns an obj with hostname and icon, also use icon for tabs
-	if h == "winbox" then
-		host_icon = wezterm.nerdfonts.dev_windows
-		host_name = "win"
-	elseif h == "void" then
-		host_icon = wezterm.nerdfonts.linux_void
-	elseif h == "pop-os" then
-		host_icon = wezterm.nerdfonts.linux_pop_os
-	elseif h == "abyss" then
-		host_icon = wezterm.nerdfonts.linux_fedora
-	elseif h:find("bakatsandr1") then
-		host_icon = wezterm.nerdfonts.linux_ubuntu
-		host_name = "devpc"
-	elseif h == "L-5CG54917G7" then
-		host_icon = wezterm.nerdfonts.linux_ubuntu
-		host_name = "laptop"
-	end
-	if not host_icon then
-		host_icon = "n/a"
-	end
+	local host_icon = hosts[h].icon
+	local host_name = hosts[h].name
 
 	local status_color = force_colors[host_name] or force_colors.default
 
@@ -257,15 +263,8 @@ wezterm.on("update-status", function(window, pane)
 	local tab_width = window:active_tab():get_size().cols
 	-- wezterm.log_info("midwidth: " .. mid_width)
 	local max_left = (tab_width - mid_width) / 2
-		- wezterm.column_width(pretty_host)
-		- wezterm.column_width(workspace)
-		-- - wezterm.column_width(title)
-	
-		max_left = math.max(0, max_left)
+	max_left = math.max(0, max_left)
 
-	if max_left < 0 then
-		max_left = 0
-	end
 
 	local left_cells = {
 		{ Background = { AnsiColor = status_color } },
@@ -276,7 +275,6 @@ wezterm.on("update-status", function(window, pane)
 		{ Text = RIGHT_SEPARATOR },
 		{ Text = wezterm.pad_left(" ", max_left) },
 	}
-
 
 	window:set_left_status(wezterm.format(left_cells))
 
@@ -289,8 +287,6 @@ wezterm.on("update-status", function(window, pane)
 			.. rounded
 		return wezterm.nerdfonts[key] or wezterm.nerdfonts.md_battery
 	end
-
-	local dir = pane:get_current_working_dir()
 
 	local bat = ""
 	for _, b in ipairs(wezterm.battery_info()) do
@@ -412,7 +408,6 @@ for i = 1, 10 do
     action = act.ActivateTab(i - 1),
   })
 end
-
 
 config.mouse_bindings = {
 	{
