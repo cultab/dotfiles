@@ -46,6 +46,7 @@ config.ssh_domains = {
 
 config.term = "xterm"
 
+local font = ""
 local hostname = wezterm.hostname()
 local font = nil
 if hostname == "winbox" then
@@ -55,7 +56,7 @@ end
 
 if hostname == "abyss" then
 	config.default_prog = { "/home/linuxbrew/.linuxbrew/bin/zsh", "-l" }
-	font = "Monaspace"
+	font = "Iosevka Term"
 end
 
 if hostname == "L-5CG54917G7" then
@@ -261,6 +262,10 @@ wezterm.on("update-status", function(window, pane)
 		-- - wezterm.column_width(title)
 	
 		max_left = math.max(0, max_left)
+
+	if max_left < 0 then
+		max_left = 0
+	end
 
 	local left_cells = {
 		{ Background = { AnsiColor = status_color } },

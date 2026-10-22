@@ -1,4 +1,4 @@
-local cozette = false
+local cozette = true
 
 local lsp_icons = {
 	cozette = {

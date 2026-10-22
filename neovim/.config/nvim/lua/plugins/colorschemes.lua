@@ -76,6 +76,7 @@ local colors = {
 	lazy { 'ellisonleao/gruvbox.nvim', opts = { transparent_mode = true } },
 	-- skip 'lifepillar/vim-gruvbox8',
 	-- lazy 'npxbr/gruvbox.nvim',
+	'dawikur/chiroptera',
 	-- vscode
 	lazy 'Mofiqul/vscode.nvim',
 	lazy 'LunarVim/darkplus.nvim',
